@@ -1,0 +1,9 @@
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\Temp\UnityVS_bin\Debug\Assembly-CSharp.dll
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\Temp\UnityVS_bin\Debug\UnityEditor.dll
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\Temp\UnityVS_bin\Debug\UnityEngine.dll
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\Temp\UnityVS_bin\Debug\UnityEngine.xml
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\Temp\UnityVS_bin\Debug\UnityEditor.xml
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\obj\Debug\Assembly-CSharp.dll
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\obj\Debug\Assembly-CSharp.pdb
+D:\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\obj\Debug\UnityVS.atrabuio_SGHW-ATRABUIO_NOROTATOR_9469.CSharp.csprojResolveAssemblyReference.cache
