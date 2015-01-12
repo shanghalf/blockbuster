@@ -25,7 +25,6 @@ public class triggerscript : MonoBehaviour {
     {
         // test for git integration vs 2012
 
-
 	}
 
     void OnTriggerEnter(Collider other)
