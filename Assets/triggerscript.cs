@@ -23,7 +23,9 @@ public class triggerscript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
     {
-   
+        // test for git integration vs 2012
+
+
 	}
 
     void OnTriggerEnter(Collider other)
