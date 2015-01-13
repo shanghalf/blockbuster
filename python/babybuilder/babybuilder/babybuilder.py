@@ -177,15 +177,9 @@ def runexternalcommand (cmd):
     outlog( "start build >>>>> ")
     # build from a jenkins job overide projectfolder
     # define action prior to build anything 
-
-
     if "buildproject" in cmd:
         outlog ("BUILD PROJECT STEP STARTED")
         BuildProject() 
-
-    
-        for n in nodepatern :
-            outlog ("list %s%s"% ( selectedbranch ,n )  )
     outlog ("end of the execution")
     return
 
