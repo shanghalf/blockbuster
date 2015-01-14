@@ -17,6 +17,9 @@ import binascii
 from xml.dom.minidom import Document
 
 env = os.environ.copy()
+localbuild = True 
+
+
 
 def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
     outlog ("About to run command: " + str(cmd))
@@ -31,11 +34,15 @@ def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
 def BuildWebPlayer(args=None):
     
     global env 
-    deployfolder = env['DEPLOYFOLDER'] 
+
+    if ( not localbuild ):
+        deployfolder = env['DEPLOYFOLDER'] 
+    else :
+        deployfolder = "d:/BABYBUIDER"
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
     
-    outlog (os.curdir ) 
+    outlog (os.path.curdir) 
 
     cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s"% (deployfolder,deployfolder)
     runcommandsync(cmd) 
