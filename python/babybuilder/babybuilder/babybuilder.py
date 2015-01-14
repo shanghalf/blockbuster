@@ -21,12 +21,8 @@ localbuild = True
 
 
 
-def runcommandsync(cmd, loglevel = "BUILDINFO", shell = True, env = None):
-    outlog ("About to run command: " + str(cmd))
-    bs=subprocess.Popen(cmd , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    output = bs.communicate()[1]
-    outlog (output)
-    bs.wait()
+#def runcommandsync(cmd, loglevel = "BUILDINFO", shell = True, env = None):
+ 
 
 
 
@@ -45,8 +41,15 @@ def BuildWebPlayer(args=None):
     outlog (os.getcwd()) 
 
     cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/log.txt "% (deployfolder,deployfolder)
+
+    outlog ("About to run command: " + str(cmd))
     
-    runcommandsync(cmd) 
+    
+    
+    bs=subprocess.check_call(cmd )# , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    output = bs.communicate()[1]
+    outlog (output)
+    bs.wait()
 
 
 
@@ -189,19 +192,13 @@ def runexternalcommand (cmd):
     global projectFolder
     global logpath 
 
-    if "jenkinsbuild" in cmd:
 
-        outlog ("current folder : %s"%os.getcwd(),"FLOOD")
-        outlog( "runexternalcommand build running from : %s"%projectpath,"FLOOD")
-        outlog( "runexternalcommand projectFolder = %s"% projectFolder,"FLOOD")
-        outlog ("runexternalcommand logpath = %s"% logpath,"FLOOD")
-        outlog ("---- BUILD EXECUTED FROM JENKINS ----","FLOOD")
-        localbuild= False
-        buildnumber= env['BUILD_NUMBER']
-        jobname = env['JOB_NAME']
+    outlog ("current folder : %s"%os.getcwd(),"FLOOD")
+    outlog( "runexternalcommand projectFolder = %s"% projectFolder,"FLOOD")
+    outlog ("runexternalcommand logpath = %s"% logpath,"FLOOD")
+    outlog ("---- BUILD EXECUTED FROM JENKINS ----","FLOOD")
+    localbuild= False
 
-    else :
-        localbuild= True
 
     # output arg table to console
     for n in cmd:
