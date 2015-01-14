@@ -17,12 +17,21 @@ import binascii
 from xml.dom.minidom import Document
 
 
-def step1(args=None):
-    outlog("step1")
-    return
 
-def step2(args=None):
-    outlog("step2")
+
+def BuildWebPlayer(args=None):
+
+   cmd = "-quit -nographics -batchmode -projectPath buildWebPlayer  -logFile"
+   return
+
+
+
+def InitBuild(args=None):
+    env = os.environ.copy()
+    
+    for s in env :
+        outlog( "ENV : %s = %s",(s[0],s[1]) )
+
     return
 
 def step3(args=None):
@@ -62,8 +71,8 @@ def BuildProject():
     cmdbuff=[]
     
     #cmdbuff.append( "MapDescAutoGenerater.GenerateMapDesc" )
-    cmdbuff.append([step1])
-    cmdbuff.append([step2])
+    cmdbuff.append([InitBuild])
+    cmdbuff.append([BuildWebPlayer])
     cmdbuff.append([step3])
     cmdbuff.append([step4])
 
