@@ -42,7 +42,7 @@ def InitBuild(args=None):
     env = os.environ.copy()
     
     for s in env :
-        outlog( "ENV  %s "%s)
+        outlog  ("%s =  %s "% (s, env[s]) )
 
     return
 
