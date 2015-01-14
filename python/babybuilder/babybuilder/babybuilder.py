@@ -32,7 +32,7 @@ def BuildWebPlayer(args=None):
     
     global env 
 
-    cmd = env['UNITIEXE'] + "-quit -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
+    cmd = env['UNITYEXE'] + "-quit -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
     runcommandsync(cmd) 
     return
 
