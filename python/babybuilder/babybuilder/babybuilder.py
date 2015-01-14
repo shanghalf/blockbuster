@@ -47,7 +47,8 @@ def BuildWebPlayer(args=None):
     
     
     bs=subprocess.check_call( cmd  )# , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    bs.wait()
+    
+
 
 
 
