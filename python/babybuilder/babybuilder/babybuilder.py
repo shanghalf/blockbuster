@@ -64,10 +64,7 @@ def InitBuild(args=None):
 def notifybuild (args=None):
 
     global env
-    global localbuild
-    if ( localbuild ):
-        outlog ("no mail notification on local build")
-        return
+
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
     
