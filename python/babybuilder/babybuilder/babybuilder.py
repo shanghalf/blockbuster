@@ -63,7 +63,11 @@ def InitBuild(args=None):
 
 def notifybuild (args=None):
 
+
     global env
+
+
+
 
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
@@ -72,8 +76,8 @@ def notifybuild (args=None):
     buildresult ="build done !"
 
 
-    username = 'babybuilder@gmail.com'
-    password = 'wadamadafaka'
+    username = "alfman"
+    password = 'fghpgxns'
 
     # me == my email address
     # you == recipient's email address
@@ -93,7 +97,7 @@ def notifybuild (args=None):
     
     # Record the MIME types of both parts - text/plain and text/html.
     part1 = MIMEText(text, 'plain')
-    part2 = MIMEText(html, 'html')
+    part2 = MIMEText(text, 'html')
 
     # Attach parts into message container.
     # According to RFC 2046, the last part of a multipart message, in this case
@@ -102,9 +106,15 @@ def notifybuild (args=None):
     msg.attach(part2)
 
     # Send the message via local SMTP server.
-    s = smtplib.SMTP('smtp.gmail.com:587')
-    s.starttls()
-    s.login(username,password)
+    #s = smtplib.SMTP('smtp.free.fr:587')
+
+    s = smtplib.SMTP('smtp2-g21.free.fr:587')
+
+
+    outlog ( "%s"%s.ehlo_msg ) 
+    s.ehlo()
+    s.lo
+    s.login(r"alfman",r"fghpgxns")
 
 
     # sendmail function takes 3 arguments: sender's address, recipient's address
@@ -118,7 +128,6 @@ def notifybuild (args=None):
 
 
     return 
-
 
 
 
@@ -279,7 +288,9 @@ if ( not os.path.exists(logpath) ):
     os.mkdir (logpath )
 outlog ("ENTRY POINT","FLOOD")
 localbuild = True
-runexternalcommand (sys.argv)
+notifybuild()
+
+#runexternalcommand (sys.argv)
 
 
 
