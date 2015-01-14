@@ -21,7 +21,7 @@ localbuild = True
 
 
 
-def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
+def runcommandsync(cmd, loglevel = "BUILDINFO", shell = True, env = None):
     outlog ("About to run command: " + str(cmd))
     bs=subprocess.Popen(cmd , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     output = bs.communicate()[1]
@@ -42,9 +42,10 @@ def BuildWebPlayer(args=None):
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
     
-    outlog (os.path.curdir) 
+    outlog (os.getcwd()) 
 
-    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s"% (deployfolder,deployfolder)
+    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/log.txt "% (deployfolder,deployfolder)
+    
     runcommandsync(cmd) 
 
 
