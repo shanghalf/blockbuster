@@ -31,7 +31,7 @@ def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
 def BuildWebPlayer(args=None):
     
     global env 
-    if ( os.path.exists (cmd = env['UNITYEXE']) ):
+    if ( os.path.exists (env['UNITYEXE']) ):
         cmd = env['UNITYEXE'] + " -quit -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
         runcommandsync(cmd) 
     else: 
