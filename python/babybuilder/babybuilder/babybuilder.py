@@ -21,7 +21,7 @@ env = os.environ.copy()
 def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
     outlog ("About to run command: " + str(cmd))
     bs=subprocess.Popen(cmd , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
-    output = bs.communicate()[0]
+    output = bs.communicate()[1]
     outlog (output)
     bs.wait()
 
@@ -32,15 +32,10 @@ def BuildWebPlayer(args=None):
     
     global env 
     deployfolder = env['DEPLOYFOLDER'] 
-    unityexe = env['UNITYEXE']
 
-    if ( os.path.exists (unityexe) and  os.path.exists (deployfolder) ):
-
-        cmd =  "%s -quit -batchmode -nographics -buildWebPlayer %s -logFile %s"% (unityexe,deployfolder,deployfolder)
-        runcommandsync(cmd) 
-    else: 
-        outlog ( "check your unity path in jenkins job" )
-    return
+    os.chdir("C:/Program Files (x86)/Unity/Editor") 
+    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s"% (deployfolder,deployfolder)
+    runcommandsync(cmd) 
 
 
 
