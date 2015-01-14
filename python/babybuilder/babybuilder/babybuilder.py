@@ -40,7 +40,7 @@ def BuildWebPlayer(args=None):
     
     outlog (os.getcwd()) 
 
-    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer  "% (deployfolder,deployfolder)
+    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer  "
 
     outlog ("About to run command: " + str(cmd))
     
