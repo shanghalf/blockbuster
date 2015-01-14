@@ -31,8 +31,12 @@ def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
 def BuildWebPlayer(args=None):
     
     global env 
-    if ( os.path.exists (env['UNITYEXE']) ):
-        cmd = env['UNITYEXE'] + " -quit -batchmode -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
+    deployfolder = env['DEPLOYFOLDER'] 
+    unityexe = env['UNITYEXE']
+
+    if ( os.path.exists (unityexe) and  os.path.exists (deployfolder) ):
+
+        cmd =  "%s -quit -batchmode -nographics -buildWebPlayer %s -logFile %s"% (unityexe,deployfolder,deployfolder)
         runcommandsync(cmd) 
     else: 
         outlog ( "check your unity path in jenkins job" )
