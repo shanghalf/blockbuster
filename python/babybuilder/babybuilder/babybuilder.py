@@ -16,13 +16,25 @@ import stat
 import binascii
 from xml.dom.minidom import Document
 
+env = os.environ.copy()
+
+def runcommandsync(cmd, loglevel = "BUILDINFO", shell = False, env = None):
+    outlog ("About to run command: " + str(cmd))
+    bs=subprocess.Popen(cmd , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    output = bs.communicate()[0]
+    outlog (output)
+    bs.wait()
+
 
 
 
 def BuildWebPlayer(args=None):
+    
+    global env 
 
-   cmd = "-quit -nographics -batchmode -projectPath buildWebPlayer  -logFile"
-   return
+    cmd = env['UNITIEXE'] + "-quit -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
+    runcommandsync(cmd) 
+    return
 
 
 
@@ -46,7 +58,7 @@ def step4(args=None):
 
 
 
-def BuildProject():
+def BuildProject(step=None):
 
     global projectFolder
     global logpath
