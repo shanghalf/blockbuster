@@ -32,7 +32,7 @@ def BuildWebPlayer(args=None):
     
     global env 
     if ( os.path.exists (env['UNITYEXE']) ):
-        cmd = env['UNITYEXE'] + " -quit -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
+        cmd = env['UNITYEXE'] + " -quit -batchmode -nographics -buildWebPlayer .\BABYBUILDER -logFile .\BABYBUILDER "
         runcommandsync(cmd) 
     else: 
         outlog ( "check your unity path in jenkins job" )
