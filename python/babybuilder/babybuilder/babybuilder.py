@@ -157,7 +157,7 @@ def BuildProject(step=None):
     #cmdbuff.append( "MapDescAutoGenerater.GenerateMapDesc" )
     cmdbuff.append([InitBuild])
     cmdbuff.append([BuildWebPlayer])
-    cmdbuff.append([step3])
+    cmdbuff.append([notifybuild])
     cmdbuff.append([step4])
 
 
