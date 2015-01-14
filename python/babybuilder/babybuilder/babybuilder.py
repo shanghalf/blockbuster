@@ -34,6 +34,9 @@ def BuildWebPlayer(args=None):
     deployfolder = env['DEPLOYFOLDER'] 
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
+    
+    outlog (os.curdir ) 
+
     cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s"% (deployfolder,deployfolder)
     runcommandsync(cmd) 
 
