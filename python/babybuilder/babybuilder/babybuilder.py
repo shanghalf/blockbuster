@@ -72,7 +72,7 @@ def notifybuild (args=None):
     filehandle= open(fn,"r")
     lines = filehandle.readlines()
     filehandle.close()
-    t = ""
+    t = r""
     buildsucess =  False 
     readcounter =0
     while readcounter  < len(lines) -1  :
@@ -94,7 +94,7 @@ def notifybuild (args=None):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
     if ( buildsucess):
-        s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s SUCESS \n cl %s \n %s "% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ,t ))
+        s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s SUCESS \n cl %s "% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
     else :
         s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s fail cl %s"% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
 
