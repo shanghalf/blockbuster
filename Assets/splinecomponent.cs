@@ -5,7 +5,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.Text;
-using UnityEditor;
+
 using System.Xml;
 
 public class splinecomponent : MonoBehaviour {
