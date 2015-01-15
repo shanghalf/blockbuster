@@ -64,44 +64,21 @@ def InitBuild(args=None):
 def notifybuild (args=None):
 
     global env
+    
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
 
-
-    # Create message container - the correct MIME type is multipart/alternative.
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = r"babybuilder notification" 
-    msg['From'] = r"babybuildmaster@gmail.com" 
-    msg['To'] = r"shanghalf1967@gmail.com"
-   
     fn = "D:/BABYBUIDER/buildWebPlayer.txt"
     filehandle= open(fn,"r")
     lines = filehandle.readlines()
     filehandle.close()
 
-    messagetext  =""
+    messagetext  =r""
     for n in lines :
+        outlog ( n )
         messagetext += n +'\n'
-
-    # Create the body of the message (a plain-text and an HTML version).
-    text = "buid notification"
-    
-    # Record the MIME types of both parts - text/plain and text/html.
-    part1 = MIMEText(messagetext, 'plain')
-    part2 = MIMEText(messagetext, 'plain')
-
-    # Attach parts into message container.
-    # According to RFC 2046, the last part of a multipart message, in this case
-    # the HTML message, is best and preferred.
-    msg.attach(part1)
-    msg.attach(part2)
-
-    # Send the message via local SMTP server.
-    #s = smtplib.SMTP('smtp.free.fr:587')
-
      
-    s = smtplib.SMTP_SSL("smtp.mail.yahoo.com",timeout=10)
-    
+    s = smtplib.SMTP_SSL("smtp.mail.yahoo.com",timeout=100)
     hello = s.ehlo() 
     outlog  ( hello  ) 
 
