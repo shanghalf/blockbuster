@@ -77,6 +77,7 @@ def notifybuild (args=None):
     readcounter =0
     while readcounter  < len(lines) -1  :
         n = lines[readcounter]
+        readcounter +=1
         if ( n.find('Exiting batchmode successfully now!') > -1) :
             buildresult= "TAG BUILD AS SUCCESS"
             break
