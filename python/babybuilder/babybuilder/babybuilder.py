@@ -94,7 +94,7 @@ def notifybuild (args=None):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
     if ( buildsucess):
-        s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s SUCESS \n cl %s "% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
+        s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s SUCESS cl %s "% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
     else :
         s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s fail cl %s"% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
 
