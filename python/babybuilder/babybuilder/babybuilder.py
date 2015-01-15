@@ -73,10 +73,14 @@ def notifybuild (args=None):
     lines = filehandle.readlines()
     filehandle.close()
 
-    messagetext  =r""
-    for n in lines :
-        outlog ( n )
-        messagetext += n +'\n'
+    buildresult = r"TAG BUILD AS FAIL"
+    readcounter =0
+    while readcounter  < len(lines) -1  :
+        n = lines[readcounter]
+        if ( n.find('Exiting batchmode successfully now!') > -1) :
+            buildresult= "TAG BUILD AS SUCCESS"
+            break
+
      
     s = smtplib.SMTP_SSL("smtp.mail.yahoo.com",timeout=100)
     hello = s.ehlo() 
@@ -88,7 +92,7 @@ def notifybuild (args=None):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
 
-    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com","build sucess" )
+    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",buildresult )
 
     s.quit()
     # display the link of the full log 
