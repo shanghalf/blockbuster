@@ -24,7 +24,7 @@ localbuild = True
 
 
 #def runcommandsync(cmd, loglevel = "BUILDINFO", shell = True, env = None):
- 
+
 
 
 
@@ -42,7 +42,7 @@ def BuildWebPlayer(args=None):
     
     outlog (os.getcwd()) 
 
-    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/log.txt "% (deployfolder,deployfolder)
+    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (deployfolder,deployfolder)
 
     outlog ("About to run command: " + str(cmd))
     
@@ -63,68 +63,44 @@ def InitBuild(args=None):
 
 def notifybuild (args=None):
 
-
     global env
-
-
-
-
+    
     from email.mime.multipart import MIMEMultipart
     from email.mime.text import MIMEText
-    
 
-    buildresult ="build done !"
+    fn = "D:/BABYBUIDER/buildWebPlayer.txt"
+    filehandle= open(fn,"r")
+    lines = filehandle.readlines()
+    filehandle.close()
+    t = r""
+    buildsucess =  False 
+    readcounter =0
+    while readcounter  < len(lines) -1  :
+        n = lines[readcounter]
+        readcounter +=1
+        t+= n
+        if ( n.find('Exiting batchmode successfully now!') > -1) :
+            buildsucess =  True
+            break
 
+     
+    s = smtplib.SMTP_SSL("smtp.mail.yahoo.com",timeout=100)
+    hello = s.ehlo() 
+    outlog  ( hello  ) 
 
-    username = "alfman"
-    password = 'fghpgxns'
-
-    # me == my email address
-    # you == recipient's email address
-    me = "babybuildmaster@gmail.com"
-    you = "Alphio.Trabuio@2kchina.com"
-    
-    subscribers=[]
-
-    # Create message container - the correct MIME type is multipart/alternative.
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = "babybuilder notification" 
-    msg['From'] = me
-    
-
-    # Create the body of the message (a plain-text and an HTML version).
-    text = "alternative "
-    
-    # Record the MIME types of both parts - text/plain and text/html.
-    part1 = MIMEText(text, 'plain')
-    part2 = MIMEText(text, 'html')
-
-    # Attach parts into message container.
-    # According to RFC 2046, the last part of a multipart message, in this case
-    # the HTML message, is best and preferred.
-    msg.attach(part1)
-    msg.attach(part2)
-
-    # Send the message via local SMTP server.
-    #s = smtplib.SMTP('smtp.free.fr:587')
-
-    s = smtplib.SMTP('smtp2-g21.free.fr:587')
-
-
-    outlog ( "%s"%s.ehlo_msg ) 
-    s.ehlo()
-    s.lo
-    s.login(r"alfman",r"fghpgxns")
+    s.login(r"babybuildmaster@yahoo.com",r"wadamadafaka")
 
 
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
-    msg['To'] = you
-    s.sendmail(me, you, msg.as_string())
+    if ( buildsucess):
+        s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s SUCESS cl %s "% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
+    else :
+        s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s fail cl %s"% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
 
     s.quit()
     # display the link of the full log 
-    outlog ( "Build notification sent ." )
+    outlog ( "Build notification sent : content file : %s"% "buildWebPlayer.txt")
 
 
     return 
@@ -288,9 +264,7 @@ if ( not os.path.exists(logpath) ):
     os.mkdir (logpath )
 outlog ("ENTRY POINT","FLOOD")
 localbuild = True
-notifybuild()
-
-#runexternalcommand (sys.argv)
+runexternalcommand (sys.argv)
 
 
 

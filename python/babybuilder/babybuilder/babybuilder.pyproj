@@ -12,10 +12,6 @@
     <OutputPath>.</OutputPath>
     <Name>babybuilder</Name>
     <RootNamespace>babybuilder</RootNamespace>
-    <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>sendmail</CommandLineArguments>
-    <InterpreterPath />
-    <InterpreterArguments />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
