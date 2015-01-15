@@ -91,6 +91,7 @@ def notifybuild (args=None):
     msg['Subject'] = "babybuilder notification" 
     msg['From'] = me
     
+    
 
     # Create the body of the message (a plain-text and an HTML version).
     text = "alternative "
@@ -120,7 +121,8 @@ def notifybuild (args=None):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
     msg['To'] = you
-    s.sendmail(me, you, msg.as_string())
+
+    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com", r"this is a build notification")
 
     s.quit()
     # display the link of the full log 
