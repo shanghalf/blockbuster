@@ -15,8 +15,6 @@ import zipfile
 import stat
 import binascii
 from xml.dom.minidom import Document
-import smtplib
-
 
 env = os.environ.copy()
 localbuild = True 
@@ -56,80 +54,15 @@ def BuildWebPlayer(args=None):
 
 def InitBuild(args=None):
     env = os.environ.copy()
+    
     for s in env :
         outlog  ("%s =  %s "% (s, env[s]) )
+
     return
 
-
-def notifybuild (args=None):
-
-
-    global env
-
-
-
-
-    from email.mime.multipart import MIMEMultipart
-    from email.mime.text import MIMEText
-    
-
-    buildresult ="build done !"
-
-
-    username = "alfman"
-    password = 'fghpgxns'
-
-    # me == my email address
-    # you == recipient's email address
-    me = "babybuildmaster@gmail.com"
-    you = "Alphio.Trabuio@2kchina.com"
-    
-    subscribers=[]
-
-    # Create message container - the correct MIME type is multipart/alternative.
-    msg = MIMEMultipart('alternative')
-    msg['Subject'] = "babybuilder notification" 
-    msg['From'] = me
-    
-
-    # Create the body of the message (a plain-text and an HTML version).
-    text = "alternative "
-    
-    # Record the MIME types of both parts - text/plain and text/html.
-    part1 = MIMEText(text, 'plain')
-    part2 = MIMEText(text, 'html')
-
-    # Attach parts into message container.
-    # According to RFC 2046, the last part of a multipart message, in this case
-    # the HTML message, is best and preferred.
-    msg.attach(part1)
-    msg.attach(part2)
-
-    # Send the message via local SMTP server.
-    #s = smtplib.SMTP('smtp.free.fr:587')
-
-    s = smtplib.SMTP('smtp2-g21.free.fr:587')
-
-
-    outlog ( "%s"%s.ehlo_msg ) 
-    s.ehlo()
-    s.lo
-    s.login(r"alfman",r"fghpgxns")
-
-
-    # sendmail function takes 3 arguments: sender's address, recipient's address
-    # and message to send - here it is sent as one string.
-    msg['To'] = you
-    s.sendmail(me, you, msg.as_string())
-
-    s.quit()
-    # display the link of the full log 
-    outlog ( "Build notification sent ." )
-
-
-    return 
-
-
+def step3(args=None):
+    outlog("step3")
+    return
 
 def step4(args=None):
     outlog("step4")
@@ -166,7 +99,7 @@ def BuildProject(step=None):
     #cmdbuff.append( "MapDescAutoGenerater.GenerateMapDesc" )
     cmdbuff.append([InitBuild])
     cmdbuff.append([BuildWebPlayer])
-    cmdbuff.append([notifybuild])
+    cmdbuff.append([step3])
     cmdbuff.append([step4])
 
 
@@ -288,7 +221,8 @@ if ( not os.path.exists(logpath) ):
     os.mkdir (logpath )
 outlog ("ENTRY POINT","FLOOD")
 localbuild = True
-notifybuild()
+runexternalcommand (sys.argv)
 
-#runexternalcommand (sys.argv)
+
+
 
