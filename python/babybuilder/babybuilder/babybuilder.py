@@ -113,7 +113,6 @@ def notifybuild (args=None):
 
     outlog ( "%s"%s.ehlo_msg ) 
     s.ehlo()
-    s.lo
     s.login(r"alfman",r"fghpgxns")
 
 
