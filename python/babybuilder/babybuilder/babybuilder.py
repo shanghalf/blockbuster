@@ -79,13 +79,16 @@ def notifybuild (args=None):
     lines = filehandle.readlines()
     filehandle.close()
 
+    messagetext  =""
+    for n in lines :
+        messagetext += n +'\n'
 
     # Create the body of the message (a plain-text and an HTML version).
     text = "buid notification"
     
     # Record the MIME types of both parts - text/plain and text/html.
-    part1 = MIMEText(lines, 'plain')
-    part2 = MIMEText(lines, 'html')
+    part1 = MIMEText(messagetext, 'plain')
+    part2 = MIMEText(messagetext, 'plain')
 
     # Attach parts into message container.
     # According to RFC 2046, the last part of a multipart message, in this case
@@ -108,7 +111,7 @@ def notifybuild (args=None):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
 
-    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",msg.as_string())
+    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",messagetext )
 
     s.quit()
     # display the link of the full log 
