@@ -82,7 +82,7 @@ def notifybuild (args=None):
     # me == my email address
     # you == recipient's email address
     me = "babybuildmaster@gmail.com"
-    you = "Alphio.Trabuio@2kchina.com"
+    you = "shanghalf1967@gmail.com"
     
     subscribers=[]
 
@@ -108,12 +108,13 @@ def notifybuild (args=None):
     # Send the message via local SMTP server.
     #s = smtplib.SMTP('smtp.free.fr:587')
 
-    s = smtplib.SMTP('smtp2-g21.free.fr:587')
-
+     
+    s = smtplib.SMTP_SSL("smtp.mail.yahoo.com",timeout=10)
+    
 
     outlog ( "%s"%s.ehlo_msg ) 
     s.ehlo()
-    s.login(r"alfman",r"fghpgxns")
+    s.login(r"babybuildmaster@yahoo.com",r"wadamadafaka")
 
 
     # sendmail function takes 3 arguments: sender's address, recipient's address
@@ -289,7 +290,7 @@ outlog ("ENTRY POINT","FLOOD")
 localbuild = True
 notifybuild()
 
-#runexternalcommand (sys.argv)
+runexternalcommand (sys.argv)
 
 
 
