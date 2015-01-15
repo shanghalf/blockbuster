@@ -699,3 +699,39 @@
 [BUILDINFO]--> USERPROFILE =  C:\Users\pc 
 [BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
 [BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer  
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[BUILDINFO]--> Build notification sent .
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[BUILDINFO]--> Build notification sent .
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
