@@ -93,7 +93,7 @@ def notifybuild (args=None):
     # sendmail function takes 3 arguments: sender's address, recipient's address
     # and message to send - here it is sent as one string.
 
-    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",buildresult )
+    s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",str (buildresult))
 
     s.quit()
     # display the link of the full log 
