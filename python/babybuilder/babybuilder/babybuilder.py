@@ -69,7 +69,7 @@ def notifybuild (args=None):
 
     global env
 
-    fn = "D:/BABYBUIDER/buildWebPlayer.txt"
+    fn = "D:/BABYBUILDER/buildWebPlayer.txt"
     filehandle= open(fn,"r")
     lines = filehandle.readlines()
     filehandle.close()
