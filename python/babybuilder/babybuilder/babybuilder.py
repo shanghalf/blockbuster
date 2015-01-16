@@ -16,6 +16,7 @@ import stat
 import binascii
 from xml.dom.minidom import Document
 import smtplib
+import ftplib
 
 
 env = os.environ.copy()
@@ -24,6 +25,22 @@ localbuild = True
 
 
 #def runcommandsync(cmd, loglevel = "BUILDINFO", shell = True, env = None):
+
+def upload(ftp, file):
+    ext = os.path.splitext(file)[1]
+    if ext in (".txt", ".htm", ".html"):
+        ftp.storlines("STOR %s"%os.path.basename(file), open(file))
+    else:
+        ftp.storbinary("STOR %s"%os.path.basename(file), open(file, "rb"), 1024)
+
+
+def deploy (args=None):
+    ftp = ftplib.FTP("ftpperso.free.fr")
+    ftp.login("alfman", "fghpgxns")
+    upload(ftp,os.path.normpath(u"D:/BABYBUIDER/BABYBUIDER.unity3d"))
+    upload(ftp, os.path.normpath(u"D:/BABYBUIDER/BABYBUIDER.html"))
+    upload(ftp, os.path.normpath(u"D:/BABYBUIDER/buildWebPlayer.txt"))
+
 
 
 
@@ -142,8 +159,9 @@ def BuildProject(step=None):
     #cmdbuff.append( "MapDescAutoGenerater.GenerateMapDesc" )
     cmdbuff.append([InitBuild])
     cmdbuff.append([BuildWebPlayer])
+    cmdbuff.append([deploy])
     cmdbuff.append([notifybuild])
-    cmdbuff.append([step4])
+
 
 
     outlog ("================================= buildsequence")
