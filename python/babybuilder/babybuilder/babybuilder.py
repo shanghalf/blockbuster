@@ -33,9 +33,9 @@ def upload(ftp, file):
 def deploy (args=None):
     ftp = ftplib.FTP("ftpperso.free.fr")
     ftp.login("alfman", "fghpgxns")
-    upload(ftp,os.path.normpath(u"D:/BABYBUIDER/BABYBUIDER.unity3d"))
-    upload(ftp, os.path.normpath(u"D:/BABYBUIDER/BABYBUIDER.html"))
-    upload(ftp, os.path.normpath(u"D:/BABYBUIDER/buildWebPlayer.txt"))
+    upload(ftp,os.path.normpath(u"D:/BABYBUILDER/BABYBUILDER.unity3d"))
+    upload(ftp, os.path.normpath(u"D:/BABYBUILDER/BABYBUILDER.html"))
+    upload(ftp, os.path.normpath(u"D:/BABYBUILDER/buildWebPlayer.txt"))
 
 
 
