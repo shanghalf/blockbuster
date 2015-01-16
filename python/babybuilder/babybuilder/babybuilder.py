@@ -22,10 +22,6 @@ import ftplib
 env = os.environ.copy()
 localbuild = True 
 
-
-
-#def runcommandsync(cmd, loglevel = "BUILDINFO", shell = True, env = None):
-
 def upload(ftp, file):
     ext = os.path.splitext(file)[1]
     if ext in (".txt", ".htm", ".html"):
@@ -43,9 +39,6 @@ def deploy (args=None):
 
 
 
-
-
-
 def BuildWebPlayer(args=None):
     
     global env 
@@ -53,18 +46,12 @@ def BuildWebPlayer(args=None):
     if ( not localbuild ):
         deployfolder = env['DEPLOYFOLDER'] 
     else :
-        deployfolder = "d:/BABYBUIDER"
+        deployfolder = "d:/BABYBUILDER"
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
-    
     outlog (os.getcwd()) 
-
     cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (deployfolder,deployfolder)
-
     outlog ("About to run command: " + str(cmd))
-    
-    
-    
     bs=subprocess.check_call( cmd  )# , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     
 
@@ -81,35 +68,24 @@ def InitBuild(args=None):
 def notifybuild (args=None):
 
     global env
-    
-    from email.mime.multipart import MIMEMultipart
-    from email.mime.text import MIMEText
 
     fn = "D:/BABYBUIDER/buildWebPlayer.txt"
     filehandle= open(fn,"r")
     lines = filehandle.readlines()
     filehandle.close()
-    t = r""
     buildsucess =  False 
     readcounter =0
     while readcounter  < len(lines) -1  :
         n = lines[readcounter]
         readcounter +=1
-        t+= n
         if ( n.find('Exiting batchmode successfully now!') > -1) :
             buildsucess =  True
             break
-
      
     s = smtplib.SMTP_SSL("smtp.mail.yahoo.com",timeout=100)
     hello = s.ehlo() 
     outlog  ( hello  ) 
-
     s.login(r"babybuildmaster@yahoo.com",r"wadamadafaka")
-
-
-    # sendmail function takes 3 arguments: sender's address, recipient's address
-    # and message to send - here it is sent as one string.
     if ( buildsucess):
         s.sendmail(r"babybuildmaster@yahoo.com", r"shanghalf1967@gmail.com",r"build %s SUCESS cl %s "% ( env['BUILD_NUMBER'] , env['GIT_COMMIT']  ))
     else :
@@ -127,6 +103,9 @@ def notifybuild (args=None):
 def step4(args=None):
     outlog("step4")
     return
+
+def failbuild( error ):
+    outlog ( error )
 
 
 
@@ -146,22 +125,11 @@ def BuildProject(step=None):
     print"                                        | |                          "
     print"                                        |_|                          "
 
-    '''
-     build sequence :
-     this sequence could be the entry point for a build sequencer 
-     aht would allow user to add custom build steps 
-     sequence array take both command line to delegate the build to the masternode ( original folder of the unity project )
-     functions could be local ( this file ) or executed in a subprocess or mix of both 
-     required API are p4 and jenkins <todo>
-    '''
     cmdbuff=[]
-    
-    #cmdbuff.append( "MapDescAutoGenerater.GenerateMapDesc" )
     cmdbuff.append([InitBuild])
     cmdbuff.append([BuildWebPlayer])
     cmdbuff.append([deploy])
     cmdbuff.append([notifybuild])
-
 
 
     outlog ("================================= buildsequence")
