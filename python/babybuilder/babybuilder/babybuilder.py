@@ -49,7 +49,7 @@ def BuildWebPlayer(args=None):
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
     outlog (os.getcwd()) 
-    cmd =  r"Unity.exe -quit -batchmode -nographics -projectPath %s -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (env[WORKSPACE],deployfolder,deployfolder)
+    cmd =  r"Unity.exe -quit -batchmode -nographics -projectPath %s -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (env['WORKSPACE'],deployfolder,deployfolder)
     outlog ("About to run command: " + str(cmd))
     bs=subprocess.check_call( cmd  )# , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     
