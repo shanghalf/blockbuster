@@ -1423,16 +1423,43 @@ void OnGUI ()
 		}
         if (GUILayout.Button("select same", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
         {
-            for (var c = 0; c < Selection.activeGameObject.transform.childCount - 1; c++)
-            {
-                GameObject tgo = Selection.activeGameObject.transform.GetChild(c).gameObject;
-                blocksetup tbs = (blocksetup)tgo.GetComponent(typeof(blocksetup));
-                tbs.paramblock.parentgui = null;
-                tbs.paramblock.grouped = false;
-            }
-            Selection.activeGameObject.transform.DetachChildren();
-        }
 
+            GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+
+             ArrayList  oblist= new ArrayList() ;
+            
+            // define basename selected 
+            int i;
+            var sname = Selection.activeGameObject.name ;
+            var tab1 = sname.Split('-');
+
+            
+
+            for (var c = 0; c < allObjects.Length -1; c++)
+            {
+
+                var itname = allObjects[c].name ;
+                var tab2 = itname.Split('-');
+
+                if (tab2[0] == tab1[0])
+
+                    oblist.Add(allObjects[c]);
+                    //Selection.objects.SetValue( allObjects[c]Selection.objects.GetLength(0));
+            }
+
+            GameObject[] s = new GameObject[oblist.Count];
+
+            //for (int c = 0; c < oblist.Count-1; c++)
+                oblist.CopyTo(s, 0);
+
+            Selection.objects = s;
+
+
+        }
+    
+         
+                
+        //Selection.objects. = oblist;
         GUI.EndGroup();
         break ;				
     }
