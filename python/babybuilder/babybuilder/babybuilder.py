@@ -9,7 +9,6 @@ import glob
 import subprocess
 import distutils
 import ctypes
-import Queue
 import shutil
 import zipfile
 import stat
