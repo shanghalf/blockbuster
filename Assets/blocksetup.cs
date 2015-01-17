@@ -349,7 +349,9 @@ public class blocksetup : MonoBehaviour {
 	    if ( paramblock.b_revert_rotation )
             paramblock.rotateindex = (paramblock.quater.GetLength(0) - paramblock.rotateindex) - 1; // should revert the sequence 
 
-        Vector3 v = paramblock.quater[paramblock.rotateindex];
+        Vector3 v = new Vector3(0,0,0);
+        if ( paramblock.quater.Length >  paramblock.rotateindex )
+         v = paramblock.quater[paramblock.rotateindex];
         //Vector3 v = Vector3.Cross(paramblock.quater[paramblock.rotateindex], axis);
 	    
         var direction =  v + transform.position ;

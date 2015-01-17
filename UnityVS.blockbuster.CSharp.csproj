@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\blocksetup.cs" />
+    <Compile Include="Assets\framerate.cs" />
     <Compile Include="Assets\splinecomponent.cs" />
     <Compile Include="Assets\triggerscript.cs" />
   </ItemGroup>
