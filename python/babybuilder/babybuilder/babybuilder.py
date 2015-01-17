@@ -198,7 +198,7 @@ def outlog(str="",thiseventlevel="BUILDINFO"):
     ts = datetime.fromtimestamp(time.time()).strftime('%H:%M:%S')
     logstring =  ("[%s]--> %s"%(thiseventlevel,str))
     # print out in console log 
-    print logstring
+    print (logstring)
     # push on global log anyway 
 
     if ( os.path.exists ( os.path.join(logpath,"full_log.txt") )):
