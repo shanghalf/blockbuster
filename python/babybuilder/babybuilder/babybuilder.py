@@ -29,6 +29,7 @@ def upload(ftp, file):
         ftp.storbinary("STOR %s"%os.path.basename(file), open(file, "rb"), 1024)
 
 
+
 def deploy (args=None):
     ftp = ftplib.FTP("ftpperso.free.fr")
     ftp.login("alfman", "fghpgxns")
