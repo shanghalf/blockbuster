@@ -1421,6 +1421,18 @@ void OnGUI ()
             }
             Selection.activeGameObject.transform.DetachChildren();	
 		}
+        if (GUILayout.Button("select same", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+        {
+            for (var c = 0; c < Selection.activeGameObject.transform.childCount - 1; c++)
+            {
+                GameObject tgo = Selection.activeGameObject.transform.GetChild(c).gameObject;
+                blocksetup tbs = (blocksetup)tgo.GetComponent(typeof(blocksetup));
+                tbs.paramblock.parentgui = null;
+                tbs.paramblock.grouped = false;
+            }
+            Selection.activeGameObject.transform.DetachChildren();
+        }
+
         GUI.EndGroup();
         break ;				
     }
