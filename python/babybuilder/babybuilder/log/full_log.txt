@@ -1,0 +1,1072 @@
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022241B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x02224170>]
+[BUILDINFO]--> [<function step3 at 0x022241F0>]
+[BUILDINFO]--> [<function step4 at 0x02224230>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022041F0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x022041B0>]
+[BUILDINFO]--> [<function step3 at 0x02204230>]
+[BUILDINFO]--> [<function step4 at 0x02204270>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> .
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022041F0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x022041B0>]
+[BUILDINFO]--> [<function step3 at 0x02204230>]
+[BUILDINFO]--> [<function step4 at 0x02204270>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> .
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022241F0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x022241B0>]
+[BUILDINFO]--> [<function step3 at 0x02224230>]
+[BUILDINFO]--> [<function step4 at 0x02224270>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> .
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022F41B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x022F4170>]
+[BUILDINFO]--> [<function step3 at 0x022F41F0>]
+[BUILDINFO]--> [<function step4 at 0x022F4230>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022E41B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x022E4170>]
+[BUILDINFO]--> [<function step3 at 0x022E41F0>]
+[BUILDINFO]--> [<function step4 at 0x022E4230>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/log.txt 
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022441B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x02244170>]
+[BUILDINFO]--> [<function step3 at 0x022441F0>]
+[BUILDINFO]--> [<function step4 at 0x02244230>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/log.txt 
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x022441B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x02244170>]
+[BUILDINFO]--> [<function step3 at 0x022441F0>]
+[BUILDINFO]--> [<function step4 at 0x02244230>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:\BABYBUIDER\output.htm -logFile d:\BABYBUIDER\output.htm/log.txt 
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x01FF5E30>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x01FF5DF0>]
+[BUILDINFO]--> [<function step3 at 0x01FF5E70>]
+[BUILDINFO]--> [<function step4 at 0x01FF5EB0>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin  
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> PROMPT =  $P$G 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> UNITY =  C:\Program Files (x86)\Unity\Editor\Unity.exe 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:\BABYBUIDER\output.htm -logFile d:\BABYBUIDER\output.htm/log.txt 
+[BUILDINFO]--> 
+[BUILDINFO]--> step3
+[BUILDINFO]--> step4
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x021FB130>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x021D29B0>]
+[BUILDINFO]--> [<function step3 at 0x021FB170>]
+[BUILDINFO]--> [<function step4 at 0x021FB1B0>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> FUGUEREPOSITORY =  C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 11.0\TEAM TOOLS\STATIC ANALYSIS TOOLS\FxCop\Repository 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROMPT =  $P$G 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer  
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x02200130>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x021E29B0>]
+[BUILDINFO]--> [<function step3 at 0x02200170>]
+[BUILDINFO]--> [<function step4 at 0x022001B0>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> FUGUEREPOSITORY =  C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 11.0\TEAM TOOLS\STATIC ANALYSIS TOOLS\FxCop\Repository 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROMPT =  $P$G 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer  
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[BUILDINFO]--> Build notification sent .
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[BUILDINFO]--> ehlo
+[BUILDINFO]--> Build notification sent .
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> end of the execution
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x0268F2B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x0268F270>]
+[BUILDINFO]--> [<function deploy at 0x0268F230>]
+[BUILDINFO]--> [<function notifybuild at 0x0268F2F0>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin ;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> UNITY =  C:\Program Files (x86)\Unity\Editor\Unity.exe 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/buildWebPlayer.txt 
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x027C32B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x027C3270>]
+[BUILDINFO]--> [<function deploy at 0x027C3230>]
+[BUILDINFO]--> [<function notifybuild at 0x027C32F0>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin ;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> UNITY =  C:\Program Files (x86)\Unity\Editor\Unity.exe 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/buildWebPlayer.txt 
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x0265E2B0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x0265E270>]
+[BUILDINFO]--> [<function deploy at 0x0265E230>]
+[BUILDINFO]--> [<function notifybuild at 0x0265E2F0>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin ;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> UNITY =  C:\Program Files (x86)\Unity\Editor\Unity.exe 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/buildWebPlayer.txt 
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x0260B2F0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x0260B2B0>]
+[BUILDINFO]--> [<function deploy at 0x0260B270>]
+[BUILDINFO]--> [<function notifybuild at 0x0260B330>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin ;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> UNITY =  C:\Program Files (x86)\Unity\Editor\Unity.exe 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/buildWebPlayer.txt 
+[BUILDINFO]--> (250, 'smtp.mail.yahoo.com\nPIPELINING\nSIZE 41697280\n8 BITMIME\nAUTH PLAIN LOGIN XOAUTH2 XYMCOOKIE')
+[FLOOD]--> ENTRY POINT
+[FLOOD]--> START BUILD .... OR NOT 
+[FLOOD]--> current folder : D:\blockbuster\python\babybuilder\babybuilder
+[FLOOD]--> runexternalcommand projectFolder = D:\blockbuster\python\babybuilder\babybuilder/
+[FLOOD]--> runexternalcommand logpath = D:\blockbuster\python\babybuilder\babybuilder/log/
+[FLOOD]--> ---- BUILD EXECUTED FROM JENKINS ----
+[BUILDINFO]--> arg nb 1 = buildproject
+[BUILDINFO]--> start build >>>>> 
+[BUILDINFO]--> BUILD PROJECT STEP STARTED
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> [<function InitBuild at 0x026FB2F0>]
+[BUILDINFO]--> [<function BuildWebPlayer at 0x026FB2B0>]
+[BUILDINFO]--> [<function deploy at 0x026FB270>]
+[BUILDINFO]--> [<function notifybuild at 0x026FB330>]
+[BUILDINFO]--> ================================= buildsequence
+[BUILDINFO]--> TMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMPUTERNAME =  PC-PC 
+[BUILDINFO]--> VS110COMNTOOLS =  C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\Tools\ 
+[BUILDINFO]--> USERDOMAIN =  pc-PC 
+[BUILDINFO]--> VISUALSTUDIODIR =  C:\Users\pc\Documents\Visual Studio 2012 
+[BUILDINFO]--> PSMODULEPATH =  C:\Windows\system32\WindowsPowerShell\v1.0\Modules\ 
+[BUILDINFO]--> COMMONPROGRAMFILES =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> PROCESSOR_IDENTIFIER =  Intel64 Family 6 Model 23 Stepping 6, GenuineIntel 
+[BUILDINFO]--> PROGRAMFILES =  C:\Program Files (x86) 
+[BUILDINFO]--> PROCESSOR_REVISION =  1706 
+[BUILDINFO]--> SYSTEMROOT =  C:\Windows 
+[BUILDINFO]--> HOME =  C:\Users\pc\.ssh 
+[BUILDINFO]--> VSLANG =  1033 
+[BUILDINFO]--> PROGRAMFILES(X86) =  C:\Program Files (x86) 
+[BUILDINFO]--> COMSPEC =  C:\Windows\system32\cmd.exe 
+[BUILDINFO]--> PKGDEFAPPLICATIONCONFIGFILE =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\devenv.exe.config 
+[BUILDINFO]--> TEMP =  C:\Users\pc\AppData\Local\Temp 
+[BUILDINFO]--> COMMONPROGRAMFILES(X86) =  C:\Program Files (x86)\Common Files 
+[BUILDINFO]--> MSBUILDLOADMICROSOFTTARGETSREADONLY =  true 
+[BUILDINFO]--> PROCESSOR_ARCHITECTURE =  x86 
+[BUILDINFO]--> ALLUSERSPROFILE =  C:\ProgramData 
+[BUILDINFO]--> LOCALAPPDATA =  C:\Users\pc\AppData\Local 
+[BUILDINFO]--> HOMEPATH =  \Users\pc 
+[BUILDINFO]--> VISUALSTUDIOVERSION =  11.0 
+[BUILDINFO]--> PROGRAMW6432 =  C:\Program Files 
+[BUILDINFO]--> USERNAME =  pc 
+[BUILDINFO]--> LOGONSERVER =  \\PC-PC 
+[BUILDINFO]--> WINDOWS_TRACING_FLAGS =  3 
+[BUILDINFO]--> PROGRAMDATA =  C:\ProgramData 
+[BUILDINFO]--> PATH =  C:\Users\pc\AppData\Local\Microsoft\VisualStudio\11.0\Extensions\btszu5us.ozm\NativeBinaries/x86;C:\Python27\;C:\Python27\Scripts;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Microsoft ASP.NET\ASP.NET Web Pages\v1.0\;C:\Program Files (x86)\Windows Kits\8.0\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft\Web Platform Installer\;C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin ;C:\Program Files (x86)\Microsoft Visual Studio 11.0\Common7\IDE\Extensions\Microsoft\VsGraphics 
+[BUILDINFO]--> UNITY =  C:\Program Files (x86)\Unity\Editor\Unity.exe 
+[BUILDINFO]--> VISUALSTUDIOEDITION =  Microsoft Visual Studio Premium 2012 
+[BUILDINFO]--> SESSIONNAME =  Console 
+[BUILDINFO]--> PATHEXT =  .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC 
+[BUILDINFO]--> GIT_HOME =  C:\Users\pc\AppData\Local\GitHub\PortableGit_c2ba306e536fdf878271f7fe636a147ff37326ad\bin 
+[BUILDINFO]--> FP_NO_HOST_CHECK =  NO 
+[BUILDINFO]--> WINDIR =  C:\Windows 
+[BUILDINFO]--> WINDOWS_TRACING_LOGFILE =  C:\BVTBin\Tests\installpackage\csilogfile.log 
+[BUILDINFO]--> HOMEDRIVE =  C: 
+[BUILDINFO]--> SYSTEMDRIVE =  C: 
+[BUILDINFO]--> NUMBER_OF_PROCESSORS =  2 
+[BUILDINFO]--> APPDATA =  C:\Users\pc\AppData\Roaming 
+[BUILDINFO]--> PROCESSOR_LEVEL =  6 
+[BUILDINFO]--> PROCESSOR_ARCHITEW6432 =  AMD64 
+[BUILDINFO]--> COMMONPROGRAMW6432 =  C:\Program Files\Common Files 
+[BUILDINFO]--> OS =  Windows_NT 
+[BUILDINFO]--> PUBLIC =  C:\Users\Public 
+[BUILDINFO]--> USERPROFILE =  C:\Users\pc 
+[BUILDINFO]--> C:\Program Files (x86)\Unity\Editor
+[BUILDINFO]--> About to run command: Unity.exe -quit -batchmode -nographics -buildWebPlayer d:/BABYBUIDER -logFile d:/BABYBUIDER/buildWebPlayer.txt 
+[BUILDINFO]--> (250, 'smtp.mail.yahoo.com\nPIPELINING\nSIZE 41697280\n8 BITMIME\nAUTH PLAIN LOGIN XOAUTH2 XYMCOOKIE')

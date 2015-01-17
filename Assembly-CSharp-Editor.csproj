@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{270A7151-6D39-15CC-0787-232569530C00}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-CSharp-Editor</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_4;UNITY_4_5;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;UNITY_PRO_LICENSE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Editor\blockbuster.cs" />
+     <None Include="Assets\PLATFORM\TEMPLE\assettransfert.xml" />
+     <None Include="Assets\PLATFORM\TEMPLE\AssetList.xml" />
+     <None Include="Assets\PLATFORM\SANDBOX\AssetList.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_03_A(Clone).xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_02_F-35822.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_03_A(Clone)-749308.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_3_2_2_01_B-134378.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_02_J-272006.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_0_0_0_01_A-362950.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_02_A-34482.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_02_G-27384.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone)-822856.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\JUNGLE_BUILD_8_8_2_01_A-138580.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_01_E-53758.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_2_2_1_01_A-352332.xml" />
+     <None Include="Assets\PLATFORM\HIGHTECH\AssetList.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_6_6_2_01_D-331872.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\JUNGLE_BUILD_8_8_1_04_G-138592.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_8_8_2_01_A-364762.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone).xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_01_C-1275682.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_02_A-15064.xml" />
+     <None Include="Assets\PLATFORM\JUNGLE\assettransfert.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_1_1_1_03_A-1520632.xml" />
+     <None Include="Assets\PLATFORM\Editor\Paramblock.xml" />
+     <None Include="Assets\PLATFORM\SANDBOX\assettransfert.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_2_2_1_01_A-526124.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_01_E-332676.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_03_A(Clone)-749460.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_01_E-802244.xml" />
+     <None Include="Assets\PLATFORM\JUNGLE\root.txt" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_01_I-1303054.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_03_I-399288.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone)-823204.xml" />
+     <None Include="Assets\PLATFORM\SANDBOX\root.txt" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone)-823408.xml" />
+     <None Include="Assets\PLATFORM\TEMPLE\root.txt" />
+     <None Include="Assets\PLATFORM\XML\paramblock\JUNGLE_BUILD_2_2_2_02_G-435658.xml" />
+     <None Include="Assets\PLATFORM\HIGHTECH\assettransfert.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone)-823064.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_0_0_0_01_A-278454.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\SANDBOX_BUILD_8_8_1_04_G-293094.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_6_6_2_01_D-728284.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_03_I-658316.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone)-823268.xml" />
+     <None Include="Assets\PLATFORM\JUNGLE\AssetList.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\TEMPLE_BUILD_4_4_4_04_A(Clone)-823548.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_2_2_2_01_E-323530.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_0_0_0_01_A-363378.xml" />
+     <None Include="Assets\PLATFORM\XML\paramblock\HIGHTECH_BUILD_6_6_2_01_D-456554.xml" />
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+ <HintPath>D:/Blockbuster_c/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+ </Reference>
+ <Reference Include="SyntaxTree.VisualStudio.Unity.Messaging">
+ <HintPath>D:/Blockbuster_c/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityVS.VersionSpecific">
+ <HintPath>D:/Blockbuster_c/Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{D7CF0BF2-12EE-5055-D5C5-B4DA7AD39BD8}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-UnityScript.unityproj">
+      <Project>{AEBE7265-7D6D-3FE1-3C5F-8476CC5DD4E7}</Project>      <Name>Assembly-UnityScript</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
