@@ -50,7 +50,7 @@ def BuildWebPlayer(args=None):
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
     outlog (os.getcwd()) 
-    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (deployfolder,deployfolder)
+    cmd =  r"Unity.exe -quit -batchmode -nographics -projectPath E:/jenkins/jobs/test/workspace -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (deployfolder,deployfolder)
     outlog ("About to run command: " + str(cmd))
     bs=subprocess.check_call( cmd  )# , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     
@@ -116,14 +116,13 @@ def BuildProject(step=None):
     global projectFolder
     global logpath
     
-    print"      _           _ _     _                                          "
-    print"     | |         (_) |   | |                                         "
-    print"     | |__  _   _ _| | __| |___  ___  __ _ _   _  ___ _ __   ___ ___ "
-    print"     | '_ \| | | | | |/ _` / __|/ _ \/ _` | | | |/ _ \ '_ \ / __/ _ \\"
-    print"     | |_) | |_| | | | (_| \__ \  __/ (_| | |_| |  __/ | | | (_|  __/"
-    print"     |_.__/ \__,_|_|_|\__,_|___/\___|\__, |\__,_|\___|_| |_|\___\___|"
-    print"                                        | |                          "
-    print"                                        |_|                          "
+    print("      _           _ _     _                                          ")
+    print("     | |         (_) |   | |                                         ")
+    print("     | |__  _   _ _| | __| |___  ___  __ _ _   _  ___ _ __   ___ ___ ")
+    print("     | '_ \| | | | | |/ _` / __|/ _ \/ _` | | | |/ _ \ '_ \ / __/ _ \\")
+    print("     | |_) | |_| | | | (_| \__ \  __/ (_| | |_| |  __/ | | | (_|  __/")
+    print("     |_.__/ \__,_|_|_|\__,_|___/\___|\__, |\__,_|\___|_| |_|\___\___|")
+    print("                                        |_|                          ")
 
     cmdbuff=[]
     cmdbuff.append([InitBuild])

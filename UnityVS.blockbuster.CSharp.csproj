@@ -78,7 +78,11 @@
     <None Include="Assets\PLATFORM\TEMPLE\assettransfert.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\root.txt" />
     <None Include="Assets\PLATFORM\XML\paramblock\a5d5e0c1-4eab-4eb1-aace-44fe077d4f0b.xml" />
+<<<<<<< HEAD
     <None Include="Assets\PLATFORM\XML\paramblock\bcc11ce2-a64b-4462-8a7b-90df332a977f.xml" />
+=======
+    <None Include="Assets\PLATFORM\XML\paramblock\cc335a32-b131-4ce5-a46f-f5a90205e58b.xml" />
+>>>>>>> 7c7e4cbdd128e1db95b9fac5ef36d8c147b673ef
     <None Include="Assets\PLATFORM\XML\preset\preset1.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset2.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset3.xml" />
