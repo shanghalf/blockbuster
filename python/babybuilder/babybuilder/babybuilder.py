@@ -50,7 +50,7 @@ def BuildWebPlayer(args=None):
 
     os.chdir("C:/Program Files (x86)/Unity/Editor") 
     outlog (os.getcwd()) 
-    cmd =  "Unity.exe -quit -batchmode -nographics -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (deployfolder,deployfolder)
+    cmd =  r"Unity.exe -quit -batchmode -nographics -projectPath E:\jenkins\jobs\test\workspace -buildWebPlayer %s -logFile %s/buildWebPlayer.txt "% (deployfolder,deployfolder)
     outlog ("About to run command: " + str(cmd))
     bs=subprocess.check_call( cmd  )# , env = env, shell = shell, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     
