@@ -14,3 +14,5 @@ D:\blockbuster\obj\Debug\UnityVS.blockbuster.CSharp.Editor.csprojResolveAssembly
 D:\blockbuster\obj\Debug\Assembly-CSharp-Editor.dll
 D:\blockbuster\obj\Debug\Assembly-CSharp-Editor.pdb
 D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-UnityScript-firstpass.dll
+D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
