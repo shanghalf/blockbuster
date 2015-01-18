@@ -117,7 +117,7 @@ def BuildProject(step=None):
     global logpath
     global env 
 
-    if ( env['GIT_COMMIT'] == env['GIT_PREVIOUS_COMMIT ']  ) :
+    if ( env['GIT_COMMIT'] == env['GIT_PREVIOUS_COMMIT']  ) :
         outlog ( "no changes detected, bypass build " ) 
         return 
     else :
