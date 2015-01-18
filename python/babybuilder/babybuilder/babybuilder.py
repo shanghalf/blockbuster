@@ -115,7 +115,14 @@ def BuildProject(step=None):
 
     global projectFolder
     global logpath
-    
+    global env 
+
+    if ( env['GIT_COMMIT'] == env['GIT_PREVIOUS_COMMIT ']  ) :
+        outlog ( "no changes detected, bypass build " ) 
+        return 
+    else :
+        outlog ("changes detected : perform build " )
+
     print("      _           _ _     _                                          ")
     print("     | |         (_) |   | |                                         ")
     print("     | |__  _   _ _| | __| |___  ___  __ _ _   _  ___ _ __   ___ ___ ")

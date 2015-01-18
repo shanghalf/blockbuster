@@ -1295,6 +1295,9 @@ void OnGUI ()
                                     if (bs != null)
                                         bs.paramblock.pltf_sate = PLTF_TYPE.ROTATING; // same enum fix as mentioned before  
 								}
+
+                                UIPB.rotationstepnumber = (int)EditorGUILayout.Slider("step", UIPB.rotationstepnumber, 2, 8, GUILayout.MaxWidth(280));
+
                                 UIPB.rotationspeed = EditorGUILayout.Slider("speed", UIPB.rotationspeed, 0.0f, 5.0f, GUILayout.MaxWidth(280));
                                 UIPB.rotationtempo = EditorGUILayout.Slider("temporisation", UIPB.rotationtempo, 0.0f, 2.0f, GUILayout.MaxWidth(280));
 								// editsub button shared over panels 

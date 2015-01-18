@@ -110,16 +110,20 @@ public class Pathnode
     {
     }
 
-    public  Vector3 Getlookatpoint(int lookatindex , float radius )
+    public  Vector3 Getlookatpoint(int lookatindex , float radius ,int step =8)
 
     {
-        float a = ((360 / 8) * Mathf.Deg2Rad) * lookatindex;
+        float a = ((360.0f / step) * Mathf.Deg2Rad) * lookatindex + ( Mathf.Deg2Rad * 45.0f );
         float ca = Mathf.Cos(a);
         float sa = Mathf.Sin(a);
-        Vector3 RV = new Vector3(radius * ca - radius * sa, 0.1f, radius * sa + radius * ca);
+        Vector3 RV = new Vector3(radius * ca - radius * sa, 0.0f, radius * sa + radius * ca);
         return ( RV );//+ pos) ;
     }
 }
+
+
+
+
 
 
 
@@ -149,13 +153,15 @@ public class ParameterBlock
     public bool b_revert_rotation;
     public bool b_triggeronce;
     public float rotationspeed;
+    public int rotationstepnumber;
     public float rotationtempo;
     public bool b_triggered;
     public int rotateindex;
     public int targetindex = 0;
     public int movedir = 1;
     public int maxhandle;
-    public Vector3[] quater = new Vector3[]{Vector3.forward,Vector3.left,Vector3.back, Vector3.right};
+    public Pathnode rotatelookpoint = new Pathnode(); 
+    //public Vector3[] quater = new Vector3[]{Vector3.forward,Vector3.left,Vector3.back, Vector3.right};
     public bool b_pathloop;
     public bool grouped;
     public COLIDER_TYPE colider_type ;
@@ -205,18 +211,16 @@ public class blocksetup : MonoBehaviour {
                 }
                 break;
             case PLTF_TYPE.ROTATING:
-                for (int c = 0; c <= paramblock.quater.GetLength(0) - 1; c++)
+                for (int c = 0; c <= paramblock.rotationstepnumber; c++)
                 {
                     Gizmos.color = Color.yellow;
-                    Gizmos.DrawSphere(paramblock.quater[paramblock.rotateindex] + paramblock.last_pos, 0.2f);
+                    Gizmos.DrawSphere(paramblock.rotatelookpoint.Getlookatpoint(paramblock.rotateindex,1.0f , paramblock.rotationstepnumber ) + paramblock.last_pos, 0.2f);
+                                        
                     Gizmos.color = Color.blue;
-                    Gizmos.DrawSphere(paramblock.quater[c] + paramblock.last_pos, 0.1f);
-
-                    if (c>0)
-                        Gizmos.DrawLine(paramblock.quater[c-1]+paramblock.last_pos, paramblock.quater[c]+paramblock.last_pos);
-                    else
-                        Gizmos.DrawLine(paramblock.quater[paramblock.quater.GetLength(0) - 1] + paramblock.last_pos, paramblock.quater[c] + paramblock.last_pos);
-
+                    Gizmos.DrawSphere(paramblock.rotatelookpoint.Getlookatpoint(c, 1.0f, paramblock.rotationstepnumber) + paramblock.last_pos, 0.1f);
+                    
+                    
+                    
                 }
                 break;
         }
@@ -343,17 +347,16 @@ public class blocksetup : MonoBehaviour {
     public void RotatePlatform (  ) 
 
     {   
+        if ( paramblock.rotationstepnumber == 0 ) 
+            return;
 	    int i   = (int)  Mathf.Abs( Time.realtimeSinceStartup * paramblock.rotationtempo) ;
-        paramblock.rotateindex = i % 4;
+        paramblock.rotateindex = i % paramblock.rotationstepnumber;
 
 	    if ( paramblock.b_revert_rotation )
-            paramblock.rotateindex = (paramblock.quater.GetLength(0) - paramblock.rotateindex) - 1; // should revert the sequence 
+            paramblock.rotateindex = (paramblock.rotationstepnumber - paramblock.rotateindex) - 1; // should revert the sequence 
 
         Vector3 v = new Vector3(0,0,0);
-        if ( paramblock.quater.Length >  paramblock.rotateindex )
-         v = paramblock.quater[paramblock.rotateindex];
-        //Vector3 v = Vector3.Cross(paramblock.quater[paramblock.rotateindex], axis);
-	    
+        v = paramblock.rotatelookpoint.Getlookatpoint(paramblock.rotateindex, 1.0f , paramblock.rotationstepnumber);
         var direction =  v + transform.position ;
         var rr = Quaternion.LookRotation(Vector3.up, v);
         rr *= Quaternion.Euler(Vector3.forward);
