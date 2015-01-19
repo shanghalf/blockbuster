@@ -10,6 +10,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
 
+using UnityEditor;
+
 [System.Serializable]
 public class scenecluster
 {
@@ -172,13 +174,15 @@ public class ParameterBlock
         
     }
 
+
+
 }
 
 
 
 
-
-public class blocksetup : MonoBehaviour {
+public class blocksetup : MonoBehaviour
+{
 
     public Transform block_transform ;
     public GameObject triggerobject;
@@ -186,6 +190,19 @@ public class blocksetup : MonoBehaviour {
     public GameObject scenerefobj;
     public GameObject parent;
     public ParameterBlock paramblock = new ParameterBlock();
+
+    public  blocksetup()
+    {
+
+        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
+    }
+
+    ~blocksetup()
+    {
+
+        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
+    }
+
 
     public void OnDrawGizmosSelected()
     {
@@ -266,6 +283,59 @@ public class blocksetup : MonoBehaviour {
 		paramblock.orig_transform =  block_transform.rotation ;
         paramblock.orig_pos = block_transform.position;
 	}
+
+
+
+    void OnCustomSceneGUI(SceneView sceneview)
+    {
+
+
+        float angle = -360f / (5);
+        for (int i = 0; i < paramblock.pathnodes.Count; i++)
+        {
+            Quaternion rotation = Quaternion.Euler(0f, 0f, angle * i);
+            Vector3 oldPoint = paramblock.pathnodes[i].pos;
+            //Handles.FreeMoveHandle(oldPoint, Quaternion.identity, 0.2f, paramblock.pathnodes[i].pos, Handles.DotCap);
+
+
+            Handles.color = Color.blue;
+            Handles.Label( transform.position + Vector3.up * 2,
+                    transform.transform.position.ToString() + "\nShieldArea: " +
+                    paramblock.assetname);
+
+            float width = (float)HandleUtility.GetHandleSize(oldPoint) * 0.5f;
+            Handles.DrawBezier(transform.transform.position,
+                        oldPoint,
+                        oldPoint,
+                        -oldPoint,
+    					Color.red, 
+    					null,
+    					width);
+
+
+            Handles.FreeRotateHandle(Quaternion.identity, paramblock.pathnodes[i].pos, 0.2f);
+        }
+    }
+
+
+    void OnDestroy()
+    {
+        Debug.Log("Script was destroyed");
+    }
+
+    public void OnEnable()
+    {
+
+        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
+    }
+
+    public void OnDisable()
+    {
+
+        SceneView.onSceneGUIDelegate -= OnCustomSceneGUI;
+    }
+
+
 
 
 
