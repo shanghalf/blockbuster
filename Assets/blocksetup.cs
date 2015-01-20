@@ -193,17 +193,14 @@ public class blocksetup : MonoBehaviour
     public GameObject parent;
     public ParameterBlock paramblock = new ParameterBlock();
 
+    #if UNITY_EDITOR
     public  blocksetup()
     {
 
         SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
     }
+    #endif
 
-    ~blocksetup()
-    {
-
-        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
-    }
 
 
     public void OnDrawGizmosSelected()
@@ -323,18 +320,6 @@ public class blocksetup : MonoBehaviour
     void OnDestroy()
     {
         Debug.Log("Script was destroyed");
-    }
-
-    public void OnEnable()
-    {
-
-        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
-    }
-
-    public void OnDisable()
-    {
-
-        SceneView.onSceneGUIDelegate -= OnCustomSceneGUI;
     }
 
 
