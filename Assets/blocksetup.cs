@@ -197,6 +197,7 @@ public class blocksetup : MonoBehaviour
     public  blocksetup()
     {
 
+
         SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
     }
     #endif
