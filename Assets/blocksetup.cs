@@ -10,7 +10,9 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
 
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 [System.Serializable]
 public class scenecluster
@@ -285,7 +287,7 @@ public class blocksetup : MonoBehaviour
 	}
 
 
-
+    #if UNITY_EDITOR
     void OnCustomSceneGUI(SceneView sceneview)
     {
 
@@ -316,7 +318,7 @@ public class blocksetup : MonoBehaviour
             Handles.FreeRotateHandle(Quaternion.identity, paramblock.pathnodes[i].pos, 0.2f);
         }
     }
-
+#endif
 
     void OnDestroy()
     {

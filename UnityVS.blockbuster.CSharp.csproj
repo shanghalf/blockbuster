@@ -78,9 +78,12 @@
     <None Include="Assets\PLATFORM\TEMPLE\AssetList.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\assettransfert.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\root.txt" />
-    <None Include="Assets\PLATFORM\XML\paramblock\58eddcaa-9f01-4584-bf0c-2ab534371037.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\8f48e900-ac8c-4b44-9886-33e8a4a907ac.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\a5d5e0c1-4eab-4eb1-aace-44fe077d4f0b.xml" />
-    <None Include="Assets\PLATFORM\XML\paramblock\cc335a32-b131-4ce5-a46f-f5a90205e58b.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\b936730e-004b-4e46-bcbb-d52e39e11bc6.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\bcc11ce2-a64b-4462-8a7b-90df332a977f.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\d7ee33dd-c796-45fe-9af9-cff3529cd75f.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\e8468ad1-4d51-44cf-ac66-ee0e0a9f140f.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset1.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset2.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset3.xml" />
