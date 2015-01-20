@@ -119,7 +119,7 @@ def BuildProject(step=None):
 
     if ( env['GIT_COMMIT'] == env['GIT_PREVIOUS_COMMIT']  ) :
         outlog ( "no changes detected, bypass build " ) 
-        return 
+        #return 
     else :
         outlog ("changes detected : perform build " )
 
