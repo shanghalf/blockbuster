@@ -26,7 +26,7 @@ def upload(ftp, file):
     if ext in (".txt", ".htm", ".html"):
         ftp.storlines("STOR %s"%os.path.basename(file), open(file))
     else:
-        ftp.storbinary("STOR %s"%os.path.basename(file), open(file, "rb"), 1024)
+        ftp.storbinary("STOR %s"%os.path.basename(file), open(file, "rb"), 512)
 
 
 
