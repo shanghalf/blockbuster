@@ -1118,8 +1118,6 @@ void OnGUI ()
                                                 bs.paramblock.pathnodes.Remove(bs.paramblock.pathnodes[c-1]);
                                         for (int c = bs.paramblock.pathnodes.Count; c < bs.paramblock.maxhandle; c++)
                                         {
-                                            
-
                                             Pathnode pn = new Pathnode();
                                             pn.ilookatpoint = 1;
                                             pn.pos = go.transform.position;
@@ -1426,39 +1424,26 @@ void OnGUI ()
 		}
         if (GUILayout.Button("select same", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
         {
-
             GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-
              ArrayList  oblist= new ArrayList() ;
-            
             // define basename selected 
             int i;
             var sname = Selection.activeGameObject.name ;
             var tab1 = sname.Split('-');
-
-            
-
             for (var c = 0; c < allObjects.Length -1; c++)
             {
-
                 var itname = allObjects[c].name ;
                 var tab2 = itname.Split('-');
-
                 if (tab2[0] == tab1[0])
-
                     oblist.Add(allObjects[c]);
-                    //Selection.objects.SetValue( allObjects[c]Selection.objects.GetLength(0));
             }
-
             GameObject[] s = new GameObject[oblist.Count];
-
-            //for (int c = 0; c < oblist.Count-1; c++)
-                oblist.CopyTo(s, 0);
-
+            oblist.CopyTo(s, 0);
             Selection.objects = s;
-
-
         }
+        if (GUILayout.Button("remove col", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+            for (var c = 0; c < Selection.gameObjects.Length - 1; c++)
+                DestroyImmediate(Selection.gameObjects[c].collider);
     
          
                 

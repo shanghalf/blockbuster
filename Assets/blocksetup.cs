@@ -346,6 +346,7 @@ public class blocksetup : MonoBehaviour
 		switch (paramblock.pltf_sate) 
 	    {
 		    case PLTF_TYPE.STATIC:
+                DestroyImmediate(this);
 			break;
 		    case PLTF_TYPE.ROTATING:
                 RotatePlatform(  ) ; 
