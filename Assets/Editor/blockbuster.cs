@@ -1119,7 +1119,7 @@ void OnGUI ()
                                         for (int c = bs.paramblock.pathnodes.Count; c < bs.paramblock.maxhandle; c++)
                                         {
                                             Pathnode pn = new Pathnode();
-                                            pn.ilookatpoint = 1;
+                                            pn.ilookatpoint = 0;
                                             pn.pos = go.transform.position;
                                             bs.paramblock.pathnodes.Add(pn);
                                         }

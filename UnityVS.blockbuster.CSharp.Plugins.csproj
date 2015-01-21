@@ -80,6 +80,7 @@
     <None Include="Assets\PLATFORM\XML\scene.xml" />
     <None Include="Assets\PLATFORM\XML\scenes\scene.xml" />
     <None Include="Assets\PLATFORM\XML\scenes\test.xml" />
+    <None Include="Assets\PLATFORM\XML\scenes\test5.xml" />
     <None Include="Assets\PLATFORM\XML\test.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />

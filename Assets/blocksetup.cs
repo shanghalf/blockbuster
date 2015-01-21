@@ -19,15 +19,65 @@ public class scenecluster
 {
     public string name;
     public Vector3 rootnodepos;
-
     public List<ParameterBlock> pblist = new List<ParameterBlock>();
-
- 
-
-
-
 }
 
+public class GUIDraggableObject
+{
+    protected Vector2 m_Position;
+    private Vector2 m_DragStart;
+    private bool m_Dragging;
+
+    public GUIDraggableObject(Vector2 position)
+    {
+        m_Position = position;
+    }
+
+    public bool Dragging
+    {
+        get
+        {
+            return m_Dragging;
+        }
+    }
+
+    public Vector2 Position
+    {
+        get
+        {
+            return m_Position;
+        }
+
+        set
+        {
+            m_Position = value;
+        }
+    }
+
+    public void Drag(Rect draggingRect)
+    {
+        if (Event.current.type == EventType.MouseUp)
+        {
+            if (m_Dragging)
+            {
+                m_Position = Event.current.mousePosition - m_DragStart;
+                m_Dragging = false;
+            }
+
+        }
+        else if (Event.current.type == EventType.MouseDown && draggingRect.Contains(Event.current.mousePosition))
+        {
+            m_Dragging = true;
+            m_DragStart = Event.current.mousePosition - m_Position;
+            Event.current.Use();
+        }
+
+        if (m_Dragging)
+        {
+            m_Position = Event.current.mousePosition - m_DragStart;
+        }
+    }
+}
 
 
 
@@ -182,7 +232,7 @@ public class ParameterBlock
 
 
 
-
+[ExecuteInEditMode()]
 public class blocksetup : MonoBehaviour
 {
 
@@ -194,13 +244,19 @@ public class blocksetup : MonoBehaviour
     public ParameterBlock paramblock = new ParameterBlock();
 
     #if UNITY_EDITOR
-    public  blocksetup()
+    void  OnEnable()
     {
-
-
         SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
     }
+
+    void OnDisable()
+    {
+        SceneView.onSceneGUIDelegate -= OnCustomSceneGUI;
+        Debug.Log("I was called.");
+    }
+
     #endif
+
 
 
 
@@ -284,6 +340,7 @@ public class blocksetup : MonoBehaviour
         paramblock.orig_pos = block_transform.position;
 	}
 
+    private static Vector3 pointSnap = Vector3.one * 0.001f;
 
     #if UNITY_EDITOR
     void OnCustomSceneGUI(SceneView sceneview)
@@ -297,20 +354,19 @@ public class blocksetup : MonoBehaviour
             Vector3 oldPoint = paramblock.pathnodes[i].pos;
             //Handles.FreeMoveHandle(oldPoint, Quaternion.identity, 0.2f, paramblock.pathnodes[i].pos, Handles.DotCap);
 
-
+            Vector3 newPoint = Handles.FreeMoveHandle( oldPoint, Quaternion.identity, 0.02f, pointSnap, Handles.DotCap);
+            if (oldPoint != newPoint)
+                paramblock.pathnodes[i].pos = newPoint;
             Handles.color = Color.blue;
-            Handles.Label( transform.position + Vector3.up * 2,
-                    transform.transform.position.ToString() + "\nShieldArea: " +
+            Handles.Label( transform.position + Vector3.up ,
+                    transform.transform.position.ToString() + "\nName: " +
                     paramblock.assetname);
 
-            float width = (float)HandleUtility.GetHandleSize(oldPoint) * 0.5f;
-            Handles.DrawBezier(transform.transform.position,
-                        oldPoint,
-                        oldPoint,
-                        -oldPoint,
-    					Color.red, 
-    					null,
-    					width);
+            //float width = (float)HandleUtility.GetHandleSize(oldPoint) * 0.5f;
+            if (i > 0)
+                Handles.DrawLine(paramblock.pathnodes[i].pos, paramblock.pathnodes[i - 1].pos);
+            
+            //Handles.DrawBezier(transform.transform.position, oldPoint, oldPoint,-oldPoint,Color.red,null,width);
 
 
             Handles.FreeRotateHandle(Quaternion.identity, paramblock.pathnodes[i].pos, 0.2f);
@@ -318,11 +374,7 @@ public class blocksetup : MonoBehaviour
     }
 #endif
 
-    void OnDestroy()
-    {
-        Debug.Log("Script was destroyed");
-    }
-
+ 
 
 
 
@@ -334,7 +386,7 @@ public class blocksetup : MonoBehaviour
 		switch (paramblock.pltf_sate) 
 	    {
 		    case PLTF_TYPE.STATIC:
-                DestroyImmediate(this);
+                //DestroyImmediate(this);
 			break;
 		    case PLTF_TYPE.ROTATING:
                 RotatePlatform(  ) ; 
