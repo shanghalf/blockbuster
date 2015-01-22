@@ -350,11 +350,11 @@ public class blocksetup : MonoBehaviour
         float angle = -360f / (5);
         for (int i = 0; i < paramblock.pathnodes.Count; i++)
         {
-            Quaternion rotation = Quaternion.Euler(0f, 0f, angle * i);
+            //Quaternion rotation = Quaternion.Euler(0f, 0f, angle * i);
             Vector3 oldPoint = paramblock.pathnodes[i].pos;
             //Handles.FreeMoveHandle(oldPoint, Quaternion.identity, 0.2f, paramblock.pathnodes[i].pos, Handles.DotCap);
 
-            Vector3 newPoint = Handles.FreeMoveHandle( oldPoint, Quaternion.identity, 0.02f, pointSnap, Handles.DotCap);
+            Vector3 newPoint = Handles.FreeMoveHandle( oldPoint, Quaternion.identity, 0.1f, pointSnap, Handles.DotCap);
             if (oldPoint != newPoint)
                 paramblock.pathnodes[i].pos = newPoint;
             Handles.color = Color.blue;
@@ -442,8 +442,17 @@ public class blocksetup : MonoBehaviour
 
                     var Qr = Quaternion.LookRotation(Vector3.up, targetpos);
                     //Qr *= Quaternion.Euler(Vector3.forward);
+#if UNITY_EDITOR
+
+                    transform.position = Vector3.MoveTowards(transform.position, target, tspeed * 0.02f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * 0.02f));
+#endif
+#if !UNITY_EDITOR
+
                     transform.position = Vector3.MoveTowards(transform.position, target, tspeed * Time.deltaTime);
                     transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * Time.deltaTime));
+#endif
+
 
                 }
 
@@ -473,7 +482,13 @@ public class blocksetup : MonoBehaviour
         rr *= Quaternion.Euler(Vector3.forward);
 	    if (v.magnitude < 0.1)
 		    return;
+# if ! UNITY_EDITOR
         transform.rotation = Quaternion.Lerp(transform.rotation, rr, (paramblock.rotationspeed * Time.deltaTime));
+# endif 
+# if  UNITY_EDITOR
+        transform.rotation = Quaternion.Lerp(transform.rotation, rr, (paramblock.rotationspeed * 0.02f));
+#endif
+
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), (paramblock.rotationspeed * Time.deltaTime));
     }
 
