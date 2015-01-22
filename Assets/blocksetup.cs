@@ -342,7 +342,7 @@ public class blocksetup : MonoBehaviour
 
     private static Vector3 pointSnap = Vector3.one * 0.001f;
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     void OnCustomSceneGUI(SceneView sceneview)
     {
 
