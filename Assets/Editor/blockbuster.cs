@@ -42,8 +42,7 @@ public class blockbuster : EditorWindow
         ;
 
     public int toolbarInt ;
-
-
+    private int currentpreset;
     ParameterBlock UIPB = new ParameterBlock();
 
 
@@ -160,12 +159,27 @@ public class blockbuster : EditorWindow
 
 
 
-
-
-
-
-    public bool loadscene(bool preset = false,string scenename =null)
+    public GameObject GroupSelection(GameObject go)
     {
+        for (var c = 0; c < Selection.gameObjects.GetLength(0); c++)
+        {
+            if (go != Selection.gameObjects[c])
+            {
+                Selection.gameObjects[c].transform.parent = go.transform;
+                blocksetup tbs = (blocksetup)Selection.gameObjects[c].GetComponent(typeof(blocksetup));
+                tbs.paramblock.parentgui = bs.paramblock.guid.ToString();
+                tbs.paramblock.grouped = true;
+                //DestroyImmediate( Selection.gameObjects[c].GetComponent("blocksetup"));
+            }
+        }
+        return go;
+    }
+
+
+    public List<GameObject>  loadscene(bool preset = false, string scenename = null)
+    {
+        List<GameObject> merged = new List<GameObject>();
+
         string repo = "";
         if (!preset)
             repo = "scenes";
@@ -177,20 +191,21 @@ public class blockbuster : EditorWindow
         if ( scenename == null) 
             path = EditorUtility.OpenFilePanel("load scene", sfolder, "xml");
         else
-            path = sfolder + scenename;
+            path = sfolder + "/"+scenename;
         S = Scene.Load(path);
         foreach (ParameterBlock blk in S.pblist )
         {
             GameObject tgo = (GameObject)Resources.LoadAssetAtPath(("Assets" + selectedbasename + blk.assetname + ".fbx"), typeof(GameObject));
-            blocksetup tbs = new blocksetup();
+            blocksetup tbs ;
             tbs = (blocksetup)tgo.GetComponent(typeof(blocksetup));
             GameObject instance = (GameObject)Instantiate(tgo, blk.last_pos, blk.orig_transform);
             instance.name = blk.assetname + instance.GetInstanceID();
             instance.AddComponent(typeof(blocksetup));
             tbs = (blocksetup)instance.GetComponent(typeof(blocksetup));
             tbs.paramblock = blk;
+            merged.Add(instance);
         }
-        return true;
+        return merged;
     }
 
     void AddBlockSetupComponent(GameObject obj, blocksetup tgs)
@@ -456,8 +471,8 @@ public class blockbuster : EditorWindow
 		////debug.Log( data.length.ToString()  + " nb of elements " ) ;
         return true;
 	}
-	else 
-		//debug.Log( data.Count.ToString()  + " no file " ) ;
+	else
+        Debug.Log(data.Count.ToString() + " no XML database");
 
     return false;
     }
@@ -819,12 +834,38 @@ void OnGUI ()
                 BrowseAsset(-1, "PREV ASSET BUTTON");
             slideindex = (int)EditorGUILayout.Slider("quick select", slideindex, 0, data.Count, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
 
-            if (GUILayout.Button("snapshot object", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
+            if (GUILayout.Button("NEXT PRESET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
             {
-                 
-                 Texture2D snap = AssetPreview.GetAssetPreview(Selection.activeGameObject);
-                
-            
+
+                GameObject original = Selection.activeGameObject;
+
+                currentpreset++;
+                var sfolder = Application.dataPath + "/PLATFORM/XML/preset";
+                string[] files = Directory.GetFiles(  sfolder, "*.xml");
+                var i = currentpreset %files.Length;
+                Debug.Log(i);
+                List<GameObject> L = loadscene(true, System.IO.Path.GetFileName( files[i]));
+                Selection.objects = L.ToArray();
+                Selection.activeGameObject = GroupSelection(Selection.gameObjects[0]);
+                Selection.activeGameObject.transform.position = original.transform.transform.position;
+                DestroyImmediate(original);
+
+            }
+            if (GUILayout.Button("PREV PRESET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
+            {
+                GameObject original = Selection.activeGameObject;
+                currentpreset--;
+                var sfolder = Application.dataPath + "/PLATFORM/XML/preset";
+                string[] files = Directory.GetFiles(sfolder, "*.xml");
+
+                if (currentpreset < 1)
+                    currentpreset = files.Length-1;
+                Debug.Log(currentpreset);
+                List<GameObject> L = loadscene(true, System.IO.Path.GetFileName(files[i]));
+                Selection.objects = L.ToArray();
+                Selection.activeGameObject = GroupSelection(Selection.gameObjects[0]);
+                Selection.activeGameObject.transform.position = original.transform.transform.position;
+                DestroyImmediate(original);
             }
 
 
@@ -1379,19 +1420,7 @@ void OnGUI ()
 
 		if(GUILayout.Button("GROUP",GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
 		{
-			for ( var c = 0 ; c< Selection.gameObjects.GetLength(0) ;c++ ) 
-			{
-				if ( go != Selection.gameObjects[c]) 
-				{  
-					Selection.gameObjects[c].transform.parent = go.transform ;
-                    blocksetup tbs = (blocksetup)Selection.gameObjects[c].GetComponent(typeof(blocksetup));
-
-                    tbs.paramblock.parentgui = bs.paramblock.guid.ToString();
-                    tbs.paramblock.grouped = true;
-
-					//DestroyImmediate( Selection.gameObjects[c].GetComponent("blocksetup"));
-				}
-			}
+            GroupSelection(go);
 		}
 	
         if(GUILayout.Button("Hide Group",GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))

@@ -8,161 +8,18 @@
   <pblist>
     <ParameterBlock>
       <parentgui />
-      <guid>038a0b34-a698-412a-a6ae-b8aa0d51b831</guid>
+      <guid>c3531ac3-03e1-4bed-964a-899029c8211b</guid>
       <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
       <block_size>
-        <x>2.00000024</x>
-        <y>0.5000005</y>
+        <x>2</x>
+        <y>0.5000002</y>
         <z>2.00000024</z>
       </block_size>
       <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>0</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
-      </orig_pos>
-      <last_pos>
-        <x>0</x>
-        <y>1.90734863E-06</y>
-        <z>-12</z>
-      </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>7.38167953</y>
-            <z>-1331.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>9.88168</y>
-            <z>-1331.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3560.19531</x>
-            <y>9.88168</y>
-            <z>-1331.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3560.19531</x>
-            <y>5.88167953</y>
-            <z>-1331.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>5.88167953</y>
-            <z>-1331.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>7.38167953</y>
-            <z>-1331.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
-      <ilookatpoint>0</ilookatpoint>
-      <speed>0.5</speed>
-      <testfloat>0</testfloat>
-      <move_ampl>0</move_ampl>
-      <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
-      <target>
-        <x>0</x>
-        <y>0</y>
-        <z>0</z>
-      </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
-      <b_followpath>false</b_followpath>
-      <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
-      <rotationspeed>0</rotationspeed>
-      <rotationtempo>0</rotationtempo>
-      <b_triggered>false</b_triggered>
-      <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
-      <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
-      <grouped>false</grouped>
-      <colider_type>BOX</colider_type>
-    </ParameterBlock>
-    <ParameterBlock>
-      <parentgui />
-      <guid>738f4cb9-7f2c-4dce-aaeb-58422164dd91</guid>
-      <assetname>HIGHTECH_BUILD_2_2_2_02_J</assetname>
-      <block_size>
-        <x>2.00000143</x>
-        <y>0.5000001</y>
-        <z>2.00000143</z>
-      </block_size>
-      <orig_transform>
-        <x>0.5</x>
-        <y>-0.5</y>
-        <z>-0.5</z>
-        <w>-0.5</w>
+        <x>-0.5</x>
+        <y>0.5</y>
+        <z>0.5</z>
+        <w>0.5</w>
         <eulerAngles>
           <x>270</x>
           <y>90</y>
@@ -170,142 +27,70 @@
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
-      </orig_pos>
-      <last_pos>
         <x>0</x>
         <y>0</y>
         <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-12.0196114</x>
+        <y>5.18660164</y>
+        <z>61.5404434</z>
       </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3560.19531</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3560.19531</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
+      <pathnodes />
       <ilookatpoint>0</ilookatpoint>
       <speed>0.5</speed>
       <testfloat>0</testfloat>
       <move_ampl>0</move_ampl>
       <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
+      <editsub>true</editsub>
       <target>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
       <b_followpath>false</b_followpath>
       <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
+      <b_triggeronce>true</b_triggeronce>
       <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
       <rotationtempo>0</rotationtempo>
       <b_triggered>false</b_triggered>
       <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
+      <targetindex>0</targetindex>
       <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
-          <y>0</y>
           <z>0</z>
-        </Vector3>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
       <grouped>false</grouped>
       <colider_type>BOX</colider_type>
     </ParameterBlock>
     <ParameterBlock>
       <parentgui />
-      <guid>19cb6258-63ed-471e-9026-9b2f0dbd905f</guid>
+      <guid>580c1540-75d2-4819-ad32-b2807951a821</guid>
       <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
       <block_size>
-        <x>2.00000024</x>
-        <y>0.5000005</y>
+        <x>2</x>
+        <y>0.5000002</y>
         <z>2.00000024</z>
       </block_size>
       <orig_transform>
-        <x>0.7071068</x>
+        <x>-0.7071068</x>
         <y>0</y>
         <z>0</z>
-        <w>-0.7071068</w>
+        <w>0.7071068</w>
         <eulerAngles>
           <x>270</x>
           <y>0</y>
@@ -313,142 +98,70 @@
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
       </orig_pos>
       <last_pos>
-        <x>0</x>
-        <y>1.90734863E-06</y>
-        <z>-10</z>
+        <x>-18.0196114</x>
+        <y>5.18660164</y>
+        <z>55.5404434</z>
       </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>7.38167953</y>
-            <z>-1333.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>9.88168</y>
-            <z>-1333.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3560.19531</x>
-            <y>9.88168</y>
-            <z>-1333.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3560.19531</x>
-            <y>5.88167953</y>
-            <z>-1333.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>5.88167953</y>
-            <z>-1333.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3570.36865</x>
-            <y>7.38167953</y>
-            <z>-1333.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
+      <pathnodes />
       <ilookatpoint>0</ilookatpoint>
       <speed>0.5</speed>
       <testfloat>0</testfloat>
       <move_ampl>0</move_ampl>
       <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
+      <editsub>true</editsub>
       <target>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
       <b_followpath>false</b_followpath>
       <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
+      <b_triggeronce>true</b_triggeronce>
       <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>2</rotationstepnumber>
       <rotationtempo>0</rotationtempo>
       <b_triggered>false</b_triggered>
       <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
+      <targetindex>0</targetindex>
       <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
-          <y>0</y>
           <z>0</z>
-        </Vector3>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
       <grouped>false</grouped>
       <colider_type>BOX</colider_type>
     </ParameterBlock>
     <ParameterBlock>
       <parentgui />
-      <guid>be07beb3-4865-4cdc-a043-f012a3d845a2</guid>
+      <guid>e37439f9-1168-446b-b0dc-0a1ff95aded5</guid>
       <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
       <block_size>
-        <x>2.00000024</x>
-        <y>0.5000005</y>
+        <x>2</x>
+        <y>0.5000002</y>
         <z>2.00000024</z>
       </block_size>
       <orig_transform>
-        <x>0.7071068</x>
+        <x>-0.7071068</x>
         <y>0</y>
         <z>0</z>
-        <w>-0.7071068</w>
+        <w>0.7071068</w>
         <eulerAngles>
           <x>270</x>
           <y>0</y>
@@ -456,142 +169,70 @@
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
       </orig_pos>
       <last_pos>
-        <x>0</x>
-        <y>1.90734863E-06</y>
-        <z>-8</z>
+        <x>-10.0196114</x>
+        <y>5.18660164</y>
+        <z>57.5404434</z>
       </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3578.36865</x>
-            <y>7.38167953</y>
-            <z>-1343.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3578.36865</x>
-            <y>9.88168</y>
-            <z>-1343.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3568.19531</x>
-            <y>9.88168</y>
-            <z>-1343.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3568.19531</x>
-            <y>5.88167953</y>
-            <z>-1343.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3578.36865</x>
-            <y>5.88167953</y>
-            <z>-1343.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3578.36865</x>
-            <y>7.38167953</y>
-            <z>-1343.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
+      <pathnodes />
       <ilookatpoint>0</ilookatpoint>
       <speed>0.5</speed>
       <testfloat>0</testfloat>
       <move_ampl>0</move_ampl>
       <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
+      <editsub>true</editsub>
       <target>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
       <b_followpath>false</b_followpath>
       <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
+      <b_triggeronce>true</b_triggeronce>
       <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
       <rotationtempo>0</rotationtempo>
       <b_triggered>false</b_triggered>
       <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
+      <targetindex>0</targetindex>
       <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
-          <y>0</y>
           <z>0</z>
-        </Vector3>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
       <grouped>false</grouped>
       <colider_type>BOX</colider_type>
     </ParameterBlock>
     <ParameterBlock>
       <parentgui />
-      <guid>a80f752b-a5e0-41ba-8bd8-d508635886e4</guid>
+      <guid>5b274677-d88a-4539-913e-7d68b9cc84ad</guid>
       <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
       <block_size>
-        <x>2.00000024</x>
-        <y>0.5000005</y>
+        <x>2</x>
+        <y>0.5000002</y>
         <z>2.00000024</z>
       </block_size>
       <orig_transform>
-        <x>0.7071068</x>
+        <x>-0.7071068</x>
         <y>0</y>
         <z>0</z>
-        <w>-0.7071068</w>
+        <w>0.7071068</w>
         <eulerAngles>
           <x>270</x>
           <y>0</y>
@@ -599,142 +240,212 @@
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
-      </orig_pos>
-      <last_pos>
         <x>0</x>
         <y>0</y>
-        <z>-2</z>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-18.0196114</x>
+        <y>5.18660164</y>
+        <z>57.5404434</z>
       </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3568.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3568.36865</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3558.19531</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3558.19531</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3568.36865</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3568.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
+      <pathnodes />
       <ilookatpoint>0</ilookatpoint>
       <speed>0.5</speed>
       <testfloat>0</testfloat>
       <move_ampl>0</move_ampl>
       <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
+      <editsub>true</editsub>
       <target>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
       <b_followpath>false</b_followpath>
       <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
+      <b_triggeronce>true</b_triggeronce>
       <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>2</rotationstepnumber>
       <rotationtempo>0</rotationtempo>
       <b_triggered>false</b_triggered>
       <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
+      <targetindex>0</targetindex>
       <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
-          <y>0</y>
           <z>0</z>
-        </Vector3>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
       <grouped>false</grouped>
       <colider_type>BOX</colider_type>
     </ParameterBlock>
     <ParameterBlock>
       <parentgui />
-      <guid>90924136-e408-4596-a19e-24c1e4158692</guid>
-      <assetname>HIGHTECH_BUILD_2_2_2_03_A</assetname>
+      <guid>8c207401-373b-41b5-ae5c-7db107ac4410</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
       <block_size>
-        <x>2.00000143</x>
-        <y>1.00000036</y>
-        <z>2.000002</z>
+        <x>2</x>
+        <y>0.5000002</y>
+        <z>2.00000024</z>
       </block_size>
       <orig_transform>
-        <x>0.5</x>
-        <y>-0.5</y>
-        <z>-0.5</z>
-        <w>-0.5</w>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>0</y>
+          <z>0</z>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-10.0196114</x>
+        <y>5.18660164</y>
+        <z>59.5404434</z>
+      </last_pos>
+      <pathnodes />
+      <ilookatpoint>0</ilookatpoint>
+      <speed>0.5</speed>
+      <testfloat>0</testfloat>
+      <move_ampl>0</move_ampl>
+      <pltf_sate>STATIC</pltf_sate>
+      <editsub>true</editsub>
+      <target>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </target>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
+      <b_followpath>false</b_followpath>
+      <b_revert_rotation>false</b_revert_rotation>
+      <b_triggeronce>true</b_triggeronce>
+      <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
+      <rotationtempo>0</rotationtempo>
+      <b_triggered>false</b_triggered>
+      <rotateindex>0</rotateindex>
+      <targetindex>0</targetindex>
+      <movedir>1</movedir>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
+      <grouped>false</grouped>
+      <colider_type>BOX</colider_type>
+    </ParameterBlock>
+    <ParameterBlock>
+      <parentgui />
+      <guid>3fb0e360-7e1e-4d81-a458-a315c6b3a0a1</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_02_G</assetname>
+      <block_size>
+        <x>2.00000048</x>
+        <y>0.5000004</y>
+        <z>2</z>
+      </block_size>
+      <orig_transform>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>0</y>
+          <z>0</z>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-18.0196114</x>
+        <y>5.18660259</y>
+        <z>61.5404434</z>
+      </last_pos>
+      <pathnodes />
+      <ilookatpoint>0</ilookatpoint>
+      <speed>0.5</speed>
+      <testfloat>0</testfloat>
+      <move_ampl>0</move_ampl>
+      <pltf_sate>STATIC</pltf_sate>
+      <editsub>true</editsub>
+      <target>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </target>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
+      <b_followpath>false</b_followpath>
+      <b_revert_rotation>false</b_revert_rotation>
+      <b_triggeronce>true</b_triggeronce>
+      <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
+      <rotationtempo>0</rotationtempo>
+      <b_triggered>false</b_triggered>
+      <rotateindex>0</rotateindex>
+      <targetindex>0</targetindex>
+      <movedir>1</movedir>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
+      <grouped>false</grouped>
+      <colider_type>BOX</colider_type>
+    </ParameterBlock>
+    <ParameterBlock>
+      <parentgui />
+      <guid>e0b05a27-30d0-4963-ac36-765afc41257e</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
+      <block_size>
+        <x>2</x>
+        <y>0.5000002</y>
+        <z>2.00000024</z>
+      </block_size>
+      <orig_transform>
+        <x>-0.5</x>
+        <y>0.5</y>
+        <z>0.5</z>
+        <w>0.5</w>
         <eulerAngles>
           <x>270</x>
           <y>90</y>
@@ -742,268 +453,408 @@
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
-      </orig_pos>
-      <last_pos>
         <x>0</x>
         <y>0</y>
-        <z>-4</z>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-14.0196114</x>
+        <y>5.18660164</y>
+        <z>61.5404434</z>
       </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3566.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3566.36865</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3556.19531</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3556.19531</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3566.36865</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3566.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
+      <pathnodes />
       <ilookatpoint>0</ilookatpoint>
       <speed>0.5</speed>
       <testfloat>0</testfloat>
       <move_ampl>0</move_ampl>
       <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
+      <editsub>true</editsub>
       <target>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
       <b_followpath>false</b_followpath>
       <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
+      <b_triggeronce>true</b_triggeronce>
       <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
       <rotationtempo>0</rotationtempo>
       <b_triggered>false</b_triggered>
       <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
+      <targetindex>0</targetindex>
       <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
-          <y>0</y>
           <z>0</z>
-        </Vector3>
-        <Vector3>
-          <x>0</x>
-          <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
-          <y>0</y>
-          <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
       <grouped>false</grouped>
       <colider_type>BOX</colider_type>
     </ParameterBlock>
     <ParameterBlock>
       <parentgui />
-      <guid>0939ac32-8fb5-4819-88f4-2d76a21d1957</guid>
-      <assetname>HIGHTECH_BUILD_2_2_2_03_A</assetname>
+      <guid>33ed8410-3170-444e-898e-1bb42d35297d</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
       <block_size>
-        <x>2.00000143</x>
-        <y>1.00000036</y>
-        <z>2.000002</z>
+        <x>2</x>
+        <y>0.5000002</y>
+        <z>2.00000024</z>
       </block_size>
       <orig_transform>
-        <x>-0.5000002</x>
-        <y>-0.499999881</y>
-        <z>-0.499999881</z>
-        <w>0.5000002</w>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
         <eulerAngles>
           <x>270</x>
-          <y>270.000031</y>
+          <y>0</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>3550.29346</x>
-        <y>7.38167953</y>
-        <z>-1368.29651</z>
-      </orig_pos>
-      <last_pos>
         <x>0</x>
         <y>0</y>
-        <z>-6</z>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-10.0196114</x>
+        <y>5.18660164</y>
+        <z>53.5404434</z>
       </last_pos>
-      <pathnodes>
-        <Pathnode>
-          <pos>
-            <x>3564.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.9</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3564.36865</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>6.3</lookatspeed>
-          <translatespeed>4.2</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3554.19531</x>
-            <y>9.88168</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>3.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3554.19531</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>3</ilookatpoint>
-          <lookatspeed>2.7</lookatspeed>
-          <translatespeed>2.7</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3564.36865</x>
-            <y>5.88167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>1</ilookatpoint>
-          <lookatspeed>4.3</lookatspeed>
-          <translatespeed>3.1</translatespeed>
-        </Pathnode>
-        <Pathnode>
-          <pos>
-            <x>3564.36865</x>
-            <y>7.38167953</y>
-            <z>-1329.39417</z>
-          </pos>
-          <ilookatpoint>5</ilookatpoint>
-          <lookatspeed>1.6</lookatspeed>
-          <translatespeed>2.8</translatespeed>
-        </Pathnode>
-      </pathnodes>
+      <pathnodes />
       <ilookatpoint>0</ilookatpoint>
       <speed>0.5</speed>
       <testfloat>0</testfloat>
       <move_ampl>0</move_ampl>
       <pltf_sate>STATIC</pltf_sate>
-      <editsub>false</editsub>
+      <editsub>true</editsub>
       <target>
         <x>0</x>
         <y>0</y>
         <z>0</z>
       </target>
-      <ismoving>true</ismoving>
-      <b_rotate_X>false</b_rotate_X>
-      <b_rotate_Y>false</b_rotate_Y>
-      <b_rotate_Z>false</b_rotate_Z>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
       <b_followpath>false</b_followpath>
       <b_revert_rotation>false</b_revert_rotation>
-      <b_triggeronce>false</b_triggeronce>
+      <b_triggeronce>true</b_triggeronce>
       <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>2</rotationstepnumber>
       <rotationtempo>0</rotationtempo>
       <b_triggered>false</b_triggered>
       <rotateindex>0</rotateindex>
-      <targetindex>2</targetindex>
+      <targetindex>0</targetindex>
       <movedir>1</movedir>
-      <maxhandle>6</maxhandle>
-      <quater>
-        <Vector3>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>1</z>
-        </Vector3>
-        <Vector3>
-          <x>-1</x>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
+      <grouped>false</grouped>
+      <colider_type>BOX</colider_type>
+    </ParameterBlock>
+    <ParameterBlock>
+      <parentgui />
+      <guid>80fe73ea-1018-410c-b3f7-d4fabbabbac7</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
+      <block_size>
+        <x>2</x>
+        <y>0.5000002</y>
+        <z>2.00000024</z>
+      </block_size>
+      <orig_transform>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
+        <eulerAngles>
+          <x>270</x>
           <y>0</y>
           <z>0</z>
-        </Vector3>
-        <Vector3>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-10.0196114</x>
+        <y>5.18660164</y>
+        <z>55.5404434</z>
+      </last_pos>
+      <pathnodes />
+      <ilookatpoint>0</ilookatpoint>
+      <speed>0.5</speed>
+      <testfloat>0</testfloat>
+      <move_ampl>0</move_ampl>
+      <pltf_sate>STATIC</pltf_sate>
+      <editsub>true</editsub>
+      <target>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </target>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
+      <b_followpath>false</b_followpath>
+      <b_revert_rotation>false</b_revert_rotation>
+      <b_triggeronce>true</b_triggeronce>
+      <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
+      <rotationtempo>0</rotationtempo>
+      <b_triggered>false</b_triggered>
+      <rotateindex>0</rotateindex>
+      <targetindex>0</targetindex>
+      <movedir>1</movedir>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
           <x>0</x>
           <y>0</y>
-          <z>-1</z>
-        </Vector3>
-        <Vector3>
-          <x>1</x>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
+      <grouped>false</grouped>
+      <colider_type>BOX</colider_type>
+    </ParameterBlock>
+    <ParameterBlock>
+      <parentgui />
+      <guid>63e66df3-1966-41c2-9e3b-5f1b03af97e2</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
+      <block_size>
+        <x>2</x>
+        <y>0.5000002</y>
+        <z>2.00000024</z>
+      </block_size>
+      <orig_transform>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
+        <eulerAngles>
+          <x>270</x>
           <y>0</y>
           <z>0</z>
-        </Vector3>
-      </quater>
-      <b_pathloop>true</b_pathloop>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-18.0196114</x>
+        <y>5.18660164</y>
+        <z>59.5404434</z>
+      </last_pos>
+      <pathnodes />
+      <ilookatpoint>0</ilookatpoint>
+      <speed>0.5</speed>
+      <testfloat>0</testfloat>
+      <move_ampl>0</move_ampl>
+      <pltf_sate>STATIC</pltf_sate>
+      <editsub>true</editsub>
+      <target>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </target>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
+      <b_followpath>false</b_followpath>
+      <b_revert_rotation>false</b_revert_rotation>
+      <b_triggeronce>true</b_triggeronce>
+      <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
+      <rotationtempo>0</rotationtempo>
+      <b_triggered>false</b_triggered>
+      <rotateindex>0</rotateindex>
+      <targetindex>0</targetindex>
+      <movedir>1</movedir>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
+      <grouped>false</grouped>
+      <colider_type>BOX</colider_type>
+    </ParameterBlock>
+    <ParameterBlock>
+      <parentgui />
+      <guid>72993702-edf4-43b5-99a8-77b08788a7f1</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_02_G</assetname>
+      <block_size>
+        <x>2.00000048</x>
+        <y>0.5000004</y>
+        <z>2</z>
+      </block_size>
+      <orig_transform>
+        <x>-0.5</x>
+        <y>0.5</y>
+        <z>0.5</z>
+        <w>0.5</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>90</y>
+          <z>0</z>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-10.0196114</x>
+        <y>5.18660259</y>
+        <z>61.5404434</z>
+      </last_pos>
+      <pathnodes />
+      <ilookatpoint>0</ilookatpoint>
+      <speed>0.5</speed>
+      <testfloat>0</testfloat>
+      <move_ampl>0</move_ampl>
+      <pltf_sate>STATIC</pltf_sate>
+      <editsub>true</editsub>
+      <target>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </target>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
+      <b_followpath>false</b_followpath>
+      <b_revert_rotation>false</b_revert_rotation>
+      <b_triggeronce>true</b_triggeronce>
+      <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
+      <rotationtempo>0</rotationtempo>
+      <b_triggered>false</b_triggered>
+      <rotateindex>0</rotateindex>
+      <targetindex>0</targetindex>
+      <movedir>1</movedir>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
+      <grouped>false</grouped>
+      <colider_type>BOX</colider_type>
+    </ParameterBlock>
+    <ParameterBlock>
+      <parentgui />
+      <guid>5b651837-7bc2-4691-bdd8-e073b1aa3f87</guid>
+      <assetname>HIGHTECH_BUILD_2_2_2_01_E</assetname>
+      <block_size>
+        <x>2</x>
+        <y>0.5000002</y>
+        <z>2.00000024</z>
+      </block_size>
+      <orig_transform>
+        <x>-0.5</x>
+        <y>0.5</y>
+        <z>0.5</z>
+        <w>0.5</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>90</y>
+          <z>0</z>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </orig_pos>
+      <last_pos>
+        <x>-16.0196114</x>
+        <y>5.18660164</y>
+        <z>61.5404434</z>
+      </last_pos>
+      <pathnodes />
+      <ilookatpoint>0</ilookatpoint>
+      <speed>0.5</speed>
+      <testfloat>0</testfloat>
+      <move_ampl>0</move_ampl>
+      <pltf_sate>STATIC</pltf_sate>
+      <editsub>true</editsub>
+      <target>
+        <x>0</x>
+        <y>0</y>
+        <z>0</z>
+      </target>
+      <ismoving>false</ismoving>
+      <b_rotate_X>true</b_rotate_X>
+      <b_rotate_Y>true</b_rotate_Y>
+      <b_rotate_Z>true</b_rotate_Z>
+      <b_followpath>false</b_followpath>
+      <b_revert_rotation>false</b_revert_rotation>
+      <b_triggeronce>true</b_triggeronce>
+      <rotationspeed>0</rotationspeed>
+      <rotationstepnumber>0</rotationstepnumber>
+      <rotationtempo>0</rotationtempo>
+      <b_triggered>false</b_triggered>
+      <rotateindex>0</rotateindex>
+      <targetindex>0</targetindex>
+      <movedir>1</movedir>
+      <maxhandle>0</maxhandle>
+      <rotatelookpoint>
+        <pos>
+          <x>0</x>
+          <y>0</y>
+          <z>0</z>
+        </pos>
+        <ilookatpoint>0</ilookatpoint>
+        <lookatspeed>0</lookatspeed>
+        <translatespeed>0</translatespeed>
+      </rotatelookpoint>
+      <b_pathloop>false</b_pathloop>
       <grouped>false</grouped>
       <colider_type>BOX</colider_type>
     </ParameterBlock>
