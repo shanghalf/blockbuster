@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="gb2312"?>
+<ParameterBlock xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <parentgui />
+  <guid>b936730e-004b-4e46-bcbb-d52e39e11bc6</guid>
+  <assetname>HIGHTECH_BUILD_2_2_2_02_A</assetname>
+  <block_size>
+    <x>2.00000143</x>
+    <y>2.00371981</y>
+    <z>2.000002</z>
+  </block_size>
+  <orig_transform>
+    <x>0.707106769</x>
+    <y>0</y>
+    <z>0</z>
+    <w>-0.707106769</w>
+    <eulerAngles>
+      <x>270</x>
+      <y>0</y>
+      <z>0</z>
+    </eulerAngles>
+  </orig_transform>
+  <orig_pos>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </orig_pos>
+  <last_pos>
+    <x>-2.01955533</x>
+    <y>0.20422554</y>
+    <z>57.54048</z>
+  </last_pos>
+  <pathnodes />
+  <ilookatpoint>0</ilookatpoint>
+  <speed>0.5</speed>
+  <testfloat>0</testfloat>
+  <move_ampl>0</move_ampl>
+  <pltf_sate>ROTATING</pltf_sate>
+  <editsub>true</editsub>
+  <target>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </target>
+  <ismoving>false</ismoving>
+  <b_rotate_X>true</b_rotate_X>
+  <b_rotate_Y>true</b_rotate_Y>
+  <b_rotate_Z>true</b_rotate_Z>
+  <b_followpath>false</b_followpath>
+  <b_revert_rotation>false</b_revert_rotation>
+  <b_triggeronce>true</b_triggeronce>
+  <rotationspeed>0</rotationspeed>
+  <rotationtempo>0</rotationtempo>
+  <b_triggered>false</b_triggered>
+  <rotateindex>0</rotateindex>
+  <targetindex>0</targetindex>
+  <movedir>1</movedir>
+  <maxhandle>0</maxhandle>
+  <quater />
+  <b_pathloop>false</b_pathloop>
+  <grouped>false</grouped>
+  <colider_type>BOX</colider_type>
+</ParameterBlock>
