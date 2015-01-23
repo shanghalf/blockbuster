@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.dll
 E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
 E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\UnityEditor.dll
@@ -7,3 +8,14 @@ E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\UnityEditor.xml
 E:\BlockBuster_G\blockbuster\obj\Debug\UnityVS.blockbuster.CSharp.Plugins.csprojResolveAssemblyReference.cache
 E:\BlockBuster_G\blockbuster\obj\Debug\Assembly-CSharp-firstpass.dll
 E:\BlockBuster_G\blockbuster\obj\Debug\Assembly-CSharp-firstpass.pdb
+=======
+D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.dll
+D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
+D:\blockbuster\Temp\UnityVS_bin\Debug\UnityEditor.dll
+D:\blockbuster\Temp\UnityVS_bin\Debug\UnityEngine.dll
+D:\blockbuster\Temp\UnityVS_bin\Debug\UnityEngine.xml
+D:\blockbuster\Temp\UnityVS_bin\Debug\UnityEditor.xml
+D:\blockbuster\obj\Debug\UnityVS.blockbuster.CSharp.Plugins.csprojResolveAssemblyReference.cache
+D:\blockbuster\obj\Debug\Assembly-CSharp-firstpass.dll
+D:\blockbuster\obj\Debug\Assembly-CSharp-firstpass.pdb
+>>>>>>> 754b67493c145d86665ae688af82dd36bb01c4bb
