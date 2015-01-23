@@ -256,7 +256,3 @@ if ( not os.path.exists(logpath) ):
 outlog ("ENTRY POINT","FLOOD")
 localbuild = True
 runexternalcommand (sys.argv)
-
-
-
-

@@ -1,11 +1,5 @@
 
 /*
-test to treiiigg a build 
-
-another one 
-
-this section comes from web interface at home 
-
 meditMaterials[3].wire = on
 max quick render
 --delete c 
