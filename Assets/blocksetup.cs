@@ -10,6 +10,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
 
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -159,6 +160,8 @@ public class Pathnode
     //public List<Vector3> orb = new List<Vector3>() ;
     public float lookatspeed;
     public float translatespeed;
+    public float waitonnode;
+    public float timer;
  
     public Pathnode()
     {
@@ -185,6 +188,8 @@ public class Pathnode
 public class ParameterBlock
 {
     public string parentgui;
+    public float timer;
+
     public string guid;
     public string assetname;
     public Vector3 block_size;
@@ -242,6 +247,8 @@ public class blocksetup : MonoBehaviour
     public GameObject scenerefobj;
     public GameObject parent;
     public ParameterBlock paramblock = new ParameterBlock();
+    public float editortick =0.02f;
+
 
     #if UNITY_EDITOR
     void  OnEnable()
@@ -372,15 +379,23 @@ public class blocksetup : MonoBehaviour
             Handles.FreeRotateHandle(Quaternion.identity, paramblock.pathnodes[i].pos, 0.2f);
         }
     }
+
 #endif
 
- 
+
+    public void  Wait(float tempo)
+    {
+        paramblock.ismoving = false;
+        var a = new WaitForSeconds(tempo);
+        
+        WaitForSeconds s = new WaitForSeconds(tempo);
+        paramblock.ismoving = true;
+
+    }
 
 
 
-
-
-	// Update is called once per frame
+// Update is called once per frame
 	void Update () 
     {
 		switch (paramblock.pltf_sate) 
@@ -416,8 +431,31 @@ public class blocksetup : MonoBehaviour
 
 
                 Vector3 target = paramblock.pathnodes[paramblock.targetindex].pos;
-                if (Vector3.Distance(transform.position, target) == 0.0f )
-                paramblock.targetindex += paramblock.movedir;
+                if (Vector3.Distance(transform.position, target) == 0.0f)
+                {
+
+                    if (paramblock.pathnodes[paramblock.targetindex].timer > 0)
+#if UNITY_EDITOR   
+                        paramblock.pathnodes[paramblock.targetindex].timer -= editortick ;
+#endif   
+#if !UNITY_EDITOR   
+                        paramblock.pathnodes[paramblock.targetindex].timer -= Time.deltaTime;
+#endif
+                    else
+                    {
+                        
+                        paramblock.pathnodes[paramblock.targetindex].timer = paramblock.pathnodes[paramblock.targetindex].waitonnode;
+                        paramblock.targetindex += paramblock.movedir;
+                    }
+                
+                    
+  
+                }
+        
+
+
+  
+
 
                 if (paramblock.ismoving)//|| (Vector3.Distance(transform.position, paramblock.pathnodes[0].pos) > 0.0f))
                 {
@@ -444,8 +482,8 @@ public class blocksetup : MonoBehaviour
                     //Qr *= Quaternion.Euler(Vector3.forward);
 #if UNITY_EDITOR
 
-                    transform.position = Vector3.MoveTowards(transform.position, target, tspeed * 0.02f);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * 0.02f));
+                    transform.position = Vector3.MoveTowards(transform.position, target, tspeed * editortick);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * editortick));
 #endif
 #if !UNITY_EDITOR
 
@@ -482,11 +520,13 @@ public class blocksetup : MonoBehaviour
         rr *= Quaternion.Euler(Vector3.forward);
 	    if (v.magnitude < 0.1)
 		    return;
+        
 # if ! UNITY_EDITOR
         transform.rotation = Quaternion.Lerp(transform.rotation, rr, (paramblock.rotationspeed * Time.deltaTime));
-# endif 
+        Debug.Log(editortick);
+# endif
 # if  UNITY_EDITOR
-        transform.rotation = Quaternion.Lerp(transform.rotation, rr, (paramblock.rotationspeed * 0.02f));
+        transform.rotation = Quaternion.Lerp(transform.rotation, rr, (paramblock.rotationspeed * editortick));
 #endif
 
         //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(v), (paramblock.rotationspeed * Time.deltaTime));

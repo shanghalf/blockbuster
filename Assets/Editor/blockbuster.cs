@@ -22,6 +22,8 @@ public enum ACTIVEBASENAME
 
 public class blockbuster : EditorWindow
 {
+    static float EditorTick = 0.1f;
+
     bool
         b_fx,
         editsub,
@@ -1239,6 +1241,8 @@ void OnGUI ()
                                             bs.paramblock.pathnodes[bs.paramblock.targetindex].lookatspeed = EditorGUILayout.Slider("lookatspeed", bs.paramblock.pathnodes[bs.paramblock.targetindex].lookatspeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                                             UIPB.pathnodes[UIPB.targetindex].translatespeed = EditorGUILayout.Slider("translatespeed", UIPB.pathnodes[UIPB.targetindex].translatespeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                                             UIPB.pathnodes[UIPB.targetindex].ilookatpoint = (int)EditorGUILayout.Slider("lookat", UIPB.pathnodes[UIPB.targetindex].ilookatpoint, 0, 8, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                            UIPB.pathnodes[UIPB.targetindex].waitonnode = (float)EditorGUILayout.Slider("wait", UIPB.pathnodes[UIPB.targetindex].waitonnode, 0, 30, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                            
                                             if (!UIPB.ismoving)
                                             {
                                                 int ti = bs.paramblock.targetindex;
