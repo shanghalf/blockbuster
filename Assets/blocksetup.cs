@@ -248,7 +248,10 @@ public class blocksetup : MonoBehaviour
     public GameObject parent;
     public ParameterBlock paramblock = new ParameterBlock();
     public float editortick =0.02f;
+    public ReplayerLogOutput rp;
 
+    
+    
 
     #if UNITY_EDITOR
     void  OnEnable()
@@ -341,10 +344,22 @@ public class blocksetup : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
+
+        if (paramblock.ismoving)
+        {
+            /*   rp = (ReplayerLogOutput)gameObject.AddComponent(typeof(ReplayerLogOutput));
+            rp.m_entityname = this.name;*/
+        }
+
         if (!block_transform)
             return;
+        
 		paramblock.orig_transform =  block_transform.rotation ;
         paramblock.orig_pos = block_transform.position;
+
+
+
+
 	}
 
     private static Vector3 pointSnap = Vector3.one * 0.001f;
