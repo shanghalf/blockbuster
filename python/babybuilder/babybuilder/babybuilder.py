@@ -100,7 +100,7 @@ def notifybuild (args=None):
 
 
 def step4(args=None):
-    outlog("step4")
+    outlog("step4 Done successful ")
     return
 
 def failbuild( error ):
