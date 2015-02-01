@@ -14,8 +14,6 @@ D:\blockbuster\obj\Debug\UnityVS.blockbuster.CSharp.Editor.csprojResolveAssembly
 D:\blockbuster\obj\Debug\Assembly-CSharp-Editor.dll
 D:\blockbuster\obj\Debug\Assembly-CSharp-Editor.pdb
 D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-UnityScript-firstpass.dll
-D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
-D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb
 E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-Editor.dll
 E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-Editor.pdb
 E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\Assembly-UnityScript-firstpass.dll
@@ -34,3 +32,5 @@ E:\BlockBuster_G\blockbuster\Temp\UnityVS_bin\Debug\UnityEditor.Graphs.xml
 E:\BlockBuster_G\blockbuster\obj\Debug\UnityVS.blockbuster.CSharp.Editor.csprojResolveAssemblyReference.cache
 E:\BlockBuster_G\blockbuster\obj\Debug\Assembly-CSharp-Editor.dll
 E:\BlockBuster_G\blockbuster\obj\Debug\Assembly-CSharp-Editor.pdb
+D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp.pdb
+D:\blockbuster\Temp\UnityVS_bin\Debug\Assembly-CSharp-firstpass.pdb

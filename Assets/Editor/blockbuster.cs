@@ -22,6 +22,8 @@ public enum ACTIVEBASENAME
 
 public class blockbuster : EditorWindow
 {
+    static float EditorTick = 0.1f;
+
     bool
         b_fx,
         editsub,
@@ -31,7 +33,8 @@ public class blockbuster : EditorWindow
         b_groupselectmode
         ;
     float
-        stepvalue
+        stepvalue,
+        ofset
         ;
     int
         i,
@@ -79,6 +82,20 @@ public class blockbuster : EditorWindow
     ACTIVEBASENAME activebasename;
     string selectedbasename = "/PLATFORM/HIGHTECH/";
     public List<string> data;
+
+
+    private int pathindex;
+    private int levelID;
+
+
+    //public GameObject m_RePlayerObject;
+    public List<GameObject> m_replayactors = new List<GameObject>();
+    public List<string> xmlfoldercontent = new List<string>();
+    private bool b_applyfilter;
+    private RePlayer R;
+    private float replayspeed;
+
+
 
     //static GameObject handle = (GameObject)Resources.LoadAssetAtPath(("Assets/Editor/target.fbx"), typeof(GameObject));
 
@@ -743,6 +760,14 @@ public class blockbuster : EditorWindow
                 BrowseAsset(slideindex - 1, "CalculateSelectionSize()");												// till you die ....:::..::...::...::.::.:.:.:::
 
             oldindexstorage = slideindex - 1;
+
+            Repaint();
+            //SceneView.RepaintAll();
+            //DebugUtils.Log(Core.LogCategory.Gamelogic, R.replayspeed.ToString());
+            if ( R != null)
+                R.Update();
+
+
         }
 
         GameObject tg = (GameObject)Selection.activeGameObject;
@@ -755,12 +780,95 @@ public class blockbuster : EditorWindow
         ////debug.Log(bs.parent.name) ;
     }
 
+    string[] ReturnXmlContent()
+    {
 
+
+
+        var sfolder = Application.dataPath + "/PLATFORM/XML/Replays";
+        string[] files = Directory.GetFiles(sfolder, "*.xml");
+        List<string> l = new List<string>();
+        string[] path = EditorApplication.currentScene.Split(char.Parse("/"));
+        string currenteditormapname = path[path.Length - 1].Split(char.Parse("."))[0];
+
+        foreach (var f in files)
+        {
+            string[] mapname = f.Split(char.Parse("\\"));
+            if (mapname[mapname.Length - 1].Contains(currenteditormapname))
+            {
+                string[] spath = f.Split(char.Parse("-"));
+                string fn = spath[spath.Length - 1].Split(char.Parse("."))[0];
+                l.Add(fn);
+            }
+
+        }
+        if (l.Count == 0)
+        {
+            l.Add("NO REPLAY FOR THIS MAP");
+            m_replayactors.Clear();
+        }
+        return l.ToArray();
+
+    }
+
+
+    void AddReplayerObject()
+    {
+        m_replayactors.Clear();
+
+        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        foreach (var it in allObjects)
+        {
+            if (it.name == "REPLAYERINSTANCE")
+                m_replayactors.Add(it);
+        }
+        if (m_replayactors.Count > 0)
+        {
+            return;
+        }
+        else
+        {
+            GameObject ReplayerObjectBody = (GameObject)Resources.LoadAssetAtPath(("Assets/ReplayerObjects/ReplayerObjectBody.FBX"), typeof(GameObject));
+            GameObject O = (GameObject)Instantiate(ReplayerObjectBody, Vector3.zero, Quaternion.identity);
+            O.AddComponent(typeof(RePlayer));
+            RePlayer R = (RePlayer)O.GetComponent(typeof(RePlayer));
+            R.m_replayfiletag = ".xml";
+            O.name = "REPLAYERINSTANCE";
+            m_replayactors.Add(O);
+        }
+    }
+
+    void OnLevelWasLoaded(int level)
+    {
+        m_replayactors.Clear();
+
+    }
+    void OnDestroy()
+    {
+        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        foreach (var it in allObjects)
+        {
+            if (it.name == "REPLAYERINSTANCE")
+                DestroyImmediate(it);
+        }
+    }
+
+
+
+
+    void SwitchReplayerPath(string filename)
+    {
+        foreach (Replay ri in R.replaylist)
+            if (ri.m_xmlfilename.Contains(filename))
+                R.m_playerreplay = ri;
+        R.targetindex = 0;
+    }
 
 
 
 
     int selectedtab=0;
+    float replayerdtab = 0;
 
 
 void OnGUI () 
@@ -771,13 +879,94 @@ void OnGUI ()
         
         GUILayout.BeginHorizontal(EditorStyles.toolbar);
 
-    if (GUILayout.Button("BLOCK MOVE", EditorStyles.toolbarButton))
+    if (GUILayout.Button("MOVE", EditorStyles.toolbarButton))
         selectedtab = 0;
-    if (GUILayout.Button("BLOCK PROP", EditorStyles.toolbarButton))
+    if (GUILayout.Button("PROP", EditorStyles.toolbarButton))
         selectedtab = 1;
     if (GUILayout.Button("TOOLS", EditorStyles.toolbarButton))
         selectedtab = 2;
-    GUILayout.EndHorizontal();
+    if (GUILayout.Button("REPLAY", EditorStyles.toolbarButton))
+        selectedtab = 3;
+        GUILayout.EndHorizontal();
+
+    if (selectedtab == 3)
+    {
+        
+
+        if (m_replayactors.Count == 0) // ||  m_replayactors[0] == null)
+        {
+            pathindex = 0;
+            AddReplayerObject();
+        }
+        if (m_replayactors[0] == null) // ||  m_replayactors[0] == null)
+        {
+            pathindex = 0;
+            AddReplayerObject();
+        }
+
+
+        R = (RePlayer)m_replayactors[0].GetComponent(typeof(RePlayer));
+        //R.RefreshXmlBase();
+
+        GUILayout.BeginHorizontal(EditorStyles.toolbar);
+
+        if (GUILayout.Button("remote", EditorStyles.toolbarButton))
+            replayerdtab = 0;
+        if (GUILayout.Button("filter", EditorStyles.toolbarButton))
+            replayerdtab = 1;
+        GUILayout.EndHorizontal();
+        if (replayerdtab == 0)
+        {
+            EditorGUILayout.BeginVertical();
+            EditorGUILayout.TextField(m_replayactors[0].transform.position.ToString());
+            R.bviewportcamfollowing = EditorGUILayout.Toggle("viewport camera follow ", R.bviewportcamfollowing);
+
+
+            replayspeed = EditorGUILayout.Slider("speed", replayspeed, 0, 1);
+            R.replayspeed = replayspeed;
+
+
+            if (GUILayout.Button("RUN SCENE", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
+                return;
+
+
+            EditorGUILayout.EndVertical();
+        }
+
+        if (replayerdtab == 1)
+        {
+
+
+            if (!b_applyfilter)
+            {
+                //RePlayer R = (RePlayer)m_replayactors[0].GetComponent(typeof(RePlayer));
+                string[] L = ReturnXmlContent();
+
+                if (R.m_replayfiletag != ReturnXmlContent()[pathindex] + ".xml")
+                {
+                    R.m_replayfiletag = ReturnXmlContent()[pathindex] + ".xml";
+                    SwitchReplayerPath(R.m_replayfiletag);
+                }
+
+
+            }
+            else
+                R.m_replayfiletag = ".xml";
+
+
+
+            GUI.BeginGroup(new Rect(0, 0, 600, 600));
+
+            pathindex = EditorGUILayout.Popup(pathindex, ReturnXmlContent());
+            b_applyfilter = EditorGUILayout.Toggle("Display All Path", b_applyfilter, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+
+            GUI.EndGroup();
+
+        }
+
+    }
+
+ 
 
     GetDir(); // Dir defined bu 4 global vector coocked related to the camera 
 
@@ -811,9 +1000,8 @@ void OnGUI ()
 	StaticEditorFlags editorflag ;
     //GUI.Toolbar(new Rect (25, 25, 250, 30), toolbarInt, toolbarStrings);
 
-    switch (selectedtab) 
-	{
-        case 0 : // BLOCK MOVE 
+    if ( selectedtab == 0 )
+    {
         if (go == null || bs==null)
         {
             GUI.Label(new Rect(0, 20, 200, 200), "SELECT A VALID GAME OBJECT");
@@ -870,7 +1058,7 @@ void OnGUI ()
 
 
         GUI.EndGroup ();
-	        float ofset ;
+
             if (GUI.Button(new Rect(bsz * 3, bsz * 5, bsz, bsz), uparrow)) //-------------- FRONT BUTTON
 			{
 				if ( b_fx ) ofset = S.x ; 
@@ -1000,11 +1188,11 @@ void OnGUI ()
 			}
 					
 			//--------------------------------------------------------------------------------------- END OF BLOCK MOVEE TAB PANNEL  
-			break;
 				
-				
-				
-		case 1 : //-------------------------------------------------------------------------- BLOCK PROP 
+            }	
+        
+		if ( selectedtab == 1)		
+        {
             if (go == null || bs ==null)
             {
                 GUI.Label(new Rect(0, 20, 200, 200), "SELECT A VALID GAME OBJECT");
@@ -1024,16 +1212,16 @@ void OnGUI ()
 
 					if(GUILayout.Button("SAVE",GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
 					{
-						if ( Selection.activeGameObject == null ) 
-							break;
+                        if (Selection.activeGameObject == null)
+                            return;
 					 	filepath  = Application.dataPath+"/PLATFORM/XML/paramblock/"+bs.paramblock.guid+".xml";
                         bs.Save(filepath);
 					}	
 					
 					if(GUILayout.Button("LOAD",GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
 					{
-							if ( Selection.activeGameObject == null )
-								break;
+                        if (Selection.activeGameObject == null)
+                            return;
 						 	filepath  = Application.dataPath+"/PLATFORM/XML/paramblock/"+bs.paramblock.guid+".xml";
 							//Selection.activeObject.GetComponent(blocksetup).paramblock.Load(filepath);
 							if (!System.IO.File.Exists(filepath))
@@ -1239,6 +1427,8 @@ void OnGUI ()
                                             bs.paramblock.pathnodes[bs.paramblock.targetindex].lookatspeed = EditorGUILayout.Slider("lookatspeed", bs.paramblock.pathnodes[bs.paramblock.targetindex].lookatspeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                                             UIPB.pathnodes[UIPB.targetindex].translatespeed = EditorGUILayout.Slider("translatespeed", UIPB.pathnodes[UIPB.targetindex].translatespeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                                             UIPB.pathnodes[UIPB.targetindex].ilookatpoint = (int)EditorGUILayout.Slider("lookat", UIPB.pathnodes[UIPB.targetindex].ilookatpoint, 0, 8, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                            UIPB.pathnodes[UIPB.targetindex].waitonnode = (float)EditorGUILayout.Slider("wait", UIPB.pathnodes[UIPB.targetindex].waitonnode, 0, 30, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                            
                                             if (!UIPB.ismoving)
                                             {
                                                 int ti = bs.paramblock.targetindex;
@@ -1381,9 +1571,10 @@ void OnGUI ()
 								break;
 							}
 						GUI.EndGroup();
-				break;
+        }
 
-        case 2: //---------------------------------------------------------------------------------------  TOOLS 
+        if ( selectedtab == 2)
+        {
 
             GUI.BeginGroup (new Rect (bsz, bsz*4 , 220, 300));
             b_groupselectmode = EditorGUILayout.Toggle ("GrpMode", b_groupselectmode,GUILayout.MinWidth(280), GUILayout.MaxWidth(280) );				
@@ -1478,7 +1669,6 @@ void OnGUI ()
                 
         //Selection.objects. = oblist;
         GUI.EndGroup();
-        break ;				
     }
 }
 
