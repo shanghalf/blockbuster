@@ -60,6 +60,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PlayerImputController.cs" />
+    <Compile Include="Assets\PlayerMotor.cs" />
     <Compile Include="Assets\Replayer.cs" />
     <Compile Include="Assets\ReplayerLogOutput.cs" />
     <Compile Include="Assets\blocksetup.cs" />
