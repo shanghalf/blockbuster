@@ -79,11 +79,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Editor\blockbuster.cs" />
-    <Compile Include="Assets\Editor\spline.cs" />
+    <Compile Include="Assets\PLATFORM\Editor\blockbuster.cs" />
+    <Compile Include="Assets\PLATFORM\Editor\spline.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Editor\Paramblock.xml" />
+    <None Include="Assets\PLATFORM\Editor\Paramblock.xml" />
     <None Include="Assets\PLATFORM\HIGHTECH\AssetList.xml" />
     <None Include="Assets\PLATFORM\HIGHTECH\assettransfert.xml" />
     <None Include="Assets\PLATFORM\JUNGLE\AssetList.xml" />

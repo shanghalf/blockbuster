@@ -60,17 +60,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\PlayerImputController.cs" />
-    <Compile Include="Assets\PlayerMotor.cs" />
-    <Compile Include="Assets\Replayer.cs" />
-    <Compile Include="Assets\ReplayerLogOutput.cs" />
-    <Compile Include="Assets\blocksetup.cs" />
-    <Compile Include="Assets\framerate.cs" />
-    <Compile Include="Assets\splinecomponent.cs" />
-    <Compile Include="Assets\triggerscript.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\PlayerImputController.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\PlayerMotor.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\Replayer.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\ReplayerLogOutput.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\blocksetup.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\framerate.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\splinecomponent.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\triggerscript.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Editor\Paramblock.xml" />
+    <None Include="Assets\PLATFORM\Editor\Paramblock.xml" />
     <None Include="Assets\PLATFORM\HIGHTECH\AssetList.xml" />
     <None Include="Assets\PLATFORM\HIGHTECH\assettransfert.xml" />
     <None Include="Assets\PLATFORM\JUNGLE\AssetList.xml" />
