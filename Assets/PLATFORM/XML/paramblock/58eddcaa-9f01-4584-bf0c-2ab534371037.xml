@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="Windows-1252"?>
+<?xml version="1.0" encoding="gb2312"?>
 <ParameterBlock xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <parentgui />
+  <timer>0</timer>
   <guid>58eddcaa-9f01-4584-bf0c-2ab534371037</guid>
   <assetname>HIGHTECH_BUILD_2_2_2_02_J</assetname>
   <block_size>
@@ -26,7 +27,7 @@
   </orig_pos>
   <last_pos>
     <x>-14.0196171</x>
-    <y>2.9585948</y>
+    <y>1.31660128</y>
     <z>41.5404434</z>
   </last_pos>
   <pathnodes>
@@ -40,6 +41,7 @@
       <lookatspeed>0</lookatspeed>
       <translatespeed>7.8</translatespeed>
       <waitonnode>0.9</waitonnode>
+      <timer>0.9</timer>
     </Pathnode>
     <Pathnode>
       <pos>
@@ -51,6 +53,7 @@
       <lookatspeed>2.1</lookatspeed>
       <translatespeed>4.5</translatespeed>
       <waitonnode>1.3</waitonnode>
+      <timer>1.3</timer>
     </Pathnode>
   </pathnodes>
   <ilookatpoint>0</ilookatpoint>
@@ -76,8 +79,8 @@
   <rotationtempo>0</rotationtempo>
   <b_triggered>false</b_triggered>
   <rotateindex>0</rotateindex>
-  <targetindex>0</targetindex>
-  <movedir>1</movedir>
+  <targetindex>1</targetindex>
+  <movedir>-1</movedir>
   <maxhandle>2</maxhandle>
   <rotatelookpoint>
     <pos>
@@ -89,6 +92,7 @@
     <lookatspeed>0</lookatspeed>
     <translatespeed>0</translatespeed>
     <waitonnode>0</waitonnode>
+    <timer>0</timer>
   </rotatelookpoint>
   <b_pathloop>false</b_pathloop>
   <grouped>false</grouped>
