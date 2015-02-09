@@ -77,6 +77,7 @@
     <None Include="Assets\PLATFORM\XML\paramblock\c1c22744-d59a-4925-a80e-1a15b7b9509d.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\cc335a32-b131-4ce5-a46f-f5a90205e58b.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\d7ee33dd-c796-45fe-9af9-cff3529cd75f.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\e453d56d-ae91-42a9-abe6-047ff70267ac.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\e8468ad1-4d51-44cf-ac66-ee0e0a9f140f.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset1.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset2.xml" />
