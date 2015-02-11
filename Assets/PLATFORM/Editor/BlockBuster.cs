@@ -30,7 +30,7 @@ public class blockbuster : EditorWindow
     // holding the common properties of anything that could be manipulated by BlockBuster Editor 
 
     Actor m_actor = null;
-    Behavior m_behavior = null;
+    Behavior m_behavior = new Behavior();
 
 
     bool
@@ -41,13 +41,14 @@ public class blockbuster : EditorWindow
         b_groupselectmode   // used to 
         ;
     float
-        stepvalue,
-        ofset
+        stepvalue=0.0f,
+        ofset =0.0f
         ;
     int
-        i,
-        assetbaseindex,
-        slideindex,
+        i=0,
+        APX=0,
+        assetbaseindex=0,
+        slideindex=0,
         BBiteratemaxobjects = 10
         //bs.paramblock.targetindex=0
         
@@ -59,7 +60,7 @@ public class blockbuster : EditorWindow
     //BaseActorProperties UIAP = new BaseActorProperties();
 
     private int bsz = 20;
-    Vector3 S = new Vector3(0, 0, 0);
+    Vector3 BlockSize = new Vector3(0, 0, 0);
     //Vector3 dir = new Vector3(0, 0, 0);
 
     Vector3 left = new Vector3(-1.0f, 0.0f, 0.0f);
@@ -95,6 +96,8 @@ public class blockbuster : EditorWindow
     private RePlayer m_replayer;
     private float replayspeed;
 
+    public static System.Enum dynamicenumtest;
+
 
 
     //static GameObject handle = (GameObject)Resources.LoadAssetAtPath(("Assets/Editor/target.fbx"), typeof(GameObject));
@@ -103,8 +106,15 @@ public class blockbuster : EditorWindow
     [MenuItem("Window/blockbuster")]
     static void ShowWindow()
     {
-        EditorWindow.GetWindow(typeof(blockbuster));
+
+
+        InitGUIValues();
+
     }
+
+
+
+
 
 
 
@@ -113,7 +123,9 @@ public class blockbuster : EditorWindow
 
     void Start()
     {
-        InitGUIValues(); 
+    
+
+
     }
 
 
@@ -196,6 +208,33 @@ public class blockbuster : EditorWindow
     }
 
 
+    public void UpdatePathnodes(Vector3 v)
+    {
+        if (m_behavior.paramblock.m_pathnodes.Count != m_behavior.paramblock.maxhandle)
+        {
+            // maxhandle protection (should be private and accessed through get set)
+            m_behavior.paramblock.maxhandle = (m_behavior.paramblock.maxhandle >= 0) ? m_behavior.paramblock.maxhandle : 0;
+
+            if (m_behavior.paramblock.m_pathnodes.Count > m_behavior.paramblock.maxhandle)
+            {
+                for (int c = m_behavior.paramblock.m_pathnodes.Count; c > m_behavior.paramblock.maxhandle; c--)
+                    m_behavior.paramblock.m_pathnodes.RemoveAt(m_behavior.paramblock.GetSafeTargetIndex());
+            }
+            for (int c = m_behavior.paramblock.m_pathnodes.Count; c < m_behavior.paramblock.maxhandle; c++)
+            {
+                Pathnode pn = new Pathnode();
+                pn.ilookatpoint = 0;
+                pn.pos = v;
+                //m_behavior.paramblock.m_pathnodes.Add(pn);
+                Debug.Log(m_behavior.paramblock.GetSafeTargetIndex().ToString());
+                int localindex = (m_behavior.paramblock.GetSafeTargetIndex() > -1) ? m_behavior.paramblock.GetSafeTargetIndex() : 0;
+                m_behavior.paramblock.m_pathnodes.Insert(localindex, pn);
+
+            }
+        }
+    }
+
+
     public List<GameObject>  loadscene(bool preset = false, string scenename = null)
     {
         List<GameObject> merged = new List<GameObject>();
@@ -267,9 +306,8 @@ public class blockbuster : EditorWindow
             m_actor.Actorprops.block_size = M.renderer.bounds.size; 
         else
         {
-            m_actor.Actorprops.block_size = M.renderer.bounds.size; 	// change size for all 
+            m_actor.Actorprops.block_size = originalactor.Actorprops.block_size; 	// change size for all 
             m_actor.block_transform = obj.transform;	 	// transform from source	
-            m_behavior.paramblock.editsub = b_editsub;							// block frozen for edition
             m_actor.Actorprops.orig_transform = obj.transform.rotation; // origin transform help to re initialize a block in static mode 
             m_actor.Actorprops.orig_pos = obj.transform.position;		// same for pos ( sound weird could be done in oneline have to see that 	
             m_actor.scenerefobj = obj;
@@ -295,10 +333,34 @@ public class blockbuster : EditorWindow
     }
 
 
+    int GetNearPathnode ()
+    {
+
+                float v;
+                int index=0;
+                float max = Mathf.Infinity;
+                for (int it = 0; it < m_behavior.paramblock.m_pathnodes.Count; it++)
+                {
+
+                    v = Vector3.Distance(m_behavior.paramblock.m_pathnodes[it].pos, Selection.activeGameObject.transform.position);
+                    if ( v < max )
+                    {
+                        max = v;
+                        index = it;
+                    }
+                    
+                }
+                   
+                return index ;
+
+                
+            Debug.Log("getnear returned : " + index.ToString());
+                
+
+    }
 
 
-
-    void DoBlockMove(bool instanciate, Vector3 dir , bool moveallpath = true , int nodepathindex = 0 )
+    void DoBlockMove(bool instanciate, Vector3 dir , bool moveallpath = true )
     {
         //************************************************************************************************
         // perform block manipulation in move block section of the tool 
@@ -317,6 +379,7 @@ public class blockbuster : EditorWindow
         for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
         {
             GameObject ts = (GameObject)Selection.gameObjects.GetValue(i);
+            
             m_actor = (Actor)ts.GetComponent(typeof(Actor));						// should be there 
             if (m_actor == null)
                 continue;
@@ -326,50 +389,40 @@ public class blockbuster : EditorWindow
             {	// ------------------------- MOVE AND DUPLICATE
 
                 GameObject obj = (GameObject)Instantiate(Selection.gameObjects[i], Selection.gameObjects[i].transform.position, Selection.gameObjects[i].transform.rotation);
-                //Platform tbs = (Platform)Selection.gameObjects[i].GetComponent(typeof(Platform));
                 str = Selection.gameObjects[i].name;										// change the name  
                 string[] strarray = str.Split(new char[] { '-' });
                 obj.name = strarray[0] + obj.GetInstanceID();								// final name is block original name plus unique id 
-                //obj.transform.Equals(  Selection.gameObjects[i].transform );		// place
                 if (Selection.gameObjects[i].transform.parent)
                     obj.transform.parent = Selection.gameObjects[i].transform.parent;
-                //DestroyImmediate(obj.GetComponent("Platform"));
-                Actor tbs = (Actor)obj.GetComponent(typeof(Actor));
+                Actor tempactor = (Actor)obj.GetComponent(typeof(Actor));
                 Guid g;
                 g = Guid.NewGuid();
-                if ( tbs )
-                    tbs.Actorprops.guid = g.ToString();//obj.GetInstanceID().ToString();
+                if (tempactor)
+                {
+                    tempactor.Actorprops.guid = g.ToString();//obj.GetInstanceID().ToString();
+                    tempactor.Actorprops.parentgui = m_actor.Actorprops.guid;
+                    tempactor.Actorprops.orig_pos = Selection.gameObjects[i].transform.position;
+                    tempactor.Actorprops.orig_transform = Selection.gameObjects[i].transform.rotation;
+                }
+
                 //AddPlatformComponent(obj, null);
             }
-
-
-            if ( m_behavior )																// but test anyway 
-            {
-                
- 
-                Pathnode p = new Pathnode();
-                if (moveallpath)
-                {
-                    for (int c = 0; c < m_behavior.paramblock.m_pathnodes.Count; c++)
-                    {
-                        p = m_behavior.paramblock.m_pathnodes[c];
-                        p.pos += dir;
-                    }
-                }
-                else
-                {
-
-
-                    p = m_behavior.paramblock.m_pathnodes[nodepathindex - 1];
-                    p.pos += dir;
-                }
-            }
-
             Selection.gameObjects[i].transform.position += dir;
+   
+            // static block
+            if (m_behavior == null)
+                return;
+            
+
+            if (moveallpath)
+                foreach (Pathnode pn in m_behavior.paramblock.m_pathnodes)
+                    pn.pos += dir;
+            else
+                m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()].pos += dir;
+
+
 
             Repaint();
-
-
 
 
         }
@@ -526,7 +579,8 @@ public class blockbuster : EditorWindow
 		for(i = 0; i < Item_list.Count; i++)  
 		{
             XmlNodeList  l = Item_list.Item(i).ChildNodes;
-		    data.Add(l[0].InnerText);
+            if (data != null )
+		        data.Add(l[0].InnerText);
 		}
 		////debug.Log( data.length.ToString()  + " nb of elements " ) ;
         return true;
@@ -685,7 +739,7 @@ public class blockbuster : EditorWindow
 
 
 
-    bool InitGUIValues() 
+    static bool InitGUIValues() 
 	{
 		
 		//  todo fill the array with all png in editor folder 
@@ -694,8 +748,13 @@ public class blockbuster : EditorWindow
 
 
 //        string[] namearray = new string[] {"arrowup","arrowdown","arrowleft","arrowright","arrowup_d","arrowdown_d","arrowleft_d","arrowright_d","duplicate"};
-																																																																																																		
-		
+
+        EditorWindow.GetWindow(typeof(blockbuster));
+        behaviorManager bmng = new behaviorManager();
+        dynamicenumtest = (System.Enum)System.Activator.CreateInstance(bmng.assemblytest());
+
+        /*
+
 		uparrow = (Texture2D )Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowup.png", typeof(Texture2D)) ;  
 		downarrow =(Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowdown.png", typeof(Texture2D) ) ;  
 		leftarrow =(Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowleft.png", typeof(Texture2D) ) ;
@@ -705,11 +764,12 @@ public class blockbuster : EditorWindow
 		d_leftarrow = (Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowleft_d.png", typeof(Texture2D) ) ;  
 		d_rightarrow = (Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowright_d.png", typeof(Texture2D) ) ;  
 		duplicate_t = (Texture2D )  Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/duplicate.png", typeof(Texture2D) ) ;  
+        */
 
 	//	bsz  = 20;			// unit for interface pos 
 		
 		// default base to use 
-		selectedbasename ="/PLATFORM/HIGHTECH/" ;
+		//selectedbasename ="/PLATFORM/HIGHTECH/" ;
 		return true ;
 
 		
@@ -980,14 +1040,35 @@ public class blockbuster : EditorWindow
 
     }
 
+    private void changeEditorFlag( bool bstatic)
+    {
+        StaticEditorFlags flags = new StaticEditorFlags();
+        if ( bstatic )
+            flags  = (StaticEditorFlags.BatchingStatic | StaticEditorFlags.LightmapStatic | StaticEditorFlags.NavigationStatic);
+        foreach (GameObject G in Selection.gameObjects )
+           GameObjectUtility.SetStaticEditorFlags(G, flags);
+    }
+
+
+    public delegate void spinner(int i);
+
+
 
 
 
 void OnGUI () 
 {
+    
+    BlockSize = CalculateSelectionSize(Selection.gameObjects);
+
+    // keeep path node index in the range 
+    
+    //m_behavior.paramblock.targetindex = Mathf.Clamp(m_behavior.paramblock.targetindex, 0, m_behavior.paramblock.m_pathnodes.Count - 1);
+
+
+
 
     Vector3 MoveVector;			// move value 
-
 
 	// just check that all gameobjects have a block setup component  
 	// make sure all head of hierachy object have a paramblock script attached  
@@ -1002,8 +1083,25 @@ void OnGUI ()
         selectedtab = 2;
     if (GUILayout.Button("REPLAY", EditorStyles.toolbarButton))
         selectedtab = 3;
-        GUILayout.EndHorizontal();
 
+    if (Dataset.menubaritem())  // button from dataset ...    
+        selectedtab = 4;
+    GUILayout.EndHorizontal();
+
+
+    if (selectedtab == 4)
+    {
+
+        if (blockbuster.dynamicenumtest == null)
+            blockbuster.InitGUIValues();
+
+        blockbuster.dynamicenumtest = (System.Enum)EditorGUILayout.EnumPopup("block action:", blockbuster.dynamicenumtest, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+    }
+    
+        
+
+   
+    
     if (selectedtab == 3)
     {
         if (m_replayactors.Count == 0) // ||  m_replayactors[0] == null)
@@ -1080,7 +1178,7 @@ void OnGUI ()
 
                 AddActorComponent(go, null, null);
                 m_actor = (Actor)go.GetComponent(typeof(Actor));
-                S = CalculateSelectionSize(Selection.gameObjects);
+                BlockSize = CalculateSelectionSize(Selection.gameObjects);
                 if (m_actor == null)
                 {
                     GUI.Label(new Rect(0, 20, 200, 200), "SELECT A VALID GAME OBJECT");
@@ -1099,7 +1197,7 @@ void OnGUI ()
 	else 
 		bb_dirty = false; 
 	
-	StaticEditorFlags editorflag ;
+	
     //GUI.Toolbar(new Rect (25, 25, 250, 30), toolbarInt, toolbarStrings);
 
     if ( selectedtab == 0 )
@@ -1159,96 +1257,32 @@ void OnGUI ()
         GUI.EndGroup ();
 
             if (GUI.Button(new Rect(bsz * 3, bsz * 5, bsz, bsz), uparrow)) //-------------- FRONT BUTTON
-			{
-				if ( b_front_X ) ofset = S.x ; 
-				else ofset = S.z ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( front * ofset ) ;
-				DoBlockMove( false , MoveVector  ) ; 
-				////debug.Log( toolbarInt.ToString());
-			}
-
+                DoBlockMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z))); 
             if (GUI.Button(new Rect(bsz * 3, bsz * 7, bsz, bsz), downarrow)) //-------------- 	BACK BUTTON
-			{
-				if ( b_front_X ) ofset = S.x ; else 	ofset = S.z ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( back * ofset ) ;
-				DoBlockMove( false , MoveVector  ) ; 
-			}
-                
+                DoBlockMove(false, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z))); 
 			if (GUI.Button(new Rect(bsz*2,bsz*6,bsz,bsz),leftarrow)) //-------------- 	LEFT BUTTON
-			{
-				if ( b_front_X ) ofset = S.z ; else 	ofset = S.x ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( left * ofset ) ;
-				DoBlockMove( false , -MoveVector  ) ; 
-			}
+                DoBlockMove(false, (right * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z))); 
             if (GUI.Button(new Rect(bsz * 4, bsz * 6, bsz, bsz), rightarrow)) //-------------- 	RIGHT BUTTON
-			{
-				if ( b_front_X ) ofset = S.z ; else ofset = S.x ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( right * ofset ) ;
-				DoBlockMove( false , -MoveVector  ) ; 
-			}
-
+                DoBlockMove(false, (left * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
             if (GUI.Button(new Rect(bsz * 7, bsz * 5, bsz, bsz), uparrow)) //-------------- 	FRONT BUTTON
-			{
-				ofset = S.y ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( Vector3.up * ofset ) ;
-				DoBlockMove( false , MoveVector  ) ; 
-			}
+                DoBlockMove(false, (Vector3.up * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue))); 
             if (GUI.Button(new Rect(bsz * 7, bsz * 7, bsz, bsz), downarrow)) //-------------- 	DOWN BUTTON
-			{
-				ofset = S.y ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( Vector3.down * ofset ) ;
-				DoBlockMove( false , MoveVector  ) ; 
-			}
-			// -----------------------------------------------------------------------------------------	SAME WITH DUPLICATE  
+                DoBlockMove(false, (Vector3.down * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
+            // -----------------------------------------------------------------------------------------	SAME WITH DUPLICATE  
+
             if (GUI.Button(new Rect(bsz * 3, bsz * 4, bsz, bsz), duplicate_t)) //-------------- FRONT BUTTON
-			{
-				if ( b_front_X ) ofset = S.x ; else ofset = S.z ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( front * ofset ) ;
-				DoBlockMove( true , MoveVector  ) ; 
-			}
-			if (GUI.Button(new Rect(bsz*3,bsz*8,bsz,bsz),duplicate_t)) //-------------- BACK BUTTON
-			{
-				if ( b_front_X ) ofset = S.x ; else 	ofset = S.z ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( back * ofset ) ;
-				DoBlockMove( true , MoveVector  ) ; 
-			}
-			if (GUI.Button(new Rect(bsz,bsz*6,bsz,bsz),duplicate_t)) //-------------- 	LEFT BUTTON
-			{
-				if ( b_front_X ) ofset = S.z ; else 	ofset = S.x ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( left * ofset ) ;
-				DoBlockMove( true , -MoveVector  ) ; 
-			}
-			if (GUI.Button(new Rect(bsz*5,bsz*6,bsz,bsz),duplicate_t)) //-------------- RIGHT BUTTON
-			{
-				if ( b_front_X ) ofset = S.z ; else ofset = S.x ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( right * ofset ) ;
-				DoBlockMove( true , -MoveVector  ) ; 
-			}
+                DoBlockMove(true, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
+            if (GUI.Button(new Rect(bsz * 3, bsz * 8, bsz, bsz), duplicate_t)) //-------------- BACK BUTTON
+                DoBlockMove(true, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
+            if (GUI.Button(new Rect(bsz, bsz * 6, bsz, bsz), duplicate_t)) //-------------- 	LEFT BUTTON
+                DoBlockMove(true, (right * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
+            if (GUI.Button(new Rect(bsz * 5, bsz * 6, bsz, bsz), duplicate_t)) //-------------- RIGHT BUTTON
+                DoBlockMove(true, (left * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
 				
 			if (GUI.Button(new Rect(bsz*7,bsz*4,bsz,bsz),duplicate_t)) //-------------- UP BUTTON
-			{
-				ofset = S.y ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( Vector3.up * ofset ) ;
-				DoBlockMove( true , MoveVector  ) ; 
-			}
-			if (GUI.Button(new Rect(bsz*7,bsz*8,bsz,bsz),duplicate_t)) //-------------- DOWN BUTTON
-			{
-				ofset = S.y ;
-				if ( b_fixedstepedit ) ofset = stepvalue ; 
-				MoveVector = ( Vector3.down * ofset ) ;
-				DoBlockMove( true , MoveVector  ) ; 
-			}
+                DoBlockMove(true, (Vector3.up * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
+            if (GUI.Button(new Rect(bsz * 7, bsz * 8, bsz, bsz), duplicate_t)) //-------------- DOWN BUTTON
+                DoBlockMove(true, (Vector3.down * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
 				
 			if (GUI.Button(new Rect(bsz*9,bsz*6,bsz,bsz),"Y")) //---------------------- ROTATE Y BUTTON  ( ZUP ?? ) 
 				
@@ -1339,162 +1373,62 @@ void OnGUI ()
 							{
 								case PLTF_TYPE.MOVING : // ---------------------------------------- plateform moving state  
 
+
+                                    m_behavior.paramblock.ismoving = !m_behavior.paramblock.editsub; 
+
+
                                     // behavior not set at this time 
-
-
                                     // ========== add limitation to the target index 
+                                    Pathnode targetedpathnode = null;
+                                    if (m_behavior.paramblock.m_pathnodes.Count != 0)
+                                        targetedpathnode = m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()];
 
-                                    int i = 0;
-                                    if (m_behavior.paramblock.targetindex > m_behavior.paramblock.m_pathnodes.Count)
-                                        i =  m_behavior.paramblock.m_pathnodes.Count - 1;
-                                    else if (m_behavior.paramblock.targetindex < 0)
-                                        i = 0;
 
-                                    Pathnode targetedpathnode = new Pathnode();
-                                    targetedpathnode.pos = m_actor.transform.position;
+                                    if (targetedpathnode == null)
+                                        Debug.Log(" cannot get a valid targetedpathnode");
                                     // need at least a pathnode 
-                                    if (m_behavior.paramblock.m_pathnodes.Count == 0)
-                                        m_behavior.paramblock.m_pathnodes.Add(targetedpathnode);
-                                        //int i = Mathf.Clamp(m_behavior.paramblock.targetindex,0,m_behavior.paramblock.m_pathnodes.Count-1 );
 
-                                        targetedpathnode = m_behavior.paramblock.m_pathnodes[i];
-                                    
-
-               
 
                                     
-                                    //  
-									for ( i = 0 ; i < Selection.gameObjects.GetLength(0) ; i++ ) 
-									{
-										StaticEditorFlags f = new StaticEditorFlags ()   ; // clear static flags
-										//editorflag = (  ) ;
-										GameObjectUtility.SetStaticEditorFlags(Selection.gameObjects[i], (f));
-										
-                                            m_behavior =(Behavior) Selection.gameObjects[i].GetComponent( typeof(Behavior)); // associated script 
-                                            if (m_behavior == null)
-                                                continue;
-	                                        m_actor.Actorprops.pltf_sate = PLTF_TYPE.MOVING  ; // same enum fix as mentioned before  
-   
-                                            
-	    							}
-
-                                    
-
-
+                                    changeEditorFlag(false);
 
 
 									//************************* controllers for moving
                                     m_behavior.paramblock.move_ampl = EditorGUILayout.Slider("move speed", m_behavior.paramblock.move_ampl, 0, 10, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
 									//---------------------------------------------------------------------------------------------- RESET POSITION 
-									if(GUILayout.Button("reset Position",GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
-										for ( i = 0 ; i < Selection.gameObjects.GetLength(0) ; i++ ) 
-										{
-                                            m_behavior = (Behavior)Selection.gameObjects[i].GetComponent(typeof(Behavior)); // associated script 
-											if ( m_actor != null ) 
-											{ // pull back at original place ( where the go  has been spotted for the first time 
-                                                Selection.gameObjects[i].transform.rotation = m_actor.Actorprops.orig_transform;
-												Selection.gameObjects[i].transform.position = m_actor.Actorprops.orig_pos;
-                                                m_behavior.paramblock.editsub = true;
-                                                //UIPB.editsub = true;
-												
-											}
-										}
-								//---------------------------------------------------------------------------------------------- MOVE BUTTON  		
-
+	
                                     m_behavior.paramblock.editsub = EditorGUILayout.Toggle("Edit Path", m_behavior.paramblock.editsub);
-                                    m_behavior.paramblock.ismoving = !m_behavior.paramblock.editsub;  
+                                     
                                     //if (UIPB.editsub)
                                     if (m_behavior.paramblock.editsub)
                                     GUI.BeginGroup(new Rect(5, bsz * 4, 280, 600));
 
 
 
-                                    if (m_behavior.paramblock.m_pathnodes.Count == 0)
-                                        m_behavior.paramblock.targetindex = 0;
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 2, bsz * 4, bsz, bsz), "\"")) //------------------------------- FRONT
-                                    {
-                                        if (b_front_X) ofset = S.x; else ofset = S.z;
-                                        MoveVector = (front * ofset);
-                                        if (b_fixedstepedit) ofset = stepvalue;
-                                        DoBlockMove(false, MoveVector, false , i);
-                                        targetedpathnode.pos = go.transform.position;
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 2, bsz * 6, bsz, bsz), ".")) //------------------------------- back
-                                    {
-                                        if (b_front_X) ofset = S.x; else ofset = S.z;
-                                        MoveVector = (back * ofset);
-                                        if (b_fixedstepedit) ofset = stepvalue;
-                                        DoBlockMove(false, MoveVector, false , i);
-                                        targetedpathnode.pos = go.transform.position;
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 1, bsz * 5, bsz, bsz), "<")) //------------------------------- left
-                                    {
-                                        if (b_front_X) ofset = S.z; else ofset = S.x;
-                                        MoveVector = (left * ofset);
-                                        if (b_fixedstepedit) ofset = stepvalue;
-                                        DoBlockMove(false, -MoveVector , false , i );
-                                        targetedpathnode.pos = go.transform.position;
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 3, bsz * 5, bsz, bsz), ">")) //------------------------------- right
-                                    {
-                                        if (b_front_X) ofset = S.z; else ofset = S.x;
-                                        MoveVector = (right * ofset);
-                                        if (b_fixedstepedit) ofset = stepvalue;
-                                        DoBlockMove(false, -MoveVector, false , i );
-                                        targetedpathnode.pos = go.transform.position;
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 6, bsz * 4, bsz, bsz), "\"")) //------------------------------- UP
-                                    {
-                                        ofset = S.y;
-                                        MoveVector = (Vector3.up * ofset);
-                                        if (b_fixedstepedit) ofset = stepvalue;
-                                        DoBlockMove(false, MoveVector, false , i);
-                                        targetedpathnode.pos = go.transform.position;
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 6, bsz * 6, bsz, bsz), ".")) //------------------------------- DOWN
-                                    {
-                                        ofset = S.y;
-                                        MoveVector = (Vector3.down * ofset);
-                                        if (b_fixedstepedit) ofset = stepvalue;
-                                        DoBlockMove(false, MoveVector, false , i);
-                                        targetedpathnode.pos = go.transform.position;
-                                    }
-                                    // adjust pathnodes number 
-                                    if (m_behavior.paramblock.m_pathnodes.Count != m_behavior.paramblock.maxhandle)
-                                    {
 
 
+                                    if (m_behavior.paramblock.editsub)
+                                    {
+                                        int decaly = 3;
 
-
-                                        if (m_behavior.paramblock.m_pathnodes.Count > m_behavior.paramblock.maxhandle)
-                                            for (int c = m_behavior.paramblock.m_pathnodes.Count; c > m_behavior.paramblock.maxhandle; c--)
-                                                m_behavior.paramblock.RemoveLastPathNode();
-                                        for (int c = m_behavior.paramblock.m_pathnodes.Count; c < m_behavior.paramblock.maxhandle; c++)
+                                        if (GUI.Button(new Rect(bsz * 2, bsz * 3, bsz, bsz), "\"")) //------------------------------- FRONT
+                                            DoBlockMove(false, (front * (ofset = (b_front_X) ? BlockSize.x : BlockSize.z)), false);
+                                        if (GUI.Button(new Rect(bsz * 2, bsz * 5, bsz, bsz), ".")) //------------------------------- back
+                                            DoBlockMove(false, (back * (ofset = (b_front_X) ? BlockSize.x : BlockSize.z)), false);
+                                        if (GUI.Button(new Rect(bsz * 1, bsz * 4, bsz, bsz), "<")) //------------------------------- left
+                                            DoBlockMove(false, -(left * (ofset = (!b_front_X) ? BlockSize.x : BlockSize.z)), false);
+                                        if (GUI.Button(new Rect(bsz * 3, bsz * 4, bsz, bsz), ">")) //------------------------------- right
+                                            DoBlockMove(false, -(right * (ofset = (!b_front_X) ? BlockSize.x : BlockSize.z)), false);
+                                        if (GUI.Button(new Rect(bsz * 6, bsz * 3, bsz, bsz), "\"")) //------------------------------- UP
+                                            DoBlockMove(false, (Vector3.up * BlockSize.y), false);
+                                        if (GUI.Button(new Rect(bsz * 6, bsz * 5, bsz, bsz), ".")) //------------------------------- DOWN
+                                            DoBlockMove(false, (Vector3.down * BlockSize.y), false);
+                                        if (GUI.Button(new Rect(bsz * 12, bsz * 3, bsz * 2, bsz), ">>")) //------------ NEXT POINT
                                         {
-                                            Pathnode pn = new Pathnode();
-                                            pn.ilookatpoint = 0;
-                                            pn.pos = go.transform.position;
-                                            m_behavior.paramblock.AddPathNode(pn);
-                                        }
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 12, bsz * 4, bsz * 2, bsz), ">>")) //------------ NEXT POINT
-                                    {
-                                        m_behavior.paramblock.targetindex++;
 
-                                        if (m_behavior.paramblock.targetindex >= m_behavior.paramblock.m_pathnodes.Count - 1)
-                                            m_behavior.paramblock.targetindex = m_behavior.paramblock.m_pathnodes.Count - 1;
-                                        //debug.Log(bs.paramblock.targetindex);
-                                        targetedpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.targetindex);
-
-                                        if (targetedpathnode!= null)
-                                        {
+                                            m_behavior.paramblock.SetSafeTargetIndex(m_behavior.paramblock.GetSafeTargetIndex() + 1);
+                                            //m_behavior.paramblock.targetindex = Mathf.Clamp(m_behavior.paramblock.targetindex+1 , 1 ,m_behavior.paramblock.m_pathnodes.Count) ;
+                                            targetedpathnode = m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()];
                                             //int ti = m_actor.paramblock.targetindex;
                                             int lkp = targetedpathnode.ilookatpoint;
                                             Vector3 targetpos = targetedpathnode.Getlookatpoint(lkp, 1.0f);
@@ -1503,161 +1437,114 @@ void OnGUI ()
                                             go.transform.rotation = Quaternion.RotateTowards(go.transform.rotation, Qr, 360.0f);
                                             go.transform.position = targetedpathnode.pos;
                                         }
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 9, bsz * 4, bsz * 2, bsz), "<<")) //------------ NEXT POINT
-                                    {
-                                        m_behavior.paramblock.targetindex--;
-                                        if (m_behavior.paramblock.targetindex < 0)
-                                            m_behavior.paramblock.targetindex = 0;
-                                        targetedpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.targetindex);
-
-                                        if (targetedpathnode != null)
+                                        if (GUI.Button(new Rect(bsz * 9, bsz * 3, bsz * 2, bsz), "<<")) //------------ NEXT POINT
                                         {
-                                            //int ti = m_actor.paramblock.targetindex;
+                                            m_behavior.paramblock.SetSafeTargetIndex(m_behavior.paramblock.GetSafeTargetIndex() - 1);
+                                            targetedpathnode = m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()];
                                             int lkp = targetedpathnode.ilookatpoint;
                                             Vector3 targetpos = targetedpathnode.Getlookatpoint(lkp, 1.0f);
                                             var Qr = Quaternion.LookRotation(Vector3.up, targetpos);
                                             Qr *= Quaternion.Euler(Vector3.forward);
-                                            go.transform.rotation = Quaternion.RotateTowards(go.transform.rotation,Qr ,360.0f);
+                                            go.transform.rotation = Quaternion.RotateTowards(go.transform.rotation, Qr, 360.0f);
                                             go.transform.position = targetedpathnode.pos;
                                         }
-                                    }
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 12, bsz * 6, bsz * 2, bsz), "+"))
-                                    {
-                                        m_behavior.paramblock.targetindex++;
-                                        m_behavior.paramblock.maxhandle += 1;
-                                    }
-
-
-                                    if (m_behavior.paramblock.editsub)
-                                    if (GUI.Button(new Rect(bsz * 9, bsz * 6, bsz * 2, bsz), "-"))
-                                    {
-                                        // move need 2 point or switch to static 
-                                        if (m_behavior.paramblock.maxhandle > 1)
+                                        if (GUI.Button(new Rect(bsz * 12, bsz * 5, bsz * 2, bsz), "+"))
                                         {
-                                            m_behavior.paramblock.maxhandle -= 1;
-                                            if (m_behavior.paramblock.targetindex > m_behavior.paramblock.maxhandle)
-                                                m_behavior.paramblock.targetindex = m_behavior.paramblock.maxhandle;
-                                            m_behavior.paramblock.RemovePathNodeAt(m_behavior.paramblock.targetindex);
-                                            targetedpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.targetindex);
-
-                                            if (m_behavior.paramblock.m_pathnodes.Count > m_behavior.paramblock.targetindex)
-                                            {
-                                                if (m_behavior.paramblock.targetindex > 0)
-                                                    m_behavior.paramblock.targetindex--;
-                                                // Debug.Log("remove at " + m_behavior.paramblock.targetindex.ToString());
-                                                if ( targetedpathnode != null )
-                                                    go.transform.position = targetedpathnode.pos;
-                                            }
-                                            else
-                                            {
-                                                targetedpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.m_pathnodes.Count - 1);
-                                                go.transform.position = targetedpathnode.pos;
-
-                                            }
+                                            m_behavior.paramblock.maxhandle += 1;
+                                            UpdatePathnodes(Selection.activeGameObject.transform.position);
+                                            DoBlockMove(false, new Vector3(0.0f, 0.01f, 0.0f), false);
                                         }
-
-                                    }
-                                    if (m_behavior.paramblock.m_pathnodes.Count > 0)
-                                    {
-                                        if (m_behavior.paramblock.targetindex < 0)
-                                            m_behavior.paramblock.targetindex = 0;
-                                        if (m_behavior.paramblock.m_pathnodes.Count > m_behavior.paramblock.targetindex) // protection 
+                                        if (GUI.Button(new Rect(bsz * 9, bsz * 5, bsz * 2, bsz), "-"))
                                         {
-                                            targetedpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.targetindex);
+                                            m_behavior.paramblock.maxhandle--;
+                                            UpdatePathnodes(Selection.activeGameObject.transform.position);
+                                            if (m_behavior.paramblock.GetSafeTargetIndex() > -1)
+                                                go.transform.position = m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()].pos;
+                                        }
+                                    } 
+                                    // end edit sub 
 
-                                            targetedpathnode.lookatspeed = EditorGUILayout.Slider("lookatspeed", targetedpathnode.lookatspeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                    if (m_behavior.paramblock.GetSafeTargetIndex() > -1)
+                                    {
+                                        targetedpathnode = m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()];
+                                        targetedpathnode.lookatspeed = EditorGUILayout.Slider("lookatspeed", targetedpathnode.lookatspeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                        targetedpathnode.translatespeed = EditorGUILayout.Slider("translatespeed", targetedpathnode.translatespeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                        targetedpathnode.ilookatpoint = (int)EditorGUILayout.Slider("lookat", targetedpathnode.ilookatpoint, 0, 8, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                        targetedpathnode.waitonnode = (float)EditorGUILayout.Slider("wait", targetedpathnode.waitonnode, 0, 30, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
 
-
-                                            Pathnode UIpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.targetindex);
-
-
-                                            UIpathnode.translatespeed = EditorGUILayout.Slider("translatespeed", UIpathnode.translatespeed, 0, 10.0f, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                                            UIpathnode.ilookatpoint = (int)EditorGUILayout.Slider("lookat", UIpathnode.ilookatpoint, 0, 8, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                                            UIpathnode.waitonnode = (float)EditorGUILayout.Slider("wait", UIpathnode.waitonnode, 0, 30, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-
-                                            if (!m_behavior.paramblock.ismoving)
-                                            {
-                                                //int ti = m_actor.paramblock.targetindex;
-                                                targetedpathnode = m_behavior.paramblock.GetPathNode(m_behavior.paramblock.targetindex);
-
-
-                                                int lkp = targetedpathnode.ilookatpoint;
-                                                Vector3 targetpos = targetedpathnode.Getlookatpoint(lkp, 1.0f);
-                                                var Qr = Quaternion.LookRotation(Vector3.up, targetpos);
-                                                Qr *= Quaternion.Euler(Vector3.forward);
-                                                go.transform.rotation = Quaternion.RotateTowards(go.transform.rotation, Qr, 360.0f);
-                                            }
+                                        if (!m_behavior.paramblock.ismoving)
+                                        {
+                                            int lkp = targetedpathnode.ilookatpoint;
+                                            Vector3 targetpos = targetedpathnode.Getlookatpoint(lkp, 1.0f);
+                                            var Qr = Quaternion.LookRotation(Vector3.up, targetpos);
+                                            Qr *= Quaternion.Euler(Vector3.forward);
+                                            go.transform.rotation = Quaternion.RotateTowards(go.transform.rotation, Qr, 360.0f);
                                         }
                                     }
                                     m_behavior.paramblock.b_pathloop = EditorGUILayout.Toggle("loop", m_behavior.paramblock.b_pathloop, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                                     m_behavior.paramblock.b_triggered = EditorGUILayout.Toggle("have trigger", m_behavior.paramblock.b_triggered, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                                    m_behavior.paramblock.b_showdebuginfos = EditorGUILayout.Toggle("show debug infos", m_behavior.paramblock.b_showdebuginfos, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+
                                     if (m_behavior.paramblock.b_triggered)
-                                {
-                                    m_behavior.paramblock.b_triggeronce = EditorGUILayout.Toggle("trigger once", m_behavior.paramblock.b_triggeronce, GUILayout.MaxWidth(280));
-                                    m_behavior.paramblock.colider_type = (COLIDER_TYPE)EditorGUILayout.EnumPopup("collider to use :", m_behavior.paramblock.colider_type, GUILayout.MinWidth(250), GUILayout.MaxWidth(250));
- 									for ( i = 0 ; i< Selection.gameObjects.GetLength(0) ; i++ ) 
- 									{
-                                        m_behavior = (Behavior)Selection.gameObjects[i].GetComponent(typeof(Behavior)); // associated script 
- 										if ( m_actor == null ) 
- 											break;
- 										//MeshFilter M =(MeshFilter) Selection.gameObjects[i].GetComponent(typeof(MeshFilter)) ;
-                                        if (m_behavior.triggerobject == null)  
- 										{	
-	 										GameObject  colholder   = new GameObject();
-	 										colholder.name = ( Selection.gameObjects[i].name + "_trigger" )  ;
-	 										colholder.AddComponent( "triggerscript" )  ;
-	 										colholder.transform.position = Selection.gameObjects[i].transform.position ;
-                                            m_behavior.triggerobject = colholder;
-                                            triggerscript ts = (triggerscript)m_behavior.triggerobject.GetComponent("triggerscript");
-                                            ts.parentobject = Selection.gameObjects[i] ;
-                                            m_behavior.triggerobject.transform.parent = Selection.gameObjects[i].transform;
-	 										// give a ref to the trigger go to script that have collider  
-	 										ts.triggerobject = colholder ;
-	 									}
-                                        switch (m_behavior.paramblock.colider_type) 
-	 									{
-	 										case COLIDER_TYPE.BOX :
-                                                if (m_behavior.triggerobject.GetComponent("BoxCollider") == null) 
-	 											{
-	 												 //MeshFilter MF =(MeshFilter) Selection.gameObjects[i].GetComponent("MeshFilter");
-                                                     //Vector3 VV=  MF.renderer.bounds.center ; 
-	 												 //debug.Log(VV.ToString());
-                                                    BoxCollider MBcolider = (BoxCollider)m_behavior.triggerobject.AddComponent("BoxCollider");
-	 												 //m_collider.bounds.size = M.renderer.bounds.size ;
-	 												 MBcolider.isTrigger = true ;
-                                                     if (m_behavior.triggerobject.GetComponent("SphereCollider"))
-                                                         DestroyImmediate(m_behavior.triggerobject.GetComponent("SphereCollider"));
-			 									 	 //bs.triggerobject.GetComponent(BoxCollider).bounds.size = vp;
-	 											}	
-		 										break;
+                                    {
+                                        m_behavior.paramblock.b_triggeronce = EditorGUILayout.Toggle("trigger once", m_behavior.paramblock.b_triggeronce, GUILayout.MaxWidth(280));
+                                        m_behavior.paramblock.colider_type = (COLIDER_TYPE)EditorGUILayout.EnumPopup("collider to use :", m_behavior.paramblock.colider_type, GUILayout.MinWidth(250), GUILayout.MaxWidth(250));
+
+                                        for ( i = 0 ; i< Selection.gameObjects.GetLength(0) ; i++ ) 
+ 									    {
+                                            m_behavior = (Behavior)Selection.gameObjects[i].GetComponent(typeof(Behavior)); // associated script 
+ 										    if ( m_actor == null ) 
+ 											    break;
+ 										    //MeshFilter M =(MeshFilter) Selection.gameObjects[i].GetComponent(typeof(MeshFilter)) ;
+                                            if (m_behavior.triggerobject == null)  
+ 										    {	
+	 										    GameObject  colholder   = new GameObject();
+	 										    colholder.name = ( Selection.gameObjects[i].name + "_trigger" )  ;
+	 										    colholder.AddComponent( "triggerscript" )  ;
+	 										    colholder.transform.position = Selection.gameObjects[i].transform.position ;
+                                                m_behavior.triggerobject = colholder;
+                                                triggerscript ts = (triggerscript)m_behavior.triggerobject.GetComponent("triggerscript");
+                                                ts.parentobject = Selection.gameObjects[i] ;
+                                                m_behavior.triggerobject.transform.parent = Selection.gameObjects[i].transform;
+	 										    // give a ref to the trigger go to script that have collider  
+	 										    ts.triggerobject = colholder ;
+	 									    }
+                                            switch (m_behavior.paramblock.colider_type) 
+	 									    {
+	 										    case COLIDER_TYPE.BOX :
+                                                    if (m_behavior.triggerobject.GetComponent("BoxCollider") == null) 
+	 											    {
+                                                        BoxCollider MBcolider = (BoxCollider)m_behavior.triggerobject.AddComponent("BoxCollider");
+	 												     MBcolider.isTrigger = true ;
+                                                         if (m_behavior.triggerobject.GetComponent("SphereCollider"))
+                                                             DestroyImmediate(m_behavior.triggerobject.GetComponent("SphereCollider"));
+	 											    }	
+		 										    break;
 		 										
-	 										case COLIDER_TYPE.SPHERE :
-                                                if (m_behavior.triggerobject.GetComponent("SphereCollider") == null) 
-	 											{
-	 												 //vp = Selection.gameObjects[i].GetComponent(MeshFilter).renderer.bounds.size ; 
-                                                    m_behavior.triggerobject.AddComponent("SphereCollider");
-                                                    SphereCollider MSCOLLIDER = (SphereCollider)m_behavior.triggerobject.GetComponent("SphereCollider");
-                                                        MSCOLLIDER.isTrigger = true;
-                                                        if (m_behavior.triggerobject.GetComponent("BoxCollider"))
-                                                            DestroyImmediate(m_behavior.triggerobject.GetComponent("BoxCollider"));
+	 										    case COLIDER_TYPE.SPHERE :
+                                                    if (m_behavior.triggerobject.GetComponent("SphereCollider") == null) 
+	 											    {
+	 												     //vp = Selection.gameObjects[i].GetComponent(MeshFilter).renderer.bounds.size ; 
+                                                        m_behavior.triggerobject.AddComponent("SphereCollider");
+                                                        SphereCollider MSCOLLIDER = (SphereCollider)m_behavior.triggerobject.GetComponent("SphereCollider");
+                                                            MSCOLLIDER.isTrigger = true;
+                                                            if (m_behavior.triggerobject.GetComponent("BoxCollider"))
+                                                                DestroyImmediate(m_behavior.triggerobject.GetComponent("BoxCollider"));
 			 									 	 
-	 											}
-	 										break; 
-	 										case COLIDER_TYPE.CAPSULE : 
-	 										break; 
-	 										case COLIDER_TYPE.MESH : 
-	 										break; 
-	 									}
+	 											    }
+	 										    break; 
+	 										    case COLIDER_TYPE.CAPSULE : 
+	 										    break; 
+	 										    case COLIDER_TYPE.MESH : 
+	 										    break; 
+	 									    }
 	 								}
 								}
 								else 
 								{
 									for ( i = 0 ; i< Selection.gameObjects.GetLength(0) ; i++ ) 
  									{
-                                        m_behavior.paramblock.ismoving = true;
+                                        //m_behavior.paramblock.ismoving = true;
                                         DestroyImmediate(m_behavior.triggerobject);
 									}
 								}
@@ -1673,14 +1560,7 @@ void OnGUI ()
                                 //List<Pathnode> pathnodes = m_behavior.paramblock.GetPathNodes();
                                 //int pmax = pathnodes.Count;
 
-								for ( i = 0 ; i< Selection.gameObjects.GetLength(0) ; i++ ) 
- 								{	
- 									StaticEditorFlags ff = new StaticEditorFlags()   ; // clear static flags
-									GameObjectUtility.SetStaticEditorFlags(Selection.gameObjects[i], (ff));
-                                    m_behavior = (Behavior)Selection.gameObjects[i].GetComponent(typeof (Behavior)); // associated script 
-                                    if (m_actor != null)
-                                        m_actor.Actorprops.pltf_sate = PLTF_TYPE.ROTATING; // same enum fix as mentioned before  
-								}
+                                changeEditorFlag(false);
 
                                 if (!m_behavior)
                                     return;
@@ -1689,45 +1569,26 @@ void OnGUI ()
                                 m_behavior.paramblock.rotationspeed = EditorGUILayout.Slider("speed", m_behavior.paramblock.rotationspeed, 0.0f, 5.0f, GUILayout.MaxWidth(280));
                                 m_behavior.paramblock.rotationtempo = EditorGUILayout.Slider("temporisation", m_behavior.paramblock.rotationtempo, 0.0f, 2.0f, GUILayout.MaxWidth(280));
 								// editsub button shared over panels 
-                                b_editsub = EditorGUILayout.Toggle("editsub", b_editsub);
-                                if (b_editsub)
+                                m_behavior.paramblock.editsub = EditorGUILayout.Toggle("editsub", m_behavior.paramblock.editsub);
+                                if (m_behavior.paramblock.editsub)
                                 {
-                                    m_behavior.paramblock.b_rotate_X = EditorGUILayout.Toggle("rotate on X", m_behavior.paramblock.b_rotate_X, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                                    m_behavior.paramblock.b_rotate_Y = EditorGUILayout.Toggle("rotate on Y", m_behavior.paramblock.b_rotate_Y, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                                    m_behavior.paramblock.b_rotate_Z = EditorGUILayout.Toggle("rotate on Z", m_behavior.paramblock.b_rotate_Z, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                                     m_behavior.paramblock.b_revert_rotation = EditorGUILayout.Toggle("invert", m_behavior.paramblock.b_revert_rotation, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                                }   
+                                }
+                                else
+                                    m_behavior.paramblock.ismoving = false;
+
 								break;
+
 								case PLTF_TYPE.STATIC:
 
-                                //UpdateActorComponent(go, typeof(Actor), PLTF_TYPE.STATIC);
+                                    changeEditorFlag(true);
+								    if(GUILayout.Button("RESET",GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
+                                        foreach (GameObject g in Selection.gameObjects)
+                                        {
+                                            g.transform.rotation = m_actor.Actorprops.orig_transform;
+                                            g.transform.position = m_actor.Actorprops.orig_pos ;
+                                        }
 
-								for ( i = 0 ; i < Selection.gameObjects.GetLength(0) ; i++ ) 
-								{
-									// change flags for navmesh build 
-									editorflag = ( StaticEditorFlags.BatchingStatic |  StaticEditorFlags.LightmapStatic | StaticEditorFlags.NavigationStatic ) ;
-									GameObjectUtility.SetStaticEditorFlags(Selection.gameObjects[i], (editorflag));
-									//GameObjectUtility.SetStaticEditorFlags(Selection.gameObjects[i], (StaticEditorFlags.BatchingStatic));
-                                    m_behavior = (Behavior)Selection.gameObjects[i].GetComponent(typeof(Behavior)); 
-									if ( m_actor != null ) 
-									{
-                                        m_actor.Actorprops.pltf_sate = PLTF_TYPE.STATIC;
-										////debug.Log( "prout" );
-									} 
-								}		
-								if(GUILayout.Button("RESET",GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
-								{
-								    for ( i = 0 ; i < Selection.gameObjects.GetLength(0) ; i++ ) 
-								    {
-                                        m_behavior = (Behavior)Selection.gameObjects[i].GetComponent(typeof(Behavior)); // associated script 
-									    if ( m_actor != null ) 
-									    {
-                                            Selection.gameObjects[i].transform.rotation = m_actor.Actorprops.orig_transform;
-                                                    Selection.gameObjects[i].transform.position = m_actor.Actorprops.orig_pos;
-									    }
-								    }
-								
-                                }
 								break;
 								case PLTF_TYPE.FALLING:
                                     
@@ -1771,6 +1632,17 @@ void OnGUI ()
         if (GUILayout.Button("LOAD PRESET", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
             loadscene(true);
 
+        if (GUILayout.Button("reset Position", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+            for (int ti = 0; ti < Selection.gameObjects.GetLength(0); ti++)
+            {
+                Actor temactor = (Actor)Selection.gameObjects[ti].GetComponent(typeof(Actor)); // associated script 
+                if (temactor != null)
+                { // pull back at original place ( where the go  has been spotted for the first time 
+                    Selection.gameObjects[ti].transform.rotation = temactor.Actorprops.orig_transform;
+                    Selection.gameObjects[ti].transform.position = temactor.Actorprops.orig_pos;
+                }
+            }
+			
 
 		if(GUILayout.Button("GROUP",GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
 		{
@@ -1796,7 +1668,7 @@ void OnGUI ()
 	
         if(GUILayout.Button("UNGROUP",GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
 		{
-            for ( var c = 0 ; c< Selection.activeGameObject.transform.childCount-1 ;c++ ) 
+            for ( var c = 0 ; c< Selection.activeGameObject.transform.childCount ;c++ ) 
             {
                 GameObject tgo =  Selection.activeGameObject.transform.GetChild(c).gameObject;
                 Actor tbs = (Actor)tgo.GetComponent(typeof(Behavior));
@@ -1813,7 +1685,7 @@ void OnGUI ()
             int i;
             var sname = Selection.activeGameObject.name ;
             var tab1 = sname.Split('-');
-            for (var c = 0; c < allObjects.Length -1; c++)
+            for (var c = 0; c < allObjects.Length ; c++)
             {
                 var itname = allObjects[c].name ;
                 var tab2 = itname.Split('-');

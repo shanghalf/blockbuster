@@ -16,20 +16,57 @@ using System.Collections;
 [ExecuteInEditMode()]
 public class MovingPlatform : Behavior
 {
+
+#if UNITY_EDITOR
+    /// <summary>
+    /// viewport callback 
+    /// </summary>
+    private void OnEnable()  { SceneView.onSceneGUIDelegate += OnCustomSceneGUI;}
+    private void OnDisable() { SceneView.onSceneGUIDelegate -= OnCustomSceneGUI;} 
     
+
+    protected void OnCustomSceneGUI(SceneView sceneview)
+    {
+        if (paramblock.m_pathnodes.Count == 0)
+            return;
+        string S = "";
+        S += "current target = " + paramblock.GetSafeTargetIndex().ToString() + "\n";
+        for (int i = 0; i < paramblock.m_pathnodes.Count; i++)
+        {
+            Handles.color = Color.blue;
+            Actor AP = (Actor)GetComponent(typeof(Actor));
+            if (paramblock.b_showdebuginfos)
+            {
+                Handles.Label(transform.position + Vector3.right * 5, S);
+                S += "pathway= " + " [" + i.ToString() + "--" + (i + 1).ToString() + "] \n";
+            }
+            Pathnode p0 = paramblock.GetPathNode(i);
+            Pathnode p1 = paramblock.GetPathNode(i + 1);
+            Handles.DrawLine(p0.pos, p1.pos);
+            if (paramblock.b_showdebuginfos)
+            {
+                Handles.Label(p0.pos + Vector3.up, i.ToString() + "\n" + "Timer :" + p0.timer.ToString());
+                Handles.Label(transform.position + Vector3.up, paramblock.GetSafeTargetIndex().ToString());
+            }
+            //Handles.DrawBezier(transform.transform.position, oldPoint, oldPoint,-oldPoint,Color.red,null,width);
+            Handles.FreeRotateHandle(Quaternion.identity, p0.pos, 0.2f);
+            Handles.FreeRotateHandle(Quaternion.identity, p1.pos, 0.2f);
+        }
+    }
+
+
+
+#endif
 
 
 
     public override void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        int pmax = paramblock.GetPathNodes().Count;
-        if (pmax <= 0)
-            return;
-        for (int c = 0; c <= pmax - 1; c++)
+        for (int c = 0; c < paramblock.m_pathnodes.Count; c++)
         {
             Gizmos.color = Color.red;
-            Pathnode p = (Pathnode)paramblock.GetPathNode(c);
+            Pathnode p = (Pathnode)paramblock.m_pathnodes[c];
             Vector3 lookatpoint = p.Getlookatpoint(p.ilookatpoint, 1.0f) + p.pos;
             Gizmos.DrawSphere(lookatpoint, 0.1f);
             Gizmos.DrawLine(lookatpoint, p.pos);
@@ -37,72 +74,43 @@ public class MovingPlatform : Behavior
         }
 
     }
-    // Use this for initialization
-    public override void Start()
-    {
-        if (paramblock.ismoving)
-        {
-            /*   rp = (ReplayerLogOutput)gameObject.AddComponent(typeof(ReplayerLogOutput));
-            rp.m_entityname = this.name;*/
-        }
-        if (!block_transform)
-            return;
-        //Actorprops.orig_transform = block_transform.rotation;
-        //Actorprops.orig_pos = block_transform.position;
 
-    }
     public override void Wait(float tempo)
     {
         paramblock.ismoving = false;
         var a = new WaitForSeconds(tempo);
         WaitForSeconds s = new WaitForSeconds(tempo);
         paramblock.ismoving = true;
-
     }
+
+
     // Update is called once per frame
     public override void Update()
     {
-        Pathnode p = paramblock.GetPathNode(paramblock.targetindex);
-        int pmax = paramblock.m_pathnodes.Count;
-        if (paramblock.targetindex >= pmax || paramblock.editsub)
+        // useless to move 
+        if (!paramblock.ismoving)
             return;
-        if (paramblock.targetindex >= pmax - 1)
-        {
-            if (paramblock.b_pathloop)
-                if ((Vector3.Distance(transform.position, p.pos) == 0.0f))
-                {
-                    paramblock.targetindex = 0;
-                    paramblock.movedir = (1);
-                    // cannot pop at exact pos 
-                    Vector3 offs = Vector3.forward / 100; // slight offset 
-                    transform.position = p.pos + offs;
-                }
-            paramblock.movedir = (-1);
-        }
-        else if (paramblock.targetindex <= 0)
-            paramblock.movedir = (1);
+
+        Pathnode p = paramblock.m_pathnodes[paramblock.GetSafeTargetIndex()];
         Vector3 target = p.pos;
         if (Vector3.Distance(transform.position, target) == 0.0f)
         {
             if (p.timer > 0)
-#if UNITY_EDITOR   
-
+                #if UNITY_EDITOR   
                     p.timer -= editortick ;
-#endif
-#if !UNITY_EDITOR
+                #endif
+                #if !UNITY_EDITOR
                 paramblock.pathnodes[paramblock.targetindex].timer -= Time.deltaTime;
-#endif
+                #endif
             else
             {
                 p.timer = p.waitonnode;
-                paramblock.targetindex += paramblock.movedir;
+                paramblock.SetSafeTargetIndex( paramblock.GetSafeTargetIndex() + paramblock.movedir );
             }
         }
         if (paramblock.ismoving)//|| (Vector3.Distance(transform.position, paramblock.pathnodes[0].pos) > 0.0f))
         {
-            int ti = paramblock.targetindex;
             int lkp = p.ilookatpoint;
-            //Debug.Log(lkp);
             float rspeed, tspeed;
             Vector3 targetpos = p.Getlookatpoint(lkp, 1.0f);
             // ude local speed for TR or global 
@@ -122,14 +130,25 @@ public class MovingPlatform : Behavior
             var Qr = Quaternion.LookRotation(Vector3.up, targetpos);
             //Qr *= Quaternion.Euler(Vector3.forward);
 
-#if UNITY_EDITOR
-             transform.position = Vector3.MoveTowards(transform.position, target, tspeed * editortick);
-             transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * editortick));
-#endif
-#if !UNITY_EDITOR
-            transform.position = Vector3.MoveTowards(transform.position, target, tspeed * Time.deltaTime);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * Time.deltaTime));
-#endif
+            #if UNITY_EDITOR
+                transform.position = Vector3.MoveTowards(transform.position, target, tspeed * editortick);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * editortick));
+             //Debug.Log(Vector3.MoveTowards(transform.position, target, tspeed * editortick).ToString());
+            #endif
+            #if !UNITY_EDITOR
+                transform.position = Vector3.MoveTowards(transform.position, target, tspeed * Time.deltaTime);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Qr, (rspeed * Time.deltaTime));
+            #endif
+
+            switch (paramblock.indexbound )
+            {
+                case ARRAY_BOUND.DOWN :
+                    paramblock.movedir = 1;
+                    break;
+                case ARRAY_BOUND.UP:
+                    paramblock.movedir = -1;
+                    break;
+            }
 
 
         

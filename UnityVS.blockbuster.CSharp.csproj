@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\PLATFORM\Scripts\Actor.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\FallingPlatform.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\MovingPlatform.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\ParameterBlock.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\Platform.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Assets\PLATFORM\Scripts\Replayer.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\ReplayerLogOutput.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\RotatingPlatform.cs" />
+    <Compile Include="Assets\PLATFORM\Scripts\TemplateBehaviorClass.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\framerate.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\scene.cs" />
     <Compile Include="Assets\PLATFORM\Scripts\splinecomponent.cs" />

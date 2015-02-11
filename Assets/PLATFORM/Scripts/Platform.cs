@@ -10,66 +10,12 @@ using System.Collections;
 #endif
 
 
-[System.Serializable]
-public enum PLTF_TYPE
-{
-    STATIC = 0,
-    ROTATING = 1,
-    FALLING = 2,
-    MOVING = 3
-}
-
-public static class behaviorManager
-{
-    // this class is a Helper to manage Actor Behaviors 
-
-    public class BehaviorHandle 
-    {
-        public System.Type T;
-        public Behavior m_behavior;
-        public string m_behaviorclassname ;
-        public GUI guid;
-
-        public GUI GetGuid ()
-        {
-            return guid;
-        }
-
-    }
-
-    private static List<BehaviorHandle> m_registeredbehaviors;
-
-    static bool Allreadyregistered(BehaviorHandle BS)
-    {
-        foreach (BehaviorHandle item in m_registeredbehaviors)
-        {
-            if ( BS  == item )
-                return true;
-        }
-        return false;
-    }
 
 
-    static public void RegisterBehavior(BehaviorHandle BS)
-    {
-        // allready here 
-        if (Allreadyregistered(BS))
-            return;
-
-        m_registeredbehaviors.Add(BS);
-    }
-
-    static public void UnRegisterBehavior(BehaviorHandle BS)
-    {
-        if (Allreadyregistered(BS))
-            m_registeredbehaviors.Remove(BS);
-    }
-
-
-
-}
-
-
+// base class for game behaviors 
+// should implement all function to comunicate with actor class
+// actor class is used to provide a layer to bind multiple behaviors to a single actor and 
+// comunicate with Blockbuster through it s function familly 
 public class Behavior  : MonoBehaviour
 {
     // should implement only shared props for all behaviors 
@@ -77,36 +23,50 @@ public class Behavior  : MonoBehaviour
     public GameObject parent;
     public float editortick =0.02f;
     public ReplayerLogOutput m_replayerlogoutput;
-    public Dataset paramblock;
+    public Dataset paramblock = new Dataset();
     public Transform block_transform;
     public GameObject triggerobject;
     public Vector3 pointSnap = Vector3.one * 0.001f;    
 
+    /// <summary>
+    /// common init for behavior 
+    /// </summary>
     public Behavior()
     { 
         
     }
 
-    
-    public virtual  void OnDrawGizmosSelected()
+    /// <summary>
+    /// not that much to do at this level 
+    /// </summary>
+    public virtual void OnDrawGizmosSelected()
     {
         Debug.Log("not implemented at this level cast an appropriated behavior class");
     }
 
+    /// <summary>
+    /// performed at deeper level than start
+    /// could be interesting 
+    /// </summary>
     public virtual void  Awake ()
     {
-        //paramblock = new Dataset();
+        // for example to be sure that the dataset have a ref object 
+        paramblock = new Dataset();
     }
 
 
 
-
+    /// <summary>
+    ///  for serialisation 
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="type"></param>
+    /// <returns></returns>
     public virtual Dataset Load(string path, System.Type type)
     {
 
         if (!System.IO.File.Exists(path))
         {
-            //debug.Log("file not exist");
             return null;
         }
         XmlSerializer serializer = new XmlSerializer(type);
@@ -116,8 +76,9 @@ public class Behavior  : MonoBehaviour
         return result;
     }
 
-
-	// Use this for initialization
+    /// <summary>
+    /// right place to init what needed by a behavior 
+    /// </summary>
 	public virtual  void Start () 
     {
         if (paramblock.ismoving)
@@ -135,70 +96,22 @@ public class Behavior  : MonoBehaviour
 
 
 
-
-    public virtual void  Wait(float tempo)
+    /// <summary>
+    /// could be used in waiting loop 
+    /// </summary>
+    /// <param name="tempo"></param>
+    public virtual void  Wait(float tempo  )
     {
-        var a = new WaitForSeconds(tempo);
+        //var a = new WaitForSeconds(tempo);
         WaitForSeconds s = new WaitForSeconds(tempo);
     }
 
-#if UNITY_EDITOR
-    private void OnEnable()
-    {
-        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
-    }
-
-    private void OnDisable()
-    {
-        SceneView.onSceneGUIDelegate -= OnCustomSceneGUI;
-        Debug.Log("I was called.");
-    }
-
-    protected void OnCustomSceneGUI(SceneView sceneview)
-    {
-        //float angle = -360f / (5);
-
-        if (paramblock == null)
-            return;
-
-        for (int i = 0; i < paramblock.m_pathnodes.Count; i++)
-        {
-            Pathnode p0 = paramblock.m_pathnodes[i];
-            Pathnode p1 = paramblock.GetPathNode(i - 1);
-
-            if (p0 == null)
-                return;
-
-
-
-            //Quaternion rotation = Quaternion.Euler(0f, 0f, angle * i);
-            Vector3 oldPoint = p0.pos;
-            //Handles.FreeMoveHandle(oldPoint, Quaternion.identity, 0.2f, paramblock.pathnodes[i].pos, Handles.DotCap);
-            Vector3 newPoint = Handles.FreeMoveHandle(oldPoint, Quaternion.identity, 0.1f, pointSnap, Handles.DotCap);
-            if (oldPoint != newPoint)
-                p0.pos = newPoint;
-            Handles.color = Color.blue;
-            Actor AP = (Actor) GetComponent(typeof(Actor));
-
-            Handles.Label(transform.position + Vector3.up,
-                    transform.transform.position.ToString() + "\nName: " + AP.Actorprops.assetname );
-
-            //float width = (float)HandleUtility.GetHandleSize(oldPoint) * 0.5f;
-            if (i > 0)
-                Handles.DrawLine(p0.pos, p1.pos);
-            //Handles.DrawBezier(transform.transform.position, oldPoint, oldPoint,-oldPoint,Color.red,null,width);
-            //Handles.FreeRotateHandle(Quaternion.identity, paramblock.pathnodes[i].pos, 0.2f);
-        }
-    }
-
-
-
-#endif
 
 // Update is called once per frame
 	public virtual  void Update () 
     {
         Actor A = (Actor)GetComponent(typeof(Actor));
+        Pathnode p ;
 
 		switch (A.Actorprops.pltf_sate) 
 	    {
@@ -215,28 +128,20 @@ public class Behavior  : MonoBehaviour
                 int pmax = paramblock.m_pathnodes.Count;
                 if (pmax < 2) // need 2 point for a move at least 
                     break;
-                if (paramblock.targetindex > pmax)
-                    break; // something went wront in target definition 
 
-                Pathnode p = paramblock.GetPathNode ( paramblock.targetindex) ;
-                
-                if (paramblock.targetindex >=  pmax || paramblock.editsub)
-                    break;
-                if (paramblock.targetindex >= pmax - 1)
-                {
-                    if (paramblock.b_pathloop)
-                        if ((Vector3.Distance(transform.position, p.pos) == 0.0f))
-                        {
-                            paramblock.targetindex = 0;
-                            paramblock.movedir = (1);
-                            // cannot pop at exact pos 
-                            Vector3 offs =  Vector3.forward/100; // slight offset 
-                            transform.position = p.pos+offs;
-                        }
-                    paramblock.movedir = (-1);
-                }
-                else if (paramblock.targetindex <= 0 )
-                    paramblock.movedir = (1);
+                 
+                p = paramblock.m_pathnodes[paramblock.GetSafeTargetIndex()];
+
+                if (paramblock.b_pathloop)
+                    if ((Vector3.Distance(transform.position, p.pos) == 0.0f))
+                    {
+                        paramblock.SetSafeTargetIndex (0);
+                        paramblock.movedir = (1);
+                        // cannot pop at exact pos 
+                        Vector3 offs =  Vector3.forward/100; // slight offset 
+                        transform.position = p.pos+offs;
+                    }
+                    
                 Vector3 target = p.pos;
                 if (Vector3.Distance(transform.position, target) == 0.0f)
                 {
@@ -250,12 +155,11 @@ public class Behavior  : MonoBehaviour
                     else
                     {
                         p.timer = p.waitonnode;
-                        paramblock.targetindex += paramblock.movedir;
+                        paramblock.SetSafeTargetIndex(paramblock.GetSafeTargetIndex() + paramblock.movedir);
                     }
                 }
                 if (paramblock.ismoving)//|| (Vector3.Distance(transform.position, paramblock.pathnodes[0].pos) > 0.0f))
                 {
-                    int ti = paramblock.targetindex;
                     int lkp =p.ilookatpoint;
                     //Debug.Log(lkp);
                     float rspeed, tspeed;

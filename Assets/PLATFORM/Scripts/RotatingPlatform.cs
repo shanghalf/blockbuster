@@ -24,7 +24,8 @@ public class RotatingPlatform  : Behavior
     }
 
     
-    public virtual  void OnDrawGizmosSelected()
+
+    public override  void OnDrawGizmosSelected()
     {
         Actor A = (Actor) GetComponent(typeof(Actor));
         if (A == null)
@@ -61,7 +62,6 @@ public class RotatingPlatform  : Behavior
 	// Use this for initialization
 	public override void Start () 
     {
-        paramblock = new Dataset();
 
 	}
 
@@ -86,9 +86,9 @@ public class RotatingPlatform  : Behavior
         if (paramblock == null)
             return;
 
-        for (int i = 0; i < paramblock.m_pathnodes.Count; i++)
+        for (int i = 0; i < paramblock.m_pathnodes.Count-1; i++)
         {
-            Pathnode p1 = paramblock.GetPathNode(i);
+            Pathnode p1 = paramblock.m_pathnodes[i];
 
             if (p1 == null)
                 return;
