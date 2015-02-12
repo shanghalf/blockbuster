@@ -96,7 +96,10 @@ public class blockbuster : EditorWindow
     private RePlayer m_replayer;
     private float replayspeed;
 
-    public static System.Enum dynamicenumtest;
+    public static  System.Enum dynamicenumtest;
+    
+
+    //dynamicenumtest = bh.GetEnumFromScriptFolder();
 
 
 
@@ -107,8 +110,13 @@ public class blockbuster : EditorWindow
     static void ShowWindow()
     {
 
+        Debug.Log("");
+
+        EditorWindow.GetWindow(typeof(blockbuster));
+
 
         InitGUIValues();
+        
 
     }
 
@@ -689,32 +697,24 @@ public class blockbuster : EditorWindow
 				    pos.x = float.Parse(l[2].InnerText,System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 				    pos.y = float.Parse(l[3].InnerText,System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 				    pos.z = ( - pos.z ) ; // flip on z 
-				
 				    var xa = float.Parse(l[4].InnerText,System.Globalization.CultureInfo.InvariantCulture.NumberFormat)+270;
 				    var ya = float.Parse(l[6].InnerText,System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 				    var za = float.Parse(l[5].InnerText,System.Globalization.CultureInfo.InvariantCulture.NumberFormat)+270;
 				    var rot = Quaternion.Euler (xa, ya, za);
-
                     GameObject instance = (GameObject) Instantiate(prefab, pos, rot);
 		            instance.name = prefab.name+instance.GetInstanceID() ;
-
                     AddActorComponent(instance, null ,null );
-		        
-		        
 		            if ( b_groupselectmode ) 
 		            {
 		        	    tempobjarray.Add (instance) ;
 		        	    ////debug.Log( tempobjarray.length.ToString());
 		            }
-		        
 		    }
-		
 		    if ( b_groupselectmode ) 
 		    {
 				    ////debug.Log( b_groupselectmode.ToString() ) ;
                     for ( int i =0 ; i<tempobjarray.Count ; i++ )
 				        Selection.objects.SetValue( tempobjarray[i],i) ;
-
                     GameObject tgo = (GameObject) Selection.activeGameObject;
 			 	    //debug.Log(tgo.name);
 			 	    for ( var c = 0 ; c< Selection.gameObjects.GetLength(0) ;c++ ) 
@@ -725,13 +725,6 @@ public class blockbuster : EditorWindow
                         bs.Actorprops.grouped = true;
 				    }
 		    }
-		
-		
-		
-        }
-        else 
-        {	
-    	    //debug.Log("assettransfert.xml not there") ;
         }
     }
 
@@ -741,38 +734,13 @@ public class blockbuster : EditorWindow
 
     static bool InitGUIValues() 
 	{
-		
 		//  todo fill the array with all png in editor folder 
 		// and texture would be avaiable on name  T.B.C 
 		//**************************************************
-
-
-//        string[] namearray = new string[] {"arrowup","arrowdown","arrowleft","arrowright","arrowup_d","arrowdown_d","arrowleft_d","arrowright_d","duplicate"};
-
-        EditorWindow.GetWindow(typeof(blockbuster));
-        behaviorManager bmng = new behaviorManager();
-        dynamicenumtest = (System.Enum)System.Activator.CreateInstance(bmng.assemblytest());
-
-        /*
-
-		uparrow = (Texture2D )Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowup.png", typeof(Texture2D)) ;  
-		downarrow =(Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowdown.png", typeof(Texture2D) ) ;  
-		leftarrow =(Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowleft.png", typeof(Texture2D) ) ;
-		rightarrow = (Texture2D )Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowright.png", typeof(Texture2D) ) ;  
-		d_uparrow = (Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowup_d.png", typeof(Texture2D) ) ;  
-		d_downarrow = (Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowdown_d.png", typeof(Texture2D) ) ;  
-		d_leftarrow = (Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowleft_d.png", typeof(Texture2D) ) ;  
-		d_rightarrow = (Texture2D ) Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/arrowright_d.png", typeof(Texture2D) ) ;  
-		duplicate_t = (Texture2D )  Resources.LoadAssetAtPath("Assets/PLATFORM/Editor/duplicate.png", typeof(Texture2D) ) ;  
-        */
-
-	//	bsz  = 20;			// unit for interface pos 
-		
-		// default base to use 
-		//selectedbasename ="/PLATFORM/HIGHTECH/" ;
+        System.Type T = (System.Type ) behaviorManager.castenum();
+        dynamicenumtest = (System.Enum)System.Activator.CreateInstance(T);
+        //System.Type TT = behaviorManager.GetClassDataset();
 		return true ;
-
-		
 	}
 
 
@@ -1095,8 +1063,14 @@ void OnGUI ()
         if (blockbuster.dynamicenumtest == null)
             blockbuster.InitGUIValues();
 
+        //behaviorManager bh = new behaviorManager();
+        //bh.GetEnumFromScriptFolder();
+
+
         blockbuster.dynamicenumtest = (System.Enum)EditorGUILayout.EnumPopup("block action:", blockbuster.dynamicenumtest, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-    }
+        Debug.Log(blockbuster.dynamicenumtest);
+
+        }
     
         
 
