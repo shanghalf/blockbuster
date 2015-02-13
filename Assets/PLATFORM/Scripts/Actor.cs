@@ -87,19 +87,19 @@ public static class behaviorManager
 
     }
 
-    public static System.Type GetClassDataset()
+    public static System.Type GetClassDataset(string behaviorclassclass)
     {
         AssemblyName assembly = new AssemblyName("ALFTEST");
 
         System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
         //System.AppDomain appDomain = System.Threading.Thread.GetDomain();
-        AssemblyName aName = new AssemblyName("blockbusterbehavior_a");
+        AssemblyName aName = new AssemblyName(behaviorclassclass);
         AssemblyBuilder assemblyBuilder = currentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
         ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(aName.Name);
 
         //create the class
         TypeBuilder typeBuilder = moduleBuilder.DefineType("BBdataset", TypeAttributes.Public | TypeAttributes.AutoClass | TypeAttributes.AnsiClass |
-                                                            TypeAttributes.BeforeFieldInit, typeof(System.Object));
+                                                            TypeAttributes.BeforeFieldInit, typeof(Behaviour));
 
 
 
@@ -110,7 +110,7 @@ public static class behaviorManager
         //create the firstName attribute [FieldOrder(0)]
 
         //create the FirstName property
-        PropertyBuilder Pathnodes  = typeBuilder.DefineProperty("Pathnodes", PropertyAttributes.None, typeof(List<Pathnode>), null);
+        //PropertyBuilder Pathnodes = typeBuilder.DefineProperty(behaviorclassclass, PropertyAttributes.None, typeof(Behavior), null);
 
         //create the FirstName Getter
         //MethodBuilder firstNamePropertyGetter = typeBuilder.DefineMethod("get_FirstName", MethodAttributes.Public | MethodAttributes.SpecialName |
