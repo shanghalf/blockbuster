@@ -10,6 +10,7 @@ using System.Xml;
 using System.Reflection;
 using System.Reflection.Emit;
 
+
 public enum ACTIVEBASENAME
 {
 	HIGHTECH = 0, 
@@ -1022,7 +1023,20 @@ public class blockbuster : EditorWindow
     public delegate void spinner(int i);
 
 
-
+public static System.Type GetTypeFromClassName(String typeName)
+{
+    foreach (Assembly currentassembly in AppDomain.CurrentDomain.GetAssemblies())
+    {
+        Type t = currentassembly.GetType(typeName, false, true);
+        Debug.Log("assname "+currentassembly.ToString());
+        if (t != null) 
+        {
+            
+            return t; 
+        }
+    }
+    return null;
+}
 
 
 void OnGUI () 
@@ -1056,30 +1070,26 @@ void OnGUI ()
     if (Dataset.menubaritem())  // button from dataset ...   
     {
         selectedtab = 4;
-        //System.Type T = behaviorManager.GetClassDataset(blockbuster.dynamicenumtest.ToString());
 
-       //string s = blockbuster.dynamicenumtest.ToString();
-        
-       //System.Type  T = Type.GetType(s,true);
+       string s =   blockbuster.dynamicenumtest.ToString();
+       System.Type T = GetTypeFromClassName(s);
+       Behavior b = new Behavior();
+
+       //b = (Behavior)Activator.CreateInstance(T);
+
+       Selection.activeGameObject.AddComponent(T);
 
 
-        System.Reflection.Assembly assembly = typeof(MovingPlatform).Assembly; // in the same assembly!
-       string s = blockbuster.dynamicenumtest.ToString();
-       System.Type T = assembly.GetType(s); // full name - i.e. with namespace (perhaps concatenate)
-        
 
-       //Behavior b = new Behavior();
-       object b = (object)  assembly.CreateInstance(s);
-
-       var a = Activator.CreateInstance(T);
-
+        /*                    
        System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
-       //System.AppDomain appDomain = System.Threading.Thread.GetDomain();
+       System.AppDomain appDomain = System.Threading.Thread.GetDomain();
        AssemblyName aName = new AssemblyName(s);
        AssemblyBuilder assemblyBuilder = currentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.ReflectionOnly);
+        */
 
-       Behavior c = (Behavior)assemblyBuilder.CreateInstance(s);
-
+       //Behavior c = (Behavior)assemblyBuilder.CreateInstance(s);
+        
         //Debug.Log(b.GetClassname());
 
     }
