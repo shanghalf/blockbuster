@@ -15,7 +15,6 @@ public class triggerscript : MonoBehaviour {
         if (parentobject)
         {
             bb = (Behavior)parentobject.GetComponent("Platform");
-            bb.paramblock.ismoving = false;
         }
    	
 	}
@@ -33,7 +32,6 @@ public class triggerscript : MonoBehaviour {
             return;
 
         bb = (Behavior)parentobject.GetComponent("Platform");
-		bb.paramblock.ismoving = true;
     
     }
 
