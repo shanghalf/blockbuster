@@ -66,18 +66,6 @@ public static class behaviorManager
           eb.DefineLiteral(s, i );
           i++;
       }
-        /*
-      eb.DefineLiteral("mon","AAAAA");
-      eb.DefineLiteral("cul", "BBBB");
-      eb.DefineLiteral("sur", "CCC");
-      eb.DefineLiteral("ton", "nez");
-      eb.DefineLiteral("nez", "DDD");
-      eb.DefineLiteral("!!", "EEE");
-        */
-       
-
-
-      //System.Type finished = 
           
       System.Type T = eb.CreateType();
       ab.Save(aName.Name + ".dll");
@@ -97,85 +85,12 @@ public static class behaviorManager
         AssemblyName aName = new AssemblyName(behaviorclassclass);
         AssemblyBuilder assemblyBuilder = currentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
         ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(aName.Name);
-
         //create the class
         TypeBuilder typeBuilder = moduleBuilder.DefineType("BBdataset", TypeAttributes.Public | TypeAttributes.AutoClass | TypeAttributes.AnsiClass |
                                                             TypeAttributes.BeforeFieldInit, typeof(Behaviour));
-
-
-
-
-        //create the firstName field
-        //FieldBuilder firstNameField = typeBuilder.DefineField("pathnodes", typeof(System.String), FieldAttributes.Private);
-
-        //create the firstName attribute [FieldOrder(0)]
-
-        //create the FirstName property
-        //PropertyBuilder Pathnodes = typeBuilder.DefineProperty(behaviorclassclass, PropertyAttributes.None, typeof(Behavior), null);
-
-        //create the FirstName Getter
-        //MethodBuilder firstNamePropertyGetter = typeBuilder.DefineMethod("get_FirstName", MethodAttributes.Public | MethodAttributes.SpecialName |
-                                                                   //       MethodAttributes.HideBySig, typeof(System.String), System.Type.EmptyTypes);
-        //ILGenerator firstNamePropertyGetterIL = firstNamePropertyGetter.GetILGenerator();
-        //firstNamePropertyGetterIL.Emit(OpCodes.Ldarg_0);
-        //firstNamePropertyGetterIL.Emit(OpCodes.Ldfld, firstNameField);
-        //firstNamePropertyGetterIL.Emit(OpCodes.Ret);
-
-        //create the FirstName Setter
-        //MethodBuilder firstNamePropertySetter = typeBuilder.DefineMethod("set_FirstName", MethodAttributes.Public | MethodAttributes.SpecialName |
-                                                      //      MethodAttributes.HideBySig, null, new System.Type[] { typeof(System.String) });
-
-
-        //MethodBuilder fNamePropertySetter = typeBuilder.DefineMethod ("set_FirstName", MethodAttributes.Public | MethodAttributes.SpecialName |
-        /*                                                    MethodAttributes.HideBySig, null, new System.Type[] { typeof(System.String) });
-        ILGenerator firstNamePropertySetterIL = firstNamePropertySetter.GetILGenerator();
-        firstNamePropertySetterIL.Emit(OpCodes.Ldarg_0);
-        firstNamePropertySetterIL.Emit(OpCodes.Ldarg_1);
-        firstNamePropertySetterIL.Emit(OpCodes.Stfld, firstNameField);
-        firstNamePropertySetterIL.Emit(OpCodes.Ret);
-
-        //assign getter and setter
-        firstNameProperty.SetGetMethod(firstNamePropertyGetter);
-        firstNameProperty.SetSetMethod(firstNamePropertySetter);
-
-
-        //create the lastName field
-        FieldBuilder lastNameField = typeBuilder.DefineField("lastName", typeof(System.String), FieldAttributes.Private);
-
-        //create the lastName attribute [FieldOrder(1)]
-
-        //create the LastName property
-        PropertyBuilder lastNameProperty = typeBuilder.DefineProperty("LastName", PropertyAttributes.HasDefault, typeof(System.String), null);
-
-        //create the LastName Getter
-        MethodBuilder lastNamePropertyGetter = typeBuilder.DefineMethod("get_LastName", MethodAttributes.Public | MethodAttributes.SpecialName |
-                                                                          MethodAttributes.HideBySig, typeof(System.String), System.Type.EmptyTypes);
-        ILGenerator lastNamePropertyGetterIL = lastNamePropertyGetter.GetILGenerator();
-        lastNamePropertyGetterIL.Emit(OpCodes.Ldarg_0);
-        lastNamePropertyGetterIL.Emit(OpCodes.Ldfld, lastNameField);
-        lastNamePropertyGetterIL.Emit(OpCodes.Ret);
-
-        //create the FirstName Setter
-        MethodBuilder lastNamePropertySetter = typeBuilder.DefineMethod("set_FirstName", MethodAttributes.Public | MethodAttributes.SpecialName |
-                                                            MethodAttributes.HideBySig, null, new System.Type[] { typeof(System.String) });
-        ILGenerator lastNamePropertySetterIL = lastNamePropertySetter.GetILGenerator();
-        lastNamePropertySetterIL.Emit(OpCodes.Ldarg_0);
-        lastNamePropertySetterIL.Emit(OpCodes.Ldarg_1);
-        lastNamePropertySetterIL.Emit(OpCodes.Stfld, lastNameField);
-        lastNamePropertySetterIL.Emit(OpCodes.Ret);
-
-        //assign getter and setter
-        lastNameProperty.SetGetMethod(lastNamePropertyGetter);
-        lastNameProperty.SetSetMethod(lastNamePropertySetter);
-        */
-
         System.Type TT = typeBuilder.CreateType();
         //lastNamePropertySetter.CreateMethodBody(
-
-
         return TT;
-
-  
     }
     
 
@@ -243,39 +158,21 @@ public static class behaviorManager
 
 
 
-
+[System.Serializable]
 public class Actor : MonoBehaviour 
-
-
-
-
 {
 
+    //public List<Dataset> DatasetTable = new List<Dataset>();
 
 
-    // will replace later with a behavior table to manage behavior from actor 
-    //public Behavior Behavior = null;
-
-
-
-    public List<Dataset> DatasetTable = new List<Dataset>();
-    
     public Transform block_transform;
     public GameObject scenerefobj;
 
-
- 
-
-
     public BaseActorProperties Actorprops = new BaseActorProperties();
-
-
     public virtual void OnDrawGizmosSelected()
     {
-
+        
     }
-
-
 	// Use this for initialization
 	public virtual void Start () 
     
@@ -283,24 +180,21 @@ public class Actor : MonoBehaviour
         // an actor is not suposed to be used in game mode 
 	}
 	
+    public  void Add(System.Object o)
+    {
+        
+
+    }
+
 	// Update is called once per frame
 	public virtual void Update () 
     
     {
-	    // an actor is not suposed to be used in game mode 
+        Debug.Log("not implemented at actor level");
 	}
 
 
     // save function should serialize a table of Behaviors (should be broken now )
-    public virtual void Save(string path, System.Type type)
-    {
-        XmlSerializer serializer = new XmlSerializer(type);
-        Stream stream = new FileStream(path, FileMode.Create);
-        serializer.Serialize(stream, this);
-        stream.Flush();
-        stream.Close();
-        //debug.Log ( serializer.ToString());
-    }
 
 
 

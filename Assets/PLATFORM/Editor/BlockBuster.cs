@@ -102,7 +102,7 @@ public enum ACTIVEBASENAME
         private RePlayer m_replayer;
         private float replayspeed;
 
-        public static System.Enum dynamicenumtest;
+        public static System.Enum behaviourenum;
 
 
         //dynamicenumtest = bh.GetEnumFromScriptFolder();
@@ -145,12 +145,9 @@ public enum ACTIVEBASENAME
 
         public bool savescene(bool preset = false, string scenename = null)
         {
-
             string repo = "";
             string defname = "";
             Scene scenetosave = new Scene();
-
-
             GameObject go;
             object[] obj;
             if (!preset)
@@ -181,6 +178,12 @@ public enum ACTIVEBASENAME
                 go = (GameObject)o;
 
                 Actor localactor = (Actor)go.GetComponent(typeof(Actor));
+                Behavior localbehavior = (Behavior)go.GetComponent(typeof(Behavior));
+                BaseActorProperties baseactorprop = localactor.Actorprops;
+
+
+              
+
 
 
                 if (localactor != null)
@@ -189,8 +192,7 @@ public enum ACTIVEBASENAME
                     var filepath = path + "/" + localactor.Actorprops.guid + ".xml";
                     localactor.Actorprops.last_pos = go.transform.position; // make sure the pos is right 
                     localactor.Actorprops.orig_transform = go.transform.rotation;
-                    scenetosave.cluster.pblist.Add(localactor);
-                    localactor.Save(filepath, typeof(Actor));
+                    scenetosave.cluster.baseassetproplist.Add(baseactorprop);
                 }
             }
 
@@ -288,15 +290,15 @@ public enum ACTIVEBASENAME
             m_actor = (Actor)obj.GetComponent(typeof(Actor));		// bs is at global scope 
             M = (MeshFilter)obj.GetComponent(typeof(MeshFilter));			// get some info from mesh to custom script 
             // -------------------------------------------------------------------------------------- init the block properties  ( parameterblock ) 
-            if (originalactor != null)
+            if (originalactor == null)
                 m_actor.Actorprops.block_size = M.renderer.bounds.size;
             else
             {
                 m_actor.Actorprops.block_size = originalactor.Actorprops.block_size; 	// change size for all 
-                m_actor.block_transform = obj.transform;	 	// transform from source	
+                //m_actor.block_transform = obj.transform;	 	// transform from source	
                 m_actor.Actorprops.orig_transform = obj.transform.rotation; // origin transform help to re initialize a block in static mode 
                 m_actor.Actorprops.orig_pos = obj.transform.position;		// same for pos ( sound weird could be done in oneline have to see that 	
-                m_actor.scenerefobj = obj;
+                //m_actor.scenerefobj = obj;
             }
             // replicate the behavior on new instancied object 
 
@@ -462,6 +464,11 @@ public enum ACTIVEBASENAME
                 right = Vector3.forward;
                 b_front_X = true;
             }
+
+            // inform a potential movig platform for direction of the camera 
+            MovingPlatform  B = (MovingPlatform)Selection.activeGameObject.GetComponent(typeof(MovingPlatform));
+       //     if (B != null)
+     //           B.paramblock.b_front_x = b_front_X; 
 
         }
 
@@ -708,7 +715,7 @@ public enum ACTIVEBASENAME
             // and texture would be avaiable on name  T.B.C 
             //**************************************************
             System.Type T = (System.Type)behaviorManager.castenum();
-            dynamicenumtest = (System.Enum)System.Activator.CreateInstance(T);
+            behaviourenum = (System.Enum)System.Activator.CreateInstance(T);
             //System.Type TT = behaviorManager.GetClassDataset();
             return true;
         }
@@ -777,6 +784,7 @@ public enum ACTIVEBASENAME
                 //Selection.activeObject = Selection.activeObject.transform.parent;
             }
 
+            Repaint();
             ////debug.Log(bs.parent.name) ;
         }
 
@@ -978,36 +986,68 @@ public enum ACTIVEBASENAME
             if (Dataset.menubaritem())  // button from dataset ...   
             {
                 selectedtab = 4;
-                string s = blockbuster.dynamicenumtest.ToString();
-                System.Type T = GetTypeFromClassName(s);
-                Behavior b = new Behavior();
-                Selection.activeGameObject.AddComponent(T);
             }
             GUILayout.EndHorizontal();
 
             if (selectedtab == 4)
             {
-                if (blockbuster.dynamicenumtest == null)
+                if (blockbuster.behaviourenum == null)
                     blockbuster.InitGUIValues();
 
-                blockbuster.dynamicenumtest = (System.Enum)EditorGUILayout.EnumPopup("block action:", blockbuster.dynamicenumtest, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
 
+
+                blockbuster.behaviourenum = (System.Enum)EditorGUILayout.EnumPopup("behaviour:", blockbuster.behaviourenum, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("add"))
+                {
+                    string s = blockbuster.behaviourenum.ToString();
+                    System.Type T = GetTypeFromClassName(s);
+
+                    bool add = true;
+                    foreach (Behavior B in m_behavior)
+                        if (B.GetType() == T)
+                            add = false;
+                    if (add)
+                    {
+                        //Behavior b = new Behavior();
+                        Actor A = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
+
+                        Behavior b = (Behavior)Selection.activeGameObject.AddComponent(T) ;
+                        // guid is the link for saving ad get back paramblocks
+                        b.paramblock.actorguid = A.Actorprops.guid;
+
+                    }
+
+                }
+                if (GUILayout.Button("remove"))
+                {
+                    string s = blockbuster.behaviourenum.ToString();
+                    System.Type T = GetTypeFromClassName(s);
+
+                    bool haveit = false;
+                    foreach (Behavior B in m_behavior)
+                        if (B.GetType() == T)
+                            haveit = true;
+                    if (haveit)
+                    {
+                        Actor A = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
+                        Behavior b = (Behavior) Selection.activeGameObject.GetComponent(T.ToString());
+                        
+                        DestroyImmediate(b);
+                    }
+
+                }
+                GUILayout.EndHorizontal();
+                
                 EditorWindow W = EditorWindow.GetWindow(typeof(blockbuster));
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(W.position.width), GUILayout.Height(W.position.height));
-
-                
                 foreach (Behavior B in m_behavior)
                 {
-                    B.DoGUILoop(0);
-                    
+                    B.DoGUILoop((Rect)W.position);
+                    Repaint();
                 }
-
                 EditorGUILayout.EndScrollView();
-
-                
-
-                
-
 
             }
 
@@ -1259,7 +1299,7 @@ public enum ACTIVEBASENAME
                     if (Selection.activeGameObject == null)
                         return;
                     filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + m_actor.Actorprops.guid + ".xml";
-                    m_actor.Save(filepath, typeof(Actor));
+                    m_actor.Actorprops.Save(filepath, typeof(BaseActorProperties));
                 }
 
                 if (GUILayout.Button("LOAD", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
@@ -1357,9 +1397,9 @@ public enum ACTIVEBASENAME
                 if (GUILayout.Button("FROMMAX", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
                     placefromxmlfile();
 
-                if (GUILayout.Button("SAVES CENE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                if (GUILayout.Button("SAVE SCENE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
                     savescene();
-                if (GUILayout.Button("SAVES PRESET", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                if (GUILayout.Button("SAVE PRESET", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
                     savescene(true);
 
 

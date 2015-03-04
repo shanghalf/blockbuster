@@ -15,8 +15,12 @@ public class scenecluster
 {
     public string name;
     public Vector3 rootnodepos;
-    public List<Actor> pblist = new List<Actor>();
+    //public List<Actor> pblist = new List<Actor>();
     public List<BaseActorProperties> baseassetproplist = new List<BaseActorProperties>();
+    //public List<Behavior> behaviorlist = new List<Behavior>();
+    public List <Dataset> datasetlist = new List<Dataset>();
+
+
 }
 
 

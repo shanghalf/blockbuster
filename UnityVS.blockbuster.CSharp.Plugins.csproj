@@ -66,6 +66,7 @@
     <None Include="Assets\PLATFORM\TEMPLE\AssetList.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\assettransfert.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\root.txt" />
+    <None Include="Assets\PLATFORM\XML\paramblock\0fb182c3-53ca-4499-9eb7-491eddad1bd8.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\48632264-9a05-47b5-8873-3fbc662eab9c.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\4dfa8292-ad0a-40c9-bd44-cc51cc9ca471.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\5153958a-d473-4d0b-86eb-84657cfe29af.xml" />
@@ -79,14 +80,8 @@
     <None Include="Assets\PLATFORM\XML\paramblock\d7ee33dd-c796-45fe-9af9-cff3529cd75f.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\e453d56d-ae91-42a9-abe6-047ff70267ac.xml" />
     <None Include="Assets\PLATFORM\XML\paramblock\e8468ad1-4d51-44cf-ac66-ee0e0a9f140f.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset1.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset2.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset3.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset4.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset5.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset6.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset7.xml" />
-    <None Include="Assets\PLATFORM\XML\preset\preset8.xml" />
+    <None Include="Assets\PLATFORM\XML\preset\dddddd.xml" />
+    <None Include="Assets\PLATFORM\XML\preset\preset.xml" />
     <None Include="Assets\PLATFORM\XML\scene.xml" />
     <None Include="Assets\PLATFORM\XML\scenes\scene.xml" />
     <None Include="Assets\PLATFORM\XML\scenes\start.xml" />

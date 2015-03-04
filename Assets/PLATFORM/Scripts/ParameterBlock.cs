@@ -32,16 +32,11 @@ public enum ARRAY_BOUND
 
 
 
-
-public abstract class Pathnode
+[System.Serializable]
+public class Pathnode
 {
-    //public Vector3 pos ;
-    //public int ilookatpoint=0;
-    //public List<Vector3> orb = new List<Vector3>() ;
-    //public float lookatspeed =  0.0f;
-    //public float translatespeed = 0.0f;
-    //public float waitonnode = 0.0f;
     public float timer = 0.0f;
+
     public virtual Vector3 Getlookatpoint(int lookatindex, float radius, int step = 8)
     {
         float a = ((360.0f / step) * Mathf.Deg2Rad) * lookatindex + (Mathf.Deg2Rad * 45.0f);
@@ -56,7 +51,7 @@ public abstract class Pathnode
 
 
 [System.Serializable]
-public class BaseActorProperties
+public class BaseActorProperties 
 {
     public string parentgui;
     public string guid;
@@ -66,8 +61,22 @@ public class BaseActorProperties
     public Vector3 last_pos;
     public Vector3 block_size;
     public PLTF_TYPE pltf_sate;
-    public System.Type BHVTYPE;
+    //public System.Type BHVTYPE;
     public bool grouped;
+
+
+
+    public void Save(string path, System.Type type)
+    {
+        XmlSerializer serializer = new XmlSerializer(type);
+        Stream stream = new FileStream(path, FileMode.Create);
+        serializer.Serialize(stream, this);
+        stream.Flush();
+        stream.Close();
+        
+        //debug.Log ( serializer.ToString());
+    }
+
 
 }
  
@@ -75,17 +84,24 @@ public class BaseActorProperties
 
 
 
-public class Dataset 
+public   class Dataset 
 {
+    public bool b_front_x;
     public float timer=0.0f;
     public bool editsub = true;
-    public bool ismoving = false;
     public bool b_showdebuginfos;
     static  int submenu=4;
+    public bool ismoving = false;
     public ARRAY_BOUND indexbound;
+    public string actorguid = "";
     public static bool  menubaritem()
     {
         return GUILayout.Button("Dataset", EditorStyles.toolbarButton) ;
+    }
+
+    public string GetGuid()
+    {
+        return actorguid;
     }
 }
 
