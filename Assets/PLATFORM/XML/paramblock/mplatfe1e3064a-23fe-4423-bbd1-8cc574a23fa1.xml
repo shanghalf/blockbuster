@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="gb2312"?>
+<RotatingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <b_front_x>false</b_front_x>
+  <timer>0</timer>
+  <editsub>true</editsub>
+  <b_showdebuginfos>false</b_showdebuginfos>
+  <ismoving>false</ismoving>
+  <indexbound>MIDDLE</indexbound>
+  <guid>26046115-5664-445c-a56c-b01cbf1b5bd0</guid>
+  <m_pathnodes />
+  <rotatelookpoint>
+    <timer>0</timer>
+    <pos>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </pos>
+    <ilookatpoint>0</ilookatpoint>
+    <lookatspeed>0</lookatspeed>
+    <translatespeed>0</translatespeed>
+    <waitonnode>0</waitonnode>
+  </rotatelookpoint>
+  <speed>0.5</speed>
+  <move_ampl>0</move_ampl>
+  <target>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </target>
+  <b_revert_rotation>true</b_revert_rotation>
+  <rotationspeed>4.03</rotationspeed>
+  <rotationstepnumber>6</rotationstepnumber>
+  <rotationtempo>0.39</rotationtempo>
+  <rotateindex>3</rotateindex>
+</RotatingPlatformDataset>
