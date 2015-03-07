@@ -25,7 +25,6 @@ public enum ACTIVEBASENAME
 
 
 
-
     public class blockbuster : EditorWindow
     {
         // editortick is used instead of Time.Delta in editor LIVE mode
@@ -115,12 +114,7 @@ public enum ACTIVEBASENAME
         [MenuItem("Window/blockbuster")]
         static void ShowWindow()
         {
-
-            Debug.Log("");
-
             EditorWindow.GetWindow(typeof(blockbuster));
-
-
             InitGUIValues();
 
 
@@ -180,12 +174,6 @@ public enum ACTIVEBASENAME
                 Actor localactor = (Actor)go.GetComponent(typeof(Actor));
                 Behavior localbehavior = (Behavior)go.GetComponent(typeof(Behavior));
                 BaseActorProperties baseactorprop = localactor.Actorprops;
-
-
-              
-
-
-
                 if (localactor != null)
                 {
                     // do not forget to update paramblock value before saving 
@@ -277,31 +265,28 @@ public enum ACTIVEBASENAME
             // ****************************************************************************
             // add a custom script on gameobject 
             // this function should be called for every new block in the scene
-
-            if (obj == null)
-            {
-                Debug.Log("AddActorComponent Gameobject is Null");
-                return;
-            }
-
+ 
             MeshFilter M;
-
             obj.AddComponent(typeof(Actor)); 				// refer to block setup script ( block behaviour ) 
             m_actor = (Actor)obj.GetComponent(typeof(Actor));		// bs is at global scope 
             M = (MeshFilter)obj.GetComponent(typeof(MeshFilter));			// get some info from mesh to custom script 
             // -------------------------------------------------------------------------------------- init the block properties  ( parameterblock ) 
-            if (originalactor == null)
-                m_actor.Actorprops.block_size = M.renderer.bounds.size;
-            else
-            {
-                m_actor.Actorprops.block_size = originalactor.Actorprops.block_size; 	// change size for all 
-                //m_actor.block_transform = obj.transform;	 	// transform from source	
-                m_actor.Actorprops.orig_transform = obj.transform.rotation; // origin transform help to re initialize a block in static mode 
-                m_actor.Actorprops.orig_pos = obj.transform.position;		// same for pos ( sound weird could be done in oneline have to see that 	
-                //m_actor.scenerefobj = obj;
-            }
-            // replicate the behavior on new instancied object 
+            m_actor.Actorprops.block_size = M.renderer.bounds.size;
+            m_actor.block_transform = obj.transform;	 	// transform from source	
+            m_actor.Actorprops.orig_transform = obj.transform.rotation; // origin transform help to re initialize a block in static mode 
+            m_actor.Actorprops.orig_pos = obj.transform.position;		// same for pos ( sound weird could be done in oneline have to see that 	
+            m_actor.scenerefobj = obj;
 
+            if (originalactor != null)
+            {
+                Behavior[] blist = originalactor.GetComponents<Behavior>();
+                foreach (Behavior b in blist)
+                {
+                    string s = b.GetType().ToString();
+                    obj.AddComponent(s) ;
+                }
+
+            }
 
             string str = obj.name;										// change the name  
             string[] strarray = str.Split(new char[] { '-' });
@@ -582,6 +567,9 @@ public enum ACTIVEBASENAME
             // ***************************************************************
             // browse asset from base todo  should be changeed to manage multiple base 
 
+
+            return;
+
             if (b_groupselectmode) return;
             GameObject tgo = (GameObject)Selection.activeObject;
 
@@ -714,7 +702,7 @@ public enum ACTIVEBASENAME
             //  todo fill the array with all png in editor folder 
             // and texture would be avaiable on name  T.B.C 
             //**************************************************
-            System.Type T = (System.Type)behaviorManager.castenum();
+            System.Type T = (System.Type)BlockBusterUtility.castenum();
             behaviourenum = (System.Enum)System.Activator.CreateInstance(T);
             //System.Type TT = behaviorManager.GetClassDataset();
             return true;
@@ -881,49 +869,7 @@ public enum ACTIVEBASENAME
         Vector2 scrollPos = new Vector2();
 
 
-        public void UpdateActorComponent(GameObject go, PLTF_TYPE pltf_sate)
-        {
-
-            // this function might be called at top of onGUI loop to validate Actor and Behavior 
-            // consistency a static actor might not have behavior and dynamic ones should have the appropriated subclass
-            // it s based on pltf_state ( structure that define the actor list and attached to actor component  ) 
-            // do not forget to cast m_behavior according to the changes 
-
-
-
-            switch (m_actor.Actorprops.pltf_sate) // CREATE APROPRIATE UI CONTENT 
-            {
-
-                case PLTF_TYPE.FALLING:
-                    break;
-
-                case PLTF_TYPE.MOVING:
-                    break;
-
-                case PLTF_TYPE.ROTATING:
-                    /*
-                    {
-                        if (m_behavior == null)
-                            m_behavior = (Behavior)go.AddComponent(typeof(RotatingPlatform));
-                        else if (m_behavior.GetType() != typeof(RotatingPlatform))
-                        {
-                            DestroyImmediate(m_behavior);
-                            go.AddComponent(typeof(RotatingPlatform));
-                            m_behavior = (Behavior)go.GetComponent(typeof(RotatingPlatform));
-                        }
-                    }*/
-                    break;
-
-                case PLTF_TYPE.STATIC:
-                    
-                    break;
-
-            }
-
- 
-
-
-        }
+    
 
         private void changeEditorFlag(bool bstatic)
         {
@@ -953,7 +899,23 @@ public enum ACTIVEBASENAME
             return null;
         }
 
-        
+
+        string fuckingclassname = "";
+
+
+        public string Getclassname(object o, bool shortname = false)
+        {
+            System.Type T = o.GetType();
+            string fullyQualifiedName = T.AssemblyQualifiedName;
+            if (shortname)
+                return "RotatingPlatform";
+            return fullyQualifiedName;
+        }
+
+
+
+
+
 
         void OnGUI()
         {
@@ -1012,10 +974,11 @@ public enum ACTIVEBASENAME
                     {
                         //Behavior b = new Behavior();
                         Actor A = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
-
                         Behavior b = (Behavior)Selection.activeGameObject.AddComponent(T) ;
-                        // guid is the link for saving ad get back paramblocks
-                        b.paramblock.actorguid = A.Actorprops.guid;
+                        System.Guid g =System.Guid.NewGuid();
+                        Dataset d = b.GetDataset();
+                        d.guid = g.ToString();
+                        m_actor.Actorprops.BehaviorListID.Add (g.ToString());
 
                     }
 
@@ -1033,7 +996,8 @@ public enum ACTIVEBASENAME
                     {
                         Actor A = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
                         Behavior b = (Behavior) Selection.activeGameObject.GetComponent(T.ToString());
-                        
+                        Dataset d = b.GetDataset();
+                        A.Actorprops.BehaviorListID.Remove(d.guid);
                         DestroyImmediate(b);
                     }
 
@@ -1299,7 +1263,15 @@ public enum ACTIVEBASENAME
                     if (Selection.activeGameObject == null)
                         return;
                     filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + m_actor.Actorprops.guid + ".xml";
-                    m_actor.Actorprops.Save(filepath, typeof(BaseActorProperties));
+                    BlockBusterUtility.Save(filepath, typeof(BaseActorProperties) ,m_actor.Actorprops );
+                    Behavior[] TB = Selection.activeGameObject.GetComponents<Behavior>();
+                    foreach (Behavior tb in TB)
+                    {
+                        Dataset d = tb.GetDataset();
+                        System.Type T = d.GetType();
+                        filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + "mplatf" + m_actor.Actorprops.guid + ".xml";
+                        d.Save(filepath, T);
+                    }
                 }
 
                 if (GUILayout.Button("LOAD", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
@@ -1310,66 +1282,18 @@ public enum ACTIVEBASENAME
                     //Selection.activeObject.GetComponent(Platform).paramblock.Load(filepath);
                     if (!System.IO.File.Exists(filepath))
                         return;
+
                     //Dataset p = m_behavior.Load(filepath, typeof(Dataset)); // deserialise pblock 
                     //m_behavior.paramblock = p;
                     //UIPB = p;
                 }
 
 
-                m_actor.Actorprops.pltf_sate = (PLTF_TYPE)EditorGUILayout.EnumPopup("block action:", m_actor.Actorprops.pltf_sate, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                UpdateActorComponent(go, m_actor.Actorprops.pltf_sate);
+                
+                //UpdateActorComponent(go, m_actor.Actorprops.pltf_sate);
 
 
-                switch (m_actor.Actorprops.pltf_sate) // CREATE APROPRIATE UI CONTENT 
-                {
-                    /*
-                    case PLTF_TYPE.MOVING: // ---------------------------------------- plateform moving state  
-                        changeEditorFlag(false);
-                        break;
-
-                    case PLTF_TYPE.ROTATING:
-                        //************************************************************************ ROTATE THE CRAP 
-                        // need to implement a keyframes system that could be used a lot add props to exploit in Platform
-
-                        //UpdateActorComponent(go, typeof(Platform),  PLTF_TYPE.ROTATING);
-                        //List<Pathnode> pathnodes = m_behavior.paramblock.GetPathNodes();
-                        //int pmax = pathnodes.Count;
-
-                        changeEditorFlag(false);
-
-                        if (!m_behavior)
-                            return;
-                        m_behavior.paramblock.rotationstepnumber = (int)EditorGUILayout.Slider("step", m_behavior.paramblock.rotationstepnumber, 2, 8, GUILayout.MaxWidth(280));
-
-                        m_behavior.paramblock.rotationspeed = EditorGUILayout.Slider("speed", m_behavior.paramblock.rotationspeed, 0.0f, 5.0f, GUILayout.MaxWidth(280));
-                        m_behavior.paramblock.rotationtempo = EditorGUILayout.Slider("temporisation", m_behavior.paramblock.rotationtempo, 0.0f, 2.0f, GUILayout.MaxWidth(280));
-                        // editsub button shared over panels 
-                        m_behavior.paramblock.editsub = EditorGUILayout.Toggle("editsub", m_behavior.paramblock.editsub);
-                        if (m_behavior.paramblock.editsub)
-                        {
-                            m_behavior.paramblock.b_revert_rotation = EditorGUILayout.Toggle("invert", m_behavior.paramblock.b_revert_rotation, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                        }
-                        else
-                            m_behavior.paramblock.ismoving = false;
-
-                        break;
-
-                     */
-                    case PLTF_TYPE.STATIC:
-
-                        changeEditorFlag(true);
-                        if (GUILayout.Button("RESET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
-                            foreach (GameObject g in Selection.gameObjects)
-                            {
-                                g.transform.rotation = m_actor.Actorprops.orig_transform;
-                                g.transform.position = m_actor.Actorprops.orig_pos;
-                            }
-
-                        break;
-                    case PLTF_TYPE.FALLING:
-
-                        break;
-                }
+           
                 GUI.EndGroup();
             }
 
@@ -1401,6 +1325,13 @@ public enum ACTIVEBASENAME
                     savescene();
                 if (GUILayout.Button("SAVE PRESET", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
                     savescene(true);
+
+
+                if (GUILayout.Button("TRACE TEST", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                {
+                    //BuildLogUtility b = new BuildLogUtility();
+                    BuildLogUtility.outlog(" mon cul sur la commode");
+                }
 
 
                 if (GUILayout.Button("LOAD SCENE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))

@@ -60,23 +60,9 @@ public class BaseActorProperties
     public Vector3 orig_pos;
     public Vector3 last_pos;
     public Vector3 block_size;
-    public PLTF_TYPE pltf_sate;
     //public System.Type BHVTYPE;
     public bool grouped;
-
-
-
-    public void Save(string path, System.Type type)
-    {
-        XmlSerializer serializer = new XmlSerializer(type);
-        Stream stream = new FileStream(path, FileMode.Create);
-        serializer.Serialize(stream, this);
-        stream.Flush();
-        stream.Close();
-        
-        //debug.Log ( serializer.ToString());
-    }
-
+    public List<string> BehaviorListID = new List<string>();
 
 }
  
@@ -93,7 +79,7 @@ public   class Dataset
     static  int submenu=4;
     public bool ismoving = false;
     public ARRAY_BOUND indexbound;
-    public string actorguid = "";
+    public string guid = "";
     public static bool  menubaritem()
     {
         return GUILayout.Button("Dataset", EditorStyles.toolbarButton) ;
@@ -101,8 +87,32 @@ public   class Dataset
 
     public string GetGuid()
     {
-        return actorguid;
+        return guid;
     }
+
+    public virtual string GetClassname()
+    {
+        string fullyQualifiedName = this.GetType().AssemblyQualifiedName;
+        return fullyQualifiedName;
+    }
+
+
+    public virtual System.Type GetClassType()
+    {
+        return System.Type.GetType(GetClassname());
+           
+    }
+
+    public virtual void Save(string path, System.Type type)
+    {
+        XmlSerializer serializer = new XmlSerializer(type);
+        Stream stream = new FileStream(path, FileMode.Create);
+        serializer.Serialize(stream, this);
+        stream.Flush();
+        stream.Close();
+    }
+
+
 }
 
 

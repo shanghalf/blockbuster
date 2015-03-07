@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#define TRACE
+
+using UnityEngine;
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
@@ -10,34 +12,30 @@ using UnityEditor;
 #endif
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Diagnostics;
 
 
-[System.Serializable]
-public enum PLTF_TYPE
+
+
+
+public class BuildLogUtility
 {
-    STATIC = 0,
-    ROTATING = 1,
-    FALLING = 2,
-    MOVING = 3
-}
-
-public class BehaviorHandle
-{
-    public System.Type T;
-    public Behavior m_behavior;
-    public string m_behaviorclassname;
-    public GUI guid;
-    public GUI GetGuid()
+    public static void outlog(string s)
     {
-        return guid;
+        string logpath = Application.dataPath +"/PLATFORM/XML/logoutput.txt";
+        //TextWriterTraceListener TL = new TextWriterTraceListener(logpath);
+        ConsoleTraceListener TL = new ConsoleTraceListener();
+        Trace.Listeners.Add(TL);//               ["console"].TraceOutputOptions = TraceOptions.DateTime;
+        Trace.WriteLine(string.Format(" \n OUTLOG {0}", s));
+        Trace.Flush();
+        Trace.Close();
     }
-    
 }
 
 
 
 
-public static class behaviorManager
+public static class BlockBusterUtility
 {
     // this class is a Helper to manage Actor Behaviors 
 
@@ -50,6 +48,7 @@ public static class behaviorManager
 
 
  
+
     
     public static  System.Type castenum()
     {
@@ -66,9 +65,15 @@ public static class behaviorManager
           eb.DefineLiteral(s, i );
           i++;
       }
-          
-      System.Type T = eb.CreateType();
-      ab.Save(aName.Name + ".dll");
+
+      try
+      {
+          System.Type T = eb.CreateType();
+          ab.Save(aName.Name + ".dll");
+      }
+      catch
+      { }
+
 
       System.Reflection.Assembly ass = System.Reflection.Assembly.LoadFrom("blockbusterbehavior_a.dll");
       System.Type castenum = ass.GetType("blockbusterbehavior_a");
@@ -95,19 +100,6 @@ public static class behaviorManager
     
 
 
-    public static bool Allreadyregistered(BehaviorHandle BS)
-    {
-        /*
-            
-        foreach (BehaviorHandle item in m_registeredbehaviors)
-        {
-            if (BS == item)
-                return true;
-        }
-         */ 
-        return false;
-    }
-
 
     public static Dictionary<string, string>  GetEnumFromScriptFolder()    
     { 
@@ -132,24 +124,15 @@ public static class behaviorManager
     }
 
 
-    static public void RegisterBehavior(BehaviorHandle BS)
+ 
+    public  static void Save(string path, System.Type type , object o)
     {
-        // allready here 
-        if (Allreadyregistered(BS))
-            return;
-
-        //m_registeredbehaviors.Add(BS);
+        XmlSerializer serializer = new XmlSerializer(type);
+        Stream stream = new FileStream(path, FileMode.Create);
+        serializer.Serialize(stream, o);
+        stream.Flush();
+        stream.Close();
     }
-
-    static public void UnRegisterBehavior(BehaviorHandle BS)
-    {
-        /*
-        if (Allreadyregistered(BS))
-            m_registeredbehaviors.Remove(BS);
-         * */
-    }
-
-
 
 }
 
@@ -190,7 +173,7 @@ public class Actor : MonoBehaviour
 	public virtual void Update () 
     
     {
-        Debug.Log("not implemented at actor level");
+       // Debug.Log("not implemented at actor level");
 	}
 
 
