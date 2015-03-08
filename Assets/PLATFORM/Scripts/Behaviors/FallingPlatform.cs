@@ -43,6 +43,22 @@ using UnityEditor;
         public bool b_triggered = false;
         public int movedir = 1;
         public bool respawn = false;
+
+        public override Dataset Load(string path)
+        {
+            if (!System.IO.File.Exists(path))
+            {
+                //debug.Log("file not exist");
+                return null;
+            }
+            XmlSerializer serializer = new XmlSerializer(typeof(FallingPlatformDataset));
+            Stream stream = new FileStream(path, FileMode.Open);
+            FallingPlatformDataset result = serializer.Deserialize(stream) as FallingPlatformDataset;
+            stream.Close();
+            return result;
+        }
+
+
     }
 
 
@@ -55,8 +71,6 @@ using UnityEditor;
         // derived from dataset this is the overrided custom data set 
         public FallingPlatformDataset paramblock = new FallingPlatformDataset();
         public FallingPlatform() { }
-
-
         /// <summary>
         /// Draw custom Gizmo 
         /// </summary>
@@ -64,14 +78,38 @@ using UnityEditor;
         {
             /// Gizmos.color = Color.yellow ; ... etc ..
         }
+        /// <summary>
+        /// return the associated dataset
+        /// </summary>
+        /// <returns></returns>
         public override Dataset GetDataset()
         {
             return (FallingPlatformDataset)paramblock;
         }
+        /// <summary>
+        /// apply a new dataset
+        /// </summary>
+        /// <param name="D"></param>
+        public override  void SetDataset(Dataset D)
+        {
+            paramblock = (FallingPlatformDataset)D;
+        }
 
 
-        public void Start() { }
-
+        /// <summary>
+        /// start 
+        /// </summary>
+        public override void Start()
+        {
+            base.Start();
+        }
+        /// <summary>
+        /// update
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+        }
 
     }
 

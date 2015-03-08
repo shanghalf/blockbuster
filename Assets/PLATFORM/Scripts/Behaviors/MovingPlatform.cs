@@ -14,34 +14,13 @@ using UnityEditor;
 
 
 
-[System.Serializable]
-public class MovingPlatformPathnode : Pathnode 
-{
-    public Vector3 pos;
-    public int ilookatpoint = 0;
-    //public List<Vector3> orb = new List<Vector3>() ;
-    public float lookatspeed = 0.0f;
-    public float translatespeed = 0.0f;
-    public float waitonnode = 0.0f;
-    public float Wtimer = 0.0f;
-    public virtual Vector3 Getlookatpoint(int lookatindex, float radius, int step = 8)
-    {
-        float a = ((360.0f / step) * Mathf.Deg2Rad) * lookatindex + (Mathf.Deg2Rad * 45.0f);
-        float ca = Mathf.Cos(a);
-        float sa = Mathf.Sin(a);
-        Vector3 RV = new Vector3(radius * ca - radius * sa, 0.0f, radius * sa + radius * ca);
-        return (RV);//+ pos) ;
-    }
 
-}
 
 [System.Serializable]
 public class MovingPlatformDataset  : Dataset
 {
-  
-    public List<MovingPlatformPathnode> m_pathnodes = new List<MovingPlatformPathnode>();
     private int targetindex = 0;
-    public MovingPlatformPathnode rotatelookpoint = new MovingPlatformPathnode();
+    public Pathnode rotatelookpoint = new Pathnode();
     public float speed = 0.5f;
     public float move_ampl=0.0f;
     public Vector3 target = Vector3.zero;
@@ -51,22 +30,13 @@ public class MovingPlatformDataset  : Dataset
     public int rotationstepnumber=2;
     public float rotationtempo=0.0f;
     public bool b_triggered=false;
-    public int rotateindex=0;
+    //public int rotateindex=0;
     public int movedir = 1;
     public int maxhandle=0;
-    public Vector3[] quater = new Vector3[] { Vector3.forward, Vector3.left, Vector3.back, Vector3.right };
+    //public Vector3[] quater = new Vector3[] { Vector3.forward, Vector3.left, Vector3.back, Vector3.right };
     public bool b_pathloop =false;
     public COLIDER_TYPE colider_type = COLIDER_TYPE.BOX;
     public bool b_path_rotation = true;
-    //public bool editsub;
-    //public bool ismoving;
-    //public bool b_front_x;
-    //public bool b_showdebuginfos;
-    //public ARRAY_BOUND indexbound;
-    //public string actorguid;
-
-
-
 
     public bool SetSafeTargetIndex(int index)
     {
@@ -96,7 +66,7 @@ public class MovingPlatformDataset  : Dataset
     }
 
 
-    public int GetSafeTargetIndex()
+    public override int GetSafeTargetIndex()
     {
         if (m_pathnodes.Count == 0)
             return -666;
@@ -129,8 +99,20 @@ public class MovingPlatformDataset  : Dataset
 
     }
 
-  
 
+    public override Dataset Load(string path)
+    {
+        if (!System.IO.File.Exists(path))
+        {
+            //debug.Log("file not exist");
+            return null;
+        }
+        XmlSerializer serializer = new XmlSerializer(typeof(MovingPlatformDataset));
+        Stream stream = new FileStream(path, FileMode.Open);
+        MovingPlatformDataset result = serializer.Deserialize(stream) as MovingPlatformDataset;
+        stream.Close();
+        return result;
+    }
 
 
 
@@ -146,44 +128,74 @@ public class MovingPlatformDataset  : Dataset
     [ExecuteInEditMode()]
     public class MovingPlatform : Behavior
     {
-        public override string GetClassname(bool shortname=false)
-        {
-            if (shortname)
-                return "MovingPlatform";
+        // paramblock is a custom data set that hold serializables 
+        // properties of a behavior 
+        public MovingPlatformDataset paramblock = new MovingPlatformDataset();
 
-            string fullyQualifiedName = typeof(MovingPlatform).AssemblyQualifiedName;
-            return fullyQualifiedName;
-
-
-        }
-        public override Dataset GetDataset()
-        {
-            return (MovingPlatformDataset)paramblock;
-        }
+        /// <summary>
+        /// setup initial condition of this specific behavior
+        /// </summary>
         public override void Start()
         {
+            // for example if the acor running this behavior got 
+            // a rotation effect from another behavior it s better to desactivate the 
+            // look at function on pathnodes
+
             m_actor = (Actor)GetComponent(typeof(Actor));						// should be there 
             if (m_actor.GetComponent(typeof(RotatingPlatform)) != null)
                 paramblock.b_path_rotation = false;
             base.Start();
         }
 
-        public MovingPlatformDataset paramblock = new MovingPlatformDataset();
+        
+        /// <summary>
+        /// param bock is a field and not a properie 
+        /// defined in another class cause monobehaviours are not serializable 
+        /// so all relevant properties are stored in a custom class derivated instance 
+        /// that allow the serialization hope unity will fix this huge problem asap 
+        /// </summary>
+        /// <returns></returns>
+        public override Dataset GetDataset()
+        {
+            return paramblock;
+        }
+        /// <summary>
+        /// same comment accessor to the custom class instance field 
+        /// </summary>
+        /// <param name="D"></param>
+        public override void SetDataset(Dataset D)
+        {
+            paramblock = (MovingPlatformDataset)D;
+        }
 
 
 #if UNITY_EDITOR
         /// <summary>
-        /// viewport callback 
+        /// register a custom display callback
         /// </summary>
-        private void OnEnable() { SceneView.onSceneGUIDelegate += OnCustomSceneGUI; }
-        private void OnDisable() { SceneView.onSceneGUIDelegate -= OnCustomSceneGUI; }
 
+
+        /// <summary>
+        /// this is related to the movepad in the moving platform
+        /// behaviour should be changed for a common move 
+        /// the editor tool blockbuster got a nice one related to camera orientation 
+        /// i should move it in a utility class but right now 
+        /// behaviors are not in editor namespace and cannot see BB function 
+        /// 
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <param name="moveallpath"></param>
         void Move(Vector3 dir, bool moveallpath = true)
         {
-                transform.position += dir;
+            // <todo> a lot  
+            transform.position += dir;
         }
 
-
+        /// <summary>
+        /// update pathnodes make sure that maxhandle is the size of the pathnodes array 
+        /// grow and add at V pos or remove at the same place 
+        /// </summary>
+        /// <param name="v"></param>
         public void UpdatePathnodes(Vector3 v)
         {
             if (paramblock.m_pathnodes.Count != paramblock.maxhandle)
@@ -197,7 +209,7 @@ public class MovingPlatformDataset  : Dataset
                 }
                 for (int c = paramblock.m_pathnodes.Count; c < paramblock.maxhandle; c++)
                 {
-                    MovingPlatformPathnode pn = new MovingPlatformPathnode();
+                    Pathnode pn = new Pathnode();
                     pn.ilookatpoint = 0;
                     pn.pos = v;
                     //m_behavior.paramblock.m_pathnodes.Add(pn);
@@ -209,21 +221,31 @@ public class MovingPlatformDataset  : Dataset
         }
 
 
-
+        /// <summary>
+        /// this is the Blockbuster GUI loop for this behavior 
+        /// implementing user interface at the same level 
+        /// make it easy to provide update , interface and custom data at the same place 
+        /// </summary>
+        /// <param name="mainwindow"></param>
         public override void DoGUILoop(Rect mainwindow)
         {
-            if (paramblock == null)
-                return;
-            base.DoGUILoop(mainwindow);
-            int movepadofset = 0;
-            int bsz = 20;
+
+            // catch a handle on the host actor for this behavior 
+            Actor tmpactor = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
+
+            int movepadofset = 0; // for the movepad ( temporary solution ill make a better thing here ) 
+            int bsz = 20; // that roughly the unit size for movepad layout (crap i ll do something better soon) 
+
+
             float ofset = 0.0f;
             paramblock.ismoving = !paramblock.editsub;
             // ========== add limitation to the target index 
-            MovingPlatformPathnode targetedpathnode = null;
+            Pathnode targetedpathnode = null;
             if (paramblock.m_pathnodes.Count != 0)
                 targetedpathnode = paramblock.m_pathnodes[paramblock.GetSafeTargetIndex()];
-            paramblock.b_showdebuginfos = EditorGUILayout.Toggle("show debug infos", paramblock.b_showdebuginfos, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+            paramblock.b_hideedition = EditorGUILayout.Toggle("hide path", paramblock.b_hideedition, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+            if (paramblock.b_hideedition == false )
+                paramblock.b_showdebuginfos = EditorGUILayout.Toggle("show debug infos", paramblock.b_showdebuginfos, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
 
             paramblock.editsub = EditorGUILayout.Toggle("EditSub", paramblock.editsub);
             paramblock.move_ampl = EditorGUILayout.Slider("move speed", paramblock.move_ampl, 0, 10, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
@@ -249,7 +271,8 @@ public class MovingPlatformDataset  : Dataset
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, Qr, 360.0f);
                 }
             }
-            Actor tmpactor = (Actor) Selection.activeGameObject.GetComponent(typeof( Actor ));
+
+            
 
             
 
@@ -257,11 +280,12 @@ public class MovingPlatformDataset  : Dataset
             paramblock.b_triggered = EditorGUILayout.Toggle("have trigger", paramblock.b_triggered, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
             //paramblock.b_showdebuginfos = EditorGUILayout.Toggle("show debug infos", paramblock.b_showdebuginfos, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
             EditorGUILayout.EndVertical();
+            GUILayout.BeginArea(new Rect(0, 20 + movepadofset, mainwindow.width, mainwindow.height));
+
             if (paramblock.editsub)
             {
                 GUI.BeginGroup(new Rect(0, 100 + movepadofset, mainwindow.width, mainwindow.height));
-
-                //GUI.BeginGroup(new Rect(5, y, 280, 600));
+                // this syntax is gdamned compact but everything else look like a novel 
                 if (GUI.Button(new Rect(bsz * 2, 0, bsz, bsz), "\"")) //------------------------------- FRONT
                     Move((Vector3.forward * (ofset = (paramblock.b_front_x) ? m_actor.Actorprops.block_size.x : m_actor.Actorprops.block_size.z)), false);
                 if (GUI.Button(new Rect(bsz * 2, bsz * 2 , bsz, bsz), ".")) //------------------------------- back
@@ -274,12 +298,12 @@ public class MovingPlatformDataset  : Dataset
                     Move((Vector3.up * m_actor.Actorprops.block_size.y), false);
                 if (GUI.Button(new Rect(bsz * 6, bsz * 2 , bsz, bsz), ".")) //------------------------------- DOWN
                     Move((Vector3.down * m_actor.Actorprops.block_size.y), false);
+                // movepad navigation into pathnodes 
                 if (GUI.Button(new Rect(bsz * 12, 0, bsz * 2, bsz), ">>")) //------------ NEXT POINT
                 {
                     paramblock.SetSafeTargetIndex(paramblock.GetSafeTargetIndex() + 1);
-                    //m_behavior.paramblock.targetindex = Mathf.Clamp(m_behavior.paramblock.targetindex+1 , 1 ,m_behavior.paramblock.m_pathnodes.Count) ;
                     targetedpathnode = paramblock.m_pathnodes[paramblock.GetSafeTargetIndex()];
-                    //int ti = m_actor.paramblock.targetindex;
+                    // orient in the lookat point dir of the pathnode lookatpoint (360/8 deg step) 
                     int lkp = targetedpathnode.ilookatpoint;
                     Vector3 targetpos = targetedpathnode.Getlookatpoint(lkp, 1.0f);
                     var Qr = Quaternion.LookRotation(Vector3.up, targetpos);
@@ -298,6 +322,8 @@ public class MovingPlatformDataset  : Dataset
                     transform.rotation = Quaternion.RotateTowards(transform.rotation, Qr, 360.0f);
                     transform.position = targetedpathnode.pos;
                 }
+                // add or remove a pathnode 
+                // size is drivent by maxhandle value and modified accordingly by updatepathnodes function 
                 if (GUI.Button(new Rect(bsz * 12, bsz * 2 , bsz * 2, bsz), "+"))
                 {
                     paramblock.maxhandle += 1;
@@ -314,18 +340,24 @@ public class MovingPlatformDataset  : Dataset
                 
                 
             }
+            GUILayout.EndArea();
         }
 
 
 
 
 
-        protected void OnCustomSceneGUI(SceneView sceneview)
+        /// <summary>
+        /// this is the edition display callback for this behavior 
+        /// 
+        /// </summary>
+        /// <param name="sceneview"></param>
+        protected override void OnCustomSceneGUI(SceneView sceneview)
         {
-            if (paramblock == null)
+            if (paramblock == null || paramblock.m_pathnodes.Count == 0 || paramblock.b_hideedition )
                 return;
-            if (paramblock.m_pathnodes.Count == 0)
-                return;
+
+
             string S = "";
             S += "current target = " + paramblock.GetSafeTargetIndex().ToString() + "\n";
             for (int i = 0; i < paramblock.m_pathnodes.Count; i++)
@@ -337,8 +369,8 @@ public class MovingPlatformDataset  : Dataset
                     Handles.Label(transform.position + Vector3.right * 5, S);
                     S += "pathway= " + " [" + i.ToString() + "--" + (i + 1).ToString() + "] \n";
                 }
-                MovingPlatformPathnode p0 = ( MovingPlatformPathnode ) paramblock.GetPathNode(i);
-                MovingPlatformPathnode p1 = ( MovingPlatformPathnode ) paramblock.GetPathNode(i + 1);
+                Pathnode p0 = ( Pathnode ) paramblock.GetPathNode(i);
+                Pathnode p1 = ( Pathnode ) paramblock.GetPathNode(i + 1);
                 Handles.DrawLine(p0.pos, p1.pos);
                 if (paramblock.b_showdebuginfos)
                 {
@@ -365,7 +397,7 @@ public class MovingPlatformDataset  : Dataset
             for (int c = 0; c < paramblock.m_pathnodes.Count; c++)
             {
                 Gizmos.color = Color.red;
-                MovingPlatformPathnode p = (MovingPlatformPathnode)paramblock.m_pathnodes[c];
+                Pathnode p = (Pathnode)paramblock.m_pathnodes[c];
                 Vector3 lookatpoint = p.Getlookatpoint(p.ilookatpoint, 1.0f) + p.pos;
                 Gizmos.DrawSphere(lookatpoint, 0.1f);
                 Gizmos.DrawLine(lookatpoint, p.pos);
@@ -396,7 +428,7 @@ public class MovingPlatformDataset  : Dataset
                 return;
             if (paramblock.m_pathnodes.Count == 0)
                 return;
-            MovingPlatformPathnode p = paramblock.m_pathnodes[paramblock.GetSafeTargetIndex()];
+            Pathnode p = paramblock.m_pathnodes[paramblock.GetSafeTargetIndex()];
 
             Vector3 target = p.pos;
             if (Vector3.Distance(transform.position, target) == 0.0f)

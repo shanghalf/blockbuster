@@ -95,8 +95,10 @@
     <None Include="Assets\PLATFORM\TEMPLE\AssetList.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\assettransfert.xml" />
     <None Include="Assets\PLATFORM\TEMPLE\root.txt" />
-    <None Include="Assets\PLATFORM\XML\paramblock\e1e3064a-23fe-4423-bbd1-8cc574a23fa1.xml" />
-    <None Include="Assets\PLATFORM\XML\paramblock\mplatfe1e3064a-23fe-4423-bbd1-8cc574a23fa1.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\1a952374-20d5-4ce0-9293-059e49e0cda5.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\62f55e9a-41b3-4f5c-94fd-9708a4d46c58.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\92425ede-a1a3-463b-96a1-5b32d8551c30.xml" />
+    <None Include="Assets\PLATFORM\XML\paramblock\95fb374f-b568-4893-b277-0d18b41e7878.xml" />
     <None Include="Assets\PLATFORM\XML\preset\dddddd.xml" />
     <None Include="Assets\PLATFORM\XML\preset\preset.xml" />
     <None Include="Assets\PLATFORM\XML\scene.xml" />

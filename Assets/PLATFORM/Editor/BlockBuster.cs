@@ -22,19 +22,145 @@ public enum ACTIVEBASENAME
 // add test comment
 
 
+public static class BlockBusterUtility
+{
+    // this class is a Helper to manage Actor Behaviors 
 
+    //private  Dictionary<string, string> BehaviorDic = new Dictionary<string, string>();
+
+    /// <summary>
+    /// this function register a new behavior in Blockbuster 
+    /// </summary>
+    /// <returns></returns>
+
+    public static bool debugmode = false;
+
+    public static int  BBdebug (String message , bool Dial = false , bool yesnocancel=false ) 
+    {
+        if (Dial || debugmode)
+        {
+            if (yesnocancel)
+                return EditorUtility.DisplayDialogComplex("BBdebug", message, "yes", "no", "cancel");
+            else
+                EditorUtility.DisplayDialog("class", message, "yes");
+        }
+        else
+            Debug.Log(message);
+        return -1;
+    }
+
+
+    public static void  Deserialize(string path , object o , System.Type T)
+    {
+        if (!System.IO.File.Exists(path))
+        {
+            //debug.Log("file not exist");
+            return ;
+        }
+        XmlSerializer serializer = new XmlSerializer(T);
+        Stream stream = new FileStream(path, FileMode.Open);
+        o = serializer.Deserialize(stream) as object ;
+        stream.Close();
+    }
+
+  
+
+
+    public static System.Type castenum()
+    {
+        System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
+        AssemblyName aName = new AssemblyName("blockbusterbehavior_a");
+        AssemblyBuilder ab = currentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.RunAndSave);
+        ModuleBuilder mb = ab.DefineDynamicModule(aName.Name, aName.Name + ".dll");
+        EnumBuilder eb = mb.DefineEnum("blockbusterbehavior_a", TypeAttributes.Public, typeof(int));
+        int i = 0;
+        foreach (var entry in GetEnumFromScriptFolder())
+        {
+            string s = entry.Key;
+            eb.DefineLiteral(s, i);
+            i++;
+        }
+
+        try
+        {
+            System.Type T = eb.CreateType();
+            ab.Save(aName.Name + ".dll");
+        }
+        catch
+        { }
+        System.Reflection.Assembly ass = System.Reflection.Assembly.LoadFrom("blockbusterbehavior_a.dll");
+        System.Type castenum = ass.GetType("blockbusterbehavior_a");
+        return castenum;
+    }
+
+    public static System.Type GetClassDataset(string behaviorclassclass)
+    {
+        AssemblyName assembly = new AssemblyName("ALFTEST");
+
+        System.AppDomain currentDomain = System.AppDomain.CurrentDomain;
+        //System.AppDomain appDomain = System.Threading.Thread.GetDomain();
+        AssemblyName aName = new AssemblyName(behaviorclassclass);
+        AssemblyBuilder assemblyBuilder = currentDomain.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
+        ModuleBuilder moduleBuilder = assemblyBuilder.DefineDynamicModule(aName.Name);
+        //create the class
+        TypeBuilder typeBuilder = moduleBuilder.DefineType("BBdataset", TypeAttributes.Public | TypeAttributes.AutoClass | TypeAttributes.AnsiClass |
+                                                            TypeAttributes.BeforeFieldInit, typeof(Behaviour));
+        System.Type TT = typeBuilder.CreateType();
+        //lastNamePropertySetter.CreateMethodBody(
+        return TT;
+    }
+
+
+
+
+    public static Dictionary<string, string> GetEnumFromScriptFolder()
+    {
+        string filepath = Application.dataPath + "/PLATFORM/blockbustersetings/registeredbehaviors.xml";
+        Dictionary<string, string> behaviorenumbuilderlist = new Dictionary<string, string>();
+        string[] files = Directory.GetFiles(Application.dataPath + "/PLATFORM/Scripts/Behaviors", "*.cs");
+
+        int i = 0;
+        foreach (string f in files)
+        {
+            System.IO.StreamReader file = new StreamReader(f);
+            string line;
+            while ((line = file.ReadLine()) != null)
+                if (line.Contains("<autoenum>"))
+                {
+                    var a = line.Split(char.Parse(" "));
+                    behaviorenumbuilderlist.Add(a[3], a[2]);
+                }
+            i++;
+        }
+        return behaviorenumbuilderlist;
+    }
+
+
+
+    public static void Save(string path, System.Type type, object o)
+    {
+        XmlSerializer serializer = new XmlSerializer(type);
+        Stream stream = new FileStream(path, FileMode.Create);
+        serializer.Serialize(stream, o);
+        stream.Flush();
+        stream.Close();
+    }
+
+}
 
 
     public class blockbuster : EditorWindow
     {
         // editortick is used instead of Time.Delta in editor LIVE mode
         static float EditorTick = 0.1f;
+     
+
 
         // Actor is base class for all GameActors 
         // holding the common properties of anything that could be manipulated by BlockBuster Editor 
 
         Actor m_actor = null;
-        Behavior[] m_behavior ;
+        //Behavior[] m_behavior ;
 
 
 
@@ -251,7 +377,7 @@ public enum ACTIVEBASENAME
             }
             catch
             {
-                Debug.Log("Object do not have proper Constructor");
+                BlockBusterUtility.BBdebug ("Object do not have proper Constructor");
                 return null;
             }
         }
@@ -375,17 +501,21 @@ public enum ACTIVEBASENAME
                 Selection.gameObjects[i].transform.position += dir;
 
                 // static block
-                if (m_behavior == null)
-                    return;
 
-                /*
-                if (moveallpath)
-                    foreach (Pathnode pn in m_behavior.paramblock.m_pathnodes)
-                        pn.pos += dir;
-                else
-                    m_behavior.paramblock.m_pathnodes[m_behavior.paramblock.GetSafeTargetIndex()].pos += dir;
+                Behavior[] blist = Selection.gameObjects[i].GetComponents<Behavior>();
+                foreach (Behavior b in blist)
+                {
+                    Dataset d=  b.GetDataset();
+                    List<Pathnode> pnodes = d.GetPathNodes();
+                    if ( d.m_pathnodes.Count == 0)
+                        continue;
+                    if (moveallpath)
+                        foreach (Pathnode pn in d.m_pathnodes)
+                            pn.pos += dir; // else move closest to obj 
+                }
 
-                */
+
+                
 
                 Repaint();
 
@@ -717,18 +847,18 @@ public enum ACTIVEBASENAME
             if (Selection.activeGameObject == null)
                 return;
 
-
+            /*
             if (Selection.activeGameObject.GetComponent(typeof(Behavior)) != null)
             {
                 m_actor = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
                 if (m_actor == null)
                     AddActorComponent(Selection.activeGameObject,  null);
 
-                m_behavior = Selection.activeGameObject.GetComponents<Behavior>();
+                //m_behavior = Selection.activeGameObject.GetComponents<Behavior>();
 
                 //UIPB = m_behavior.paramblock;
             }
-
+            */
             Repaint();
 
         }
@@ -750,11 +880,7 @@ public enum ACTIVEBASENAME
 
             if ((EditorWindow.focusedWindow.title == "blockbuster"))
             {				// Block Buster got the focus: so play that funky music white boy  
-                for (var i = 0; i < Selection.gameObjects.GetLength(0); i++)
-                {// lay down the boogy and play that funky music 
-                    m_behavior = Selection.gameObjects[i].GetComponents<Behavior>();
-
-                }
+ 
                 if (slideindex - 1 != oldindexstorage)
                     BrowseAsset(slideindex - 1, "CalculateSelectionSize()");												// till you die ....:::..::...::...::.::.:.:.:::
                 oldindexstorage = slideindex - 1;
@@ -889,28 +1015,14 @@ public enum ACTIVEBASENAME
             foreach (Assembly currentassembly in AppDomain.CurrentDomain.GetAssemblies())
             {
                 Type t = currentassembly.GetType(typeName, false, true);
-                Debug.Log("assname " + currentassembly.ToString());
                 if (t != null)
-                {
-
                     return t;
-                }
             }
             return null;
         }
 
 
-        string fuckingclassname = "";
 
-
-        public string Getclassname(object o, bool shortname = false)
-        {
-            System.Type T = o.GetType();
-            string fullyQualifiedName = T.AssemblyQualifiedName;
-            if (shortname)
-                return "RotatingPlatform";
-            return fullyQualifiedName;
-        }
 
 
 
@@ -927,7 +1039,7 @@ public enum ACTIVEBASENAME
             if (m_actor == null)
                 AddActorComponent(Selection.activeGameObject, null);
 
-
+            Behavior[] blist = Selection.activeGameObject.GetComponents<Behavior>();
 
 
 
@@ -945,10 +1057,15 @@ public enum ACTIVEBASENAME
             if (GUILayout.Button("REPLAY", EditorStyles.toolbarButton))
                 selectedtab = 3;
 
+            
+
             if (Dataset.menubaritem())  // button from dataset ...   
             {
                 selectedtab = 4;
             }
+
+            BlockBusterUtility.debugmode = GUILayout.Toggle(BlockBusterUtility.debugmode , "");
+
             GUILayout.EndHorizontal();
 
             if (selectedtab == 4)
@@ -967,7 +1084,8 @@ public enum ACTIVEBASENAME
                     System.Type T = GetTypeFromClassName(s);
 
                     bool add = true;
-                    foreach (Behavior B in m_behavior)
+
+                    foreach (Behavior B in blist)
                         if (B.GetType() == T)
                             add = false;
                     if (add)
@@ -978,7 +1096,11 @@ public enum ACTIVEBASENAME
                         System.Guid g =System.Guid.NewGuid();
                         Dataset d = b.GetDataset();
                         d.guid = g.ToString();
+                        d.fullqualifiedclassname = d.GetFullQualifiedClassName();
                         m_actor.Actorprops.BehaviorListID.Add (g.ToString());
+                        d.suportedclassname = T.AssemblyQualifiedName;
+
+
 
                     }
 
@@ -987,9 +1109,8 @@ public enum ACTIVEBASENAME
                 {
                     string s = blockbuster.behaviourenum.ToString();
                     System.Type T = GetTypeFromClassName(s);
-
                     bool haveit = false;
-                    foreach (Behavior B in m_behavior)
+                    foreach (Behavior B in blist)
                         if (B.GetType() == T)
                             haveit = true;
                     if (haveit)
@@ -1006,7 +1127,7 @@ public enum ACTIVEBASENAME
                 
                 EditorWindow W = EditorWindow.GetWindow(typeof(blockbuster));
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(W.position.width), GUILayout.Height(W.position.height));
-                foreach (Behavior B in m_behavior)
+                foreach (Behavior B in blist)
                 {
                     B.DoGUILoop((Rect)W.position);
                     Repaint();
@@ -1206,7 +1327,7 @@ public enum ACTIVEBASENAME
                     for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
                     {
 
-                        m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
+                        //m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
 
                         Selection.gameObjects[i].transform.Rotate(Vector3.up * 90, Space.Self);
 
@@ -1217,7 +1338,7 @@ public enum ACTIVEBASENAME
                 {
                     for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
                     {
-                        m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
+                        //m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
 
                         Selection.gameObjects[i].transform.Rotate(Vector3.left * 90, Space.Self);
 
@@ -1228,7 +1349,7 @@ public enum ACTIVEBASENAME
                 {
                     for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
                     {
-                        m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
+                        //m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
 
                         Selection.gameObjects[i].transform.Rotate(Vector3.forward * 90, Space.Self);
                     }
@@ -1269,7 +1390,7 @@ public enum ACTIVEBASENAME
                     {
                         Dataset d = tb.GetDataset();
                         System.Type T = d.GetType();
-                        filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + "mplatf" + m_actor.Actorprops.guid + ".xml";
+                        filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" +  d.guid + ".xml";
                         d.Save(filepath, T);
                     }
                 }
@@ -1282,8 +1403,39 @@ public enum ACTIVEBASENAME
                     //Selection.activeObject.GetComponent(Platform).paramblock.Load(filepath);
                     if (!System.IO.File.Exists(filepath))
                         return;
+                    Actor A = (Actor) Selection.activeGameObject.GetComponent(typeof(Actor));
+                    BaseActorProperties B = BaseActorProperties.Load(filepath); // deserialise pblock 
+                    A.Actorprops = B;
 
-                    //Dataset p = m_behavior.Load(filepath, typeof(Dataset)); // deserialise pblock 
+                    foreach ( string S in A.Actorprops.BehaviorListID ) 
+                    {
+                       filepath = Application.dataPath + "/PLATFORM/XML/paramblock/"+ S +".xml";
+                       XmlDocument xmlDoc = new XmlDocument(); 
+                       if (!File.Exists(filepath))
+                       {
+                           Debug.Log(string.Format( "file {0} do not exist" , filepath ));
+                           continue ;
+                       }
+                       xmlDoc.Load(filepath);
+                       XmlNode node= xmlDoc.GetElementsByTagName("fullqualifiedclassname")[0];
+                       string classname = node.InnerText;
+                       node = xmlDoc.GetElementsByTagName("suportedclassname")[0];
+                       string suportedclassname = node.InnerText;
+                       BlockBusterUtility.BBdebug( classname  );
+                       System.Type T = System.Type.GetType(suportedclassname);
+                       BlockBusterUtility.BBdebug(T.ToString());
+                       GameObject.DestroyImmediate(A.GetComponent(T.ToString()));
+                       Behavior TEMPB= (Behavior) Selection.activeGameObject.AddComponent(T.ToString());
+                       Dataset DS = TEMPB.GetDataset().Load(filepath);
+                       TEMPB.SetDataset(DS); 
+                    }
+
+                    blist = Selection.activeGameObject.GetComponents<Behavior>();
+                    // to be continued load the appropriated xml here based on list 
+
+                    
+
+
                     //m_behavior.paramblock = p;
                     //UIPB = p;
                 }
