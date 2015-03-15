@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="gb2312"?>
+<MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <targetindex>0</targetindex>
+  <b_front_x>false</b_front_x>
+  <timer>0</timer>
+  <editsub>true</editsub>
+  <b_showdebuginfos>false</b_showdebuginfos>
+  <b_hideedition>false</b_hideedition>
+  <ismoving>false</ismoving>
+  <indexbound>MIDDLE</indexbound>
+  <guid>a8438f51-9c18-49d3-ba5f-f38bb6b183c1</guid>
+  <fullqualifiedclassname>MovingPlatformDataset, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</fullqualifiedclassname>
+  <suportedclassname>MovingPlatform, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</suportedclassname>
+  <rotatelookpoint>
+    <pos>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </pos>
+    <ilookatpoint>0</ilookatpoint>
+    <lookatspeed>0</lookatspeed>
+    <translatespeed>0</translatespeed>
+    <waitonnode>0</waitonnode>
+    <timer>0</timer>
+  </rotatelookpoint>
+  <speed>0.5</speed>
+  <move_ampl>0</move_ampl>
+  <target>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </target>
+  <b_revert_rotation>false</b_revert_rotation>
+  <b_triggeronce>false</b_triggeronce>
+  <rotationspeed>0</rotationspeed>
+  <rotationstepnumber>2</rotationstepnumber>
+  <b_triggered>false</b_triggered>
+  <movedir>1</movedir>
+  <maxhandle>1</maxhandle>
+  <b_pathloop>false</b_pathloop>
+  <colider_type>BOX</colider_type>
+  <b_path_rotation>false</b_path_rotation>
+  <m_pathnodes />
+</MovingPlatformDataset>

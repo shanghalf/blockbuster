@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="gb2312"?>
+<BaseActorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <parentgui />
+  <guid>5419f40b-5af5-49a9-a153-521914a2529f</guid>
+  <assetname>JUNGLE_BUILD_2_2_1_01_A</assetname>
+  <orig_transform>
+    <x>-0.707074463</x>
+    <y>-0.006760633</y>
+    <z>-0.00676063634</z>
+    <w>0.707074463</w>
+    <eulerAngles>
+      <x>270</x>
+      <y>358.9044</y>
+      <z>0</z>
+    </eulerAngles>
+  </orig_transform>
+  <orig_pos>
+    <x>36.4035645</x>
+    <y>110.955841</y>
+    <z>-21.4542313</z>
+  </orig_pos>
+  <last_pos>
+    <x>36.4035645</x>
+    <y>110.955841</y>
+    <z>-21.4542313</z>
+  </last_pos>
+  <block_size>
+    <x>2.56402588</x>
+    <y>0.5</y>
+    <z>2.56402588</z>
+  </block_size>
+  <BehaviorListID>
+    <string>4af26f00-b24e-40fe-9fa4-07bbb2ed16f7</string>
+    <string>ef7f5c52-04c4-408d-a97d-16da7c2cdf8e</string>
+  </BehaviorListID>
+  <grouped>false</grouped>
+</BaseActorProperties>
