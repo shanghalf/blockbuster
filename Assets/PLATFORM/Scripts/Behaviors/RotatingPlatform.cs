@@ -24,7 +24,7 @@ using System.Collections;
 [System.Serializable]
 public class RotatingPlatformDataset : Dataset
 {
-    private int targetindex = 0;
+
     public Pathnode rotatelookpoint = new Pathnode();
     public float speed = 0.5f;
     public float move_ampl=0.0f;
@@ -34,44 +34,7 @@ public class RotatingPlatformDataset : Dataset
     public int rotationstepnumber=2;
     public float rotationtempo=0.0f;
     public int rotateindex=0;
-
-    public bool SetSafeTargetIndex(int index)
-    {
-        if (m_pathnodes.Count == 0)
-            return false;
-        int correctindex = Mathf.Clamp(index, 0, m_pathnodes.Count - 1);
-        targetindex = correctindex;
-        if (targetindex == m_pathnodes.Count - 1)
-            indexbound = ARRAY_BOUND.UP;
-        else if (targetindex == 0)
-            indexbound = ARRAY_BOUND.DOWN;
-        else
-            indexbound = ARRAY_BOUND.MIDDLE;
-        return true;
-    }
-
-
-    public  int GetSafeTargetIndex()
-    {
-        if (m_pathnodes.Count == 0)
-            return -666;
-        int correctindex = Mathf.Clamp(targetindex, 0, m_pathnodes.Count - 1);
-        targetindex = correctindex;
-
-        // array boundaries  
-        if (targetindex == m_pathnodes.Count - 1)
-        {
-            indexbound = ARRAY_BOUND.UP;
-        }
-        else if (targetindex == 0)
-        {
-            indexbound = ARRAY_BOUND.DOWN;
-        }
-        else
-            indexbound = ARRAY_BOUND.MIDDLE;
-
-        return (correctindex > 0) ? correctindex : 0;
-    }
+    public List<Pathnode> m_pathnodes = new List<Pathnode>();   // pathnodes array for any path 
 
 
     public object GetPathNode(int index)
@@ -82,13 +45,15 @@ public class RotatingPlatformDataset : Dataset
 
     }
 
+    public override List<Pathnode> GetPathNodes()
+    {
+        return m_pathnodes;
+    }
+
     public override  Dataset Load(string path)
     {
         if (!System.IO.File.Exists(path))
-        {
-            //debug.Log("file not exist");
             return null;
-        }
         XmlSerializer serializer = new XmlSerializer(typeof(RotatingPlatformDataset));
         Stream stream = new FileStream(path, FileMode.Open);
         RotatingPlatformDataset result = serializer.Deserialize(stream) as RotatingPlatformDataset;
@@ -104,32 +69,28 @@ public class RotatingPlatformDataset : Dataset
 
 
 [ExecuteInEditMode()]
-public class RotatingPlatform : Behavior
+public class RotatingPlatform : BBehavior
 {
     // should implement only shared props for all behaviors 
-
-
     public RotatingPlatformDataset paramblock = new RotatingPlatformDataset();
+
 
     public override Dataset GetDataset()
     {
         return (RotatingPlatformDataset)paramblock;
     }
 
-    public override void SetDataset(Dataset D)
+    public override void SetDataset(object o)
     {
-        paramblock = (RotatingPlatformDataset)D;
+        paramblock = (RotatingPlatformDataset)o;
+
     }
-
-
-
- 
-
-
+  
 
     public override void DoGUILoop(Rect mainwindow)
     {
-        base.DoGUILoop(mainwindow);
+        //base.DoGUILoop(mainwindow);
+
         paramblock.b_hideedition = EditorGUILayout.Toggle("show rotation", paramblock.b_hideedition, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
         paramblock.rotationstepnumber = (int)EditorGUILayout.Slider("step", paramblock.rotationstepnumber, 2, 8, GUILayout.MaxWidth(280));
         paramblock.rotationspeed = EditorGUILayout.Slider("speed", paramblock.rotationspeed, 0.0f, 5.0f, GUILayout.MaxWidth(280));
@@ -189,18 +150,8 @@ public class RotatingPlatform : Behavior
 
 #if UNITY_EDITOR
 
-    private void OnEnable()
-    {
-        SceneView.onSceneGUIDelegate += OnCustomSceneGUI;
-    }
 
-    private void OnDisable()
-    {
-        SceneView.onSceneGUIDelegate -= OnCustomSceneGUI;
-        Debug.Log("I was called.");
-    }
-
-    protected override  void OnCustomSceneGUI(SceneView sceneview)
+    public  override  void OnCustomSceneGUI(SceneView sceneview)
     {
         //float angle = -360f / (5);
 

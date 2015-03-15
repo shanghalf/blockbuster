@@ -58,6 +58,8 @@ public class ReplayerLogOutput : MonoBehaviour
         XmlText pos = playerposlog.CreateTextNode(data);
         tag.AppendChild(pos);
         playerposlog.FirstChild.AppendChild(tag);
+
+
     }
 
     protected void OnDestroy()

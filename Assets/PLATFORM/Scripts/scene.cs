@@ -11,21 +11,19 @@ using System.Collections;
 
 
 [System.Serializable]
+[XmlInclude(typeof(BaseActorProperties))]
 public class scenecluster
 {
     public string name;
     public Vector3 rootnodepos;
-    //public List<Actor> pblist = new List<Actor>();
     public List<BaseActorProperties> baseassetproplist = new List<BaseActorProperties>();
-    //public List<Behavior> behaviorlist = new List<Behavior>();
-    public List <Dataset> datasetlist = new List<Dataset>();
-
-
+    //public List<Dataset>  datasetlist = new List<Dataset>();
 }
 
 
 
-
+[System.Serializable]
+[XmlInclude(typeof(scenecluster))]
 public class Scene
 {
     //public Scene scene = new Scene();

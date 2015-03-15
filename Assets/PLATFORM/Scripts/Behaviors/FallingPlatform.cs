@@ -34,7 +34,7 @@ using UnityEditor;
     }
 
 
-    [System.Serializable]
+    
     public class FallingPlatformDataset : Dataset
     {
 
@@ -43,6 +43,7 @@ using UnityEditor;
         public bool b_triggered = false;
         public int movedir = 1;
         public bool respawn = false;
+        public List<Pathnode> m_pathnodes = new List<Pathnode>();   // pathnodes array for any path 
 
         public override Dataset Load(string path)
         {
@@ -59,6 +60,12 @@ using UnityEditor;
         }
 
 
+        public override List<Pathnode> GetPathNodes()
+        {
+            return  m_pathnodes;
+        }
+
+
     }
 
 
@@ -66,50 +73,47 @@ using UnityEditor;
 
 
     [ExecuteInEditMode()] // same no exec in editor might be done here 
-    public class FallingPlatform : Behavior
+    public class FallingPlatform : BBehavior
     {
         // derived from dataset this is the overrided custom data set 
         public FallingPlatformDataset paramblock = new FallingPlatformDataset();
-        public FallingPlatform() { }
-        /// <summary>
-        /// Draw custom Gizmo 
-        /// </summary>
-        public void OnDrawGizmosSelected()
+        public override void OnDrawGizmosSelected()
         {
-            /// Gizmos.color = Color.yellow ; ... etc ..
+            // draw specific gizmo
         }
-        /// <summary>
-        /// return the associated dataset
-        /// </summary>
-        /// <returns></returns>
+
+        public override void SetDataset(object o)
+        {
+            throw new System.NotImplementedException();
+        }
+  
+
+
         public override Dataset GetDataset()
         {
-            return (FallingPlatformDataset)paramblock;
+            return paramblock;
         }
-        /// <summary>
-        /// apply a new dataset
-        /// </summary>
-        /// <param name="D"></param>
-        public override  void SetDataset(Dataset D)
+        public override void DoGUILoop(Rect Mainwindow)
         {
-            paramblock = (FallingPlatformDataset)D;
+            // do gui loop
         }
-
-
-        /// <summary>
-        /// start 
-        /// </summary>
+        public override void OnCustomSceneGUI(SceneView sceneview)
+        {
+            // do scene editition callback
+        }
         public override void Start()
         {
             base.Start();
         }
-        /// <summary>
-        /// update
-        /// </summary>
         public override void Update()
         {
-            base.Update();
+            // do update
         }
+
+
+
+
+
 
     }
 

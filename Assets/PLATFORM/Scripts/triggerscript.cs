@@ -6,15 +6,15 @@ public class triggerscript : MonoBehaviour {
     public GameObject  triggerobject ;
     public GameObject   parentobject  ;
     public bool triggeronce;
-    private Behavior bb;
+    private BBehavior bb;
 
 	// Use this for initialization
 	void Start () 
     {
-        Behavior bb ;
+        BBehavior bb ;
         if (parentobject)
         {
-            bb = (Behavior)parentobject.GetComponent("Platform");
+            bb = (BBehavior)parentobject.GetComponent("Platform");
         }
    	
 	}
@@ -31,7 +31,7 @@ public class triggerscript : MonoBehaviour {
         if (!parentobject)
             return;
 
-        bb = (Behavior)parentobject.GetComponent("Platform");
+        bb = (BBehavior)parentobject.GetComponent("Platform");
     
     }
 

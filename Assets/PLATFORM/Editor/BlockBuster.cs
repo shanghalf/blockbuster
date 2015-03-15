@@ -153,20 +153,10 @@ public static class BlockBusterUtility
     {
         // editortick is used instead of Time.Delta in editor LIVE mode
         static float EditorTick = 0.1f;
-     
-
-
-        // Actor is base class for all GameActors 
-        // holding the common properties of anything that could be manipulated by BlockBuster Editor 
-
         Actor m_actor = null;
-        //Behavior[] m_behavior ;
-
-
 
         bool
             b_front_X,          // determine if editor camera point roughly along X axis ( to keep a viewport relative block move ) 
-            b_editsub,          // used to access sub properties of a behavior in blockbuster UI and freeze Live Move During the edition ( ismoving )    
             b_fixedstepedit,    // manipulate actor on defined step offset instead of using it block size 
             bb_dirty,           // used to add a limitation on how many selected objects are refreshed ( stop refresh loop after 10 objects ) 
             b_groupselectmode   // used to 
@@ -181,40 +171,27 @@ public static class BlockBusterUtility
             assetbaseindex = 0,
             slideindex = 0,
             BBiteratemaxobjects = 10
-            //bs.paramblock.targetindex=0
-
             ;
 
         public int toolbarInt;
         private int currentpreset;
-        //Dataset  UIPB = new Dataset();
-        //BaseActorProperties UIAP = new BaseActorProperties();
-
         private int bsz = 20;
         Vector3 BlockSize = new Vector3(0, 0, 0);
-        //Vector3 dir = new Vector3(0, 0, 0);
-
         Vector3 left = new Vector3(-1.0f, 0.0f, 0.0f);
         Vector3 front = new Vector3(0.0f, 0.0f, 1.0f);
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
         Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
-
         public Texture2D uparrow;//= new Texture2D(20,20)  ;
         public Texture2D downarrow;//= new Texture2D(20,20)  ;
         public Texture2D leftarrow;//= new Texture2D(20,20)  ;
         public Texture2D rightarrow;//= new Texture2D(20,20)  ;
-
         public Texture2D d_uparrow;//= new Texture2D(20,20)  ;
         public Texture2D d_downarrow;//= new Texture2D(20,20)  ;
         public Texture2D d_leftarrow;//= new Texture2D(20,20)  ;
         public Texture2D d_rightarrow;//= new Texture2D(20,20)  ;
         public Texture2D duplicate_t;//= new Texture2D(20,20)  ;
-
         public ArrayList hidenobjectlist = new ArrayList();
-
         int oldindexstorage;
-
-
         ACTIVEBASENAME activebasename;
         string selectedbasename = "/PLATFORM/HIGHTECH/";
         public List<string> data;
@@ -226,42 +203,25 @@ public static class BlockBusterUtility
         private bool b_applyfilter;
         private RePlayer m_replayer;
         private float replayspeed;
-
         public static System.Enum behaviourenum;
-
-
-        //dynamicenumtest = bh.GetEnumFromScriptFolder();
-
-
-
-        //static GameObject handle = (GameObject)Resources.LoadAssetAtPath(("Assets/Editor/target.fbx"), typeof(GameObject));
-
 
         [MenuItem("Window/blockbuster")]
         static void ShowWindow()
         {
             EditorWindow.GetWindow(typeof(blockbuster));
             InitGUIValues();
-
-
         }
-
-
-
-
-
-
-
-
-
 
         void Start()
         {
-
-
-
+            // nothing special 
         }
 
+        public void UpdateDatasetList(GameObject G)
+        { 
+        
+
+        }
 
         public bool savescene(bool preset = false, string scenename = null)
         {
@@ -275,7 +235,6 @@ public static class BlockBusterUtility
                 obj = GameObject.FindObjectsOfType(typeof(GameObject));
                 repo = "scenes";
                 defname = "scene.xml";
-
             }
             else
             {
@@ -285,20 +244,20 @@ public static class BlockBusterUtility
             }
 
             var sfolder = Application.dataPath + "/PLATFORM/XML/" + repo;
+            var pbfolder = Application.dataPath + "/PLATFORM/XML/paramblock/" ;
+            
             string path = "";
             if (scenename == null)
                 path = EditorUtility.SaveFilePanel("filename to save", sfolder, defname, "xml");
             else
                 path = sfolder + scenename;
 
-
-            //Directory.CreateDirectory(path);
             foreach (object o in obj)
             {
                 go = (GameObject)o;
-
                 Actor localactor = (Actor)go.GetComponent(typeof(Actor));
-                Behavior localbehavior = (Behavior)go.GetComponent(typeof(Behavior));
+                if (localactor == null)
+                    continue;
                 BaseActorProperties baseactorprop = localactor.Actorprops;
                 if (localactor != null)
                 {
@@ -307,17 +266,15 @@ public static class BlockBusterUtility
                     localactor.Actorprops.last_pos = go.transform.position; // make sure the pos is right 
                     localactor.Actorprops.orig_transform = go.transform.rotation;
                     scenetosave.cluster.baseassetproplist.Add(baseactorprop);
+                    BBehavior[] bblist = go.GetComponents<BBehavior>();
+                    foreach ( BBehavior  B in bblist )
+                        B.GetDataset().Save(pbfolder + B.GetDataset().GetGuid() + ".xml", B.GetDataset().GetType());
+
                 }
             }
-
             scenetosave.Save(path);
             return true;
-
         }
-
-
-
-
 
         public GameObject GroupSelection(GameObject go)
         {
@@ -356,14 +313,19 @@ public static class BlockBusterUtility
             S = Scene.Load(path);
             foreach (BaseActorProperties blk in S.baseassetproplist)
             {
-                GameObject tgo = (GameObject)Resources.LoadAssetAtPath(("Assets" + selectedbasename + blk.assetname + ".fbx"), typeof(GameObject));
-                Actor tbs;
-                tbs = (Actor)tgo.GetComponent(typeof(Actor));
+                string assetpath = ("Assets"+ selectedbasename + blk.assetname + ".fbx");
+                GameObject tgo = (GameObject)Resources.LoadAssetAtPath(assetpath, typeof(GameObject));
+                
+
+                
+
                 GameObject instance = (GameObject)Instantiate(tgo, blk.last_pos, blk.orig_transform);
                 instance.name = blk.assetname + instance.GetInstanceID();
-                instance.AddComponent(typeof(Behavior));
-                tbs = (Actor)instance.GetComponent(typeof(Actor));
-                //tbs.ba= blk;
+                instance.AddComponent(typeof(Actor));
+                
+                Actor tbs = (Actor)instance.GetComponent(typeof(Actor));
+                tbs.Actorprops = blk;
+                LoadBBhaviorfromActorlist(instance);
                 merged.Add(instance);
             }
             return merged;
@@ -405,8 +367,8 @@ public static class BlockBusterUtility
 
             if (originalactor != null)
             {
-                Behavior[] blist = originalactor.GetComponents<Behavior>();
-                foreach (Behavior b in blist)
+                BBehavior[] blist = originalactor.GetComponents<BBehavior>();
+                foreach (BBehavior b in blist)
                 {
                     string s = b.GetType().ToString();
                     obj.AddComponent(s) ;
@@ -494,7 +456,33 @@ public static class BlockBusterUtility
                         tempactor.Actorprops.parentgui = m_actor.Actorprops.guid;
                         tempactor.Actorprops.orig_pos = Selection.gameObjects[i].transform.position;
                         tempactor.Actorprops.orig_transform = Selection.gameObjects[i].transform.rotation;
-                    }
+                        tempactor.Actorprops.BehaviorListID.Clear();
+                        // refresh dataset guiid list 
+                        BBehavior[] BHL = obj.GetComponents<BBehavior>();
+                        foreach (BBehavior B in BHL)
+                        {
+                            Dataset localdataset = B.GetDataset();
+                            string newguid  = System.Guid.NewGuid().ToString();
+                            localdataset.SetGuid(newguid.ToString());
+                            tempactor.Actorprops.BehaviorListID.Add(newguid);
+
+                            // translate pathnodes 
+                            List<Pathnode> pnodes = localdataset.GetPathNodes();
+                            if (pnodes== null )
+                                continue;
+                            if (pnodes.Count == 0)
+                                continue;
+                            // in edit sub mode we move only the current pathnode 
+                            if (!localdataset.editsub)
+                                foreach (Pathnode pn in pnodes)
+                                    pn.pos += dir; // else move closest to obj 
+                            else
+                                pnodes[localdataset.targetindex].pos += dir;
+
+                        }
+                        
+
+                     }
 
                     //AddPlatformComponent(obj, null);
                 }
@@ -502,15 +490,15 @@ public static class BlockBusterUtility
 
                 // static block
 
-                Behavior[] blist = Selection.gameObjects[i].GetComponents<Behavior>();
-                foreach (Behavior b in blist)
+                BBehavior[] blist = Selection.gameObjects[i].GetComponents<BBehavior>();
+                foreach (BBehavior B in blist)
                 {
-                    Dataset d=  b.GetDataset();
-                    List<Pathnode> pnodes = d.GetPathNodes();
-                    if ( d.m_pathnodes.Count == 0)
+                    Dataset localdataset = B.GetDataset();
+                    List<Pathnode> pnodes = localdataset.GetPathNodes();
+                    if (pnodes == null)
                         continue;
-                    if (moveallpath)
-                        foreach (Pathnode pn in d.m_pathnodes)
+                    // in edit sub mode we move only the current pathnode 
+                    foreach (Pathnode pn in pnodes)
                             pn.pos += dir; // else move closest to obj 
                 }
 
@@ -582,8 +570,8 @@ public static class BlockBusterUtility
 
             // inform a potential movig platform for direction of the camera 
             MovingPlatform  B = (MovingPlatform)Selection.activeGameObject.GetComponent(typeof(MovingPlatform));
-       //     if (B != null)
-     //           B.paramblock.b_front_x = b_front_X; 
+            if (B != null)
+                B.paramblock.b_front_x = b_front_X; 
 
         }
 
@@ -711,7 +699,7 @@ public static class BlockBusterUtility
 
             ReadAssetBase("BrowseAsset()" + "from " + caller);  																	// read the base definition ( generated by 3dsmax during  export ) 
 
-            Behavior bs = (Behavior)Selection.gameObjects[0].GetComponent(typeof(Behavior));
+            BBehavior bs = (BBehavior)Selection.gameObjects[0].GetComponent(typeof(BBehavior));
 
             // first element of the selection is used as active transform to pop objects 
             if (bs == null)
@@ -1024,9 +1012,42 @@ public static class BlockBusterUtility
 
 
 
+        public void refreshActorDatasetList(  GameObject o , BaseActorProperties BAP)
+        {
+            BBehavior[] BHL = (BBehavior[])o.GetComponents<BBehavior>();
+            BAP.BehaviorListID.Clear();
+            foreach (BBehavior B in BHL )
+                BAP.BehaviorListID.Add( B.GetDataset().GetGuid());
+        }
 
 
+        public void LoadBBhaviorfromActorlist(GameObject o )
+        {
+            Actor A = o.GetComponent<Actor>();
 
+            foreach (string S in A.Actorprops.BehaviorListID)
+            {
+                string filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + S + ".xml";
+                XmlDocument xmlDoc = new XmlDocument();
+                if (!File.Exists(filepath))
+                {
+                    BlockBusterUtility.BBdebug(string.Format("file {0} do not exist", filepath));
+                    continue;
+                }
+                xmlDoc.Load(filepath);
+                XmlNode node = xmlDoc.GetElementsByTagName("fullqualifiedclassname")[0];
+                string classname = node.InnerText;
+                node = xmlDoc.GetElementsByTagName("suportedclassname")[0];
+                string suportedclassname = node.InnerText;
+                BlockBusterUtility.BBdebug(classname);
+                System.Type T = System.Type.GetType(suportedclassname);
+                BlockBusterUtility.BBdebug(T.ToString());
+                GameObject.DestroyImmediate(o.GetComponent(T.ToString()));
+                BBehavior TEMPB = (BBehavior)o.AddComponent(T.ToString());
+                Dataset DS = TEMPB.GetDataset().Load(filepath);
+                TEMPB.SetDataset(DS);
+            }
+        }
 
 
         void OnGUI()
@@ -1039,7 +1060,7 @@ public static class BlockBusterUtility
             if (m_actor == null)
                 AddActorComponent(Selection.activeGameObject, null);
 
-            Behavior[] blist = Selection.activeGameObject.GetComponents<Behavior>();
+            BBehavior[] blist = Selection.activeGameObject.GetComponents<BBehavior>();
 
 
 
@@ -1085,21 +1106,20 @@ public static class BlockBusterUtility
 
                     bool add = true;
 
-                    foreach (Behavior B in blist)
+                    foreach (BBehavior B in blist)
                         if (B.GetType() == T)
                             add = false;
                     if (add)
                     {
                         //Behavior b = new Behavior();
                         Actor A = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
-                        Behavior b = (Behavior)Selection.activeGameObject.AddComponent(T) ;
+                        BBehavior b = (BBehavior)Selection.activeGameObject.AddComponent(T) ;
                         System.Guid g =System.Guid.NewGuid();
                         Dataset d = b.GetDataset();
                         d.guid = g.ToString();
                         d.fullqualifiedclassname = d.GetFullQualifiedClassName();
                         m_actor.Actorprops.BehaviorListID.Add (g.ToString());
                         d.suportedclassname = T.AssemblyQualifiedName;
-
 
 
                     }
@@ -1110,16 +1130,15 @@ public static class BlockBusterUtility
                     string s = blockbuster.behaviourenum.ToString();
                     System.Type T = GetTypeFromClassName(s);
                     bool haveit = false;
-                    foreach (Behavior B in blist)
+                    foreach (BBehavior B in blist)
                         if (B.GetType() == T)
                             haveit = true;
                     if (haveit)
                     {
                         Actor A = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
-                        Behavior b = (Behavior) Selection.activeGameObject.GetComponent(T.ToString());
-                        Dataset d = b.GetDataset();
-                        A.Actorprops.BehaviorListID.Remove(d.guid);
-                        DestroyImmediate(b);
+                        BBehavior tbv = (BBehavior) Selection.activeGameObject.GetComponent(T.ToString());
+                        DestroyImmediate(tbv);
+                        refreshActorDatasetList(Selection.activeGameObject, A.Actorprops);
                     }
 
                 }
@@ -1127,7 +1146,7 @@ public static class BlockBusterUtility
                 
                 EditorWindow W = EditorWindow.GetWindow(typeof(blockbuster));
                 scrollPos = EditorGUILayout.BeginScrollView(scrollPos, GUILayout.Width(W.position.width), GUILayout.Height(W.position.height));
-                foreach (Behavior B in blist)
+                foreach (BBehavior B in blist)
                 {
                     B.DoGUILoop((Rect)W.position);
                     Repaint();
@@ -1371,28 +1390,23 @@ public static class BlockBusterUtility
                 //---------------------------------------------------------------------		<BeginGroup>  
                 //-------------------------------------------------------------- 4 Controls in the group  
                 GUI.BeginGroup(new Rect(10, 80, 300, 600));
-
-
                 b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                 String filepath;
-
-                //Platform tblock = (Platform)Selection.activeGameObject.GetComponent("Platform");
-
-
                 if (GUILayout.Button("SAVE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
                 {
                     if (Selection.activeGameObject == null)
                         return;
                     filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + m_actor.Actorprops.guid + ".xml";
-                    BlockBusterUtility.Save(filepath, typeof(BaseActorProperties) ,m_actor.Actorprops );
-                    Behavior[] TB = Selection.activeGameObject.GetComponents<Behavior>();
-                    foreach (Behavior tb in TB)
+                    m_actor.Actorprops.Save(filepath, typeof(BaseActorProperties));
+
+                    BBehavior[] BHL = Selection.activeGameObject.GetComponents<BBehavior>();
+                    foreach (BBehavior tmp in BHL)
                     {
-                        Dataset d = tb.GetDataset();
-                        System.Type T = d.GetType();
-                        filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" +  d.guid + ".xml";
-                        d.Save(filepath, T);
+                        filepath = Application.dataPath + "/PLATFORM/XML/paramblock/" + tmp.GetDataset().GetGuid() + ".xml";
+                        tmp.GetDataset().Save(filepath,tmp.GetDataset().GetType());
                     }
+
+
                 }
 
                 if (GUILayout.Button("LOAD", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
@@ -1407,30 +1421,35 @@ public static class BlockBusterUtility
                     BaseActorProperties B = BaseActorProperties.Load(filepath); // deserialise pblock 
                     A.Actorprops = B;
 
-                    foreach ( string S in A.Actorprops.BehaviorListID ) 
-                    {
-                       filepath = Application.dataPath + "/PLATFORM/XML/paramblock/"+ S +".xml";
-                       XmlDocument xmlDoc = new XmlDocument(); 
-                       if (!File.Exists(filepath))
-                       {
-                           Debug.Log(string.Format( "file {0} do not exist" , filepath ));
-                           continue ;
-                       }
-                       xmlDoc.Load(filepath);
-                       XmlNode node= xmlDoc.GetElementsByTagName("fullqualifiedclassname")[0];
-                       string classname = node.InnerText;
-                       node = xmlDoc.GetElementsByTagName("suportedclassname")[0];
-                       string suportedclassname = node.InnerText;
-                       BlockBusterUtility.BBdebug( classname  );
-                       System.Type T = System.Type.GetType(suportedclassname);
-                       BlockBusterUtility.BBdebug(T.ToString());
-                       GameObject.DestroyImmediate(A.GetComponent(T.ToString()));
-                       Behavior TEMPB= (Behavior) Selection.activeGameObject.AddComponent(T.ToString());
-                       Dataset DS = TEMPB.GetDataset().Load(filepath);
-                       TEMPB.SetDataset(DS); 
-                    }
+                    LoadBBhaviorfromActorlist(Selection.activeGameObject);
 
-                    blist = Selection.activeGameObject.GetComponents<Behavior>();
+
+
+                    //foreach ( string S in A.Actorprops.BehaviorListID ) 
+                    //{
+                    //   filepath = Application.dataPath + "/PLATFORM/XML/paramblock/"+ S +".xml";
+                    //   XmlDocument xmlDoc = new XmlDocument(); 
+                    //   if (!File.Exists(filepath))
+                    //   {
+                    //       BlockBusterUtility.BBdebug(string.Format( "file {0} do not exist" , filepath));
+                    //       continue ;
+                    //   }
+                    //   xmlDoc.Load(filepath);
+                    //   XmlNode node= xmlDoc.GetElementsByTagName("fullqualifiedclassname")[0];
+                    //   string classname = node.InnerText;
+                    //   node = xmlDoc.GetElementsByTagName("suportedclassname")[0];
+                    //   string suportedclassname = node.InnerText;
+                    //   BlockBusterUtility.BBdebug( classname  );
+                    //   System.Type T = System.Type.GetType(suportedclassname);
+                    //   BlockBusterUtility.BBdebug(T.ToString());
+                    //   GameObject.DestroyImmediate(A.GetComponent(T.ToString()));
+                    //   BBehavior TEMPB= (BBehavior) Selection.activeGameObject.AddComponent(T.ToString());
+                    //   Dataset DS = TEMPB.GetDataset().Load(filepath);
+                    //   TEMPB.SetDataset(DS); 
+                    //}
+                    
+
+                    //blist = Selection.activeGameObject.GetComponents<BBehavior>();
                     // to be continued load the appropriated xml here based on list 
 
                     
@@ -1530,7 +1549,7 @@ public static class BlockBusterUtility
                     for (var c = 0; c < Selection.activeGameObject.transform.childCount; c++)
                     {
                         GameObject tgo = Selection.activeGameObject.transform.GetChild(c).gameObject;
-                        Actor tbs = (Actor)tgo.GetComponent(typeof(Behavior));
+                        Actor tbs = (Actor)tgo.GetComponent(typeof(BBehavior));
                         tbs.Actorprops.parentgui = null;
                         tbs.Actorprops.grouped = false;
                     }

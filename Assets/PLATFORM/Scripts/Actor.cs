@@ -40,6 +40,11 @@ public class BuildLogUtility
 
 
 
+
+[XmlInclude(typeof(RotatingPlatformDataset))]
+[XmlInclude(typeof(MovingPlatformDataset))]
+[XmlInclude(typeof(FallingPlatformDataset))]
+[XmlInclude(typeof(Dataset))]
 [System.Serializable]
 public class BaseActorProperties
 {
@@ -50,9 +55,12 @@ public class BaseActorProperties
     public Vector3 orig_pos;
     public Vector3 last_pos;
     public Vector3 block_size;
-    //public System.Type BHVTYPE;
-    public bool grouped;
     public List<string> BehaviorListID = new List<string>();
+    //public List<Dataset> DatasetList = new List<Dataset>();    
+    public bool grouped;
+
+    // hold the behavior dataset 
+
 
     public static BaseActorProperties Load(string path)
     {
@@ -68,50 +76,52 @@ public class BaseActorProperties
         return result;
     }
 
+    public virtual void Save(string path, System.Type type)
+    {
+        System.Type[] extraTypes = { type  };
+
+        XmlSerializer serializer = new XmlSerializer(type, extraTypes);
+        Stream stream = new FileStream(path, FileMode.Create);
+        serializer.Serialize(stream, this);
+        stream.Flush();
+        stream.Close();
+    }
+
 
 }
 
 
-[System.Serializable]
+/// <summary>
+/// actor derive from MonoBehaviour and not supporting
+/// serialization using Dataset and overrides to support this 
+/// </summary>
 public class Actor : MonoBehaviour 
 {
-
     //public List<Dataset> DatasetTable = new List<Dataset>();
-
-
     public Transform block_transform;
     public GameObject scenerefobj;
-
+    // serializable properties 
     public BaseActorProperties Actorprops = new BaseActorProperties();
     public virtual void OnDrawGizmosSelected()
     {
-        
     }
 	// Use this for initialization
 	public virtual void Start () 
-    
     {
-        // an actor is not suposed to be used in game mode 
 	}
-	
-    public  void Add(System.Object o)
-    {
-        
-
-    }
-
 	// Update is called once per frame
 	public virtual void Update () 
-    
     {
-       // Debug.Log("not implemented at actor level");
 	}
-
-
-    // save function should serialize a table of Behaviors (should be broken now )
-
-
-
+    // acessor for serialized properties 
+    public virtual BaseActorProperties GetActorprops()
+    {
+        return Actorprops;
+    }
+    public virtual void SetActorprops(BaseActorProperties A )
+    {
+        Actorprops = A;
+    }
 
 
 }
