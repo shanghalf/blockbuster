@@ -283,7 +283,7 @@ public abstract class BBehavior : MonoBehaviour
         if (!block_transform)
             return;
         Actor A = (Actor)GetComponent(typeof(Actor));
-        A.Actorprops.orig_transform = block_transform.rotation;
+        A.Actorprops.orig_rotation = block_transform.rotation;
         A.Actorprops.orig_pos = block_transform.position;
 	}
 

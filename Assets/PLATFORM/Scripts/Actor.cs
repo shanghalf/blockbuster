@@ -51,7 +51,7 @@ public class BaseActorProperties
     public string parentgui;
     public string guid;
     public string assetname;
-    public Quaternion orig_transform = Quaternion.identity;
+    public Quaternion orig_rotation = Quaternion.identity;
     public Vector3 orig_pos;
     public Vector3 last_pos;
     public Vector3 block_size;

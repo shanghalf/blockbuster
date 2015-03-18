@@ -108,6 +108,10 @@ public static class BlockBusterUtility
         System.Type TT = typeBuilder.CreateType();
         //lastNamePropertySetter.CreateMethodBody(
         return TT;
+
+
+
+
     }
 
 
@@ -146,6 +150,15 @@ public static class BlockBusterUtility
         stream.Close();
     }
 
+    public static GameObject[] getchildrens(GameObject o)
+    {
+        List<GameObject> L = new List<GameObject>();
+        for (int c = 0; c < o.transform.childCount; c++)
+            L.Add(o.transform.GetChild(c).gameObject);
+        return L.ToArray();
+    }
+
+
 }
 
 
@@ -169,7 +182,7 @@ public static class BlockBusterUtility
             i = 0,
             APX = 0,
             assetbaseindex = 0,
-            slideindex = 0,
+            assetsliderindex = 0,
             BBiteratemaxobjects = 10
             ;
 
@@ -194,7 +207,7 @@ public static class BlockBusterUtility
         int oldindexstorage;
         ACTIVEBASENAME activebasename;
         string selectedbasename = "/PLATFORM/HIGHTECH/";
-        public List<string> data;
+        public List<string> data = new List<string>();
         private int pathindex;
         private int levelID;
         public GameObject m_RePlayerObject;
@@ -230,6 +243,9 @@ public static class BlockBusterUtility
             Scene scenetosave = new Scene();
             GameObject go;
             object[] obj;
+
+            
+            
             if (!preset)
             {
                 obj = GameObject.FindObjectsOfType(typeof(GameObject));
@@ -264,7 +280,7 @@ public static class BlockBusterUtility
                     // do not forget to update paramblock value before saving 
                     var filepath = path + "/" + localactor.Actorprops.guid + ".xml";
                     localactor.Actorprops.last_pos = go.transform.position; // make sure the pos is right 
-                    localactor.Actorprops.orig_transform = go.transform.rotation;
+                    localactor.Actorprops.orig_rotation = go.transform.rotation;
                     scenetosave.cluster.baseassetproplist.Add(baseactorprop);
                     BBehavior[] bblist = go.GetComponents<BBehavior>();
                     foreach ( BBehavior  B in bblist )
@@ -276,18 +292,48 @@ public static class BlockBusterUtility
             return true;
         }
 
-        public GameObject GroupSelection(GameObject go)
+        public void BrowsePresset(int dir)
         {
-            for (var c = 0; c < Selection.gameObjects.GetLength(0); c++)
+            GameObject original = Selection.activeGameObject;
+            currentpreset+=dir;
+            var sfolder = Application.dataPath + "/PLATFORM/XML/preset";
+            string[] files = Directory.GetFiles(sfolder, "*.xml");
+            int i = currentpreset % files.Length;
+            BlockBusterUtility.BBdebug(i.ToString());
+
+
+            
+            List<GameObject> L = loadscene(true, System.IO.Path.GetFileName(files[i]));
+            Selection.objects = L.ToArray();
+            Selection.activeGameObject = GroupSelection(Selection.gameObjects[0], true);
+            Selection.activeGameObject.transform.position = original.transform.transform.position;
+            DestroyImmediate(original);
+        }
+
+
+
+        public GameObject GroupSelection(GameObject go , bool group)
+        {
+            GameObject[] glist = (group) ? Selection.gameObjects :BlockBusterUtility.getchildrens(Selection.activeGameObject);
+
+            foreach (GameObject tgo in glist)
             {
-                if (go != Selection.gameObjects[c])
+                if (go != tgo)
                 {
-                    Selection.gameObjects[c].transform.parent = go.transform;
-                    Actor tbs = (Actor)Selection.gameObjects[c].GetComponent(typeof(Actor));
-                    tbs.Actorprops.parentgui = m_actor.Actorprops.guid.ToString();
-                    tbs.Actorprops.grouped = true;
-                    //DestroyImmediate( Selection.gameObjects[c].GetComponent("Platform"));
+                    if ( group )
+                        tgo.transform.parent = go.transform;
+                    
+
+                    Actor destactor = tgo.GetComponent<Actor>();
+                    Actor originalactor = go.GetComponent<Actor>();
+                    if (destactor == null || originalactor ==null)
+                        continue;
+                    
+                    destactor.Actorprops.parentgui = (group) ?  m_actor.Actorprops.guid.ToString() : null;
+                    destactor.Actorprops.grouped = (group) ? true : false ;
                 }
+                if (!group)
+                    Selection.activeGameObject.transform.DetachChildren();
             }
             return go;
         }
@@ -315,14 +361,9 @@ public static class BlockBusterUtility
             {
                 string assetpath = ("Assets"+ selectedbasename + blk.assetname + ".fbx");
                 GameObject tgo = (GameObject)Resources.LoadAssetAtPath(assetpath, typeof(GameObject));
-                
-
-                
-
-                GameObject instance = (GameObject)Instantiate(tgo, blk.last_pos, blk.orig_transform);
+                GameObject instance = (GameObject)Instantiate(tgo, blk.last_pos, blk.orig_rotation);
                 instance.name = blk.assetname + instance.GetInstanceID();
                 instance.AddComponent(typeof(Actor));
-                
                 Actor tbs = (Actor)instance.GetComponent(typeof(Actor));
                 tbs.Actorprops = blk;
                 LoadBBhaviorfromActorlist(instance);
@@ -361,7 +402,7 @@ public static class BlockBusterUtility
             // -------------------------------------------------------------------------------------- init the block properties  ( parameterblock ) 
             m_actor.Actorprops.block_size = M.renderer.bounds.size;
             m_actor.block_transform = obj.transform;	 	// transform from source	
-            m_actor.Actorprops.orig_transform = obj.transform.rotation; // origin transform help to re initialize a block in static mode 
+            m_actor.Actorprops.orig_rotation = obj.transform.rotation; // origin transform help to re initialize a block in static mode 
             m_actor.Actorprops.orig_pos = obj.transform.position;		// same for pos ( sound weird could be done in oneline have to see that 	
             m_actor.scenerefobj = obj;
 
@@ -429,11 +470,12 @@ public static class BlockBusterUtility
             // bs.paramblock.pathnodes[bs.paramblock.targetindex] = Selection.activeGameObject.transform.position;
 
             // iterate on the selection 
-            for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
+            foreach (GameObject go in Selection.gameObjects)
             {
-                GameObject ts = (GameObject)Selection.gameObjects.GetValue(i);
+                //GameObject ts = (GameObject)Selection.gameObjects.GetValue(i);
 
-                m_actor = (Actor)ts.GetComponent(typeof(Actor));						// should be there 
+                m_actor = (Actor)go.GetComponent(typeof(Actor));						// should be there 
+                m_actor.Actorprops.last_pos = go.transform.position; // make sure the pos is right 
                 if (m_actor == null)
                     continue;
 
@@ -441,22 +483,25 @@ public static class BlockBusterUtility
                 if (instanciate)
                 {	// ------------------------- MOVE AND DUPLICATE
 
-                    GameObject obj = (GameObject)Instantiate(Selection.gameObjects[i], Selection.gameObjects[i].transform.position, Selection.gameObjects[i].transform.rotation);
-                    str = Selection.gameObjects[i].name;										// change the name  
+                    GameObject obj = (GameObject)Instantiate(go, go.transform.position, go.transform.rotation);
+                    str = go.name;										// change the name  
                     string[] strarray = str.Split(new char[] { '-' });
                     obj.name = strarray[0] + obj.GetInstanceID();								// final name is block original name plus unique id 
-                    if (Selection.gameObjects[i].transform.parent)
-                        obj.transform.parent = Selection.gameObjects[i].transform.parent;
-                    Actor tempactor = (Actor)obj.GetComponent(typeof(Actor));
+                    if (go.transform.parent)
+                        obj.transform.parent = go.transform.parent;
+                    
                     Guid g;
                     g = Guid.NewGuid();
-                    if (tempactor)
+                    if (m_actor)
                     {
-                        tempactor.Actorprops.guid = g.ToString();//obj.GetInstanceID().ToString();
-                        tempactor.Actorprops.parentgui = m_actor.Actorprops.guid;
-                        tempactor.Actorprops.orig_pos = Selection.gameObjects[i].transform.position;
-                        tempactor.Actorprops.orig_transform = Selection.gameObjects[i].transform.rotation;
-                        tempactor.Actorprops.BehaviorListID.Clear();
+                        m_actor.Actorprops.guid = g.ToString();//obj.GetInstanceID().ToString();
+                        m_actor.Actorprops.parentgui = m_actor.Actorprops.guid;
+                        m_actor.Actorprops.orig_pos = go.transform.position;
+                        m_actor.Actorprops.orig_rotation = go.transform.rotation;
+
+
+
+                        m_actor.Actorprops.BehaviorListID.Clear();
                         // refresh dataset guiid list 
                         BBehavior[] BHL = obj.GetComponents<BBehavior>();
                         foreach (BBehavior B in BHL)
@@ -464,7 +509,7 @@ public static class BlockBusterUtility
                             Dataset localdataset = B.GetDataset();
                             string newguid  = System.Guid.NewGuid().ToString();
                             localdataset.SetGuid(newguid.ToString());
-                            tempactor.Actorprops.BehaviorListID.Add(newguid);
+                            m_actor.Actorprops.BehaviorListID.Add(newguid);
 
                             // translate pathnodes 
                             List<Pathnode> pnodes = localdataset.GetPathNodes();
@@ -486,11 +531,13 @@ public static class BlockBusterUtility
 
                     //AddPlatformComponent(obj, null);
                 }
-                Selection.gameObjects[i].transform.position += dir;
+                go.transform.position += dir;
+
+              
 
                 // static block
 
-                BBehavior[] blist = Selection.gameObjects[i].GetComponents<BBehavior>();
+                BBehavior[] blist = go.GetComponents<BBehavior>();
                 foreach (BBehavior B in blist)
                 {
                     Dataset localdataset = B.GetDataset();
@@ -627,7 +674,7 @@ public static class BlockBusterUtility
 
 
 
-        public bool ReadAssetBase(String caller)
+        public bool ReadAssetBase()
         {
             // **************************************************************************
             // the asset base xml file is generated by 3dsmax exporter in asset folder 
@@ -680,61 +727,61 @@ public static class BlockBusterUtility
         }
 
 
-        public void BrowseAsset(int next, String caller)
+        public void BrowseAsset(int next)
         {
             // ***************************************************************
             // browse asset from base todo  should be changeed to manage multiple base 
 
-
-            return;
-
             if (b_groupselectmode) return;
             GameObject tgo = (GameObject)Selection.activeObject;
-
             if (tgo == null)
-            {
-                //debug.Log( "no object selected "   )  ;
                 return;
-            }
+            ReadAssetBase();  																	// read the base definition ( generated by 3dsmax during  export ) 
 
-            ReadAssetBase("BrowseAsset()" + "from " + caller);  																	// read the base definition ( generated by 3dsmax during  export ) 
+            Actor A = (Actor)tgo.GetComponent(typeof(Actor));
+            BaseActorProperties BAP = A.Actorprops; ;
 
-            BBehavior bs = (BBehavior)Selection.gameObjects[0].GetComponent(typeof(BBehavior));
-
-            // first element of the selection is used as active transform to pop objects 
-            if (bs == null)
-            {
-                //debug.Log( "no block setup script on source object " + Selection.activeObject.name  )  ;
-                return;
-            }
-
+            BBehavior[] blist = tgo.GetComponents<BBehavior>(); 
 
             int index;
-            if (Mathf.Abs(next) < 2)
+            if (Mathf.Abs(next) == 1)
             {
                 assetbaseindex = Mathf.Abs(assetbaseindex + next);								// loop index todo check index base seems to have a small bug here 
                 index = assetbaseindex % data.Count;
+                assetsliderindex = index;
+                assetbaseindex = index;
             }
             else
-                index = slideindex;
-
-            ////debug.Log(index.ToString());
-
-
+            {
+                index = assetsliderindex;
+                BlockBusterUtility.BBdebug(next.ToString());
+            }
             string assetname = (data[index]);													// load and swap 
-
             GameObject prefab = (GameObject)Resources.LoadAssetAtPath(("Assets" + selectedbasename + assetname + ".fbx"), typeof(GameObject));
             if (prefab == null)
             {
-                //debug.Log( "prefab load fail "+  ( "Assets"+selectedbasename  + assetname +".fbx") );
+                BlockBusterUtility.BBdebug("prefab load fail " + ("Assets" + selectedbasename + assetname + ".fbx"));
                 return;
             }
             // the new instance need a block controller as well and get whatever it can grab on the 
             // original object // in AddPlatformComponent funbtion ( add new fresh script ut can also take props from source 
-            GameObject instance = (GameObject)Instantiate(prefab, Selection.activeTransform.position, Selection.gameObjects[0].transform.rotation);
+            GameObject instance = (GameObject)Instantiate(prefab, tgo.transform.position, tgo.transform.rotation);
             instance.name = prefab.name + instance.GetInstanceID();
+            instance.AddComponent(typeof(Actor));
+            Actor swapactor = instance.GetComponent<Actor>();
+            swapactor.Actorprops = BAP;
+            swapactor.Actorprops.assetname = assetname;
 
-            AddActorComponent(instance,  m_actor);
+            foreach ( BBehavior B in blist ) 
+            {
+                System.Type T = B.GetType();
+                instance.AddComponent(T.Name);
+                BBehavior SB =(BBehavior) instance.GetComponent(T.Name);
+                //SB = B;
+                Dataset D = B.GetDataset();
+                SB.SetDataset( D ) ;
+
+            }
 
             DestroyImmediate(Selection.activeObject);
             Selection.activeGameObject = instance;
@@ -869,9 +916,9 @@ public static class BlockBusterUtility
             if ((EditorWindow.focusedWindow.title == "blockbuster"))
             {				// Block Buster got the focus: so play that funky music white boy  
  
-                if (slideindex - 1 != oldindexstorage)
-                    BrowseAsset(slideindex - 1, "CalculateSelectionSize()");												// till you die ....:::..::...::...::.::.:.:.:::
-                oldindexstorage = slideindex - 1;
+                if (assetsliderindex - 1 != oldindexstorage)
+                    BrowseAsset(assetsliderindex - 1);												// till you die ....:::..::...::...::.::.:.:.:::
+                oldindexstorage = assetsliderindex - 1;
                 Repaint();
                 //SceneView.RepaintAll();
                 //DebugUtils.Log(Core.LogCategory.Gamelogic, R.replayspeed.ToString());
@@ -1049,23 +1096,119 @@ public static class BlockBusterUtility
             }
         }
 
+        void DisplayToolPannel(bool showobjectactionbuttons)
+        {
+                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
+
+                GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("<< MAX"))
+                        placefromxmlfile();
+                    if (GUILayout.Button("MAX >> "))
+                        BlockBusterUtility.BBdebug("not implemented",true);
+                GUILayout.EndHorizontal();
+
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("SAVE SCENE"))
+                    savescene();
+                if (GUILayout.Button("LOAD SCENE"))
+                    loadscene();
+                GUILayout.EndHorizontal();
+
+
+                if (showobjectactionbuttons) // object seleted in the scene
+                {
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("LOAD PRESET"))
+                        loadscene(true);
+                    if (GUILayout.Button("SAVE PRESET"))
+                        savescene(true);
+                    GUILayout.EndHorizontal();
+
+
+
+                    if (GUILayout.Button("reset Position"))
+                        for (int ti = 0; ti < Selection.gameObjects.GetLength(0); ti++)
+                        {
+                            Actor temactor = (Actor)Selection.gameObjects[ti].GetComponent(typeof(Actor)); // associated script 
+                            if (temactor != null)
+                            { // pull back at original place ( where the go  has been spotted for the first time 
+                                Selection.gameObjects[ti].transform.rotation = temactor.Actorprops.orig_rotation;
+                                Selection.gameObjects[ti].transform.position = temactor.Actorprops.orig_pos;
+                            }
+                        }
+                    GUILayout.BeginHorizontal();
+                        if (GUILayout.Button(" GROUP " ))
+                            GroupSelection(Selection.activeGameObject,true);
+                        if (GUILayout.Button("UNGROUP", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                            GroupSelection(Selection.activeGameObject, false);
+                    GUILayout.EndHorizontal();
+
+
+                    if (GUILayout.Button("Hide Group", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                    {
+                        Selection.activeGameObject.SetActive(false);
+                        hidenobjectlist.Add(Selection.activeGameObject);
+                    }
+                    if (GUILayout.Button("Unhide All", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                    {
+                        for (int count = 0; count < hidenobjectlist.Count; count++)
+                        {
+                            GameObject tgo = (GameObject)hidenobjectlist[count];
+                            tgo.SetActive(true);
+                        }
+                        hidenobjectlist.Clear();
+                    }
+
+
+
+                    if (GUILayout.Button("select same", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                    {
+                        GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+                        ArrayList oblist = new ArrayList();
+                        // define basename selected 
+
+                        var sname = Selection.activeGameObject.name;
+                        var tab1 = sname.Split('-');
+                        for (var c = 0; c < allObjects.Length; c++)
+                        {
+                            var itname = allObjects[c].name;
+                            var tab2 = itname.Split('-');
+                            if (tab2[0] == tab1[0])
+                                oblist.Add(allObjects[c]);
+                        }
+                        GameObject[] s = new GameObject[oblist.Count];
+                        oblist.CopyTo(s, 0);
+                        Selection.objects = s;
+                    }
+                    if (GUILayout.Button("remove col", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
+                        for (var c = 0; c < Selection.gameObjects.Length - 1; c++)
+                            DestroyImmediate(Selection.gameObjects[c].collider);
+
+                }
+
+            
+
+        }
+
+
 
         void OnGUI()
         {
+            
 
             if (Selection.activeGameObject == null)
+            {
+                DisplayToolPannel(false);
                 return;
-            m_actor = (Actor) Selection.activeGameObject.GetComponent(typeof(Actor));
-
+            }
+            
+            m_actor = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
             if (m_actor == null)
                 AddActorComponent(Selection.activeGameObject, null);
-
             BBehavior[] blist = Selection.activeGameObject.GetComponents<BBehavior>();
-
-
-
             BlockSize = CalculateSelectionSize(Selection.gameObjects);
             m_actor.Actorprops.block_size = BlockSize;
+
 
             GUILayout.BeginHorizontal(EditorStyles.toolbar);
 
@@ -1088,6 +1231,10 @@ public static class BlockBusterUtility
             BlockBusterUtility.debugmode = GUILayout.Toggle(BlockBusterUtility.debugmode , "");
 
             GUILayout.EndHorizontal();
+
+            if (selectedtab == 2)
+                DisplayToolPannel(true);
+
 
             if (selectedtab == 4)
             {
@@ -1261,119 +1408,94 @@ public static class BlockBusterUtility
             {
 
 
-                GUI.BeginGroup(new Rect(10, bsz * 10, 300, 600));
-
-                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                b_fixedstepedit = EditorGUILayout.Toggle("fixed predefined move  ", b_fixedstepedit);
+                //GUI.BeginGroup(new Rect(10, bsz * 10, 300, 600));
+                
+                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
+                b_fixedstepedit = EditorGUILayout.Toggle("fixed predefined move  ", b_fixedstepedit );
                 //------------------------------------------------------------------ SLIDER FOR FIXED OFSET MOVE #2
-                stepvalue = EditorGUILayout.Slider("fixed step ", stepvalue, 0, 4, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                stepvalue = EditorGUILayout.Slider("fixed step ", stepvalue, 0, 4);
                 //------------------------------------------------------------------ NEXT ASSET BUTTON #3
-                if (GUILayout.Button("NEXT ASSET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
-                    BrowseAsset(1, "NEXT BUTTON");
-                //------------------------------------------------------------------ PREV ASSET BUTTON #4
-                if (GUILayout.Button("PREV ASSET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
-                    BrowseAsset(-1, "PREV ASSET BUTTON");
-                if (data != null)
-                    slideindex = (int)EditorGUILayout.Slider("quick select", slideindex, 0, data.Count, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
 
-                if (GUILayout.Button("NEXT PRESET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
+
+
+                activebasename = (ACTIVEBASENAME)EditorGUILayout.EnumPopup("base:", activebasename);
+                switch (activebasename)
                 {
-
-                    GameObject original = Selection.activeGameObject;
-
-                    currentpreset++;
-                    var sfolder = Application.dataPath + "/PLATFORM/XML/preset";
-                    string[] files = Directory.GetFiles(sfolder, "*.xml");
-                    var i = currentpreset % files.Length;
-                    Debug.Log(i);
-                    List<GameObject> L = loadscene(true, System.IO.Path.GetFileName(files[i]));
-                    Selection.objects = L.ToArray();
-                    Selection.activeGameObject = GroupSelection(Selection.gameObjects[0]);
-                    Selection.activeGameObject.transform.position = original.transform.transform.position;
-                    DestroyImmediate(original);
-
-                }
-                if (GUILayout.Button("PREV PRESET", GUILayout.MinWidth(280), GUILayout.MaxWidth(280)))
-                {
-                    GameObject original = Selection.activeGameObject;
-                    currentpreset--;
-                    var sfolder = Application.dataPath + "/PLATFORM/XML/preset";
-                    string[] files = Directory.GetFiles(sfolder, "*.xml");
-
-                    if (currentpreset < 1)
-                        currentpreset = files.Length - 1;
-                    Debug.Log(currentpreset);
-                    List<GameObject> L = loadscene(true, System.IO.Path.GetFileName(files[i]));
-                    Selection.objects = L.ToArray();
-                    Selection.activeGameObject = GroupSelection(Selection.gameObjects[0]);
-                    Selection.activeGameObject.transform.position = original.transform.transform.position;
-                    DestroyImmediate(original);
+                    case ACTIVEBASENAME.HIGHTECH:
+                        selectedbasename = "/PLATFORM/HIGHTECH/";
+                        break;
+                    case ACTIVEBASENAME.JUNGLE:
+                        selectedbasename = "/PLATFORM/JUNGLE/";
+                        break;
+                    case ACTIVEBASENAME.TEMPLE:
+                        selectedbasename = "/PLATFORM/TEMPLE/";
+                        break;
+                    case ACTIVEBASENAME.SANDBOX:
+                        selectedbasename = "/PLATFORM/SANDBOX/";
+                        break;
                 }
 
 
-                GUI.EndGroup();
+                assetsliderindex = (int)EditorGUILayout.Slider("quick select", assetsliderindex, 0, data.Count );
 
-                if (GUI.Button(new Rect(bsz * 3, bsz * 5, bsz, bsz), uparrow)) //-------------- FRONT BUTTON
+                GUILayout.BeginHorizontal();
+                if (GUILayout.Button("PREV ASSET"))
+                {
+                    assetsliderindex = assetbaseindex;
+                    BrowseAsset(-1);
+                }
+                if (GUILayout.Button("NEXT ASSET"))
+                {
+                    assetsliderindex = assetbaseindex;
+                    BrowseAsset(1);
+                }
+                GUILayout.EndHorizontal();
+                assetbaseindex = assetsliderindex;
+
+                GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("NEXT PRESET"))
+                        BrowsePresset(1);
+                    if (GUILayout.Button("PREV PRESET"))
+                        BrowsePresset(-1);
+                GUILayout.EndHorizontal();
+
+                //GUI.EndGroup();
+
+                if (GUI.Button(new Rect(bsz * 3, bsz * 10, bsz, bsz), uparrow)) //-------------- FRONT BUTTON
                     DoBlockMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 3, bsz * 7, bsz, bsz), downarrow)) //-------------- 	BACK BUTTON
+                if (GUI.Button(new Rect(bsz * 3, bsz * 12, bsz, bsz), downarrow)) //-------------- 	BACK BUTTON
                     DoBlockMove(false, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 2, bsz * 6, bsz, bsz), leftarrow)) //-------------- 	LEFT BUTTON
+                if (GUI.Button(new Rect(bsz * 2, bsz * 11, bsz, bsz), leftarrow)) //-------------- 	LEFT BUTTON
                     DoBlockMove(false, (right * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 4, bsz * 6, bsz, bsz), rightarrow)) //-------------- 	RIGHT BUTTON
+                if (GUI.Button(new Rect(bsz * 4, bsz * 11, bsz, bsz), rightarrow)) //-------------- 	RIGHT BUTTON
                     DoBlockMove(false, (left * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 5, bsz, bsz), uparrow)) //-------------- 	FRONT BUTTON
+                if (GUI.Button(new Rect(bsz * 7, bsz * 10, bsz, bsz), uparrow)) //-------------- 	FRONT BUTTON
                     DoBlockMove(false, (Vector3.up * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 7, bsz, bsz), downarrow)) //-------------- 	DOWN BUTTON
+                if (GUI.Button(new Rect(bsz * 7, bsz * 12, bsz, bsz), downarrow)) //-------------- 	DOWN BUTTON
                     DoBlockMove(false, (Vector3.down * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
                 // -----------------------------------------------------------------------------------------	SAME WITH DUPLICATE  
 
-                if (GUI.Button(new Rect(bsz * 3, bsz * 4, bsz, bsz), duplicate_t)) //-------------- FRONT BUTTON
+                if (GUI.Button(new Rect(bsz * 3, bsz * 9, bsz, bsz), duplicate_t)) //-------------- FRONT BUTTON
                     DoBlockMove(true, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 3, bsz * 8, bsz, bsz), duplicate_t)) //-------------- BACK BUTTON
+                if (GUI.Button(new Rect(bsz * 3, bsz * 13, bsz, bsz), duplicate_t)) //-------------- BACK BUTTON
                     DoBlockMove(true, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz, bsz * 6, bsz, bsz), duplicate_t)) //-------------- 	LEFT BUTTON
+                if (GUI.Button(new Rect(bsz, bsz * 11, bsz, bsz), duplicate_t)) //-------------- 	LEFT BUTTON
                     DoBlockMove(true, (right * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 5, bsz * 6, bsz, bsz), duplicate_t)) //-------------- RIGHT BUTTON
+                if (GUI.Button(new Rect(bsz * 5, bsz * 11, bsz, bsz), duplicate_t)) //-------------- RIGHT BUTTON
                     DoBlockMove(true, (left * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-
-                if (GUI.Button(new Rect(bsz * 7, bsz * 4, bsz, bsz), duplicate_t)) //-------------- UP BUTTON
+                if (GUI.Button(new Rect(bsz * 7, bsz * 9, bsz, bsz), duplicate_t)) //-------------- UP BUTTON
                     DoBlockMove(true, (Vector3.up * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 8, bsz, bsz), duplicate_t)) //-------------- DOWN BUTTON
+                if (GUI.Button(new Rect(bsz * 7, bsz * 13, bsz, bsz), duplicate_t)) //-------------- DOWN BUTTON
                     DoBlockMove(true, (Vector3.down * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-
-                if (GUI.Button(new Rect(bsz * 9, bsz * 6, bsz, bsz), "Y")) //---------------------- ROTATE Y BUTTON  ( ZUP ?? ) 
-                {
-                    for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
-                    {
-
-                        //m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
-
-                        Selection.gameObjects[i].transform.Rotate(Vector3.up * 90, Space.Self);
-
-                    }
-
-                }
-                if (GUI.Button(new Rect(bsz * 11, bsz * 6, bsz, bsz), "X")) //----------------- ROTATE X BUTTON
-                {
-                    for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
-                    {
-                        //m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
-
-                        Selection.gameObjects[i].transform.Rotate(Vector3.left * 90, Space.Self);
-
-                    }
-
-                }
-                if (GUI.Button(new Rect(bsz * 13, bsz * 6, bsz, bsz), "Z")) ///---------------- ROTATE Z BUTTON
-                {
-                    for (i = 0; i < Selection.gameObjects.GetLength(0); i++)
-                    {
-                        //m_behavior = Selection.gameObjects[i].GetComponents<Behavior>(); // associated script 
-
-                        Selection.gameObjects[i].transform.Rotate(Vector3.forward * 90, Space.Self);
-                    }
-
-                }
+                if (GUI.Button(new Rect(bsz * 9, bsz * 11, bsz, bsz), "Y")) //---------------------- ROTATE Y BUTTON  ( ZUP ?? ) 
+                    for (int c = 0; c < Selection.gameObjects.GetLength(0); c++)
+                        Selection.gameObjects[c].transform.Rotate(Vector3.up * 90, Space.Self);
+                if (GUI.Button(new Rect(bsz * 11, bsz * 11, bsz, bsz), "X")) //----------------- ROTATE X BUTTON
+                    for (int c = 0; c < Selection.gameObjects.GetLength(0); c++)
+                        Selection.gameObjects[c].transform.Rotate(Vector3.left * 90, Space.Self);
+                if (GUI.Button(new Rect(bsz * 13, bsz * 11, bsz, bsz), "Z")) ///---------------- ROTATE Z BUTTON
+                    for (int c = 0; c < Selection.gameObjects.GetLength(0); c++)
+                        Selection.gameObjects[c].transform.Rotate(Vector3.forward * 90, Space.Self);
 
                 //--------------------------------------------------------------------------------------- END OF BLOCK MOVEE TAB PANNEL  
 
@@ -1390,7 +1512,7 @@ public static class BlockBusterUtility
                 //---------------------------------------------------------------------		<BeginGroup>  
                 //-------------------------------------------------------------- 4 Controls in the group  
                 GUI.BeginGroup(new Rect(10, 80, 300, 600));
-                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
                 String filepath;
                 if (GUILayout.Button("SAVE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
                 {
@@ -1468,121 +1590,7 @@ public static class BlockBusterUtility
                 GUI.EndGroup();
             }
 
-            if (selectedtab == 2)
-            {
 
-                GUI.BeginGroup(new Rect(bsz, bsz * 4, 220, 300));
-                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                activebasename = (ACTIVEBASENAME)EditorGUILayout.EnumPopup("base:", activebasename, GUILayout.MinWidth(330), GUILayout.MaxWidth(330));
-                switch (activebasename)
-                {
-                    case ACTIVEBASENAME.HIGHTECH:
-                        selectedbasename = "/PLATFORM/HIGHTECH/";
-                        break;
-                    case ACTIVEBASENAME.JUNGLE:
-                        selectedbasename = "/PLATFORM/JUNGLE/";
-                        break;
-                    case ACTIVEBASENAME.TEMPLE:
-                        selectedbasename = "/PLATFORM/TEMPLE/";
-                        break;
-                    case ACTIVEBASENAME.SANDBOX:
-                        selectedbasename = "/PLATFORM/SANDBOX/";
-                        break;
-                }
-                if (GUILayout.Button("FROMMAX", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    placefromxmlfile();
-
-                if (GUILayout.Button("SAVE SCENE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    savescene();
-                if (GUILayout.Button("SAVE PRESET", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    savescene(true);
-
-
-                if (GUILayout.Button("TRACE TEST", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                {
-                    //BuildLogUtility b = new BuildLogUtility();
-                    BuildLogUtility.outlog(" mon cul sur la commode");
-                }
-
-
-                if (GUILayout.Button("LOAD SCENE", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    loadscene();
-                if (GUILayout.Button("LOAD PRESET", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    loadscene(true);
-
-                if (GUILayout.Button("reset Position", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    for (int ti = 0; ti < Selection.gameObjects.GetLength(0); ti++)
-                    {
-                        Actor temactor = (Actor)Selection.gameObjects[ti].GetComponent(typeof(Actor)); // associated script 
-                        if (temactor != null)
-                        { // pull back at original place ( where the go  has been spotted for the first time 
-                            Selection.gameObjects[ti].transform.rotation = temactor.Actorprops.orig_transform;
-                            Selection.gameObjects[ti].transform.position = temactor.Actorprops.orig_pos;
-                        }
-                    }
-
-
-                if (GUILayout.Button("GROUP", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                {
-                    GroupSelection(go);
-                }
-
-                if (GUILayout.Button("Hide Group", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                {
-                    go.SetActive(false);
-                    hidenobjectlist.Add(go);
-                }
-                if (GUILayout.Button("Unhide All", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                {
-                    for (int count = 0; count < hidenobjectlist.Count; count++)
-                    {
-                        GameObject tgo = (GameObject)hidenobjectlist[count];
-                        tgo.SetActive(true);
-                    }
-                    hidenobjectlist.Clear();
-                }
-
-                //**************************************************************************** READ WRITE PARAMETERBLOCK FILE
-
-                if (GUILayout.Button("UNGROUP", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                {
-                    for (var c = 0; c < Selection.activeGameObject.transform.childCount; c++)
-                    {
-                        GameObject tgo = Selection.activeGameObject.transform.GetChild(c).gameObject;
-                        Actor tbs = (Actor)tgo.GetComponent(typeof(BBehavior));
-                        tbs.Actorprops.parentgui = null;
-                        tbs.Actorprops.grouped = false;
-                    }
-                    Selection.activeGameObject.transform.DetachChildren();
-                }
-                if (GUILayout.Button("select same", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                {
-                    GameObject[] allObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
-                    ArrayList oblist = new ArrayList();
-                    // define basename selected 
-
-                    var sname = Selection.activeGameObject.name;
-                    var tab1 = sname.Split('-');
-                    for (var c = 0; c < allObjects.Length; c++)
-                    {
-                        var itname = allObjects[c].name;
-                        var tab2 = itname.Split('-');
-                        if (tab2[0] == tab1[0])
-                            oblist.Add(allObjects[c]);
-                    }
-                    GameObject[] s = new GameObject[oblist.Count];
-                    oblist.CopyTo(s, 0);
-                    Selection.objects = s;
-                }
-                if (GUILayout.Button("remove col", GUILayout.MinWidth(140), GUILayout.MaxWidth(140)))
-                    for (var c = 0; c < Selection.gameObjects.Length - 1; c++)
-                        DestroyImmediate(Selection.gameObjects[c].collider);
-
-
-
-                //Selection.objects. = oblist;
-                GUI.EndGroup();
-            }
         }
 
     }

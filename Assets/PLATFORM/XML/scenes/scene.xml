@@ -7,125 +7,89 @@
   </rootnodepos>
   <baseassetproplist>
     <BaseActorProperties>
-      <parentgui>c06ba664-644f-4dc6-a675-758680d6d426</parentgui>
-      <guid>3d3db473-4a92-4958-a391-9eb46285aec2</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>7727b75b-94f4-4458-86fe-5d0c162f84cb</guid>
+      <assetname>SANDBOX_BUILD_4_2_2_01_A</assetname>
       <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>0</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
+        <x>34.84236</x>
+        <y>144.2178</y>
+        <z>-31.5287971</z>
       </orig_pos>
       <last_pos>
-        <x>46.9206619</x>
+        <x>32.81626</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-35.3234253</z>
       </last_pos>
       <block_size>
-        <x>2</x>
+        <x>4.034296</x>
         <y>4.072296</y>
-        <z>2</z>
+        <z>2.06950378</z>
       </block_size>
       <BehaviorListID>
-        <string>50272ac5-4848-4e8c-b8bd-2a87ed69f21b</string>
-        <string>215a401a-4e41-4a80-983d-a054f5dc5e80</string>
+        <string>f7a9b130-df40-429d-b53d-c82eb3772cda</string>
+        <string>3068a59e-5383-4d5c-bafe-dba043ed43ed</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>ceabaf63-9110-4b77-898f-ae44b92dd2a3</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>867f3baa-4cd8-43df-85de-2ba9f89d37fa</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_05_C</assetname>
       <orig_transform>
-        <x>-0.455175966</x>
-        <y>0.541123748</y>
-        <z>0.541123748</z>
-        <w>0.455175966</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>99.86106</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>36.9206619</x>
+        <x>38.89456</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-34.7634125</z>
       </orig_pos>
       <last_pos>
-        <x>36.9206619</x>
+        <x>36.86846</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-33.9633942</z>
       </last_pos>
       <block_size>
-        <x>2.6749115</x>
-        <y>4.072296</y>
-        <z>2.6749115</z>
+        <x>2.03482056</x>
+        <y>5.072296</y>
+        <z>2.04713249</z>
       </block_size>
       <BehaviorListID>
-        <string>722bf8bc-3cae-43eb-bd22-f084c407068f</string>
-        <string>4d4c6717-4dde-4eed-8580-dbdd5479b022</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui>354cd560-3969-4cdd-8bbe-12ee7ddc5d25</parentgui>
-      <guid>f7fd77a9-23ee-4713-afb4-51c7ebe81207</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>0</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>38.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>38.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </last_pos>
-      <block_size>
-        <x>2</x>
-        <y>4.072296</y>
-        <z>2</z>
-      </block_size>
-      <BehaviorListID>
-        <string>a8438f51-9c18-49d3-ba5f-f38bb6b183c1</string>
-        <string>20eafee6-6f55-4fe1-89b4-49a883fe41d2</string>
+        <string>a13647d2-aba0-47ac-9cc4-0c79094fd2c2</string>
+        <string>f8fd9170-3ca1-4ee9-9f4c-4537846d95a3</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
       <parentgui>cb928dba-21be-4158-8d6b-1695c388d13a</parentgui>
       <guid>41580f36-f58b-419e-8215-318fd521d20e</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <assetname>SANDBOX_BUILD_2_2_2_04_B</assetname>
       <orig_transform>
-        <x>0.00617059274</x>
-        <y>0.7070799</y>
-        <z>0.7070799</z>
-        <w>-0.00617059274</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>181.000015</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
@@ -135,14 +99,14 @@
         <z>-39.79183</z>
       </orig_pos>
       <last_pos>
-        <x>40.9206619</x>
-        <y>143.497787</y>
-        <z>-31.3796768</z>
+        <x>26.7379646</x>
+        <y>140.145508</y>
+        <z>-33.40338</z>
       </last_pos>
       <block_size>
-        <x>12.2910538</x>
-        <y>4.072296</y>
-        <z>4.01205063</z>
+        <x>2.034603</x>
+        <y>5.072296</y>
+        <z>2.034607</z>
       </block_size>
       <BehaviorListID>
         <string>b38ee01b-9672-4738-b657-464affbf55a8</string>
@@ -151,398 +115,182 @@
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
-      <parentgui>ff852f02-a9ee-475e-8d08-4ba18970161a</parentgui>
-      <guid>db17aa63-6d47-43c6-8c02-0e0c99cc67d7</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>86856d20-bf8a-4271-b6ab-c4a2769f112c</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
       <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>0</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>42.9206619</x>
+        <x>28.7640648</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-33.53971</z>
       </orig_pos>
       <last_pos>
-        <x>42.9206619</x>
+        <x>26.7379646</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-33.8833923</z>
       </last_pos>
       <block_size>
-        <x>2</x>
+        <x>1.54737091</x>
         <y>4.072296</y>
-        <z>2</z>
+        <z>2.02610016</z>
       </block_size>
       <BehaviorListID>
-        <string>e33378bf-e615-40fd-acb8-eff0af1ac43b</string>
-        <string>0057b0c7-e2ee-494a-a863-868235245bf2</string>
+        <string>17e9d1e7-66a8-4c48-aa19-1845e9f4f404</string>
+        <string>0b3e34d0-e270-44e5-b431-8848dd024131</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
-      <parentgui>221503fd-befe-47bb-89ad-0013421b0040</parentgui>
-      <guid>529a5d1e-0e61-4cc0-a92f-6b672cc6aeb8</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>0a42497d-5e76-4f02-9fbd-9e96d6c84811</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
       <orig_transform>
-        <x>-0.559047043</x>
-        <y>0.4329739</y>
-        <z>0.4329739</z>
-        <w>0.559047043</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>75.51454</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>44.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
+        <x>30.790163</x>
+        <y>140.217712</y>
+        <z>-31.3796768</z>
       </orig_pos>
       <last_pos>
-        <x>44.9206619</x>
+        <x>28.7640648</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-35.4034271</z>
       </last_pos>
       <block_size>
-        <x>2.0345993</x>
+        <x>1.54737091</x>
         <y>4.072296</y>
-        <z>2.0345993</z>
+        <z>2.02609825</z>
       </block_size>
       <BehaviorListID>
-        <string>05604875-9976-444e-ae6a-5e0b865242c1</string>
-        <string>d87e9774-0ed3-4bf0-85c3-05e0ebf0b160</string>
+        <string>e3ccdea1-633e-4410-8537-7d1c9e3c567f</string>
+        <string>0b3a9c12-afb3-472f-99e2-353d7c5d2b75</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
-      <parentgui>c06ba664-644f-4dc6-a675-758680d6d426</parentgui>
-      <guid>4d61d465-0a6b-4411-92ec-3aa12566d42c</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>a6d633e4-f395-4843-80a3-2138c2b50e02</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
       <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>0</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
+        <x>32.81626</x>
+        <y>141.977753</y>
+        <z>-31.3796768</z>
       </orig_pos>
       <last_pos>
-        <x>46.9206619</x>
+        <x>30.790163</x>
         <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-34.3634033</z>
       </last_pos>
       <block_size>
-        <x>2</x>
+        <x>1.54737091</x>
         <y>4.072296</y>
-        <z>2</z>
+        <z>2.02609825</z>
       </block_size>
       <BehaviorListID>
-        <string>bfaf0290-129e-4e15-9008-cba63320c59e</string>
-        <string>3bf77f52-8cba-48d8-8b68-ac19c2dde0a3</string>
+        <string>716260ba-6748-4162-a584-94a5579a993b</string>
+        <string>423ebf56-a9ce-4e49-8e21-abc0e825eae8</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>354cd560-3969-4cdd-8bbe-12ee7ddc5d25</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>0460dd9c-0256-4c1b-90dc-4ea0f010d727</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
       <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>0</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
-        <x>38.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>38.9206619</x>
-        <y>140.145508</y>
-        <z>-20.52355</z>
-      </last_pos>
-      <block_size>
-        <x>2</x>
-        <y>4.072296</y>
-        <z>2</z>
-      </block_size>
-      <BehaviorListID>
-        <string>98c5ccfe-e023-404b-96d8-da40cdf8174c</string>
-        <string>6c3535e9-132f-45b6-b6f6-ad61378b0c39</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>8d3d4d1c-2774-4250-bdfe-0cfb845d1f41</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>0.00617059274</x>
-        <y>0.7070799</y>
-        <z>0.7070799</z>
-        <w>-0.00617059274</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>181.000015</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>40.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>40.9206619</x>
+        <x>36.86846</x>
         <y>144.2178</y>
-        <z>-29.59993</z>
-      </last_pos>
-      <block_size>
-        <x>2.0345993</x>
-        <y>4.072296</y>
-        <z>2.0345993</z>
-      </block_size>
-      <BehaviorListID>
-        <string>c256461c-6315-4ff6-90e2-e431cf9a9269</string>
-        <string>3ac558ab-f3b8-4c7a-b6f3-0dbd8d396bd7</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>ff852f02-a9ee-475e-8d08-4ba18970161a</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>0</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>42.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
+        <z>-34.80886</z>
       </orig_pos>
       <last_pos>
-        <x>42.9206619</x>
+        <x>34.84236</x>
         <y>140.145508</y>
-        <z>-20.52355</z>
+        <z>-33.9633942</z>
       </last_pos>
       <block_size>
-        <x>2</x>
+        <x>1.54737091</x>
         <y>4.072296</y>
-        <z>2</z>
+        <z>2.02610016</z>
       </block_size>
       <BehaviorListID>
-        <string>81c0a1b0-d916-4018-8b75-dcd90a419b60</string>
-        <string>c1c33f54-df1a-47cd-b585-3ebf6846b5de</string>
+        <string>234e5cdf-9b9a-4d03-9528-12d4f83b71a9</string>
+        <string>ff5c0597-6100-4861-9fc1-44687da2a95c</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
     <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>221503fd-befe-47bb-89ad-0013421b0040</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
+      <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+      <guid>8b3c21a9-a25a-46fa-92b7-f010444f0ae1</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
       <orig_transform>
-        <x>-0.559047043</x>
-        <y>0.4329739</y>
-        <z>0.4329739</z>
-        <w>0.559047043</w>
+        <x>-0.006170673</x>
+        <y>-0.7070799</y>
+        <z>-0.7070799</z>
+        <w>0.006170673</w>
         <eulerAngles>
           <x>270</x>
-          <y>75.51454</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>44.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>44.9206619</x>
-        <y>140.145508</y>
-        <z>-20.52355</z>
-      </last_pos>
-      <block_size>
-        <x>2.0345993</x>
-        <y>4.072296</y>
-        <z>2.0345993</z>
-      </block_size>
-      <BehaviorListID>
-        <string>319f39d2-2bd9-48b1-9e80-3f57e0131e68</string>
-        <string>49627105-e71e-4340-b216-4854616d1cca</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>c06ba664-644f-4dc6-a675-758680d6d426</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>0</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-20.52355</z>
-      </last_pos>
-      <block_size>
-        <x>2</x>
-        <y>4.072296</y>
-        <z>2</z>
-      </block_size>
-      <BehaviorListID>
-        <string>bec01976-3e3a-414d-986a-1dc4b2711835</string>
-        <string>ac90e71b-5c56-4dd6-bad5-34801d4d7b8a</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui />
-      <guid>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>-0.455175966</x>
-        <y>0.541123748</y>
-        <z>0.541123748</z>
-        <w>0.455175966</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>99.86106</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>36.9206619</x>
-        <y>140.145508</y>
-        <z>-20.52355</z>
-      </last_pos>
-      <block_size>
-        <x>2.6749115</x>
-        <y>4.072296</y>
-        <z>2.6749115</z>
-      </block_size>
-      <BehaviorListID>
-        <string>475e176b-ca80-46df-83cf-315574692fa6</string>
-        <string>3fa5e708-782a-4913-8fbc-046115c12734</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui>8d3d4d1c-2774-4250-bdfe-0cfb845d1f41</parentgui>
-      <guid>cb928dba-21be-4158-8d6b-1695c388d13a</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>0.00617059274</x>
-        <y>0.7070799</y>
-        <z>0.7070799</z>
-        <w>-0.00617059274</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>181.000015</y>
+          <y>181.000031</y>
           <z>0</z>
         </eulerAngles>
       </orig_transform>
       <orig_pos>
         <x>40.9206619</x>
         <y>144.2178</y>
-        <z>-41.4955254</z>
+        <z>-31.3796768</z>
       </orig_pos>
       <last_pos>
-        <x>40.9206619</x>
-        <y>142.937775</y>
-        <z>-14.4197521</z>
+        <x>38.89456</x>
+        <y>140.145508</y>
+        <z>-35.48343</z>
       </last_pos>
       <block_size>
-        <x>12.1564865</x>
-        <y>6.864563</y>
-        <z>8.339444</z>
-      </block_size>
-      <BehaviorListID>
-        <string>b7162630-71de-4577-95b4-4f8cf7fc1950</string>
-        <string>cb705958-24c6-423b-8fbf-43a305596b7a</string>
-      </BehaviorListID>
-      <grouped>false</grouped>
-    </BaseActorProperties>
-    <BaseActorProperties>
-      <parentgui>7071186d-0ccf-49cd-905f-aa71f2c6c3c0</parentgui>
-      <guid>c06ba664-644f-4dc6-a675-758680d6d426</guid>
-      <assetname>SANDBOX_BUILD_2_2_2_01_C</assetname>
-      <orig_transform>
-        <x>0.7071068</x>
-        <y>0</y>
-        <z>0</z>
-        <w>-0.7071068</w>
-        <eulerAngles>
-          <x>270</x>
-          <y>0</y>
-          <z>0</z>
-        </eulerAngles>
-      </orig_transform>
-      <orig_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-41.4955254</z>
-      </orig_pos>
-      <last_pos>
-        <x>46.9206619</x>
-        <y>140.145508</y>
-        <z>-20.52355</z>
-      </last_pos>
-      <block_size>
-        <x>2</x>
+        <x>1.54737091</x>
         <y>4.072296</y>
-        <z>2</z>
+        <z>2.02609825</z>
       </block_size>
       <BehaviorListID>
-        <string>bec01976-3e3a-414d-986a-1dc4b2711835</string>
-        <string>ac90e71b-5c56-4dd6-bad5-34801d4d7b8a</string>
+        <string>daee2cbf-63dd-4c52-998d-573a8b0362c6</string>
+        <string>5a238425-586a-46c5-b2c9-2d0abe3f64cf</string>
       </BehaviorListID>
       <grouped>false</grouped>
     </BaseActorProperties>
