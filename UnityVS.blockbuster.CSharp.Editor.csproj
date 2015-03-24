@@ -85,17 +85,17 @@
     <Compile Include="Assets\Editor\ScriptEditorDebughelpers.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\BLOCKBUSTER\HIGHTECH\AssetList.xml" />
-    <None Include="Assets\BLOCKBUSTER\HIGHTECH\assettransfert.xml" />
-    <None Include="Assets\BLOCKBUSTER\JUNGLE\AssetList.xml" />
-    <None Include="Assets\BLOCKBUSTER\JUNGLE\assettransfert.xml" />
-    <None Include="Assets\BLOCKBUSTER\JUNGLE\root.txt" />
-    <None Include="Assets\BLOCKBUSTER\SANDBOX\AssetList.xml" />
-    <None Include="Assets\BLOCKBUSTER\SANDBOX\assettransfert.xml" />
-    <None Include="Assets\BLOCKBUSTER\SANDBOX\root.txt" />
-    <None Include="Assets\BLOCKBUSTER\TEMPLE\AssetList.xml" />
-    <None Include="Assets\BLOCKBUSTER\TEMPLE\assettransfert.xml" />
-    <None Include="Assets\BLOCKBUSTER\TEMPLE\root.txt" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\HIGHTECH\AssetList.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\HIGHTECH\assettransfert.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\JUNGLE\AssetList.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\JUNGLE\assettransfert.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\JUNGLE\root.txt" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\SANDBOX\AssetList.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\SANDBOX\assettransfert.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\SANDBOX\root.txt" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\AssetList.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\assettransfert.xml" />
+    <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
     <None Include="Assets\BLOCKBUSTER\XML\doc\BlockbusterControll.XML" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\0460dd9c-0256-4c1b-90dc-4ea0f010d727.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\0a42497d-5e76-4f02-9fbd-9e96d6c84811.xml" />
@@ -107,6 +107,7 @@
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\2439f847-d01c-435a-902c-4c837b7465a6.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\26583d93-86ad-47b4-99fa-e36b1f1f4045.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\269b10f8-ddb5-4089-83df-e7957188e2f1.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\2e34bca7-7bea-4c0b-b69b-463ceda568da.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\3068a59e-5383-4d5c-bafe-dba043ed43ed.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\3288e854-2ec4-46a6-a0a2-8d896e4397d3.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\3299ff8b-eb03-4b2a-8365-4587a947a5e8.xml" />
@@ -142,6 +143,7 @@
     <None Include="Assets\BLOCKBUSTER\XML\scene.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene2.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\scenes\scene3.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\test.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
