@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="gb2312"?>
+<BaseActorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+  <guid>7727b75b-94f4-4458-86fe-5d0c162f84cb</guid>
+  <assetname>HIGHTECH_BUILD_2_2_1_01_A</assetname>
+  <orig_rotation>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+    <w>1</w>
+    <eulerAngles>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </eulerAngles>
+  </orig_rotation>
+  <orig_pos>
+    <x>34.84236</x>
+    <y>144.2178</y>
+    <z>-31.5287971</z>
+  </orig_pos>
+  <last_pos>
+    <x>32.81626</x>
+    <y>140.145508</y>
+    <z>-35.3234253</z>
+  </last_pos>
+  <block_size>
+    <x>2</x>
+    <y>2</y>
+    <z>0.5</z>
+  </block_size>
+  <BehaviorListID>
+    <string>f7a9b130-df40-429d-b53d-c82eb3772cda</string>
+    <string>3068a59e-5383-4d5c-bafe-dba043ed43ed</string>
+  </BehaviorListID>
+  <grouped>false</grouped>
+</BaseActorProperties>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="gb2312"?>
+<BaseActorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <parentgui>41580f36-f58b-419e-8215-318fd521d20e</parentgui>
+  <guid>0a42497d-5e76-4f02-9fbd-9e96d6c84811</guid>
+  <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
+  <orig_rotation>
+    <x>-0.5980131</x>
+    <y>-0.3773332</y>
+    <z>-0.3773332</z>
+    <w>0.5980131</w>
+    <eulerAngles>
+      <x>270</x>
+      <y>295.497955</y>
+      <z>0</z>
+    </eulerAngles>
+  </orig_rotation>
+  <orig_pos>
+    <x>28.7640648</x>
+    <y>143.74559</y>
+    <z>-31.3796768</z>
+  </orig_pos>
+  <last_pos>
+    <x>28.7640648</x>
+    <y>143.74559</y>
+    <z>-31.3796768</z>
+  </last_pos>
+  <block_size>
+    <x>2.80966568</x>
+    <y>4.072296</y>
+    <z>2.80966187</z>
+  </block_size>
+  <BehaviorListID>
+    <string>e3ccdea1-633e-4410-8537-7d1c9e3c567f</string>
+    <string>0b3a9c12-afb3-472f-99e2-353d7c5d2b75</string>
+  </BehaviorListID>
+  <grouped>false</grouped>
+</BaseActorProperties>

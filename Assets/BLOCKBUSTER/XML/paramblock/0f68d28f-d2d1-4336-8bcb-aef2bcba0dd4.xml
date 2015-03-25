@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="gb2312"?>
+<BaseActorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <parentgui>0f68d28f-d2d1-4336-8bcb-aef2bcba0dd4</parentgui>
+  <guid>0f68d28f-d2d1-4336-8bcb-aef2bcba0dd4</guid>
+  <assetname>HIGHTECH_BUILD_2_2_1_01_A</assetname>
+  <orig_rotation>
+    <x>-0.00617067236</x>
+    <y>-0.7070798</y>
+    <z>-0.7070798</z>
+    <w>0.00617067236</w>
+    <eulerAngles>
+      <x>270</x>
+      <y>181.000031</y>
+      <z>0</z>
+    </eulerAngles>
+  </orig_rotation>
+  <orig_pos>
+    <x>44.60176</x>
+    <y>140.145508</y>
+    <z>-43.0838737</z>
+  </orig_pos>
+  <last_pos>
+    <x>44.72387</x>
+    <y>140.145508</y>
+    <z>-41.6842766</z>
+  </last_pos>
+  <block_size>
+    <x>2.0345993</x>
+    <y>0.5</y>
+    <z>2.0345993</z>
+  </block_size>
+  <BehaviorListID>
+    <string>26583d93-86ad-47b4-99fa-e36b1f1f4045</string>
+    <string>c6cdd9ab-4d21-48fb-922e-bb1a09e91748</string>
+  </BehaviorListID>
+  <grouped>false</grouped>
+</BaseActorProperties>

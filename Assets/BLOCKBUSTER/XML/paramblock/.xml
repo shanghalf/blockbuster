@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="gb2312"?>
+<BaseActorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <orig_transform>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+    <w>1</w>
+    <eulerAngles>
+      <x>0</x>
+      <y>0</y>
+      <z>0</z>
+    </eulerAngles>
+  </orig_transform>
+  <orig_pos>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </orig_pos>
+  <last_pos>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </last_pos>
+  <block_size>
+    <x>2.00799561</x>
+    <y>5.072296</y>
+    <z>2.00799561</z>
+  </block_size>
+  <BehaviorListID />
+  <grouped>false</grouped>
+</BaseActorProperties>

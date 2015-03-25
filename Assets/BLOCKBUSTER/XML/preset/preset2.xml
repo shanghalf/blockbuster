@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="gb2312"?>
+<scenecluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <rootnodepos>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </rootnodepos>
+  <baseassetproplist>
+    <BaseActorProperties>
+      <parentgui>ae5d7db3-104d-4530-ae3d-272fd291afed</parentgui>
+      <guid>1c8af66c-31f6-4287-8414-594c4a5d678d</guid>
+      <assetname>TEMPLE_BUILD_2_2_2_01_G</assetname>
+      <orig_transform>
+        <x>-0.7071068</x>
+        <y>0</y>
+        <z>0</z>
+        <w>0.7071068</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>0</y>
+          <z>0</z>
+        </eulerAngles>
+      </orig_transform>
+      <orig_pos>
+        <x>110.42054</x>
+        <y>300.531738</y>
+        <z>-158.48642</z>
+      </orig_pos>
+      <last_pos>
+        <x>116.42054</x>
+        <y>300.531738</y>
+        <z>-158.48642</z>
+      </last_pos>
+      <block_size>
+        <x>2</x>
+        <y>0.7920532</y>
+        <z>2</z>
+      </block_size>
+      <BehaviorListID />
+      <grouped>false</grouped>
+    </BaseActorProperties>
+  </baseassetproplist>
+</scenecluster>
