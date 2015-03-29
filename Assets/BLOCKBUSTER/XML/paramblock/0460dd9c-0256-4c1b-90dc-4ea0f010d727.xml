@@ -4,30 +4,30 @@
   <guid>0460dd9c-0256-4c1b-90dc-4ea0f010d727</guid>
   <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
   <orig_rotation>
-    <x>0</x>
-    <y>0</y>
-    <z>0</z>
-    <w>1</w>
+    <x>-0.006170673</x>
+    <y>-0.7070799</y>
+    <z>-0.7070799</z>
+    <w>0.006170673</w>
     <eulerAngles>
-      <x>0</x>
-      <y>0</y>
+      <x>270</x>
+      <y>181.000031</y>
       <z>0</z>
     </eulerAngles>
   </orig_rotation>
   <orig_pos>
-    <x>36.86846</x>
-    <y>144.2178</y>
-    <z>-34.80886</z>
+    <x>34.84236</x>
+    <y>140.574768</y>
+    <z>-34.95642</z>
   </orig_pos>
   <last_pos>
     <x>34.84236</x>
-    <y>140.145508</y>
-    <z>-33.9633942</z>
+    <y>142.552</y>
+    <z>-0.8606758</z>
   </last_pos>
   <block_size>
-    <x>2</x>
-    <y>2</y>
-    <z>4.0723</z>
+    <x>2.0345993</x>
+    <y>4.072296</y>
+    <z>2.03460264</z>
   </block_size>
   <BehaviorListID>
     <string>234e5cdf-9b9a-4d03-9528-12d4f83b71a9</string>

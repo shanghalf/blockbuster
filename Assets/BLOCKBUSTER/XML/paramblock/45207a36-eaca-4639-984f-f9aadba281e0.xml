@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <targetindex>4</targetindex>
+  <targetindex>1</targetindex>
   <b_front_x>false</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
@@ -43,9 +43,9 @@
   <m_pathnodes>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>144.2178</y>
-        <z>-45.5934677</z>
+        <z>-35.5934677</z>
       </pos>
       <ilookatpoint>4</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -55,9 +55,9 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>144.2178</y>
-        <z>-41.5242729</z>
+        <z>-31.5242729</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -67,9 +67,9 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>144.2178</y>
-        <z>-41.5242729</z>
+        <z>-31.5242729</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -79,9 +79,9 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>140.145508</y>
-        <z>-41.5242729</z>
+        <z>-31.5242729</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -91,9 +91,9 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>140.145508</y>
-        <z>-47.6280746</z>
+        <z>-37.6280746</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -103,9 +103,9 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>140.145508</y>
-        <z>-47.6280746</z>
+        <z>-37.6280746</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -115,9 +115,9 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>26.72387</x>
+        <x>44.83663</x>
         <y>140.145508</y>
-        <z>-47.6280746</z>
+        <z>-37.6280746</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>

@@ -35,7 +35,7 @@
   <rotationspeed>0</rotationspeed>
   <rotationstepnumber>2</rotationstepnumber>
   <b_triggered>false</b_triggered>
-  <movedir>-1</movedir>
+  <movedir>1</movedir>
   <maxhandle>7</maxhandle>
   <b_pathloop>true</b_pathloop>
   <colider_type>BOX</colider_type>
@@ -63,7 +63,7 @@
       <lookatspeed>0</lookatspeed>
       <translatespeed>4.86</translatespeed>
       <waitonnode>17.7</waitonnode>
-      <timer>4.79978228</timer>
+      <timer>17.7</timer>
     </Pathnode>
     <Pathnode>
       <pos>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <targetindex>3</targetindex>
-  <b_front_x>false</b_front_x>
+  <b_front_x>true</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
   <b_showdebuginfos>false</b_showdebuginfos>
@@ -45,7 +45,7 @@
       <pos>
         <x>44.72387</x>
         <y>144.2178</y>
-        <z>-45.5934677</z>
+        <z>0.0572180748</z>
       </pos>
       <ilookatpoint>4</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -57,7 +57,7 @@
       <pos>
         <x>44.72387</x>
         <y>144.2178</y>
-        <z>-41.5242729</z>
+        <z>4.126413</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -69,7 +69,7 @@
       <pos>
         <x>44.72387</x>
         <y>144.2178</y>
-        <z>-41.5242729</z>
+        <z>4.126413</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -81,7 +81,7 @@
       <pos>
         <x>44.72387</x>
         <y>140.145508</y>
-        <z>-41.5242729</z>
+        <z>4.126413</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -93,7 +93,7 @@
       <pos>
         <x>44.72387</x>
         <y>140.145508</y>
-        <z>-47.6280746</z>
+        <z>-1.97739077</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -105,7 +105,7 @@
       <pos>
         <x>44.72387</x>
         <y>140.145508</y>
-        <z>-47.6280746</z>
+        <z>-1.97739077</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -117,7 +117,7 @@
       <pos>
         <x>44.72387</x>
         <y>140.145508</y>
-        <z>-47.6280746</z>
+        <z>-1.97739077</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>

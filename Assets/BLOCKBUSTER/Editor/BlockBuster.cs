@@ -12,12 +12,15 @@ using System.Reflection.Emit;
 //using BlockbusterControll;
 
 
+
 public enum ACTIVEBASENAME
 {
 	HIGHTECH = 0, 
 	JUNGLE = 1, 
 	TEMPLE = 2,
 	SANDBOX = 3
+
+   
 }
 
 // add test comment
@@ -43,8 +46,29 @@ public class ScriptEditor : EditorWindow
         GUI.Button(new Rect(0, 30, 100, 50), "Wee!");
         GUI.DragWindow();
     }
+
+    /*
+    static Texture2D LoadPNG(string filePath)
+    {
+        //Rect picsize = new Rect(5, 100, 200, 150);
+        Texture2D tex = null;
+        byte[] fileData;
+        if (File.Exists(filePath))
+        {
+            fileData = File.ReadAllBytes(filePath);
+            tex = new Texture2D(mvpd_txtsz, mvpd_txtsz);
+            tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+        }
+        tex.EncodeToPNG();
+        return tex;
+    }
+    */
+
     void curveFromTo(Rect wr, Rect wr2, Color color, Color shadow)
     {
+
+        
+
         Drawing.bezierLine(
             new Vector2(wr.x + wr.width, wr.y + 3 + wr.height / 2),
             new Vector2(wr.x + wr.width + Mathf.Abs(wr2.x - (wr.x + wr.width)) / 2, wr.y + 3 + wr.height / 2),
@@ -126,19 +150,8 @@ public class ScriptEditor : EditorWindow
 */
 
 
-public class StringValue : System.Attribute
-{
-    private string _value;
 
-    public StringValue(string value)
-    {
-        _value = value;
-    }
-    public string Value
-    {
-        get { return _value; }
-    }
-}
+
 
 public static class BBDir
 {
@@ -147,7 +160,7 @@ public static class BBDir
         string output = null;
         Type type = value.GetType();
         FieldInfo fi = type.GetField(value.ToString());
-        StringValue[] attrs = fi.GetCustomAttributes(typeof(StringValue), false) as StringValue[];
+        BBattribute[] attrs = fi.GetCustomAttributes(typeof(BBattribute), false) as BBattribute[];
         if (attrs.Length > 0)
             output = attrs[0].Value;
         if (root)
@@ -166,34 +179,38 @@ public static class ROOTDEF
 public enum BBpath
 {
     
-    [StringValue( "/BLOCKBUSTER/Editor/")]
+    [BBattribute( "/BLOCKBUSTER/Editor/")]
     EDITOR = 1,
-    [StringValue("/BLOCKBUSTER/Editor/BBResources/")]
+    [BBattribute("/BLOCKBUSTER/Editor/BBResources/256/")]
     RES = 2,
-    [StringValue("/BLOCKBUSTER/XML/")]
+    [BBattribute("/BLOCKBUSTER/XML/")]
     XML = 3,
-    [StringValue("/BLOCKBUSTER/XML/blockbustersetings/")]
+    [BBattribute("/BLOCKBUSTER/XML/blockbustersetings/")]
     SETING = 4,
-    [StringValue("/BLOCKBUSTER/XML/paramblock/")]
+    [BBattribute("/BLOCKBUSTER/XML/paramblock/")]
     DATASET = 5,
-    [StringValue("/BLOCKBUSTER/XML/preset/")]
+    [BBattribute("/BLOCKBUSTER/XML/preset/")]
     PRESET = 6,
-    [StringValue("/BLOCKBUSTER/XML/Replays/")]
+    [BBattribute("/BLOCKBUSTER/XML/Replays/")]
     REPLAY = 7,
-    [StringValue("/BLOCKBUSTER/XML/scenes/")]
+    [BBattribute("/BLOCKBUSTER/XML/scenes/")]
     SCENE = 8,
-    [StringValue("/BLOCKBUSTER/Scripts/")]
+    [BBattribute("/BLOCKBUSTER/Scripts/")]
     SCRIPTS = 9,
-    [StringValue("/BLOCKBUSTER/Scripts/Actors/")]
+    [BBattribute("/BLOCKBUSTER/Scripts/Actors/")]
     ACTORSCRIPTS = 10,
-    [StringValue("/BLOCKBUSTER/Scripts/BBehaviors/")]
+    [BBattribute("/BLOCKBUSTER/Scripts/BBehaviors/")]
     BBEHAVIORSCRIPTS = 11,
-    [StringValue("/BLOCKBUSTER/BBGBASE/")]
+    [BBattribute("/BLOCKBUSTER/BBGBASE/")]
     BBGBASE = 12,
-    [StringValue("Assets/BLOCKBUSTER/BBGBASE/")]
+    [BBattribute("Assets/BLOCKBUSTER/BBGBASE/")]
     ROOTGBASE = 13
 
 }
+
+
+
+
 public static class BBTools
 {
     // this class is a Helper to manage Actor Behaviors 
@@ -206,8 +223,8 @@ public static class BBTools
     
 
 
-
-
+    
+    
 
    
 
@@ -351,6 +368,19 @@ public static class BBTools
 
     public class blockbuster : EditorWindow  
     {
+
+        public enum GridIndexType
+        {
+            LINERAR = 0,
+            FUNCTION = 1,
+            R = 2,
+            G = 3,
+            B = 4,
+            A = 5
+        }
+
+
+
         // editortick is used instead of Time.Delta in editor LIVE mode
         //static float EditorTick = 0.1f;
         Actor m_actor = null;
@@ -370,7 +400,7 @@ public static class BBTools
             assetsliderindex = 0
             //BBiteratemaxobjects = 10
             ;
-
+        public static GridIndexType bbGrdtype;
         public int toolbarInt;
         private int currentpreset;
         
@@ -380,10 +410,11 @@ public static class BBTools
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
         Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
        
+        
 
-        private static int mvpd_grsz = 32 ;
-        private static int bsz = 16;
-        private static int mvpd_txtsz = bsz * mvpd_grsz ;
+        private static int mvpd_grsz = 8 ;
+        private static int mvpd_bsz = 32;
+        private static int mvpd_txtsz = mvpd_bsz * mvpd_grsz ;
         static Rect movepadpos = new Rect(0, 0, mvpd_txtsz, mvpd_txtsz);
         static Rect mvpd_rect= new Rect(0,30, mvpd_txtsz, mvpd_txtsz);
 
@@ -815,7 +846,9 @@ public static class BBTools
             // inform a potential movig platform for direction of the camera 
             MovingPlatform  B = (MovingPlatform)Selection.activeGameObject.GetComponent(typeof(MovingPlatform));
             if (B != null)
-                B.paramblock.b_front_x = b_front_X; 
+                B.paramblock.b_front_x = b_front_X;
+            m_actor.b_front_X = b_front_X;
+
 
         }
 
@@ -870,20 +903,6 @@ public static class BBTools
         }
 
 
-        static Texture2D LoadPNG(string filePath)
-        {
-            //Rect picsize = new Rect(5, 100, 200, 150);
-            Texture2D tex = null;
-            byte[] fileData;
-            if (File.Exists(filePath))
-            {
-                fileData = File.ReadAllBytes(filePath);
-                tex = new Texture2D(mvpd_txtsz, mvpd_txtsz);
-                tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
-            }
-            tex.EncodeToPNG();
-            return tex;
-        }
 
 
         public bool ReadAssetBase()
@@ -1072,21 +1091,20 @@ public static class BBTools
 
 
 
-        // movepad interface composition in diferent state 
-        public static Dictionary<int, int> movepadNSdic= new Dictionary<int, int>();
-        public static Dictionary<int, int> movepadIconpagedic = new Dictionary<int, int>();
-        // movepad interface normal state 
-        static Texture2D movepad_i_cl = new Texture2D(mvpd_txtsz, mvpd_txtsz);
-        // movepad interface normal state 
-        static Texture2D movepad_i = null;
-        // mask to identify the button on rgba Red is for function id 
-        static Texture2D movepad_func_id = new Texture2D(mvpd_txtsz, mvpd_txtsz);
-        // target for composition 
-        static Texture2D movepad_target = new Texture2D(mvpd_txtsz, mvpd_txtsz);
 
-        static List<Texture2D> mvpdilst = new List<Texture2D>();
-   
-       
+        // movepad interface composition in diferent state 
+        public static Dictionary<int, int> mvp_dic_normal= new Dictionary<int, int>();
+        // movepad interface normal state 
+        static Texture2D mvp_texture_button_clic = new Texture2D(mvpd_txtsz, mvpd_txtsz);
+        // movepad interface normal state 
+        static Texture2D mvp_texture_button_normalstate = null;
+        // mask to identify the button on rgba Red is for function id 
+        static Texture2D mvp_texture_func_id = new Texture2D(mvpd_txtsz, mvpd_txtsz);
+        // target for composition 
+        static Texture2D mvp_texture_target = new Texture2D(mvpd_txtsz, mvpd_txtsz);
+
+        static List<Texture2D> mvp_textures_array = new List<Texture2D>();
+
         
 
         static bool InitGUIValues()
@@ -1097,46 +1115,47 @@ public static class BBTools
             System.Type T = (System.Type)BBTools.castenum();
             behaviourenum = (System.Enum)System.Activator.CreateInstance(T);
             //System.Type TT = behaviorManager.GetClassDataset();
-            string uitex = BBDir.Get(BBpath.RES)+ "movepad_i.png";
-            movepad_i = LoadPNG(uitex);
-            mvpdilst.Add(movepad_i);
-            uitex = BBDir.Get(BBpath.RES)+"movepad_i_cl.png";
-            movepad_i_cl = LoadPNG(uitex);
-            mvpdilst.Add(movepad_i_cl);
-            uitex = BBDir.Get(BBpath.RES)+"movepad_id.png";
-            movepad_func_id = LoadPNG(uitex);
-            mvpdilst.Add(movepad_func_id);
-            uitex = BBDir.Get(BBpath.RES)+"movepad_target.png";
-            movepad_target = LoadPNG(uitex);
-            mvpdilst.Add(movepad_target);
+
+            List<string> tlist = new List<string>() ;
+            tlist.Add(BBDir.Get(BBpath.RES) + "movepad_i.png");
+            tlist.Add(BBDir.Get(BBpath.RES) + "movepad_i_cl.png");
+            tlist.Add(BBDir.Get(BBpath.RES) + "movepad_id.png");
 
 
 
-            // this is the composition of normal state movepad   
-            movepadNSdic.Clear();
-            movepadNSdic.Add(1, 0);
-            movepadNSdic.Add(8, 2);
-            movepadNSdic.Add(10, 3);
-            movepadNSdic.Add(17, 1);
-            movepadNSdic.Add(9, 11);
-            movepadNSdic.Add(3, 8);
-            movepadNSdic.Add(19, 9);
-            movepadNSdic.Add(5, 4);
-            movepadNSdic.Add(13, 5);
-            movepadNSdic.Add(21, 6);
+            string layername = "bbmain";
+            BBControllManager.RegisterLayer(layername, tlist, 8, 32);
+
+
+            
             
 
-            // icon page dic (folow linear grid) 
-            movepadIconpagedic.Clear();
-            for (int i = 0; i <  mvpd_grsz * mvpd_grsz; i++)
-            {
-                movepadIconpagedic.Add(i,i);
-            }
 
-                ComposeMovepad(1, movepadNSdic);
+
+            
+
+
+            BBControllManager.RegisterButton(layername, 1, 0, "BBeditorMoveForward");
+            BBControllManager.RegisterButton(layername, 8, 2, "BBeditorMoveLeft");
+            BBControllManager.RegisterButton(layername, 10, 3, "BBeditorMoveRight");
+            BBControllManager.RegisterButton(layername, 17, 1, "BBeditorMoveBack");
+            BBControllManager.RegisterButton(layername, 19, 9, "BBeditorMoveDown");
+            BBControllManager.RegisterButton(layername, 3, 8, "BBeditorMoveUp");
+            BBControllManager.RegisterButton(layername, 5, 4, "");
+            BBControllManager.RegisterButton(layername, 13, 5, "");
+            BBControllManager.RegisterButton(layername, 21, 6, "");
+            //********* test with parameters to pass 
+            BBControllManager.RegisterButton(layername, 7, 7, "BBEditorActorMove");
+
+
+
+            MVP_ComposeMovepad(0);
 
             return true;
         }
+
+
+
 
 
         void Update()
@@ -1298,7 +1317,7 @@ public static class BBTools
 
     
 
-        private void changeEditorFlag(bool bstatic)
+        private void ichangeEditorFlag(bool bstatic)
         {
             StaticEditorFlags flags = new StaticEditorFlags();
             if (bstatic)
@@ -1457,66 +1476,108 @@ public static class BBTools
 
         }
 
-        public static int[] MvpdGriXYfromlinearIndex(int index, int celsize, int gridsize)
+        public static int[] MVP_RectFromIndex(int index, int celsize, int gridsize)
         {
+
             int px = ((index) * celsize) % mvpd_txtsz;// base index 0
             int py = ((((index) * celsize / mvpd_txtsz)) * celsize);
             int[] ret = new int[] { px, py, celsize, celsize };
             return ret;
         }
-        public static void ComposeMovepad(int mousestate, Dictionary<int, int> itable)
+        public static void MVP_ComposeMovepad(int mousestate)
         {
-            foreach (KeyValuePair<int, int> kvp in itable)
-                UpdateSingleButton(kvp, 0);
-            BBTools.SaveMovepadTarget("test.png", movepad_target);
-        }
-        public static void MvpdClearTarget (Texture2D txt )
-        {
-            int txtsz =(int)  Math.Pow(mvpd_grsz * bsz , 2) ;
-            /*
-             Texture2D tex = new Texture2D(mvpd_grsz, mvpd_grsz);
-             Color32[] texColors = new Color32[txtsz];
-             for (int i = 0; i < txtsz; i++)  
-                texColors[i]= Color.clear;
-            */
-            movepad_target = txt;//LoadPNG(BBDir.Get(BBpath.RES) + "movepad_target.png");
 
-             //movepad_target.SetPixels32 (texColors);
-             //movepad_target.Apply();
+             
+            foreach (KeyValuePair<int, BBControll> kvp in BBControllManager.GetControlDic("bbmain"))
+            {
 
+                BBControllManager.RenderSingleButton("bbmain", TXTINDEX.NORMAL, kvp.Key);
+                Debug.Log(kvp.Key.ToString());
+            }
+
+            BBTools.SaveMovepadTarget("test.png", mvp_texture_target);
         }
 
-        public static void UpdateSingleButton (KeyValuePair<int, int> entry,int state )
+        public static void MVP_dClearTarget (Texture2D txt )
         {
+            int txtsz =(int)  Math.Pow(mvpd_grsz * mvpd_bsz , 2) ;
+            mvp_texture_target = txt;
+        }
+
+        //public static void MVP_UpdateSingleButton(int state, int index = -1, int cx = 0, int cy = 0)
+        //{
+
+        //    int i;
+        //    if (index < 0)
+        //        i = MVP_returngridindex(cx, cy);
+        //    else
+        //        i = index;
+
+        //    if (state > mvp_textures_array.Count)
+        //    {
+                
+        //        Debug.Log( "no texture at index : "+state.ToString());
+        //        return;
+        //    }
+
+        //    int y = mvpd_txtsz - BBControllManager.MVPBSZ;
+
+        //    if (!BBControllManager.layerentry.ContainsKey(i))
+        //    {
+        //        Debug.Log("no entry key at : " + i.ToString());
+        //        return;
+        //    }
+
+        //    int[] i4 = MVP_RectFromIndex(BBControllManager.layerentry[i], BBControllManager.MVPBSZ, BBControllManager.MVPGSZ);  // { (entry.Value * bsz) % texturesize, texturesize - ((1 + entry.Value / gsz) * bsz), bsz, bsz };
+            
+        //    Color[] pix = mvp_textures_array[state].GetPixels(i4[0],y-i4[1], i4[2], i4[3]);
+        //    int[] R = MVP_RectFromIndex(i, BBControllManager.MVPBSZ, BBControllManager.MVPGSZ);
+        //    mvp_texture_target.SetPixels(R[0], y-R[1], R[2], R[3], pix);
+        //    mvp_texture_target.Apply();
+
+
             
 
-            int y = mvpd_txtsz - bsz; 
 
-            int[] i4 = MvpdGriXYfromlinearIndex(entry.Value, bsz, mvpd_grsz);  // { (entry.Value * bsz) % texturesize, texturesize - ((1 + entry.Value / gsz) * bsz), bsz, bsz };
+        //}
 
 
-            Color[] pix = mvpdilst[state].GetPixels(i4[0],y-i4[1], i4[2], i4[3]);
-            
-            int[] R = MvpdGriXYfromlinearIndex(entry.Key, bsz, mvpd_grsz);
-            movepad_target.SetPixels(R[0], y-R[1], R[2], R[3], pix);
-            movepad_target.Apply();
-            state = 0;
-        }
+
+        
+
+
         public void ShowMovePadGrid()
         {
-            
-
             for (int ic = 0; ic < Math.Pow( mvpd_grsz ,2 ); ic++)
             {
-                int[] I = MvpdGriXYfromlinearIndex(ic, bsz, mvpd_grsz);  //Rect(px, py, bsz, bsz);
+                int index = 0;
+                switch (bbGrdtype)
+                {
+                    case GridIndexType.LINERAR:
+                        index = ic;
+                        break;
+                    case GridIndexType.FUNCTION:
+                        Vector2 mpos = Event.current.mousePosition - mvpd_rect.position;
+                        Color32 C = mvp_texture_func_id.GetPixel((int)mpos.x, mvpd_grsz - (int) mpos.y);
+                        index = C.r;
+                        break;
+                }
+
+                int[] I = MVP_RectFromIndex(ic, mvpd_bsz, mvpd_grsz);  //Rect(px, py, bsz, bsz);
                 Rect NR = new Rect(I[0], I[1], I[2], I[3]);
                 NR.position += mvpd_rect.position;
-                GUI.TextField(NR, (ic).ToString());
+                GUI.TextField(NR, (index).ToString());
             }
         }
 
 
         public int mousebttn;
+        public bool mousemove;
+        public bool mouseclic;
+        public bool mousedrag;
+
+        public int leftmouseclickeventnumber = 0;
+        public Vector2 lastmousepos;
 
         public void CheckInput()
         {
@@ -1527,6 +1588,8 @@ public static class BBTools
                 case EventType.MouseDown:
                     if (Event.current.button == 0)
                     {
+
+                        mouseclic = true;
                         GUIUtility.hotControl = controlID;
                         Event.current.Use();
                         mousebttn = 1;
@@ -1540,56 +1603,51 @@ public static class BBTools
                     if (GUIUtility.hotControl == controlID)
                     {
                         // Release lock on it :)
+                        mouseclic = false;
                         GUIUtility.hotControl = 0;
                         Event.current.Use();
                         mousebttn = 0;
+                        leftmouseclickeventnumber = 0;
                     }
                     break;
             }
         }
 
-
-
-
-
-
-
- 
-
-        void DoMovepad(int i)
+        static int MVP_returngridindex (int x, int y) 
         {
-            if (movepad_i == null)
-                InitGUIValues();
+            return(int)  y / mvpd_bsz * mvpd_grsz + x / mvpd_bsz; // base index 1 
+        }
 
-            // calculate movepad texture placement 
+
+        void MVP_DoMovepad(int i)
+        {
+            // place the movepad texture
             mvpd_rect.Set(Screen.width / 2 - (mvpd_rect.width / 2), mvpd_rect.y, mvpd_rect.width, mvpd_rect.height);
 
-      
-            GUI.DrawTexture(mvpd_rect, movepad_target); // draw the target 
-
+            GUI.DrawTexture(mvpd_rect, mvp_texture_target); // draw the target 
             Vector2 mpos = Event.current.mousePosition - mvpd_rect.position;
-
             CheckInput(); // 
+            Debug.Log(mpos.ToString());
+            int gridindex= BBControllManager.GetGridIndexFromXY(mpos);
+   
 
-            // hum x is base index 1 y base 0 .. should fix 
-            // but that touchy and work fine like this .. p5
-            int sx = ((int)mpos.x / bsz);
-            int sy =((int)mpos.y  /bsz);
-            int key = sy * mvpd_grsz + sx; // base index 1 
-            // dictionary define the interface layout
-
-            // for movepadeditor will improve 
-            if (BBTools.buttonpage)
+            if (mouseclic && leftmouseclickeventnumber == 0)
             {
-                if (movepadIconpagedic.ContainsKey(key))
+                BBControllManager.RenderSingleButton("bbmain",TXTINDEX.CLICKED ,gridindex);
+                BBControll Ctrl = BBControllManager.GetControll("bbmain", gridindex);
+                if (Ctrl == null)
                 {
-                    UpdateSingleButton(new KeyValuePair<int, int>(key, movepadIconpagedic[key]), mousebttn);
+                    BBTools.BBdebug("no function at " + gridindex.ToString() );
+                    return;
                 }
+                Actor A = Selection.activeGameObject.GetComponent<Actor>();
+                Ctrl.invoke(A);//could use other thing to pass param 
+                leftmouseclickeventnumber++; // single event 
+                lastmousepos = mpos;
             }
-            else
-                if (movepadNSdic.ContainsKey(key))
-                    UpdateSingleButton(new KeyValuePair<int, int>(key, movepadNSdic[key]), mousebttn);
-
+            else if (leftmouseclickeventnumber ==0)
+                // hold the last mouse pos 
+                BBControllManager.RenderSingleButton("bbmain", TXTINDEX.NORMAL, gridindex);
 
             GUI.DragWindow();
 
@@ -1657,31 +1715,32 @@ public static class BBTools
 
             if (selectedtab == 1)
             {
-                
+                //GUILayout.BeginHorizontal();
                 BBTools.showgrid = GUILayout.Toggle(BBTools.showgrid, "show linear grid numbers ");
-                if (GUILayout.Button("UNLAYERED"))
+                if (BBTools.showgrid)
                 {
-                    BBTools.buttonpage = !BBTools.buttonpage;
-                    if (!BBTools.buttonpage)
-                    {
-                        MvpdClearTarget(LoadPNG(BBDir.Get(BBpath.RES)+"movepad_target.png"));
-                        ComposeMovepad(1, movepadNSdic);
+                    blockbuster.behaviourenum = (System.Enum)EditorGUILayout.EnumPopup("behaviour:", blockbuster.behaviourenum, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
+                    blockbuster.bbGrdtype = (GridIndexType)EditorGUILayout.EnumPopup("type", bbGrdtype);
+                }
+
+                //GUILayout.EndHorizontal();
+
+                 
+                if (GUILayout.Button("UNLAYERED"))
+                    {           
+                        // display TXTINDEX.NORMAL
                     }
                     else
                     {
-                        MvpdClearTarget(LoadPNG(BBDir.Get(BBpath.RES)+"movepad_i.png"));
-
-                        //ComposeMovepad(1, movepadIconpagedic);
+                        // TXTINDEX.TARGET
                     }
 
-                }
+                
                 
             }
 
             if (selectedtab == 4)
             {
-                if (blockbuster.behaviourenum == null)
-                    blockbuster.InitGUIValues();
 
 
                 String filepath;
@@ -1868,6 +1927,8 @@ public static class BBTools
             {
                 b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
                 b_fixedstepedit = EditorGUILayout.Toggle("fixed predefined move  ", b_fixedstepedit );
+                  
+
                 //------------------------------------------------------------------ SLIDER FOR FIXED OFSET MOVE #2
                 stepvalue = EditorGUILayout.Slider("fixed step ", stepvalue, 0, 4);
                 //------------------------------------------------------------------ NEXT ASSET BUTTON #3
@@ -1908,9 +1969,13 @@ public static class BBTools
                     if (GUILayout.Button("PREV PRESET"))
                         BrowsePresset(-1);
                 GUILayout.EndHorizontal();
+
+                m_actor.bbeditor_fixedstep = b_fixedstepedit;
+
+
+                if (GUI.Button(new Rect(mvpd_bsz * 3, mvpd_bsz * 10, mvpd_bsz, mvpd_bsz), "")) //-------------- FRONT BUTTON
+                    m_actor.BBEditorActorMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
                 /*
-                if (GUI.Button(new Rect(bsz * 3, bsz * 10, bsz, bsz), "")) //-------------- FRONT BUTTON
-                    DoBlockMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
                 if (GUI.Button(new Rect(bsz * 3, bsz * 12, bsz, bsz), "")) //-------------- 	BACK BUTTON
                     DoBlockMove(false, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
                 if (GUI.Button(new Rect(bsz * 2, bsz * 11, bsz, bsz), "")) //-------------- 	LEFT BUTTON
@@ -1944,7 +2009,7 @@ public static class BBTools
                         Selection.gameObjects[c].transform.Rotate(Vector3.forward * 90, Space.Self);
                  */
             }
-
+        
 
      
 
@@ -1960,7 +2025,7 @@ public static class BBTools
                 BeginWindows();
                 Rect R = new Rect();
 
-                R = GUI.Window(1, movepadpos, DoMovepad, MovepadMousePos.ToString());
+                R = GUI.Window(1, movepadpos, MVP_DoMovepad, MovepadMousePos.ToString());
                 float ylimitation = (Screen.height - 320);
                 float ymin  = (Screen.height - 40);
                 

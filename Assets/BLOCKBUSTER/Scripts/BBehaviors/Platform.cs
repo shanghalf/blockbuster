@@ -227,7 +227,8 @@ public abstract class BBehavior : MonoBehaviour
     //public  GameObject triggerobject;
     public Vector3 pointSnap = Vector3.one * 0.001f;
     public Actor m_actor = null;
- 
+
+    public List<object> argsbuff = new List<object>();
     
     /// <summary>
     /// need override ( no meaning to get any generic implementation 

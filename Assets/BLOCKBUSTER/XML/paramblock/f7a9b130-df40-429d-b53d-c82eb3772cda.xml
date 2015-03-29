@@ -35,7 +35,7 @@
   <rotationspeed>0</rotationspeed>
   <rotationstepnumber>2</rotationstepnumber>
   <b_triggered>false</b_triggered>
-  <movedir>-1</movedir>
+  <movedir>1</movedir>
   <maxhandle>7</maxhandle>
   <b_pathloop>false</b_pathloop>
   <colider_type>BOX</colider_type>

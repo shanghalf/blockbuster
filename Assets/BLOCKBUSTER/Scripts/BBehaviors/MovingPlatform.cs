@@ -105,6 +105,7 @@ public class MovingPlatformDataset  : Dataset
 
 
 
+
     public override Dataset Load(string path)
     {
         if (!System.IO.File.Exists(path))
@@ -134,12 +135,14 @@ public class MovingPlatformDataset  : Dataset
         // properties of a behavior 
         public MovingPlatformDataset paramblock = new MovingPlatformDataset();
 
-        // for convenient 
+        // for convenient  used in bbehavior and actor should be unified 
+        
         private Vector3 left = new Vector3(-1.0f, 0.0f, 0.0f);
         private Vector3 front = new Vector3(0.0f, 0.0f, 1.0f);
         private Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
         private Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
         private bool b_front_x;
+        
 
         /// <summary>
         /// setup initial condition of this specific behavior
@@ -156,6 +159,8 @@ public class MovingPlatformDataset  : Dataset
             base.Start();
         }
 
+      
+  
         
         /// <summary>
         /// param bock is a field and not a properie 

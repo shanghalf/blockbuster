@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <targetindex>3</targetindex>
-  <b_front_x>false</b_front_x>
+  <targetindex>4</targetindex>
+  <b_front_x>true</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
   <b_showdebuginfos>false</b_showdebuginfos>
@@ -35,7 +35,7 @@
   <rotationspeed>0</rotationspeed>
   <rotationstepnumber>2</rotationstepnumber>
   <b_triggered>false</b_triggered>
-  <movedir>-1</movedir>
+  <movedir>1</movedir>
   <maxhandle>7</maxhandle>
   <b_pathloop>false</b_pathloop>
   <colider_type>BOX</colider_type>
@@ -43,7 +43,7 @@
   <m_pathnodes>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>144.2178</y>
         <z>-45.5934677</z>
       </pos>
@@ -55,7 +55,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>144.2178</y>
         <z>-41.5242729</z>
       </pos>
@@ -67,7 +67,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>144.2178</y>
         <z>-41.5242729</z>
       </pos>
@@ -79,7 +79,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>140.145508</y>
         <z>-41.5242729</z>
       </pos>
@@ -91,7 +91,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>140.145508</y>
         <z>-47.6280746</z>
       </pos>
@@ -103,7 +103,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>140.145508</y>
         <z>-47.6280746</z>
       </pos>
@@ -115,7 +115,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>34.72387</x>
+        <x>50.82409</x>
         <y>140.145508</y>
         <z>-47.6280746</z>
       </pos>

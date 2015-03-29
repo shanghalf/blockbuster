@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <targetindex>4</targetindex>
-  <b_front_x>false</b_front_x>
+  <targetindex>3</targetindex>
+  <b_front_x>true</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
   <b_showdebuginfos>false</b_showdebuginfos>
@@ -24,7 +24,7 @@
     <timer>0</timer>
   </rotatelookpoint>
   <speed>0.5</speed>
-  <move_ampl>7.52</move_ampl>
+  <move_ampl>2.04</move_ampl>
   <target>
     <x>0</x>
     <y>0</y>
@@ -35,7 +35,7 @@
   <rotationspeed>0</rotationspeed>
   <rotationstepnumber>2</rotationstepnumber>
   <b_triggered>false</b_triggered>
-  <movedir>1</movedir>
+  <movedir>-1</movedir>
   <maxhandle>7</maxhandle>
   <b_pathloop>false</b_pathloop>
   <colider_type>BOX</colider_type>
@@ -45,7 +45,7 @@
       <pos>
         <x>34.84236</x>
         <y>144.2178</y>
-        <z>-35.4488754</z>
+        <z>-2.89527178</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -57,7 +57,7 @@
       <pos>
         <x>34.84236</x>
         <y>144.2178</y>
-        <z>-31.3796768</z>
+        <z>1.17392683</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -69,7 +69,7 @@
       <pos>
         <x>34.84236</x>
         <y>144.2178</y>
-        <z>-31.3796768</z>
+        <z>1.17392683</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -81,7 +81,7 @@
       <pos>
         <x>34.84236</x>
         <y>140.145508</y>
-        <z>-31.3796768</z>
+        <z>1.17392683</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -93,7 +93,7 @@
       <pos>
         <x>34.84236</x>
         <y>140.145508</y>
-        <z>-37.4834747</z>
+        <z>-4.929871</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -105,7 +105,7 @@
       <pos>
         <x>34.84236</x>
         <y>140.145508</y>
-        <z>-37.4834747</z>
+        <z>-4.929871</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>
@@ -117,7 +117,7 @@
       <pos>
         <x>34.84236</x>
         <y>140.145508</y>
-        <z>-37.4834747</z>
+        <z>-4.929871</z>
       </pos>
       <ilookatpoint>0</ilookatpoint>
       <lookatspeed>0</lookatspeed>

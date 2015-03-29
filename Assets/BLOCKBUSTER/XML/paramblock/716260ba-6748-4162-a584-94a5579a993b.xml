@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <targetindex>4</targetindex>
-  <b_front_x>false</b_front_x>
+  <targetindex>0</targetindex>
+  <b_front_x>true</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
   <b_showdebuginfos>false</b_showdebuginfos>
   <b_hideedition>false</b_hideedition>
   <ismoving>true</ismoving>
-  <indexbound>MIDDLE</indexbound>
+  <indexbound>DOWN</indexbound>
   <guid>716260ba-6748-4162-a584-94a5579a993b</guid>
   <fullqualifiedclassname>MovingPlatformDataset, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</fullqualifiedclassname>
   <suportedclassname>MovingPlatform, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</suportedclassname>
@@ -43,7 +43,7 @@
   <m_pathnodes>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>144.2178</y>
         <z>-35.4488754</z>
       </pos>
@@ -55,7 +55,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>144.2178</y>
         <z>-31.3796768</z>
       </pos>
@@ -67,7 +67,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>144.2178</y>
         <z>-31.3796768</z>
       </pos>
@@ -79,7 +79,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>140.145508</y>
         <z>-31.3796768</z>
       </pos>
@@ -91,7 +91,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>140.145508</y>
         <z>-37.4834747</z>
       </pos>
@@ -103,7 +103,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>140.145508</y>
         <z>-37.4834747</z>
       </pos>
@@ -115,7 +115,7 @@
     </Pathnode>
     <Pathnode>
       <pos>
-        <x>30.790163</x>
+        <x>52.79016</x>
         <y>140.145508</y>
         <z>-37.4834747</z>
       </pos>
