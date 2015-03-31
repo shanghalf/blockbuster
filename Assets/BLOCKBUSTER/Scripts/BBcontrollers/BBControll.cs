@@ -2,6 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System;
+using System.Xml.Serialization;
+using System.Text;
+using System.Xml;
+using System.Reflection;
+using System.Reflection.Emit;
+//using BlockbusterControll;
+
+
 
 [System.Serializable]
 public enum TXTINDEX 
@@ -40,40 +49,234 @@ public enum MVPBUTTONSIZE
 }
 
 
-
-public  class BBControllManager
+public enum BBpath
 {
-    // link between the controllers and the movepad texture target 
-    private static List<BBControll> BBControllersAray = new List<BBControll>();
 
-    // layer of movepads interfaces 
-    // tricky layer but using dic is really convenient 
-    // i believe that 
-    public static Dictionary<string,Dictionary<int, BBControll > > MVP_LAYERS = new Dictionary<string,Dictionary<int, BBControll>>() ;
-    public static Dictionary<string, List<Texture2D>> TEXTURES = new Dictionary<string, List<Texture2D>>();
+    [BBattribute("/BLOCKBUSTER/Editor/")]
+    EDITOR = 1,
+    [BBattribute("/BLOCKBUSTER/Editor/BBResources/256/")]
+    RES = 2,
+    [BBattribute("/BLOCKBUSTER/XML/")]
+    XML = 3,
+    [BBattribute("/BLOCKBUSTER/XML/blockbustersetings/")]
+    SETING = 4,
+    [BBattribute("/BLOCKBUSTER/XML/paramblock/")]
+    DATASET = 5,
+    [BBattribute("/BLOCKBUSTER/XML/preset/")]
+    PRESET = 6,
+    [BBattribute("/BLOCKBUSTER/XML/Replays/")]
+    REPLAY = 7,
+    [BBattribute("/BLOCKBUSTER/XML/scenes/")]
+    SCENE = 8,
+    [BBattribute("/BLOCKBUSTER/Scripts/")]
+    SCRIPTS = 9,
+    [BBattribute("/BLOCKBUSTER/Scripts/Actors/")]
+    ACTORSCRIPTS = 10,
+    [BBattribute("/BLOCKBUSTER/Scripts/BBehaviors/")]
+    BBEHAVIORSCRIPTS = 11,
+    [BBattribute("/BLOCKBUSTER/BBGBASE/")]
+    BBGBASE = 12,
+    [BBattribute("Assets/BLOCKBUSTER/BBGBASE/")]
+    ROOTGBASE = 13
+
+}
+
+public static class BBDir
+{
+    public static string Get(Enum value, bool root = false)
+    {
+        string output = null;
+        Type type = value.GetType();
+        FieldInfo fi = type.GetField(value.ToString());
+        BBattribute[] attrs = fi.GetCustomAttributes(typeof(BBattribute), false) as BBattribute[];
+        if (attrs.Length > 0)
+            output = attrs[0].Value;
+        if (root)
+            return output;
+        else
+            return Application.dataPath + output;
+    }
+}
+
+
+public static class BBdebug
+{
+
+    public static void SaveMovepadTarget(String filename, Texture2D Txt)
+    {
+        FileStream fs = new FileStream(BBDir.Get(BBpath.RES) + filename, FileMode.Create);
+        BinaryWriter bw = new BinaryWriter(fs);
+        bw.Write(Txt.EncodeToPNG());
+        bw.Close();
+        fs.Close();
+    }
+
+}
+
+public static class EditorTimer
+{
+    public static bool run;
+    private static float timeOut;
+
+    public static void StartCountdown( float seconds )
+    {
+        timeOut = Time.realtimeSinceStartup + seconds;
+        run = true;
+    }
+ 
+    public static void Update()
+    {
+        if (Time.realtimeSinceStartup > timeOut)
+        {
+            run = false;
+        }
+    }
+
+}
+
+
+public  class BBCtrl
+{
+
     
+    
+    private static  List<BBControll> BBControllersAray = new List<BBControll>();
+    private static Dictionary<string, Dictionary<int, BBControll>> MVP_LAYERS = new Dictionary<string, Dictionary<int, BBControll>>();
+    private static Dictionary<string, List<Texture2D>> TEXTURES = new Dictionary<string, List<Texture2D>>();
   
 
+    private static int      gridsize;
+    private static int      buttonsize;
+    private static int      texturesize;
+    private static int      gridcelnumber;
+    private static int      count;
+
+    private static bool     isfocused;
+    private static int      mousebttn;
+    private static bool     mousemove;
+    private static bool     mouseclic;
+    private static bool     mousedrag;
+    
+    private static int      leftmouseclickeventnumber;
+    private static Vector2  lastmousepos;
+    private static Vector2 mousepos;
+
+    public static bool      GOTFOCUS()  
+    {
+        CheckInput();
+        return isfocused;  
+    }
+
+    public static int       MOUSECLIC()
+    {
+        CheckInput();
+
+        if (mouseclic)
+            return mousebttn ;
+        else 
+            return -1;
+
+    }
+
+    public  static int      MVPTXTSZ            { get { return ((int)gridsize * (int)buttonsize); } }
+    public  static int      MVPCELLNB           { get { return ((int)gridsize * (int)buttonsize); } }
+    public  static int      MVPGSZ              { get { return gridsize; } }
+    public  static int      MVPBSZ              { get { return buttonsize; } }
+    public  static int      MVPCNT              { get { return count; } }
+
+    public static int MVPMOUSECLIC      
+    { 
+        get 
+        {
+            CheckInput();
+            return mousebttn; 
+        } 
+    }
+    
+    public  static bool     MVPMOUSEMOVE        { get { return mousemove; } }
+    //public  static bool     MVPMOUSECLIC        { get { return mouseclic; } }
+    public  static bool     MVPMOUSEDRAG        { get { return mousedrag; } }
+
+    // where the final txt stand 
+
+    public static Rect mvpd_rect = new Rect(0, 30, MVPTXTSZ, MVPTXTSZ);
+
+
+    public static void RenderLayer(string layername, TXTINDEX type)
+    {
+        foreach (KeyValuePair<int, BBControll> kvp in GetControlDic(layername))
+        {
+            int[] r = CalcRectFromIndex(kvp.Key);
+            Vector2 V = new Vector2(r[0], r[1]);
+            RenderSingleButton("bbmain", TXTINDEX.TARGET, V);
+            Debug.Log(kvp.Key.ToString());
+        }
+    }
+
+    private static void CheckInput()
+    {
+
+        Rect MouseCursor = new Rect();
         
 
-    //public static Dictionary<int, int> layerentry = new Dictionary<int, int>();
+
+        // Get a unique ID for your control.
+        int controlID = GUIUtility.GetControlID(FocusType.Passive);
+        mousepos = Event.current.mousePosition;
+        MouseCursor.Set(mousepos.x, mousepos.y, 1, 1);
+        GUI.Box(MouseCursor, "");
+        if (MouseCursor.Overlaps(mvpd_rect))
+            isfocused = true;
+        else
+        {
+            isfocused = false;
+            return;
+        }
+
+        switch (Event.current.GetTypeForControl(controlID))
+        {
+            case EventType.MouseDown:
+                if (Event.current.button == 0)
+                {
+
+                    mouseclic = true;
+                    GUIUtility.hotControl = controlID;
+                    Event.current.Use();
+                    mousebttn = 1;
+                }
+                break;
+            case EventType.MouseMove:
+                
+                break;
+            case EventType.MouseDrag:
+                break;
+            case EventType.MouseUp:
+                // If this control is currently active.
+                if (GUIUtility.hotControl == controlID)
+                {
+                    // Release lock on it :)
+                    mouseclic = false;
+                    GUIUtility.hotControl = 0;
+                    Event.current.Use();
+                    mousebttn = 0;
+                    leftmouseclickeventnumber = 0;
+                }
+                break;
+        }
+    }
 
 
-
-    static private int gridsize ;
-    private static int buttonsize = 0;
-    private static int texturesize = 0;
-    private static int gridcelnumber = 0;
-
-
-    private static int count = 0;
-    public static int MVPGSZ { get { return gridsize; } }
-    public static int MVPBSZ { get { return  buttonsize  ; } }
-    public static int MVPCNT { get { return count; } }
-
-
-    public static int MVPTXTSZ { get { return ((int)gridsize * (int)buttonsize); } }
-    public static int MVPCELLNB { get { return ((int)gridsize * (int)buttonsize); } }
+    public static Texture2D GetTextureFromLayer (string layer , TXTINDEX type   )
+    {
+        List<Texture2D> TXTLIST;
+        if (! TEXTURES.TryGetValue("bbmain", out TXTLIST))
+        {
+            Debug.Log("no texture in this layer entry");
+            return null;
+        }
+        Texture2D Txt = TXTLIST[(int)type]; 
+        return Txt;
+    }
 
 
 
@@ -90,7 +293,7 @@ public  class BBControllManager
         Dictionary<int, BBControll> CTRLIST;
         if (MVP_LAYERS.TryGetValue(layername, out CTRLIST))
         {
-            Debug.Log("returned " + layername + " controls dictionary ");
+            //Debug.Log("returned " + layername + " controls dictionary ");
             return CTRLIST;
 
         }
@@ -107,10 +310,17 @@ public  class BBControllManager
 
     public static int GetGridIndexFromXY (Vector2 pos)
     {
-
-        Debug.Log("pos " + pos.ToString() + " gsz :" + gridsize.ToString() + " bsz :" + buttonsize.ToString());
-        return (int)pos.y / gridsize * buttonsize + (int)pos.x / buttonsize; // base index 1 
+        //Debug.Log("pos " + pos.ToString() + " texture size  :" + MVPTXTSZ.ToString() + " pos :" +  pos.ToString() );
         
+        
+        //return(int)  y / mvpd_bsz * mvpd_grsz   + x / mvpd_bsz; // base index 1 
+        int x = (int)pos.x ; 
+        int y = (int)pos.y ;
+
+        int res = ( y / buttonsize * gridsize ) +(  x / buttonsize) ; // base index 1 
+        
+        //Debug.Log("pos " + pos.ToString() + " gsz :" + gridsize.ToString() + " bsz :" + buttonsize.ToString() + "index is :"+ res );
+        return res;
     }
 
     public static int[] CalcRectFromIndex (int index)
@@ -121,11 +331,33 @@ public  class BBControllManager
         return ret;
     }
 
-
-
-    public static bool  RenderSingleButton (string layername,TXTINDEX textureindex ,int index )
+    
+    public static object[]  InvokeCtrlMethod (string layername, Vector2 frompos , object In , object[] args, out object[] Out  )
     {
-        
+
+        Out =null;
+        int index = GetGridIndexFromXY(frompos);
+
+        BBControll BBC = GetControll(layername, index);
+        if (BBC == null)
+            return null;
+
+
+        BBC.BBinvoke ( In ,args );
+
+
+        return Out;
+    }
+
+
+
+    public static bool  RenderSingleButton (string layername,TXTINDEX textureindex , Vector2 frompos )
+    {
+        int index = GetGridIndexFromXY(frompos);
+
+        BBControll BBC = GetControll("bbmain", index);
+        if (BBC == null)
+            return false;
 
         // max number of controls in layer  
         int max = GetControlDic(layername).Count ;
@@ -142,12 +374,25 @@ public  class BBControllManager
             Debug.Log("no texture at index : " + textureindex.ToString());
             return false;
         }
+
         int y = MVPTXTSZ - (int) MVPBSZ;
-        int[] i4 = CalcRectFromIndex((int)textureindex);  
-        //Color[] pix = TXTBUF[(int)textureindex].GetPixels(i4[0], y - i4[1], i4[2], i4[3]);
-        int[] R = CalcRectFromIndex(index);
-        //TXTBUF[(int)TXTINDEX.TARGET].SetPixels(R[0], y - R[1], R[2], R[3], pix);
-        //TXTBUF[(int)TXTINDEX.TARGET].Apply();
+        int[] i4 = CalcRectFromIndex(BBC.iconindex);
+
+        //Rect A = new Rect(i4[0], i4[1], i4[2], i4[3]);
+        //A.position += mvpd_rect.position;
+        //GUI.Box(A,"A");
+
+        Color[] pix = TXTBUF[(int)textureindex].GetPixels(i4[0], y - i4[1], i4[2], i4[3]);
+        //Debug.Log("texture size for" + textureindex.ToString() + " >>> " + TXTBUF[(int)TXTINDEX.TARGET].width.ToString()); 
+
+        int[] R = CalcRectFromIndex(BBC.linearindex);
+
+        //Rect B = new Rect(i4[0], i4[1], i4[2], i4[3]);
+        //B.position += mvpd_rect.position;
+        //GUI.Box(B, "B");
+
+        TXTBUF[(int)TXTINDEX.TARGET].SetPixels(R[0], y - R[1], R[2], R[3], pix);
+        TXTBUF[(int)TXTINDEX.TARGET].Apply();
         return true;
 
 
@@ -180,6 +425,33 @@ public  class BBControllManager
         Debug.Log("Layer "+ layername + "flusheed " );
     }
 
+
+    protected static void  GenerateTexture (TXTINDEX ti ,out Texture2D T, int size )
+
+    {
+        T = new Texture2D(size, size, TextureFormat.RGBA32, false);
+
+        switch (ti)
+        {
+
+            case TXTINDEX.CLEAR:
+                Color32[] TBUF = T.GetPixels32();
+                for (int i = 0; i < TBUF.Length; i++)
+                {
+                    TBUF[i].r = 0;
+                    TBUF[i].g = 0;
+                    TBUF[i].b = 0;
+                    TBUF[i].a = 0;
+                }
+                break;
+            case TXTINDEX.NORMAL:
+
+                break;
+        }
+    }
+
+
+
     protected static Texture2D LoadPNG(string filePath )
     {
         //Rect picsize = new Rect(5, 100, 200, 150);
@@ -194,15 +466,32 @@ public  class BBControllManager
         }
         try
         {
-            
-            Texture2D tex = null;
-            int SZ = MVPCELLNB * (int)MVPBSZ;
-            byte[] fileData = (returnclearbuffer) ? new byte[SZ] : File.ReadAllBytes(filePath)  ;
-            tex = new Texture2D(SZ, SZ);
-            if (returnclearbuffer) 
-                fileData.Initialize();
-            tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
+
+            Texture2D tex;//= new Texture2D( texturesize,texturesize );
+            byte[] tData;
+
+
+            if (returnclearbuffer)
+            {
+                
+                GenerateTexture(TXTINDEX.CLEAR, out tex, texturesize);
+                tex.EncodeToPNG();
+                tex.alphaIsTransparency = true;
+                BBdebug.SaveMovepadTarget(Directory.GetDirectoryRoot(filePath) + "outputtargetclear.png", tex);
+                return tex;
+            }
+            else
+            {
+                tData = new byte[texturesize * texturesize];
+                tData = File.ReadAllBytes(filePath);
+                 //..this will auto-resize the texture dimensions.
+            }
+            tex = new Texture2D(texturesize, texturesize);
+            tex.LoadImage(tData);
             tex.EncodeToPNG();
+            BBdebug.SaveMovepadTarget(Directory.GetDirectoryRoot(filePath) + "outputtargetclear.png", tex);
+
+            Debug.Log("load texture done: " + filePath + "byte size : " + texturesize);
             return tex;
         }
         catch (IOException e)
@@ -254,10 +543,12 @@ public  class BBControllManager
 
         gridsize = gsz;
         buttonsize = bsz;
+        texturesize = gsz * bsz; 
+
         Dictionary<int, BBControll> L = new Dictionary<int, BBControll>();
         MVP_LAYERS.Add(layername,L);
         // and the associated textures 
-        LoadTextures(layername, TEXLIST);
+        LoadTexturesAndRegisterTxtLayer(layername, TEXLIST) ;
     }
 
     /// <summary>
@@ -268,7 +559,7 @@ public  class BBControllManager
     /// <param name="layer"></param>
     /// <param name="FileArray"></param>
     /// <returns></returns>
-    public static int LoadTextures( string layer , List<string> FileArray  )
+    public static List<Texture2D> LoadTexturesAndRegisterTxtLayer(string layer, List<string> FileArray)
     {
         // load texture set for this layer 
         List<Texture2D> TXTLIST = new List<Texture2D>();
@@ -283,13 +574,13 @@ public  class BBControllManager
         {
             TEXTURES.Add(layer, TXTLIST);
             foreach (Texture2D T in TXTLIST)
-                Debug.Log(T.name + " LOADED ");
-            return TXTLIST.Count;
+                Debug.Log(T.name + " LOADED");
+            return TXTLIST;
         }
         else
         {
             Debug.Log("no texture found check name you sent ");
-            return 0;
+            return null;
         }
 
     }
@@ -342,7 +633,7 @@ public  class BBControllManager
 
     public static bool  RegisterButton(string layername, int linearindex, int iconindex, string functionname = "void")
     {
-        int linearmax = BBControllManager.MVPCELLNB;
+        int linearmax = BBCtrl.MVPCELLNB;
         if (iconindex > linearmax  || iconindex < 0 ||  linearindex > linearmax || linearindex <0 )
         {
             Debug.Log(string.Format ( "you try to acccess index out of movepad scope \n movepad linear max :{0} \n iconindex: {1} \n linear :{2}", linearmax,iconindex.ToString(),linearindex.ToString()));
@@ -407,27 +698,29 @@ public class BBControll
         Debug.Log ( "perform all before removing "+ GUID + " " + FunctionName + " " + linearindex + " " + iconindex );
     }
 
-    public bool invoke (Actor A)
+
+
+    public bool BBinvoke ( object obj ,  object[] args = null )
     {
+         
+
         if (FunctionName == null)
         {
-            Debug.Log("Invoke function name is null ");
+            Debug.Log("no function bound to this button");
             return false;
         }
+
+
         Debug.Log(FunctionName);
-        System.Reflection.MethodInfo Minfo = A.GetType().GetMethod(FunctionName);
+        System.Type T = obj.GetType();
+
+        System.Reflection.MethodInfo Minfo = T.GetMethod(FunctionName);
         if (Minfo == null)
         {
-            Debug.Log("reflection cannot get method for " + A.GetType().ToString() +" function : " +FunctionName );
+            Debug.Log("cannot get method " + FunctionName + " for " + obj.GetType().ToString() );
             return false;
         }
-        Minfo.Invoke( A , null ) ;
-        return true;
-    }
-    public bool invoke(BBehavior B)
-    {
-        System.Reflection.MethodInfo Minfo = B.GetType().GetMethod(FunctionName);
-        Minfo.Invoke(B, B.argsbuff.ToArray());
+        Minfo.Invoke(obj, args);
         return true;
     }
 

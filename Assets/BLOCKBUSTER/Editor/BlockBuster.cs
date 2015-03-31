@@ -153,22 +153,7 @@ public class ScriptEditor : EditorWindow
 
 
 
-public static class BBDir
-{
-    public static string Get(Enum value , bool root = false)
-    {
-        string output = null;
-        Type type = value.GetType();
-        FieldInfo fi = type.GetField(value.ToString());
-        BBattribute[] attrs = fi.GetCustomAttributes(typeof(BBattribute), false) as BBattribute[];
-        if (attrs.Length > 0)
-            output = attrs[0].Value;
-        if (root)
-            return output;
-        else
-            return Application.dataPath + output;
-    }
-}
+
 
 public static class ROOTDEF
 {
@@ -176,37 +161,6 @@ public static class ROOTDEF
 }
 
 
-public enum BBpath
-{
-    
-    [BBattribute( "/BLOCKBUSTER/Editor/")]
-    EDITOR = 1,
-    [BBattribute("/BLOCKBUSTER/Editor/BBResources/256/")]
-    RES = 2,
-    [BBattribute("/BLOCKBUSTER/XML/")]
-    XML = 3,
-    [BBattribute("/BLOCKBUSTER/XML/blockbustersetings/")]
-    SETING = 4,
-    [BBattribute("/BLOCKBUSTER/XML/paramblock/")]
-    DATASET = 5,
-    [BBattribute("/BLOCKBUSTER/XML/preset/")]
-    PRESET = 6,
-    [BBattribute("/BLOCKBUSTER/XML/Replays/")]
-    REPLAY = 7,
-    [BBattribute("/BLOCKBUSTER/XML/scenes/")]
-    SCENE = 8,
-    [BBattribute("/BLOCKBUSTER/Scripts/")]
-    SCRIPTS = 9,
-    [BBattribute("/BLOCKBUSTER/Scripts/Actors/")]
-    ACTORSCRIPTS = 10,
-    [BBattribute("/BLOCKBUSTER/Scripts/BBehaviors/")]
-    BBEHAVIORSCRIPTS = 11,
-    [BBattribute("/BLOCKBUSTER/BBGBASE/")]
-    BBGBASE = 12,
-    [BBattribute("Assets/BLOCKBUSTER/BBGBASE/")]
-    ROOTGBASE = 13
-
-}
 
 
 
@@ -220,22 +174,9 @@ public static class BBTools
     public static bool debugmode = false;
     public static bool showgrid = false;
     public static bool buttonpage = false;
-    
-
-
-    
-    
-
    
 
-    public static void SaveMovepadTarget (String filename , Texture2D Txt )
-    {
-        FileStream fs = new FileStream(BBDir.Get(BBpath.RES) + filename, FileMode.Create);
-        BinaryWriter bw = new BinaryWriter(fs);
-        bw.Write(Txt.EncodeToPNG());
-        bw.Close();
-        fs.Close();
-    }
+
 
 
     public static int  BBdebug (String message , bool Dial = false , bool yesnocancel=false ) 
@@ -416,7 +357,7 @@ public static class BBTools
         private static int mvpd_bsz = 32;
         private static int mvpd_txtsz = mvpd_bsz * mvpd_grsz ;
         static Rect movepadpos = new Rect(0, 0, mvpd_txtsz, mvpd_txtsz);
-        static Rect mvpd_rect= new Rect(0,30, mvpd_txtsz, mvpd_txtsz);
+        
 
 
 
@@ -447,7 +388,7 @@ public static class BBTools
 
         void Start()
         {
-            InitGUIValues();
+
         }
 
         public void UpdateDatasetList(GameObject G)
@@ -1124,32 +1065,28 @@ public static class BBTools
 
 
             string layername = "bbmain";
-            BBControllManager.RegisterLayer(layername, tlist, 8, 32);
-
-
-            
-            
+            BBCtrl.RegisterLayer(layername, tlist, 8, 32);
 
 
 
             
 
 
-            BBControllManager.RegisterButton(layername, 1, 0, "BBeditorMoveForward");
-            BBControllManager.RegisterButton(layername, 8, 2, "BBeditorMoveLeft");
-            BBControllManager.RegisterButton(layername, 10, 3, "BBeditorMoveRight");
-            BBControllManager.RegisterButton(layername, 17, 1, "BBeditorMoveBack");
-            BBControllManager.RegisterButton(layername, 19, 9, "BBeditorMoveDown");
-            BBControllManager.RegisterButton(layername, 3, 8, "BBeditorMoveUp");
-            BBControllManager.RegisterButton(layername, 5, 4, "");
-            BBControllManager.RegisterButton(layername, 13, 5, "");
-            BBControllManager.RegisterButton(layername, 21, 6, "");
+            BBCtrl.RegisterButton(layername, 1, 0, "BBeditorMoveForward");
+            BBCtrl.RegisterButton(layername, 8, 2, "BBeditorMoveLeft");
+            BBCtrl.RegisterButton(layername, 10, 3, "BBeditorMoveRight");
+            BBCtrl.RegisterButton(layername, 17, 1, "BBeditorMoveBack");
+            BBCtrl.RegisterButton(layername, 19, 9, "BBeditorMoveDown");
+            BBCtrl.RegisterButton(layername, 3, 8, "BBeditorMoveUp");
+            BBCtrl.RegisterButton(layername, 5, 4, "");
+            BBCtrl.RegisterButton(layername, 13, 5, "");
+            BBCtrl.RegisterButton(layername, 21, 6, "");
             //********* test with parameters to pass 
-            BBControllManager.RegisterButton(layername, 7, 7, "BBEditorActorMove");
+            BBCtrl.RegisterButton(layername, 7, 7, "BBEditorActorMove");
+
+            BBCtrl.RenderLayer("bbmain", TXTINDEX.CLICKED);
 
 
-
-            MVP_ComposeMovepad(0);
 
             return true;
         }
@@ -1170,20 +1107,6 @@ public static class BBTools
             // update inspector sheet according to the tool value 
             Repaint();
             return;
-
-
-
-
-
-
-
-	
-
-
-
-
-
-
 
 
             if (Selection.gameObjects.Length == 0 || EditorWindow.focusedWindow == null)
@@ -1487,15 +1410,7 @@ public static class BBTools
         public static void MVP_ComposeMovepad(int mousestate)
         {
 
-             
-            foreach (KeyValuePair<int, BBControll> kvp in BBControllManager.GetControlDic("bbmain"))
-            {
-
-                BBControllManager.RenderSingleButton("bbmain", TXTINDEX.NORMAL, kvp.Key);
-                Debug.Log(kvp.Key.ToString());
-            }
-
-            BBTools.SaveMovepadTarget("test.png", mvp_texture_target);
+            BBdebug.SaveMovepadTarget("test.png", mvp_texture_target);
         }
 
         public static void MVP_dClearTarget (Texture2D txt )
@@ -1557,7 +1472,7 @@ public static class BBTools
                         index = ic;
                         break;
                     case GridIndexType.FUNCTION:
-                        Vector2 mpos = Event.current.mousePosition - mvpd_rect.position;
+                        Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
                         Color32 C = mvp_texture_func_id.GetPixel((int)mpos.x, mvpd_grsz - (int) mpos.y);
                         index = C.r;
                         break;
@@ -1565,7 +1480,7 @@ public static class BBTools
 
                 int[] I = MVP_RectFromIndex(ic, mvpd_bsz, mvpd_grsz);  //Rect(px, py, bsz, bsz);
                 Rect NR = new Rect(I[0], I[1], I[2], I[3]);
-                NR.position += mvpd_rect.position;
+                NR.position += BBCtrl.mvpd_rect.position;
                 GUI.TextField(NR, (index).ToString());
             }
         }
@@ -1613,50 +1528,68 @@ public static class BBTools
             }
         }
 
-        static int MVP_returngridindex (int x, int y) 
-        {
-            return(int)  y / mvpd_bsz * mvpd_grsz + x / mvpd_bsz; // base index 1 
-        }
+
+        //static int MVP_returngridindex (int x, int y) 
+        //{
+        //    return(int)  y / mvpd_bsz * mvpd_grsz + x / mvpd_bsz; // base index 1 
+        //}
 
 
         void MVP_DoMovepad(int i)
         {
             // place the movepad texture
-            mvpd_rect.Set(Screen.width / 2 - (mvpd_rect.width / 2), mvpd_rect.y, mvpd_rect.width, mvpd_rect.height);
 
-            GUI.DrawTexture(mvpd_rect, mvp_texture_target); // draw the target 
-            Vector2 mpos = Event.current.mousePosition - mvpd_rect.position;
-            CheckInput(); // 
-            Debug.Log(mpos.ToString());
-            int gridindex= BBControllManager.GetGridIndexFromXY(mpos);
-   
 
-            if (mouseclic && leftmouseclickeventnumber == 0)
+            Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
+
+            Rect R;
+            Texture2D T = BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET );
+
+            
+
+            // after unity build movepad need a reboot 
+            if (T == null)
+                InitGUIValues();
+
+            // define a output area for the movepad 
+            BBCtrl.mvpd_rect.Set(Screen.width / 2 - (BBCtrl.MVPTXTSZ / 2), 30, BBCtrl.MVPTXTSZ, BBCtrl.MVPTXTSZ);
+            GUI.DrawTexture(BBCtrl.mvpd_rect, T); // draw the target 
+            
+            // should add a start and end controll 
+            if ( ! BBCtrl.GOTFOCUS() )
             {
-                BBControllManager.RenderSingleButton("bbmain",TXTINDEX.CLICKED ,gridindex);
-                BBControll Ctrl = BBControllManager.GetControll("bbmain", gridindex);
-                if (Ctrl == null)
-                {
-                    BBTools.BBdebug("no function at " + gridindex.ToString() );
-                    return;
-                }
-                Actor A = Selection.activeGameObject.GetComponent<Actor>();
-                Ctrl.invoke(A);//could use other thing to pass param 
-                leftmouseclickeventnumber++; // single event 
-                lastmousepos = mpos;
+                GUI.DragWindow();
+                return;
             }
-            else if (leftmouseclickeventnumber ==0)
-                // hold the last mouse pos 
-                BBControllManager.RenderSingleButton("bbmain", TXTINDEX.NORMAL, gridindex);
 
-            GUI.DragWindow();
+            if (    BBCtrl.MOUSECLIC() == 1  )
+            {
+                BBCtrl.RenderSingleButton("bbmain", TXTINDEX.CLICKED, mpos);
+                
+                // this control is associated with fuction of the class actor 
+                Actor A = Selection.activeGameObject.GetComponent<Actor>();
+
+                object[] result; // returned by function ( not yet ) 
+
+                if (leftmouseclickeventnumber == 0) // crappy mouse management 
+                {
+                    BBCtrl.RenderSingleButton("bbmain", TXTINDEX.CLICKED, mpos);
+                    BBCtrl.InvokeCtrlMethod("bbmain", mpos, (object)A, null, out result);
+                    lastmousepos = mpos;
+
+                }
+
+                leftmouseclickeventnumber++; // single event 
+            }
+            else if (leftmouseclickeventnumber > 0)
+            {
+                // hold the last mouse pos 
+                BBCtrl.RenderSingleButton("bbmain", TXTINDEX.NORMAL, lastmousepos);
+                leftmouseclickeventnumber --;
+            }
 
             if (BBTools.showgrid)
                 ShowMovePadGrid();
-
-
-            // for debug purpose display a button grid with info on clic 
-
             
         }
  
