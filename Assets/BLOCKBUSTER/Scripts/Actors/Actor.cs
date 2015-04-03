@@ -14,22 +14,6 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Diagnostics;
 
-
-public class BBattribute : System.Attribute
-{
-    private string _value;
-
-    public BBattribute(string value)
-    {
-        _value = value;
-    }
-    public string Value
-    {
-        get { return _value; }
-    }
-}
-
-
 public class BuildLogUtility
 {
     public static void outlog(string s)
@@ -135,92 +119,51 @@ public class Actor : MonoBehaviour
     private Vector3 front = new Vector3(0.0f, 0.0f, 1.0f);
     private Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
     private Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
+    public static bool  fixedstep= false ;
 
-    public void BBeditorMoveForward()
+
+    [BBatrib(true)] // define a function visible for BBControl 
+    public static void BBeditorMoveForward(Actor A)
     {
+        
+
         float ofset;
         float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (front * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
+        Vector3 BlockSize = A.Actorprops.block_size;
+        BBEditorActorMove(A,false, (A.front * (ofset = (fixedstep) ? stepvalue : (A.b_front_X) ? BlockSize.x : BlockSize.z)));
     }
 
-    
-    public void BBeditorMovEBlock (Vector3 V )
+    [BBatrib(true)] // define a function visible for BBControl 
+    public static void TestFunction (Vector3 pos, bool checkbool , string name)
     {
-        float ofset;
-        float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (V * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-    }
 
-
-
-    public void BBeditorMoveBack()
-    {
-        float ofset;
-        float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (front * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-    }
-
-    public void BBeditorMoveLeft()
-    {
-        float ofset;
-        float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (front * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-    }
-
-    public void BBeditorMoveRight()
-    {
-        float ofset;
-        float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (front * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-    }
-
-    public void BBeditorMoveUp()
-    {
-        float ofset;
-        float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (front * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-    }
-
-    public void BBeditorMoveDown()
-    {
-        float ofset;
-        float stepvalue = 2.0f; // default for stepvalue
-        Vector3 BlockSize = Actorprops.block_size;
-        BBEditorActorMove(false, (front * (ofset = (bbeditor_fixedstep) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
+        UnityEngine.Debug.Log(name);
     }
 
 
-    public void BBEditorActorMove(bool instanciate, Vector3 dir, bool moveallpath = true)
+    [BBatrib(true)] // define a function visible for BBControl 
+    public static void BBEditorActorMove(Actor A, bool instanciate, Vector3 dir, bool moveallpath = true )
     {
-
-
-
 
         string str;
-        Transform TT = this.transform ;
-        Actorprops.last_pos = TT.position; // make sure the pos is right 
+        Transform TT = A.gameObject.transform ;
+        A.Actorprops.last_pos = TT.position; // make sure the pos is right 
         if (instanciate)
         {	// ------------------------- MOVE AND DUPLICATE
-            TT = this.transform ;
-            GameObject obj = (GameObject)Instantiate(this.gameObject, TT.position, TT.rotation);
-            str = name;										// change the name  
+            TT = A.gameObject.transform ;
+            GameObject obj = (GameObject)Instantiate(A.gameObject, TT.position, TT.rotation);
+            str = A.gameObject.name;										// change the name  
             string[] strarray = str.Split(new char[] { '-' });
             obj.name = strarray[0] + obj.GetInstanceID();								// final name is block original name plus unique id 
-            if (this.transform.parent)
+            if (A.gameObject.transform.parent)
                 obj.transform.parent = TT.parent;
             System.Guid g;
             g = System.Guid.NewGuid();
-            Actorprops.guid = g.ToString();//obj.GetInstanceID().ToString();
-            Actorprops.parentgui = Actorprops.guid;
-            Actorprops.orig_pos = TT.position;
-            Actorprops.orig_rotation = TT.rotation;
-            Actorprops.BehaviorListID.Clear();
+            A.Actorprops.guid = g.ToString();//obj.GetInstanceID().ToString();
+            A.Actorprops.parentgui = A.Actorprops.guid;
+            A.Actorprops.orig_pos = TT.position;
+            A.Actorprops.orig_rotation = TT.rotation;
+            A.Actorprops.BehaviorListID.Clear();
             // refresh dataset guiid list 
             BBehavior[] BHL = obj.GetComponents<BBehavior>();
             foreach (BBehavior B in BHL)
@@ -228,7 +171,7 @@ public class Actor : MonoBehaviour
                 Dataset localdataset = B.GetDataset();
                 string newguid = System.Guid.NewGuid().ToString();
                 localdataset.SetGuid(newguid.ToString());
-                Actorprops.BehaviorListID.Add(newguid);
+                A.Actorprops.BehaviorListID.Add(newguid);
 
                 // translate pathnodes 
                 List<Pathnode> pnodes = localdataset.GetPathNodes();
@@ -248,7 +191,7 @@ public class Actor : MonoBehaviour
         }
         TT.position += dir;
         // static block
-        BBehavior[] blist = GetComponents<BBehavior>();
+        BBehavior[] blist = A.gameObject.GetComponents<BBehavior>();
         foreach (BBehavior B in blist)
         {
             Dataset localdataset = B.GetDataset();

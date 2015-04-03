@@ -106,11 +106,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BLOCKBUSTER\Editor\BBCtrlEditor.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Editor\BButton.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Editor\BlockBuster.cs" />
-    <Compile Include="Assets\Editor\Drawing.cs" />
-    <Compile Include="Assets\Editor\ScriptEditor.cs" />
-    <Compile Include="Assets\Editor\ScriptEditorDebughelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\BLOCKBUSTER\BBGBASE\HIGHTECH\AssetList.xml" />

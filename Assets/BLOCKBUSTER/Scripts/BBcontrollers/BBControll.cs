@@ -48,35 +48,61 @@ public enum MVPBUTTONSIZE
     MVP1024 = 1024
 }
 
+public class BBTextEnumattribute : System.Attribute
+{
+    private string _value;
+    public BBTextEnumattribute(string value)
+    {
+        _value = value;
+    }
+    public string Value
+    {
+        get { return _value; }
+    }
+}
+
+public class BBatrib : System.Attribute
+{
+    private static  bool bbvisible;
+
+    public BBatrib(bool v)
+    {
+        bbvisible = v;
+    }
+    public bool  IsBBVisible
+    {
+        get { return bbvisible; }
+    }
+}
 
 public enum BBpath
 {
 
-    [BBattribute("/BLOCKBUSTER/Editor/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/Editor/")]
     EDITOR = 1,
-    [BBattribute("/BLOCKBUSTER/Editor/BBResources/256/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/Editor/BBResources/256/")]
     RES = 2,
-    [BBattribute("/BLOCKBUSTER/XML/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/XML/")]
     XML = 3,
-    [BBattribute("/BLOCKBUSTER/XML/blockbustersetings/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/XML/blockbustersetings/")]
     SETING = 4,
-    [BBattribute("/BLOCKBUSTER/XML/paramblock/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/XML/paramblock/")]
     DATASET = 5,
-    [BBattribute("/BLOCKBUSTER/XML/preset/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/XML/preset/")]
     PRESET = 6,
-    [BBattribute("/BLOCKBUSTER/XML/Replays/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/XML/Replays/")]
     REPLAY = 7,
-    [BBattribute("/BLOCKBUSTER/XML/scenes/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/XML/scenes/")]
     SCENE = 8,
-    [BBattribute("/BLOCKBUSTER/Scripts/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/Scripts/")]
     SCRIPTS = 9,
-    [BBattribute("/BLOCKBUSTER/Scripts/Actors/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/Scripts/Actors/")]
     ACTORSCRIPTS = 10,
-    [BBattribute("/BLOCKBUSTER/Scripts/BBehaviors/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/Scripts/BBehaviors/")]
     BBEHAVIORSCRIPTS = 11,
-    [BBattribute("/BLOCKBUSTER/BBGBASE/")]
+    [BBTextEnumattribute("/BLOCKBUSTER/BBGBASE/")]
     BBGBASE = 12,
-    [BBattribute("Assets/BLOCKBUSTER/BBGBASE/")]
+    [BBTextEnumattribute("Assets/BLOCKBUSTER/BBGBASE/")]
     ROOTGBASE = 13
 
 }
@@ -88,7 +114,7 @@ public static class BBDir
         string output = null;
         Type type = value.GetType();
         FieldInfo fi = type.GetField(value.ToString());
-        BBattribute[] attrs = fi.GetCustomAttributes(typeof(BBattribute), false) as BBattribute[];
+        BBTextEnumattribute[] attrs = fi.GetCustomAttributes(typeof(BBTextEnumattribute), false) as BBTextEnumattribute[];
         if (attrs.Length > 0)
             output = attrs[0].Value;
         if (root)
@@ -96,14 +122,18 @@ public static class BBDir
         else
             return Application.dataPath + output;
     }
+
+
 }
 
 
 public static class BBdebug
 {
-
+    
     public static void SaveMovepadTarget(String filename, Texture2D Txt)
     {
+        
+
         FileStream fs = new FileStream(BBDir.Get(BBpath.RES) + filename, FileMode.Create);
         BinaryWriter bw = new BinaryWriter(fs);
         bw.Write(Txt.EncodeToPNG());
@@ -143,7 +173,16 @@ public  class BBCtrl
     private static  List<BBControll> BBControllersAray = new List<BBControll>();
     private static Dictionary<string, Dictionary<int, BBControll>> MVP_LAYERS = new Dictionary<string, Dictionary<int, BBControll>>();
     private static Dictionary<string, List<Texture2D>> TEXTURES = new Dictionary<string, List<Texture2D>>();
-  
+    
+
+    public static int LookupClassindex;
+    public static string lookupclassname;
+
+    public static int LookupMethodindex;
+    public static string LookupMethodName;
+
+
+
 
     private static int      gridsize;
     private static int      buttonsize;
@@ -184,6 +223,10 @@ public  class BBCtrl
     public  static int      MVPBSZ              { get { return buttonsize; } }
     public  static int      MVPCNT              { get { return count; } }
 
+
+
+
+
     public static int MVPMOUSECLIC      
     { 
         get 
@@ -201,25 +244,27 @@ public  class BBCtrl
 
     public static Rect mvpd_rect = new Rect(0, 30, MVPTXTSZ, MVPTXTSZ);
 
-
     public static void RenderLayer(string layername, TXTINDEX type)
     {
         foreach (KeyValuePair<int, BBControll> kvp in GetControlDic(layername))
         {
             int[] r = CalcRectFromIndex(kvp.Key);
             Vector2 V = new Vector2(r[0], r[1]);
-            RenderSingleButton("bbmain", TXTINDEX.TARGET, V);
+            RenderSingleButton("bbmain", type, V);
             Debug.Log(kvp.Key.ToString());
+            
         }
+
     }
+
+
+
+
+
 
     private static void CheckInput()
     {
-
         Rect MouseCursor = new Rect();
-        
-
-
         // Get a unique ID for your control.
         int controlID = GUIUtility.GetControlID(FocusType.Passive);
         mousepos = Event.current.mousePosition;
@@ -675,7 +720,7 @@ public  class BBCtrl
 public class BBControll 
 
 {
-
+    public object[] args ;
     public int linearindex;
     public int iconindex;
     public string FunctionName;

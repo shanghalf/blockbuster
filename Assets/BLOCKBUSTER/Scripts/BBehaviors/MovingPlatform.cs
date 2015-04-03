@@ -238,6 +238,7 @@ public class MovingPlatformDataset  : Dataset
             }
         }
 
+         
 
         /// <summary>
         /// crap this is defined in several point but not in the same namespace
@@ -245,7 +246,9 @@ public class MovingPlatformDataset  : Dataset
         /// should find a way to simplify 
         /// and share the logic without adding useless value to paramblock base 
         /// </summary>
-        void GetDir()
+        /// 
+        [BBatrib(true)] // define a function visible for BBControl 
+        public  void GetDir()
         {
 
             if (SceneView.currentDrawingSceneView == null) return;
@@ -466,7 +469,11 @@ public class MovingPlatformDataset  : Dataset
 
         }
 
-
+        [BBatrib(true)] // define a function visible for BBControl 
+        public void Movpltftest(string t1, bool t2, int t3)
+        { 
+        
+        }
 
 
 

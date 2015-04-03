@@ -31,67 +31,7 @@ public enum ACTIVEBASENAME
 /// thanks to Linusmartensson from unity comunauty 
 /// to share such simple handy and precious info 
 /// </summary>
-public class ScriptEditor : EditorWindow
-{
-    [MenuItem("Window/ScriptEditor")]
-    static void init()
-    {
-        EditorWindow.GetWindow<ScriptEditor>();
-    }
-    Rect winpos = new Rect(100, 100, 100, 100);
-    Rect wr2 = new Rect(300, 100, 100, 100);
-    Rect wr3 = new Rect(150, 300, 100, 100);
-    void doWindow(int id)
-    {
-        GUI.Button(new Rect(0, 30, 100, 50), "Wee!");
-        GUI.DragWindow();
-    }
 
-    /*
-    static Texture2D LoadPNG(string filePath)
-    {
-        //Rect picsize = new Rect(5, 100, 200, 150);
-        Texture2D tex = null;
-        byte[] fileData;
-        if (File.Exists(filePath))
-        {
-            fileData = File.ReadAllBytes(filePath);
-            tex = new Texture2D(mvpd_txtsz, mvpd_txtsz);
-            tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
-        }
-        tex.EncodeToPNG();
-        return tex;
-    }
-    */
-
-    void curveFromTo(Rect wr, Rect wr2, Color color, Color shadow)
-    {
-
-        
-
-        Drawing.bezierLine(
-            new Vector2(wr.x + wr.width, wr.y + 3 + wr.height / 2),
-            new Vector2(wr.x + wr.width + Mathf.Abs(wr2.x - (wr.x + wr.width)) / 2, wr.y + 3 + wr.height / 2),
-            new Vector2(wr2.x, wr2.y + 3 + wr2.height / 2),
-            new Vector2(wr2.x - Mathf.Abs(wr2.x - (wr.x + wr.width)) / 2, wr2.y + 3 + wr2.height / 2), shadow, 5, true, 20);
-        Drawing.bezierLine(
-            new Vector2(wr.x + wr.width, wr.y + wr.height / 2),
-            new Vector2(wr.x + wr.width + Mathf.Abs(wr2.x - (wr.x + wr.width)) / 2, wr.y + wr.height / 2),
-            new Vector2(wr2.x, wr2.y + wr2.height / 2),
-            new Vector2(wr2.x - Mathf.Abs(wr2.x - (wr.x + wr.width)) / 2, wr2.y + wr2.height / 2), color, 2, true, 20);
-    }
-    void OnGUI()
-    {
-        Color s = new Color(0.4f, 0.4f, 0.5f);
-        curveFromTo(winpos, wr2, new Color(0.3f, 0.7f, 0.4f), s);
-        curveFromTo(wr2, wr3, new Color(0.7f, 0.2f, 0.3f), s);
-        BeginWindows();
-        winpos = GUI.Window(0, winpos, doWindow, "hello");
-        wr2 = GUI.Window(1, wr2, doWindow, "world");
-        wr3 = GUI.Window(2, wr3, doWindow, "!");
-        EndWindows();
-    }
-}
 /*
     public class Movepad : EditorWindow
     {
@@ -357,8 +297,10 @@ public static class BBTools
         private static int mvpd_bsz = 32;
         private static int mvpd_txtsz = mvpd_bsz * mvpd_grsz ;
         static Rect movepadpos = new Rect(0, 0, mvpd_txtsz, mvpd_txtsz);
-        
 
+
+        int methodindex ;
+        int buttonnumber;
 
 
 
@@ -368,6 +310,9 @@ public static class BBTools
         string selectedbasename = BBDir.Get(BBpath.BBGBASE)+ "/HIGHTECH/";
         public List<string> data = new List<string>();
         private int pathindex;
+
+        private bool Staticfunctiononly;
+
         private int levelID;
         public GameObject m_RePlayerObject;
         public List<GameObject> m_replayactors = new List<GameObject>();
@@ -379,7 +324,7 @@ public static class BBTools
         Vector2 MovepadMousePos = new Vector2();
         public bool showmovepad = true;
 
-        [MenuItem("Window/blockbuster")]
+        [MenuItem("BlockBuster/BBmainWindow")]
         static void ShowWindow()
         {
             EditorWindow.GetWindow(typeof(blockbuster));
@@ -1072,21 +1017,19 @@ public static class BBTools
             
 
 
-            BBCtrl.RegisterButton(layername, 1, 0, "BBeditorMoveForward");
-            BBCtrl.RegisterButton(layername, 8, 2, "BBeditorMoveLeft");
-            BBCtrl.RegisterButton(layername, 10, 3, "BBeditorMoveRight");
-            BBCtrl.RegisterButton(layername, 17, 1, "BBeditorMoveBack");
-            BBCtrl.RegisterButton(layername, 19, 9, "BBeditorMoveDown");
-            BBCtrl.RegisterButton(layername, 3, 8, "BBeditorMoveUp");
+            BBCtrl.RegisterButton(layername, 1, 0, "");
+            BBCtrl.RegisterButton(layername, 8, 2, "");
+            BBCtrl.RegisterButton(layername, 10, 3, "");
+            BBCtrl.RegisterButton(layername, 17, 1, "");
+            BBCtrl.RegisterButton(layername, 19, 9, "");
+            BBCtrl.RegisterButton(layername, 3, 8, "");
             BBCtrl.RegisterButton(layername, 5, 4, "");
             BBCtrl.RegisterButton(layername, 13, 5, "");
             BBCtrl.RegisterButton(layername, 21, 6, "");
             //********* test with parameters to pass 
-            BBCtrl.RegisterButton(layername, 7, 7, "BBEditorActorMove");
+            BBCtrl.RegisterButton(layername, 7, 7, "");
 
-            BBCtrl.RenderLayer("bbmain", TXTINDEX.CLICKED);
-
-
+            BBCtrl.RenderLayer(layername, TXTINDEX.NORMAL);
 
             return true;
         }
@@ -1177,7 +1120,7 @@ public static class BBTools
         }
 
 
-        void AddReplayerObject()
+        bool AddReplayerObject()
         {
             m_replayactors.Clear();
 
@@ -1189,7 +1132,7 @@ public static class BBTools
             }
             if (m_replayactors.Count > 0)
             {
-                return;
+                return true;
             }
             else
             {
@@ -1200,6 +1143,7 @@ public static class BBTools
                 m_replayer.m_replayfiletag = ".xml";
                 O.name = "REPLAYERINSTANCE";
                 m_replayactors.Add(O);
+                return true;
             }
         }
 
@@ -1542,18 +1486,18 @@ public static class BBTools
 
             Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
 
-            Rect R;
-            Texture2D T = BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET );
+
+
+            //BBCtrl.RenderLayer("bbmain", TXTINDEX.TARGET);
+            //GUI.DrawTexture(BBCtrl.mvpd_rect, BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET)); // draw the targe
 
             
+            
 
-            // after unity build movepad need a reboot 
-            if (T == null)
-                InitGUIValues();
 
             // define a output area for the movepad 
             BBCtrl.mvpd_rect.Set(Screen.width / 2 - (BBCtrl.MVPTXTSZ / 2), 30, BBCtrl.MVPTXTSZ, BBCtrl.MVPTXTSZ);
-            GUI.DrawTexture(BBCtrl.mvpd_rect, T); // draw the target 
+            GUI.DrawTexture(BBCtrl.mvpd_rect, BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET)); // draw the target 
             
             // should add a start and end controll 
             if ( ! BBCtrl.GOTFOCUS() )
@@ -1658,17 +1602,84 @@ public static class BBTools
 
                 //GUILayout.EndHorizontal();
 
-                 
-                if (GUILayout.Button("UNLAYERED"))
-                    {           
-                        // display TXTINDEX.NORMAL
-                    }
-                    else
+                
+                
+
+                List<string> genericstringlist = new List<string>();
+                List<string> buttonlist  = new List<string>();
+                Dictionary<int,BBControll> BBCL =BBCtrl.GetControlDic("bbmain");
+                for (int c =0 ; c < BBCtrl.MVPCELLNB ; c++  )
+                {
+                   BBControll BBC ;
+                    if ( BBCL.TryGetValue(c , out BBC )) 
+                        buttonlist.Add( BBC.linearindex.ToString() );
+                }
+
+                // list of monobehaviours on selected object and list of type 
+                MonoBehaviour[] scripts = Selection.activeGameObject.GetComponents<MonoBehaviour>();
+                List<System.Type> TLIST = new List<Type>();
+
+                //fill up list of monobhv and a type list 
+                foreach (MonoBehaviour o in scripts)
+                {
+                    genericstringlist.Add(o.GetType().Name);
+                    TLIST.Add(o.GetType());
+                }
+                // store in BBTRL
+                BBCtrl.LookupClassindex = EditorGUILayout.Popup( BBCtrl.LookupClassindex, genericstringlist.ToArray());
+                BBCtrl.lookupclassname = genericstringlist[BBCtrl.LookupClassindex ];
+
+
+                // get the methods of the selected Class Monobehaviour 
+                MethodInfo[] MethodInfoList = TLIST[BBCtrl.LookupClassindex].GetMethods();
+                
+                // and retrieve a method info 
+
+                genericstringlist.Clear();
+
+
+                // apply filter 
+                Staticfunctiononly= GUILayout.Toggle(Staticfunctiononly, "static function");
+                foreach (MethodInfo m in MethodInfoList)
+                {
+                    object[] atributelist = m.GetCustomAttributes(true);
+
+                    foreach (object o in atributelist)
+                        if (o.GetType() == typeof(BBatrib))
+                            genericstringlist.Add(m.Name);
+                    
+                }
+
+                bool foundmethods = true;
+                if (genericstringlist.Count == 0)
+                {
+                    foundmethods  = false ;
+                    genericstringlist.Add("search returned nothing");
+                }
+
+                MethodInfo selectedmethod;
+
+                if (foundmethods)
+                {
+                    BBCtrl.LookupMethodindex = EditorGUILayout.Popup(BBCtrl.LookupMethodindex, genericstringlist.ToArray());
+                    BBCtrl.LookupMethodName = genericstringlist[BBCtrl.LookupMethodindex];
+                    selectedmethod = MethodInfoList[BBCtrl.LookupMethodindex];
+                    System.Reflection.ParameterInfo[] argstypes = selectedmethod.GetParameters();
+                    genericstringlist.Clear();
+                    foreach (ParameterInfo argTypepinfo in argstypes)
+                        genericstringlist.Add(argTypepinfo.ParameterType.Name);
+                    int argnnb = 0;
+                    EditorGUILayout.Popup(argnnb, genericstringlist.ToArray());
+                    if (GUILayout.Button("invoke"))
                     {
-                        // TXTINDEX.TARGET
+                        Debug.Log("class " + BBCtrl.lookupclassname + " method " + BBCtrl.LookupMethodName);
+
                     }
 
-                
+
+                }
+                        
+
                 
             }
 
@@ -1766,8 +1777,8 @@ public static class BBTools
 
 
 
-
-            if (selectedtab == 3)
+            // desactivate replay tab
+            if (selectedtab == 666)
             {
                 if (m_replayactors.Count == 0) // ||  m_replayactors[0] == null)
                 {
@@ -1780,6 +1791,7 @@ public static class BBTools
                     AddReplayerObject();
                 }
                 m_replayer = (RePlayer)m_replayactors[0].GetComponent(typeof(RePlayer));
+                
                 m_replayer.RefreshXmlBase();
 
                 GUILayout.BeginHorizontal(EditorStyles.toolbar);
@@ -1805,6 +1817,7 @@ public static class BBTools
 
                     if (!b_applyfilter)
                     {
+
                         m_replayer = (RePlayer)m_replayactors[0].GetComponent(typeof(RePlayer));
                         
                         if (m_replayer.m_replayfiletag != L[pathindex] + ".xml")
@@ -1906,8 +1919,6 @@ public static class BBTools
                 m_actor.bbeditor_fixedstep = b_fixedstepedit;
 
 
-                if (GUI.Button(new Rect(mvpd_bsz * 3, mvpd_bsz * 10, mvpd_bsz, mvpd_bsz), "")) //-------------- FRONT BUTTON
-                    m_actor.BBEditorActorMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
                 /*
                 if (GUI.Button(new Rect(bsz * 3, bsz * 12, bsz, bsz), "")) //-------------- 	BACK BUTTON
                     DoBlockMove(false, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
