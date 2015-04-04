@@ -238,7 +238,11 @@ public class MovingPlatformDataset  : Dataset
             }
         }
 
-         
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public int  TestForLinBlink(float ftest, string stringtest )
+        {
+            return 1;
+        }
 
         /// <summary>
         /// crap this is defined in several point but not in the same namespace
@@ -247,7 +251,7 @@ public class MovingPlatformDataset  : Dataset
         /// and share the logic without adding useless value to paramblock base 
         /// </summary>
         /// 
-        [BBatrib(true)] // define a function visible for BBControl 
+        [BBCtrlVisible] // define a function visible for BBControl 
         public  void GetDir()
         {
 
@@ -469,7 +473,7 @@ public class MovingPlatformDataset  : Dataset
 
         }
 
-        [BBatrib(true)] // define a function visible for BBControl 
+        [BBCtrlVisible] // define a function visible for BBControl 
         public void Movpltftest(string t1, bool t2, int t3)
         { 
         

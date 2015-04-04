@@ -121,8 +121,7 @@ public class Actor : MonoBehaviour
     private Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
     public static bool  fixedstep= false ;
 
-
-    [BBatrib(true)] // define a function visible for BBControl 
+    [BBCtrlVisible] // define a function visible for BBControl 
     public static void BBeditorMoveForward(Actor A)
     {
         
@@ -133,7 +132,7 @@ public class Actor : MonoBehaviour
         BBEditorActorMove(A,false, (A.front * (ofset = (fixedstep) ? stepvalue : (A.b_front_X) ? BlockSize.x : BlockSize.z)));
     }
 
-    [BBatrib(true)] // define a function visible for BBControl 
+    [BBCtrlVisible] // define a function visible for BBControl 
     public static void TestFunction (Vector3 pos, bool checkbool , string name)
     {
 
@@ -141,7 +140,7 @@ public class Actor : MonoBehaviour
     }
 
 
-    [BBatrib(true)] // define a function visible for BBControl 
+    [BBCtrlVisible] // define a function visible for BBControl 
     public static void BBEditorActorMove(Actor A, bool instanciate, Vector3 dir, bool moveallpath = true )
     {
 

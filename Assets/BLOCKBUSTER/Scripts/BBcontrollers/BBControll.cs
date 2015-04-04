@@ -61,13 +61,13 @@ public class BBTextEnumattribute : System.Attribute
     }
 }
 
-public class BBatrib : System.Attribute
+public class BBCtrlVisible : System.Attribute
 {
     private static  bool bbvisible;
 
-    public BBatrib(bool v)
+    public BBCtrlVisible()
     {
-        bbvisible = v;
+        bbvisible = true;
     }
     public bool  IsBBVisible
     {
@@ -143,23 +143,39 @@ public static class BBdebug
 
 }
 
-public static class EditorTimer
+public class EditorTimer
 {
-    public static bool run;
-    private static float timeOut;
+    public bool run;
+    private float timeOut;
+    public float timeremaining;
+    public float s;
+   
 
-    public static void StartCountdown( float seconds )
+
+    public  void StartCountdown( float seconds )
     {
         timeOut = Time.realtimeSinceStartup + seconds;
+        s = seconds;
         run = true;
     }
  
-    public static void Update()
+    public float Update(bool loop)
     {
+        timeremaining = timeOut - Time.realtimeSinceStartup;
+
         if (Time.realtimeSinceStartup > timeOut)
         {
-            run = false;
+            if (!loop)
+            {
+                run = false;
+                timeremaining = 0.0f;
+            }
+            else
+            {
+                timeOut = Time.realtimeSinceStartup + s;
+            }
         }
+        return timeremaining;
     }
 
 }
@@ -175,14 +191,14 @@ public  class BBCtrl
     private static Dictionary<string, List<Texture2D>> TEXTURES = new Dictionary<string, List<Texture2D>>();
     
 
-    public static int LookupClassindex;
-    public static string lookupclassname;
-
-    public static int LookupMethodindex;
-    public static string LookupMethodName;
 
 
 
+
+
+    public static GUIStyle BBGuiStyle = new GUIStyle();
+
+    private static bool initialized = false;
 
     private static int      gridsize;
     private static int      buttonsize;
@@ -199,6 +215,7 @@ public  class BBCtrl
     private static int      leftmouseclickeventnumber;
     private static Vector2  lastmousepos;
     private static Vector2 mousepos;
+
 
     public static bool      GOTFOCUS()  
     {
@@ -222,9 +239,29 @@ public  class BBCtrl
     public  static int      MVPGSZ              { get { return gridsize; } }
     public  static int      MVPBSZ              { get { return buttonsize; } }
     public  static int      MVPCNT              { get { return count; } }
+    public static bool      INITITIALIZED       { get { return initialized; } }
 
 
+    public static void  Init()
+    {
+        // do init 
+        BBGuiStyle.fontStyle = FontStyle.Normal;
+        Font bbfont = Resources.Load("digistrip", typeof(Font)) as Font;
+        Color C = new Color(255, 255, 255, 255);
+        Material M = Resources.Load("BBFONTMAT", typeof(Material)) as Material;
+        M.color = C;
+        bbfont.material = M;
+        BBGuiStyle.font = bbfont;
+        BBGuiStyle.name = "bb";
+        initialized = true;
+    }
 
+
+    public static void Flush()
+    {
+        initialized = false;
+        // do cleaning task 
+    }
 
 
     public static int MVPMOUSECLIC      
@@ -258,7 +295,33 @@ public  class BBCtrl
     }
 
 
+    public static void ShowMovePadGrid(string layername  ,Vector2 pos , bool linear )
+    {
+        // call inside a gui event draw 
+        for (int ic = 0; ic < Math.Pow(gridsize, 2); ic++)
+        {
+            int index = 0;
+            switch (linear)
+            {
+                case true:
+                    index = ic;
+                    break;
+                case false:
+                    Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
+                     Texture2D T =  GetTextureFromLayer(layername , TXTINDEX.NORMAL); 
+                    Color32 C =  T.GetPixel((int)mpos.x, gridsize - (int)mpos.y);
+                    index = C.r;
+                    break;
+            }
+            int[] I = CalcRectFromIndex (ic);  //Rect(px, py, bsz, bsz);
+            Rect NR = new Rect(I[0], I[1], I[2], I[3]);
+            NR.position += pos;
 
+
+
+            GUI.TextField(NR, (index).ToString() , BBGuiStyle);
+        }
+    }
 
 
 

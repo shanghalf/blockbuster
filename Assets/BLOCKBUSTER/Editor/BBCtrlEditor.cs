@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 using System.IO;
-using System.Collections.Generic;
+using System;
 using System.Xml.Serialization;
 using System.Text;
-using UnityEditor;
 using System.Xml;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Collections.Generic;
+using UnityEditor;
 //using BlockbusterControll;
 
 
@@ -22,8 +22,9 @@ public class Drawing
 {
     public static Texture2D aaLineTex = null;
     public static Texture2D lineTex = null;
-    public static void DrawLine(Vector2 pointA, Vector2 pointB, Color color, float width, bool antiAlias)
+    public static void DrawLine(Vector2 pointA, Vector2 pointB, Color color, float width, bool antiAlias , Matrix4x4 zoom )
     {
+        
         Color savedColor = GUI.color;
         Matrix4x4 savedMatrix = GUI.matrix;
 
@@ -65,8 +66,11 @@ public class Drawing
         GUI.color = savedColor;
     }
 
-    public static void bezierLine(Vector2 start, Vector2 startTangent, Vector2 end, Vector2 endTangent, Color color, float width, bool antiAlias, int segments)
+    public static void bezierLine(Vector2 start, Vector2 startTangent, Vector2 end, Vector2 endTangent, Color color, float width, bool antiAlias, int segments , Matrix4x4 zoom)
     {
+        
+
+
         Vector2 lastV = cubeBezier(start, startTangent, end, endTangent, 0);
         for (int i = 1; i <= segments; ++i)
         {
@@ -75,7 +79,7 @@ public class Drawing
             Drawing.DrawLine(
                 lastV,
                 v,
-                color, width, antiAlias);
+                color, width, antiAlias ,zoom );
             lastV = v;
         }
     }
@@ -94,24 +98,202 @@ public class Drawing
 }
 
 
+[System.Serializable]
+public class BBCtrleditorNode
+{
+    public Rect Windowpos;
+    public object o;
+    public string name;
+    private string Guid;
+    public int windowid;
+    public System.Type T;
+    public ParameterInfo Paraminfo ;
+    private List<BBCtrleditorNode> paramlist = new List<BBCtrleditorNode>();
+    private int WINDOWHEADOFFSET = 20;
+    private  int LookupClassindex;
+    private string lookupclassname;
+    private int userindex=0;
+    private int LookupMethodindex;
+    private string LookupMethodName;
+    private int idcount;
+    public System.Type ReturnTye;
+    public Matrix4x4 zoom ;
 
+
+    public void DoNodeWindow(int id)
+    {
+        // after a build or repopen window 
+        //List<BBCtrleditoParameterbox> paramlist = new List<BBCtrleditoParameterbox>();
+
+        if (Selection.activeGameObject == null)
+        {   // exit and clear param list ( to kill prev windows ) 
+            GUI.TextField(new Rect(0, WINDOWHEADOFFSET, Windowpos.width, Windowpos.height - WINDOWHEADOFFSET), "Select an object To inspect ");
+            paramlist.Clear();
+            GUI.DragWindow();
+            return;
+        }
+        // generic list to reuse for popup 
+        List<string> genericstringlist = new List<string>();
+
+        // get list of monobehaviour on the selected object 
+        MonoBehaviour[] scripts = Selection.activeGameObject.GetComponents<MonoBehaviour>();
+
+
+        List<System.Type> TLIST = new List<Type>();
+
+        //fill up list of monobhv and a type list 
+        foreach (MonoBehaviour o in scripts)
+        {
+            genericstringlist.Add(o.GetType().Name);
+            TLIST.Add(o.GetType());
+        }
+        // store ispected class index 
+        LookupClassindex = EditorGUILayout.Popup(LookupClassindex, genericstringlist.ToArray());
+
+        // to check if user change selection 
+        bool classchanged = false;
+        bool methodchanged = false;
+
+
+        if (lookupclassname != genericstringlist[LookupClassindex])
+        {
+            lookupclassname = genericstringlist[LookupClassindex];
+            classchanged = true; // to prevent reinitialisation in loop of parameterbox
+            methodchanged = true; // method could not be the same 
+            userindex = 0;
+            Debug.Log("CLASS CHANGED ");
+        }
+
+        // get the methods of the selected Class Monobehaviour 
+        MethodInfo[] MethodInfoList = TLIST[LookupClassindex].GetMethods();
+        genericstringlist.Clear();
+
+        // we want to list only methods standing under the custom attribute BBCtrlVisible
+        // and store the index in a dictionary 
+        Dictionary<string, int> Methodindexdic = new Dictionary<string, int>();
+        for (int mc = 0; mc < MethodInfoList.GetLength(0); mc++)
+        {
+            object[] atributelist = MethodInfoList[mc].GetCustomAttributes(true);
+            foreach (object o in atributelist)
+                if (o.GetType() == typeof(BBCtrlVisible))
+                {
+                    Methodindexdic.Add(MethodInfoList[mc].Name, mc); // store the index on the name 
+                    genericstringlist.Add(MethodInfoList[mc].Name);  // for the list that would be wrong otherwise
+                }
+        }
+        // useless to go further if no methods are visible 
+        if (Methodindexdic.Count == 0)
+        {
+            paramlist.Clear();
+            return;
+        }
+       
+
+       
+
+
+        // get the user selection index in the drop down list
+        userindex = EditorGUILayout.Popup(userindex, genericstringlist.ToArray());
+
+        // and the index in the full method table 
+        // but init first to stored index to spot user changes 
+        int methodindexfromdic = LookupMethodindex;
+        // check on the method name in dic 
+        if (!Methodindexdic.TryGetValue(genericstringlist[userindex], out methodindexfromdic))
+        {
+            Debug.Log("no entry in methodindexfromdic");
+            return;
+        }
+
+        // user made a change in ddlist 
+        if (LookupMethodindex != methodindexfromdic)
+        {
+            LookupMethodindex = methodindexfromdic;
+            methodchanged = true;
+        }
+        // store the name 
+        LookupMethodName = MethodInfoList[LookupMethodindex].Name;
+        // get the appropriated method info 
+
+        MethodInfo selectedmethod; // the method selected in combobox 
+        selectedmethod = MethodInfoList[LookupMethodindex];//*/
+        ReturnTye = selectedmethod.ReturnType;
+
+        // ready to parse Args for this method 
+
+        System.Reflection.ParameterInfo[] argstypes = selectedmethod.GetParameters();
+
+
+        genericstringlist.Clear();
+        foreach (ParameterInfo argTypepinfo in argstypes)
+            genericstringlist.Add(argTypepinfo.ParameterType.Name);
+
+        //int argnnb = 0; 
+        //EditorGUILayout.Popup(argnnb, genericstringlist.ToArray());
+
+        if (methodchanged || classchanged)
+        {
+            paramlist.Clear();
+            idcount = 10; // base index for window ID 
+            //************************************************
+            //BBCtrlEditortimerList["T1"].StartCountdown(0.5f);
+            EditorTimer T = new EditorTimer();
+            T.StartCountdown(0.8f);
+            //************************************************
+
+
+            //foreach (string str in genericstringlist)
+            foreach (ParameterInfo pi in argstypes)
+            {
+                BBCtrleditorNode newparam = new BBCtrleditorNode();
+                newparam.T = pi.GetType();
+                newparam.name = pi.Name;
+                newparam.Paraminfo = pi;
+                int yof = (Screen.height / argstypes.GetLength(0)) * (idcount - 10) + 20; // base to count number of params 
+                idcount++;
+                newparam.windowid = idcount;
+                newparam.Windowpos = new Rect(20, yof, 200, 100);
+                paramlist.Add(newparam); // add the window 
+
+            }
+
+
+            if (GUILayout.Button("invoke"))
+            {
+                Debug.Log("class " + lookupclassname + " method " + LookupMethodName);
+
+            }
+        }
+
+
+
+
+
+        GUI.DragWindow();
+
+
+    }
+
+
+}
+
+
+
+[System.Serializable]
 public class BBCtrlEditor : EditorWindow
 {
     [MenuItem("BlockBuster/BBControllEditor")]
     static void init()
     {
         EditorWindow.GetWindow<BBCtrlEditor>();
-        G.fontStyle = FontStyle.Normal;
-        Font bbfont = Resources.Load("digistrip", typeof(Font)) as Font;
-        Color C = new Color(255, 255, 255, 255);
-        Material M = Resources.Load("BBFONTMAT", typeof(Material)) as Material;
-        M.color = C;
-        bbfont.material = M;
-        bbfont.
-        G.font = bbfont;
-         
-        G.name = "bb"; 
 
+
+        BBCtrlEditortimerList.Add("T1", new EditorTimer());
+        BBCtrlEditortimerList.Add("T2", new EditorTimer());
+        BBCtrlEditortimerList["T2"].StartCountdown(1.0f);
+
+
+        BBCtrl.Init();
     }
 
     public  static GUIStyle G = new GUIStyle();
@@ -121,8 +303,19 @@ public class BBCtrlEditor : EditorWindow
     private int WPARAMID = 3;
 
     int WINDOWHEADOFFSET = 20;
-    
- 
+
+    private bool Staticfunctiononly;
+    private  int idcount =2067;
+    int userindex = 0;
+
+    public static Dictionary<string,EditorTimer> BBCtrlEditortimerList = new Dictionary<string,EditorTimer>();
+
+    public static int LookupClassindex;
+    public static string lookupclassname;
+
+    public static int LookupMethodindex;
+    public static string LookupMethodName;
+
 
     Rect FunctionInspectorWindowRect = new Rect(10, 50, 200, 300);
     Rect BBctrlWindowRect = new Rect(100, 50, BBCtrl.mvpd_rect.width, BBCtrl.mvpd_rect.height + 20);
@@ -151,19 +344,36 @@ public class BBCtrlEditor : EditorWindow
             NR.position += pos;
 
 
-            GUI.TextField(NR, (index).ToString(),G);
+            GUI.TextField(NR, (index).ToString(), BBCtrl.BBGuiStyle );
         }
     }
+
+    private List<BBCtrleditorNode> paramlist = new List<BBCtrleditorNode>();
+
+
+    void DoParamWindow(int id)
+    {
+        GUI.DragWindow();
+
+    }
+
 
     void DoBBCtrlWindow(int id)
     {
         Rect R = new Rect(0, WINDOWHEADOFFSET, BBCtrl.mvpd_rect.width, BBCtrl.mvpd_rect.height );
         Texture2D T = BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET);
         GUI.DrawTexture( R , T); // draw the target 
-        ShowMovePadGrid("bbmain", new Vector2(0, WINDOWHEADOFFSET), true);
+        //ShowMovePadGrid("bbmain", new Vector2(0, WINDOWHEADOFFSET), true);
         GUI.DragWindow();
     }
 
+    void OnInspectorUpdate()
+    {
+        //***********************************************************************************
+        // update inspector sheet according to the tool value 
+        Repaint();
+        return;
+    }
 
 
     void doParameterInspectorWindow(int id)
@@ -171,34 +381,297 @@ public class BBCtrlEditor : EditorWindow
         GUI.DragWindow();
     }
 
+    public Vector2 RotatePoint(int lookatindex, float radius, int step = 8)
+    {
+        float a = ((360.0f / step) * Mathf.Deg2Rad) * lookatindex + (Mathf.Deg2Rad * 45.0f);
+        float ca = Mathf.Cos(a);
+        float sa = Mathf.Sin(a);
+        Vector3 RV = new Vector3(radius * ca - radius * sa, 0.0f, radius * sa + radius * ca);
+        return (RV);//+ pos) ;
+    }
+
+
+
     void doFunctionInspectorWindow(int id)
     {
+        // after a build or repopen window 
+        //List<BBCtrleditoParameterbox> paramlist = new List<BBCtrleditoParameterbox>();
+        if (BBCtrlEditortimerList["T1"] == null)
+            init();
+        if (Selection.activeGameObject == null)
+        {   // exit and clear param list ( to kill prev windows ) 
+            GUI.TextField(new Rect(0, WINDOWHEADOFFSET, FunctionInspectorWindowRect.width , FunctionInspectorWindowRect.height - WINDOWHEADOFFSET), "Select an object To inspect ");
+            paramlist.Clear();
+            GUI.DragWindow();
+            return;
+        }
+        // generic list to reuse for popup 
+        List<string> genericstringlist = new List<string>();
+
+        // get list of monobehaviour on the selected object 
+        MonoBehaviour[] scripts = Selection.activeGameObject.GetComponents<MonoBehaviour>();
+
+
+        List<System.Type> TLIST = new List<Type>();
+
+        //fill up list of monobhv and a type list 
+        foreach (MonoBehaviour o in scripts)
+        {
+            genericstringlist.Add(o.GetType().Name);
+            TLIST.Add(o.GetType());
+        }
+        // store ispected class index 
+        LookupClassindex = EditorGUILayout.Popup(LookupClassindex, genericstringlist.ToArray());
+
+        // to check if user change selection 
+        bool classchanged = false;
+        bool methodchanged = false;
+
+
+        if (lookupclassname != genericstringlist[LookupClassindex])
+        {
+            lookupclassname = genericstringlist[LookupClassindex];
+            classchanged = true; // to prevent reinitialisation in loop of parameterbox
+            methodchanged = true; // method could not be the same 
+            userindex = 0;
+            Debug.Log("CLASS CHANGED ");
+        }
+
+        // get the methods of the selected Class Monobehaviour 
+        MethodInfo[] MethodInfoList = TLIST[LookupClassindex].GetMethods();
+        genericstringlist.Clear();
+
+        // we want to list only methods standing under the custom attribute BBCtrlVisible
+        // and store the index in a dictionary 
+        Dictionary<string,int> Methodindexdic = new Dictionary<string,int>();
+        for (int mc = 0; mc < MethodInfoList.GetLength(0); mc++ )
+        {
+            object[] atributelist = MethodInfoList[mc].GetCustomAttributes(true);
+            foreach (object o in atributelist)
+                if (o.GetType() == typeof(BBCtrlVisible))
+                {
+                    Methodindexdic.Add(MethodInfoList[mc].Name, mc); // store the index on the name 
+                    genericstringlist.Add(MethodInfoList[mc].Name);  // for the list that would be wrong otherwise
+                }
+        }
+        // useless to go further if no methods are visible 
+        if (Methodindexdic.Count == 0)
+        {
+            paramlist.Clear();
+            return;
+        }
+        MethodInfo selectedmethod; // the method selected in combobox 
+
+        // get the user selection index in the drop down list
+        userindex = EditorGUILayout.Popup(userindex, genericstringlist.ToArray());
+        
+        // and the index in the full method table 
+        // but init first to stored index to spot user changes 
+        int methodindexfromdic = LookupMethodindex; 
+        // check on the method name in dic 
+        if (!Methodindexdic.TryGetValue(genericstringlist[userindex], out methodindexfromdic))
+        {
+            Debug.Log("no entry in methodindexfromdic");
+            return;
+        }
+
+        // user made a change in ddlist 
+        if (LookupMethodindex != methodindexfromdic)
+        {
+            LookupMethodindex = methodindexfromdic;
+            methodchanged = true;
+        }
+        // store the name 
+        LookupMethodName = MethodInfoList[LookupMethodindex].Name;
+        // get the appropriated method info 
+        selectedmethod = MethodInfoList[LookupMethodindex];
+
+        // ready to parse Args for this method 
+
+        System.Reflection.ParameterInfo[] argstypes = selectedmethod.GetParameters();
+
+
+        genericstringlist.Clear();
+        foreach (ParameterInfo argTypepinfo in argstypes)
+            genericstringlist.Add(argTypepinfo.ParameterType.Name);
+
+        //int argnnb = 0; 
+        //EditorGUILayout.Popup(argnnb, genericstringlist.ToArray());
+
+        if (methodchanged || classchanged)
+        {
+            paramlist.Clear();
+            idcount = 10; // base index for window ID 
+            //************************************************
+            BBCtrlEditortimerList["T1"].StartCountdown(0.5f);
+            EditorTimer T = new EditorTimer();
+            T.StartCountdown(0.8f);
+            //************************************************
+            
+
+            //foreach (string str in genericstringlist)
+            foreach (ParameterInfo pi in argstypes)
+            {
+                BBCtrleditorNode newparam = new BBCtrleditorNode();
+                newparam.T = pi.GetType();
+                newparam.name =   pi.Name;
+                newparam.Paraminfo = pi; 
+                int yof = (Screen.height / argstypes.GetLength(0)) * (idcount - 10) + 20; // base to count number of params 
+                idcount++;
+                newparam.windowid = idcount;
+                newparam.Windowpos = new Rect(20, yof, 200, 100);
+                paramlist.Add(newparam); // add the window 
+
+            }
+            
+
+            if (GUILayout.Button("invoke"))
+            {
+                Debug.Log("class " + lookupclassname + " method " + LookupMethodName);
+
+            }
+        }
+
+   
+
+
+
         GUI.DragWindow();
+
+
     }
 
-    void curveFromTo(Rect wr, Rect BBctrlWindowRect, Color color, Color shadow)
+
+
+
+    void curveFromTo(Rect from, Rect to, Color color, Color shadow ,Matrix4x4 zoom )
     {
+
+       // from.position = zoom.MultiplyPoint3x4(from.position);
+       // to.position = zoom.MultiplyPoint3x4(to.position);
+
 
         Drawing.bezierLine(
-            new Vector2(wr.x + wr.width, wr.y + wr.height / 2),
-            new Vector2(wr.x + wr.width + Mathf.Abs(BBctrlWindowRect.x - (wr.x + wr.width)) / 2, wr.y + wr.height / 2),
-            new Vector2(BBctrlWindowRect.x, BBctrlWindowRect.y + BBctrlWindowRect.height / 2),
-            new Vector2(BBctrlWindowRect.x - Mathf.Abs(BBctrlWindowRect.x - (wr.x + wr.width)) / 2, BBctrlWindowRect.y + BBctrlWindowRect.height / 2), color, 2, true, 30);
+            new Vector2(from.x + from.width, from.y + from.height / 2)  ,
+            new Vector2(from.x + from.width + Mathf.Abs(to.x - (from.x + from.width)) / 2, from.y + from.height / 2),
+            new Vector2(to.x, to.y + to.height / 2),
+            new Vector2(to.x - Mathf.Abs(to.x - (from.x + from.width)) / 2, to.y + to.height / 2), color, 2, true, 30 ,zoom);
     }
 
+    Rect  ZoomRect ( Rect R , Matrix4x4 zoom  )
+    {
+        Rect R2 = new Rect();
+
+        R2.position = R.position;//zoom.MultiplyPoint(R.position);
+        Vector2 sz = new Vector2(  R.width , 0 )   ;
+        R2.width= zoom.MultiplyVector(sz).magnitude;
+        sz = new Vector2(R.height, 0);
+        R2.height = zoom.MultiplyVector(sz).magnitude;
+
+        return R2;
+
+    }
+
+
+    Vector2 scrollPosition = Vector2.zero;
+
+
+    static Rect save = new Rect(10, 50, 200, 300);
+
+
+    float zoom = 1f;
     void OnGUI()
     {
-        Color s = new Color(0.4f, 0.4f, 0.5f);
-        curveFromTo(FunctionInspectorWindowRect, BBctrlWindowRect, new Color(0.3f, 0.7f, 0.4f), s);
-        curveFromTo(BBctrlWindowRect, ParameterInspectorWindowRect, new Color(0.7f, 0.2f, 0.3f), s);
+
+        zoom = EditorGUILayout.Slider("zoom", zoom, 0.5f, 2.0f);
+        Matrix4x4 zoommatrix =  new  Matrix4x4();
+        zoommatrix.SetTRS(Vector2.zero, Quaternion.identity, Vector3.one * zoom);
+
+        //Matrix4x4 orgmatrix = GUI.matrix; 
+
+
+        //GUI.matrix = zoommatrix;
+
+        Color errorlinkcolor = new Color(0.4f, 0.4f, 0.5f);
+
+
+        Rect slot ;
+        int decal_y = 0;
+        
+        //curveFromTo(BBctrlWindowRect, ParameterInspectorWindowRect, new Color(0.7f, 0.2f, 0.3f), s);
+        
+
+        //scrollPosition = GUILayout.BeginScrollView(scrollPosition, true, true, GUILayout.Width(Screen.width), GUILayout.Height(Screen.height));
         BeginWindows();
-        FunctionInspectorWindowRect = GUI.Window(WFUNCID, FunctionInspectorWindowRect, doFunctionInspectorWindow, "FUNCTION");
+
+        Vector2 sz = new Vector2(save.width, 0);
+        float width =  zoommatrix.MultiplyVector(sz).magnitude;
+        sz = new Vector2(save.height, 0);
+        float height = zoommatrix.MultiplyVector(sz).magnitude;
+
+        
+
+
+
+        FunctionInspectorWindowRect= GUI.Window(WFUNCID,FunctionInspectorWindowRect , doFunctionInspectorWindow, "FUNCTION");
+        FunctionInspectorWindowRect.width = width;
+        FunctionInspectorWindowRect.height = height;
+
+
+        
+        
         BBctrlWindowRect = GUI.Window(BBCTRLID, BBctrlWindowRect, DoBBCtrlWindow, "UI");
-        ParameterInspectorWindowRect = GUI.Window(WPARAMID, ParameterInspectorWindowRect, doParameterInspectorWindow, "PARAMETER");
+        slot = new Rect(FunctionInspectorWindowRect.width + FunctionInspectorWindowRect.position.x, FunctionInspectorWindowRect.position.y + 30, 16, 16);
+        GUI.Box(slot, "");
+
+        
+
+        //GUI.matrix =  orgmatrix; 
+
+        curveFromTo(slot, BBctrlWindowRect, new Color(0.3f, 0.7f, 0.4f), errorlinkcolor , zoommatrix);
+
+        //GUI.matrix = zoommatrix; 
+
+        foreach (BBCtrleditorNode pbox in paramlist)
+        {
+            if (pbox.Paraminfo == null)
+                continue;
+
+            decal_y  += 30 ; // ofset y for slots
+            slot = new Rect( FunctionInspectorWindowRect.position.x - 16 , FunctionInspectorWindowRect.position.y + decal_y , 16 ,16) ;
+            GUI.Box(slot, "");
+            // animation effect 
+
+
+            if (BBCtrlEditortimerList["T1"].run)
+            {
+                float ymove = pbox.Windowpos.position.y - (BBCtrlEditortimerList["T1"].Update(false) * pbox.Windowpos.position.y);
+                Rect moveposrect = new Rect(pbox.Windowpos.position.x, ymove, pbox.Windowpos.width, pbox.Windowpos.height);
+                GUI.Box(moveposrect, "");
+            }
+            else
+            {
+                float fade = BBCtrlEditortimerList["T2"].Update(true);
+                pbox.Windowpos = GUI.Window(pbox.windowid, pbox.Windowpos, pbox.DoNodeWindow, pbox.Paraminfo.ParameterType + " " + pbox.name);
+                Color linkblinkcolor = new Color(0.5f,0.5f,0.5f);
+                if (pbox.ReturnTye == typeof (int) )
+                    linkblinkcolor.g =  (1.0f );
+                else
+                    linkblinkcolor.r =  (1.0f * fade);
+
+                //GUI.matrix = orgmatrix; 
+                curveFromTo(pbox.Windowpos, slot, linkblinkcolor , errorlinkcolor * fade ,zoommatrix);
+                //GUI.matrix = zoommatrix; 
+            }
+
+        }
+       // Debug.Log(paramlist.Count.ToString());
 
         EndWindows();
+        //GUILayout.EndScrollView();
+ 
 
-
+        
 
 
     }

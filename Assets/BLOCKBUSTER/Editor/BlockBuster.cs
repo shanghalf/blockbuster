@@ -1031,6 +1031,9 @@ public static class BBTools
 
             BBCtrl.RenderLayer(layername, TXTINDEX.NORMAL);
 
+            BBCtrl.Init();
+
+
             return true;
         }
 
@@ -1483,7 +1486,8 @@ public static class BBTools
         {
             // place the movepad texture
 
-
+            if (!BBCtrl.INITITIALIZED)
+                InitGUIValues();
             Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
 
 
@@ -1589,104 +1593,13 @@ public static class BBTools
 
             if (selectedtab == 2)
                 DisplayToolPannel(true);
-
+        
             if (selectedtab == 1)
             {
-                //GUILayout.BeginHorizontal();
-                BBTools.showgrid = GUILayout.Toggle(BBTools.showgrid, "show linear grid numbers ");
-                if (BBTools.showgrid)
-                {
-                    blockbuster.behaviourenum = (System.Enum)EditorGUILayout.EnumPopup("behaviour:", blockbuster.behaviourenum, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-                    blockbuster.bbGrdtype = (GridIndexType)EditorGUILayout.EnumPopup("type", bbGrdtype);
-                }
-
-                //GUILayout.EndHorizontal();
-
-                
-                
-
-                List<string> genericstringlist = new List<string>();
-                List<string> buttonlist  = new List<string>();
-                Dictionary<int,BBControll> BBCL =BBCtrl.GetControlDic("bbmain");
-                for (int c =0 ; c < BBCtrl.MVPCELLNB ; c++  )
-                {
-                   BBControll BBC ;
-                    if ( BBCL.TryGetValue(c , out BBC )) 
-                        buttonlist.Add( BBC.linearindex.ToString() );
-                }
-
-                // list of monobehaviours on selected object and list of type 
-                MonoBehaviour[] scripts = Selection.activeGameObject.GetComponents<MonoBehaviour>();
-                List<System.Type> TLIST = new List<Type>();
-
-                //fill up list of monobhv and a type list 
-                foreach (MonoBehaviour o in scripts)
-                {
-                    genericstringlist.Add(o.GetType().Name);
-                    TLIST.Add(o.GetType());
-                }
-                // store in BBTRL
-                BBCtrl.LookupClassindex = EditorGUILayout.Popup( BBCtrl.LookupClassindex, genericstringlist.ToArray());
-                BBCtrl.lookupclassname = genericstringlist[BBCtrl.LookupClassindex ];
-
-
-                // get the methods of the selected Class Monobehaviour 
-                MethodInfo[] MethodInfoList = TLIST[BBCtrl.LookupClassindex].GetMethods();
-                
-                // and retrieve a method info 
-
-                genericstringlist.Clear();
-
-
-                // apply filter 
-                Staticfunctiononly= GUILayout.Toggle(Staticfunctiononly, "static function");
-                foreach (MethodInfo m in MethodInfoList)
-                {
-                    object[] atributelist = m.GetCustomAttributes(true);
-
-                    foreach (object o in atributelist)
-                        if (o.GetType() == typeof(BBatrib))
-                            genericstringlist.Add(m.Name);
-                    
-                }
-
-                bool foundmethods = true;
-                if (genericstringlist.Count == 0)
-                {
-                    foundmethods  = false ;
-                    genericstringlist.Add("search returned nothing");
-                }
-
-                MethodInfo selectedmethod;
-
-                if (foundmethods)
-                {
-                    BBCtrl.LookupMethodindex = EditorGUILayout.Popup(BBCtrl.LookupMethodindex, genericstringlist.ToArray());
-                    BBCtrl.LookupMethodName = genericstringlist[BBCtrl.LookupMethodindex];
-                    selectedmethod = MethodInfoList[BBCtrl.LookupMethodindex];
-                    System.Reflection.ParameterInfo[] argstypes = selectedmethod.GetParameters();
-                    genericstringlist.Clear();
-                    foreach (ParameterInfo argTypepinfo in argstypes)
-                        genericstringlist.Add(argTypepinfo.ParameterType.Name);
-                    int argnnb = 0;
-                    EditorGUILayout.Popup(argnnb, genericstringlist.ToArray());
-                    if (GUILayout.Button("invoke"))
-                    {
-                        Debug.Log("class " + BBCtrl.lookupclassname + " method " + BBCtrl.LookupMethodName);
-
-                    }
-
-
-                }
-                        
-
-                
             }
 
             if (selectedtab == 4)
             {
-
-
                 String filepath;
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button("SAVE"))
@@ -1694,10 +1607,6 @@ public static class BBTools
                     if (Selection.activeGameObject == null)
                         return;
                     filepath = BBDir.Get(BBpath.DATASET) + m_actor.Actorprops.guid + ".xml";
-
-                    
-
-                    
                     m_actor.Actorprops.Save(filepath, typeof(BaseActorProperties));
                     BBehavior[] BHL = Selection.activeGameObject.GetComponents<BBehavior>();
                     foreach (BBehavior tmp in BHL)
@@ -1725,9 +1634,7 @@ public static class BBTools
                 {
                     string s = blockbuster.behaviourenum.ToString();
                     System.Type T = GetTypeFromClassName(s);
-
                     bool add = true;
-
                     foreach (BBehavior B in blist)
                         if (B.GetType() == T)
                             add = false;
@@ -1743,7 +1650,6 @@ public static class BBTools
                         m_actor.Actorprops.BehaviorListID.Add (g.ToString());
                         d.suportedclassname = T.AssemblyQualifiedName;
                     }
-
                 }
                 if (GUILayout.Button("remove"))
                 {
@@ -1764,14 +1670,11 @@ public static class BBTools
                 }
                 GUILayout.EndHorizontal();
                 blockbuster.behaviourenum = (System.Enum)EditorGUILayout.EnumPopup("behaviour:", blockbuster.behaviourenum, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
-
-
                 foreach (BBehavior B in blist)
                 {
                     B.DoGUILoop((Rect)W.position);
                     //Repaint();
                 }
-
             }
 
 
