@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <targetindex>0</targetindex>
+  <targetindex>5</targetindex>
   <b_front_x>true</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
   <b_showdebuginfos>false</b_showdebuginfos>
   <b_hideedition>false</b_hideedition>
   <ismoving>true</ismoving>
-  <indexbound>DOWN</indexbound>
+  <indexbound>MIDDLE</indexbound>
   <guid>716260ba-6748-4162-a584-94a5579a993b</guid>
   <fullqualifiedclassname>MovingPlatformDataset, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</fullqualifiedclassname>
   <suportedclassname>MovingPlatform, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</suportedclassname>
@@ -35,7 +35,7 @@
   <rotationspeed>0</rotationspeed>
   <rotationstepnumber>2</rotationstepnumber>
   <b_triggered>false</b_triggered>
-  <movedir>1</movedir>
+  <movedir>-1</movedir>
   <maxhandle>7</maxhandle>
   <b_pathloop>false</b_pathloop>
   <colider_type>BOX</colider_type>

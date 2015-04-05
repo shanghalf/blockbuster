@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\BLOCKBUSTER\Editor\BBCtrlEditor.cs" />
+    <Compile Include="Assets\BLOCKBUSTER\Editor\BBCtrlEditorNodes.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Editor\BButton.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Editor\BlockBuster.cs" />
   </ItemGroup>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="gb2312"?>
 <MovingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <targetindex>3</targetindex>
+  <targetindex>4</targetindex>
   <b_front_x>true</b_front_x>
   <timer>0</timer>
   <editsub>false</editsub>
