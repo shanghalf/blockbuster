@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\BLOCKBUSTER\Scripts\Actors\Actor.cs" />
+    <Compile Include="Assets\BLOCKBUSTER\Scripts\BBcontrollers\BBControlEditorCustomFunctions.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBcontrollers\BBControll.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\FallingPlatform.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\MovingPlatform.cs" />
