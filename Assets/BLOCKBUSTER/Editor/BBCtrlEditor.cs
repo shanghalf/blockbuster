@@ -15,20 +15,6 @@ using UnityEditor;
 
 
 
-public static class Textureloader
-{
-    // TEXTURES 
-    //------------------------------------------------------------------------------------------------------
-    public static Texture2D slot_main_output_txt = Resources.Load("slot_main_output", typeof(Texture2D)) as Texture2D;
-    public static Texture2D slot_ok_txt = Resources.Load("slot_ok", typeof(Texture2D)) as Texture2D;
-    public static Texture2D slot_error_txt = Resources.Load("slot_error", typeof(Texture2D)) as Texture2D;
-    public static Texture2D slot_questionmark_txt = Resources.Load("slot_questionmark", typeof(Texture2D)) as Texture2D;
-    public static GUIContent slot_main_output = new GUIContent(slot_main_output_txt);
-    public static GUIContent slot_ok = new GUIContent(slot_ok_txt);
-    public static GUIContent slot_error = new GUIContent(slot_error_txt);
-    public static GUIContent slot_questionmark = new GUIContent(slot_questionmark_txt);
-    //------------------------------------------------------------------------------------------------------
-}
 
 /// <summary>
 /// to place the relevant data for serialization 
@@ -49,7 +35,7 @@ public class BBCtrlEditor : EditorWindow
     static void init()
     {
         EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
-        MethodInfo[] MethodInfoList = typeof(BBCtrleditorNode).GetMethods();
+        MethodInfo[] MethodInfoList = typeof(BBCtrlNode).GetMethods();
         foreach (MethodInfo i in MethodInfoList)
             if (i.Name == "onhwcalback")
             {
@@ -63,11 +49,19 @@ public class BBCtrlEditor : EditorWindow
         BBCtrlEditortimerList["T2"].StartCountdown(1.0f);
 
         // ROOT IS THE FIRST AND MANDATORY NODE FOR THE VIEW 
-        ROOT = new BBCtrleditorNode(ROOTPOS,true);
-        ROOT.CutBranch();
-        ROOT.name = "ROOT";
-        ROOT.isroot = true;
-        ROOT.windowid = -1;
+        BBCtrlNode.ROOT = new BBCtrlNode(BBCtrlNode.ROOTPOS);
+        BBCtrlNode.ROOT.isroot = true;
+ 
+        //BBCtrleditorNode.ROOT.CutBranch();
+        
+        BBCtrlNode.ROOT.Childrens.Clear();
+
+        
+
+        BBCtrlNode.ROOT.name = "ROOT";
+        BBCtrlNode.ROOT.isroot = true;
+        BBCtrlNode.ROOT.windowid = -1;
+
 
         // init BBCTRL 
         // since this view is linked to Movepad ( BBCTRL is the movepad ) 
@@ -80,35 +74,43 @@ public class BBCtrlEditor : EditorWindow
     public static Dictionary<string,EditorTimer> BBCtrlEditortimerList = new Dictionary<string,EditorTimer>();
 
     // ROOT NODE DEFAULT POSITION 
-    private static Rect ROOTPOS = new Rect(Screen.width , Screen.height / 2, 200, 200);
+   
 
-    // THE ROOT INSTANCE 
-    private static  BBCtrleditorNode ROOT;
+    public static bool BBCTRLEditorFocused = false ;
 
     // display debug info flag 
     public static bool showdebuginfo;
 
+    /// <summary>
+    ///  check if a type can be converted 
+    /// </summary>
+    /// <param name="value"></param>
+    /// <param name="conversionType"></param>
+    /// <returns></returns>
+    [BBCtrlVisible] // define a function visible for BBControl 
+    public static bool CanChangeType(object value, Type conversionType)
+    {
+        if (conversionType == null)
+        {
+            return false;
+        }
 
+        if (value == null)
+        {
+            return false;
+        }
+
+        IConvertible convertible = value as IConvertible;
+
+        if (convertible == null)
+        {
+            return false;
+        }
+
+        return true;
+    }
     
-    /// <summary>
-    /// ACCES TO THE NODE LIST called on node creation 
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="newkidontheblock"></param>
-    public  static void AddChildrenToRoot (int id ,  BBCtrleditorNode newkidontheblock)
-    {
-        if (! ROOT.Childrens.ContainsKey(id))
-            ROOT.Childrens.Add(id, newkidontheblock);
-    }
-    /// <summary>
-    /// ACCES TO THE NODE LIST called on node Destruction (should be) 
-    /// </summary>
-    /// <param name="id"></param>
-    public static void RemoveChildrenFromRoot(int id)
-    {
-        if (ROOT.Childrens.ContainsKey(id))
-            ROOT.Childrens.Remove(id);
-    }
+
     /// <summary>
     /// display a linear indexed grid on top of a rectangle 
     /// based on layer definition 
@@ -169,6 +171,21 @@ public class BBCtrlEditor : EditorWindow
     }
 
 
+    void DisplayPlacementGrid ()
+    {
+        Rect SCR = new Rect(0, 0, Screen.width, Screen.height);
+
+        if (BBCtrlNode.ROOT == null)
+            init();
+        List<BBCtrlNode> L = new List<BBCtrlNode>();
+
+        Vector2 NodeSize = new Vector2(BBCtrlNode.ROOT.Windowpos.width, BBCtrlNode.ROOT.Windowpos.height);
+        BBDrawing.BBDoGridLayout( SCR, NodeSize);
+
+
+    }
+
+  
 
     /// <summary>
     /// that the main purpose of the Editor 
@@ -176,41 +193,68 @@ public class BBCtrlEditor : EditorWindow
     /// </summary>
     void OnGUI()
     {
+        float fade = 0.8f;
         // for link blink 
-        float fade = BBCtrlEditortimerList["T2"].Update(true);
+        EditorTimer T;
+        if ( BBCtrlEditortimerList.TryGetValue("T2",out T)) 
+            fade = BBCtrlEditortimerList["T2"].Update(true);
+
+        BBDrawing.CheckInput();  // update inputs 
+        BBCtrlNode root = BBCtrlNode.ROOT;
+
+
+        DisplayPlacementGrid();
+        Repaint();
+
+
+        // set node focus 
+        root.gotfocus = BBDrawing.GetRectFocus(root.Windowpos,true);
+
+
+        if (BBCtrlNode.scrolllock = GUI.Toggle(new Rect(10, 180, 100, 20), BBCtrlNode.scrolllock, "scroll lock"))
 
         // debug mode 
-        showdebuginfo= GUI.Toggle(new Rect(10, 10, 100, 20), showdebuginfo, "debug mode");
+        if (BBCtrlNode.editordebugmode = GUI.Toggle(new Rect(10, 200, 100, 20), BBCtrlNode.editordebugmode, "debug mode"))
+        {
+
+            BBCtrlNode.debugfloat1 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat1, 0f, 1f);
+            BBCtrlNode.debugfloat2 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat2, 0f, 10f);
+            BBCtrlNode.debugfloat3 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat3, 0f, 100f);
+            BBCtrlNode.debugfloat4 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat4, 0f, 1000f);
+        }
         
         BeginWindows(); // ---------------------------------------------------------------------------------------------- START WINDOWS LOOP
         
         // a problem in the root initialization 
         // useless to keep going further 
-        if (ROOT == null)
+        if (root == null)
         {
             Debug.Log("ROOT HAS NOT BEEN INITIALIZED SOMETHING WENT CRAZY HERE !! ");
             return;
         }
 
+        
+
         // DO THE ROOTINE .... ( at least .. )
-        ROOT.Windowpos = GUI.Window(ROOT.windowid, ROOT.Windowpos, ROOT.DoNodeWindow, ROOT.windowid.ToString());
-        ROOT.DoNode();
+        root.Windowpos = GUI.Window(root.windowid, root.Windowpos, root.DoNodeWindow, root.windowid.ToString());
+        root.DoNode();
 
         // at this point we fill up a list to iterate cause the Root children list 
         // might change during the Window loop and cause troubles 
-        List<BBCtrleditorNode> AllNodesList = new List<BBCtrleditorNode>();
-        foreach (KeyValuePair<int, BBCtrleditorNode> kvp in ROOT.Childrens)
+        List<BBCtrlNode> AllNodesList = new List<BBCtrlNode>();
+        foreach (KeyValuePair<int, BBCtrlNode> kvp in root.Childrens)
             AllNodesList.Add(kvp.Value);
 
      
         // process all Nodes 
-        foreach (BBCtrleditorNode node  in AllNodesList )
+        foreach (BBCtrlNode node  in AllNodesList )
         {
             // check conditions to cancel this node 
-            if (node.windowid == 0 || node.ParentFeedSlotInfo == null || node.Parent.slotspos.Count <= node.ParentFeedSlotInfo.id)
+            if (node.windowid == 0 || node.ParentFeedSlotInfo == null || node.Parent.slotspos.Count <= node.ParentFeedSlotInfo.index)
             {
-                // dead node cut the branch 
-                node.CutBranch();
+                
+                if (! node.isroot )
+                //node.CutBranch();
                 continue;
             }
             // this is for the animation ( useless but lovely ) 
@@ -223,20 +267,34 @@ public class BBCtrlEditor : EditorWindow
             else
             {
                 // Do the Node Window 
-                node.Windowpos = GUI.Window(node.windowid, node.Windowpos, node.DoNodeWindow, node.windowid.ToString());
+                node.Windowpos = GUI.Window(node.windowid, node.Windowpos, node.DoNodeWindow, node.name);
                 // and blink link that not fit conditions 
                 // here node output Type != parent input 
 
-                if (node.ReturnTye == node.Parent.slotspos[node.ParentFeedSlotInfo.id].T)
-                    Drawing.curveFromTo(node.outputslotbutton, node.Parent.slotspos[node.ParentFeedSlotInfo.id].R, new Color(0.2f, 0.8f, 0.2f));
-                else
-                    Drawing.curveFromTo(node.outputslotbutton, node.Parent.slotspos[node.ParentFeedSlotInfo.id].R, new Color(0.2f, fade * 0.8f, 0.2f));
+                bool canchange = CanChangeType(node.ReturnTye, node.Parent.slotspos[node.ParentFeedSlotInfo.index].T);
+                bool entryfit =(node.ReturnTye == node.Parent.slotspos[node.ParentFeedSlotInfo.index].T);
+
+
+
+
+                if (canchange || entryfit )    
+                    fade = 0.8f;
+                BBDrawing.curveFromTo(node.outputslotbutton, node.Parent.slotspos[node.ParentFeedSlotInfo.index].R, new Color(0.2f, fade * 0.8f, 0.2f ),node.Windowpos.width );
+
+                
+
             }
             // the node stuff that might be done out of the window ( slot etc )
             // the link draw should be done also there as soon as i redo the spline draw 
             // for something faster and more accurate 
             node.DoNode();
-            Repaint();
+
+            
+            foreach (BBCtrlNode BBC in node.Childrens.Values)
+                GUI.Box(BBC.Windowpos, "");
+
+
+      
         }
         EndWindows();
     }

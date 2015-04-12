@@ -69,11 +69,13 @@ public class RotatingPlatform : BBehavior
 
     public override Dataset GetDataset()
     {
-        return (RotatingPlatformDataset)paramblock;
+        return paramblock;
     }
 
-    public override void SetDataset(object o)
+    [BBCtrlVisible] // define a function visible for BBControl 
+    public override void SetDataset(object o )  
     {
+        
         paramblock = (RotatingPlatformDataset)o;
     }
   
@@ -123,6 +125,7 @@ public class RotatingPlatform : BBehavior
     }
 
 
+    
   
 
 	// Use this for initialization

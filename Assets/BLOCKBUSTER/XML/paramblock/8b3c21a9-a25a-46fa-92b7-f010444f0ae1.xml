@@ -4,25 +4,25 @@
   <guid>8b3c21a9-a25a-46fa-92b7-f010444f0ae1</guid>
   <assetname>SANDBOX_BUILD_2_2_2_03_F</assetname>
   <orig_rotation>
-    <x>0</x>
-    <y>0</y>
-    <z>0</z>
-    <w>1</w>
+    <x>-0.006170673</x>
+    <y>-0.7070799</y>
+    <z>-0.7070799</z>
+    <w>0.006170673</w>
     <eulerAngles>
-      <x>0</x>
-      <y>0</y>
+      <x>270</x>
+      <y>181.000031</y>
       <z>0</z>
     </eulerAngles>
   </orig_rotation>
   <orig_pos>
-    <x>40.9206619</x>
-    <y>144.2178</y>
-    <z>-31.3796768</z>
+    <x>38.89456</x>
+    <y>140.145508</y>
+    <z>-36.50445</z>
   </orig_pos>
   <last_pos>
     <x>38.89456</x>
     <y>140.145508</y>
-    <z>-35.48343</z>
+    <z>-36.50445</z>
   </last_pos>
   <block_size>
     <x>2.0345993</x>

@@ -290,6 +290,8 @@ public static class BBTools
         Vector3 front = new Vector3(0.0f, 0.0f, 1.0f);
         Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
         Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
+        //====================== FOR MOUSE EVENT 
+
        
         
 
@@ -1006,7 +1008,8 @@ public static class BBTools
             tlist.Add(BBDir.Get(BBpath.RES) + "movepad_i.png");
             tlist.Add(BBDir.Get(BBpath.RES) + "movepad_i_cl.png");
             tlist.Add(BBDir.Get(BBpath.RES) + "movepad_id.png");
-
+            tlist.Add(BBDir.Get(BBpath.RES) + "");
+            tlist.Add(BBDir.Get(BBpath.RES) + "outclear_256.png");
 
 
             string layername = "bbmain";
@@ -1431,114 +1434,49 @@ public static class BBTools
                 GUI.TextField(NR, (index).ToString());
             }
         }
-
-
-        public int mousebttn;
-        public bool mousemove;
-        public bool mouseclic;
-        public bool mousedrag;
-
-        public int leftmouseclickeventnumber = 0;
-        public Vector2 lastmousepos;
-
-        public void CheckInput()
-        {
-            // Get a unique ID for your control.
-            int controlID = GUIUtility.GetControlID(FocusType.Passive);
-            switch (Event.current.GetTypeForControl(controlID))
-            {
-                case EventType.MouseDown:
-                    if (Event.current.button == 0)
-                    {
-
-                        mouseclic = true;
-                        GUIUtility.hotControl = controlID;
-                        Event.current.Use();
-                        mousebttn = 1;
-                    }
-                    break;
-                case EventType.MouseMove:
-                case EventType.MouseDrag:
-                    break;
-                case EventType.MouseUp:
-                    // If this control is currently active.
-                    if (GUIUtility.hotControl == controlID)
-                    {
-                        // Release lock on it :)
-                        mouseclic = false;
-                        GUIUtility.hotControl = 0;
-                        Event.current.Use();
-                        mousebttn = 0;
-                        leftmouseclickeventnumber = 0;
-                    }
-                    break;
-            }
-        }
-
-
-        //static int MVP_returngridindex (int x, int y) 
-        //{
-        //    return(int)  y / mvpd_bsz * mvpd_grsz + x / mvpd_bsz; // base index 1 
-        //}
-
-
+        /// <summary>
+        ///  MOVEPAD the mouse management should be redo
+        ///  but works fine right now i ll probably merge this with nodes logic 
+        ///  to share more stuff it s basically the same 
+        /// </summary>
+        /// <param name="i"></param>
         void MVP_DoMovepad(int i)
         {
-            // place the movepad texture
-
+            BBDrawing.CheckInput();
             if (!BBCtrl.INITITIALIZED)
                 InitGUIValues();
             Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
-
-
-
-            //BBCtrl.RenderLayer("bbmain", TXTINDEX.TARGET);
-            //GUI.DrawTexture(BBCtrl.mvpd_rect, BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET)); // draw the targe
-
-            
-            
-
-
             // define a output area for the movepad 
             BBCtrl.mvpd_rect.Set(Screen.width / 2 - (BBCtrl.MVPTXTSZ / 2), 30, BBCtrl.MVPTXTSZ, BBCtrl.MVPTXTSZ);
             GUI.DrawTexture(BBCtrl.mvpd_rect, BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET)); // draw the target 
-            
-            // should add a start and end controll 
-            if ( ! BBCtrl.GOTFOCUS() )
+            if (!BBDrawing.GetRectFocus(BBCtrl.mvpd_rect))
             {
                 GUI.DragWindow();
                 return;
             }
-
-            if (    BBCtrl.MOUSECLIC() == 1  )
+            if (BBDrawing.mousedown)
             {
                 BBCtrl.RenderSingleButton("bbmain", TXTINDEX.CLICKED, mpos);
-                
-                // this control is associated with fuction of the class actor 
                 Actor A = Selection.activeGameObject.GetComponent<Actor>();
-
                 object[] result; // returned by function ( not yet ) 
 
-                if (leftmouseclickeventnumber == 0) // crappy mouse management 
+                if (BBDrawing.leftmouseclickeventnumber == 0) // crappy mouse management 
                 {
                     BBCtrl.RenderSingleButton("bbmain", TXTINDEX.CLICKED, mpos);
                     BBCtrl.InvokeCtrlMethod("bbmain", mpos, (object)A, null, out result);
-                    lastmousepos = mpos;
-
+                    BBDrawing.lastmousepos = mpos;
                 }
 
-                leftmouseclickeventnumber++; // single event 
+                BBDrawing.leftmouseclickeventnumber++; // single event 
             }
-            else if (leftmouseclickeventnumber > 0)
+            else if (BBDrawing.mouseup)
             {
                 // hold the last mouse pos 
-                BBCtrl.RenderSingleButton("bbmain", TXTINDEX.NORMAL, lastmousepos);
-                leftmouseclickeventnumber --;
+                BBCtrl.RenderSingleButton("bbmain", TXTINDEX.NORMAL, BBDrawing.lastmousepos);
+                BBDrawing.leftmouseclickeventnumber=0;
             }
-
             if (BBTools.showgrid)
                 ShowMovePadGrid();
-            
         }
  
 

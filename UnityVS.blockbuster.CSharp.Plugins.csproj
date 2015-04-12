@@ -52,6 +52,21 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
+    <Reference Include="DiaQ">
+      <HintPath>Assets\plyoung\DiaQ\DiaQ.dll</HintPath>
+    </Reference>
+    <Reference Include="plyBlox">
+      <HintPath>Assets\plyoung\plyBlox\plyBlox.dll</HintPath>
+    </Reference>
+    <Reference Include="plyCommon">
+      <HintPath>Assets\plyoung\plyCommon\plyCommon.dll</HintPath>
+    </Reference>
+    <Reference Include="plyGame">
+      <HintPath>Assets\plyoung\plyGame\plyGame.dll</HintPath>
+    </Reference>
+    <Reference Include="plyRPG">
+      <HintPath>Assets\plyoung\plyRPG\plyRPG.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
@@ -68,8 +83,6 @@
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\AssetList.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\assettransfert.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
-    <None Include="Assets\BLOCKBUSTER\Editor\BlockbusterControll.XML" />
-    <None Include="Assets\BLOCKBUSTER\XML\doc\BlockbusterControll.XML" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\03fe2863-fc2e-4cba-a95f-b7eb1d299c3b.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\0460dd9c-0256-4c1b-90dc-4ea0f010d727.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\050db306-969b-4ac4-ac21-c878a52f322d.xml" />
@@ -200,6 +213,26 @@
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene2.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene3.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\test.xml" />
+    <None Include="Assets\plyoung\DiaQ\DiaQ.xml" />
+    <None Include="Assets\plyoung\DiaQ\Documentation\readme.txt" />
+    <None Include="Assets\plyoung\DiaQ\Documentation\version.txt" />
+    <None Include="Assets\plyoung\DiaQ\Editor\DiaQEditor.xml" />
+    <None Include="Assets\plyoung\plyBlox\Documentation\readme.txt" />
+    <None Include="Assets\plyoung\plyBlox\Documentation\version.txt" />
+    <None Include="Assets\plyoung\plyBlox\Editor\plyBloxEditor.XML" />
+    <None Include="Assets\plyoung\plyBlox\plyBlox.XML" />
+    <None Include="Assets\plyoung\plyCommon\Editor\plyCommonEditor.XML" />
+    <None Include="Assets\plyoung\plyCommon\plyCommon.XML" />
+    <None Include="Assets\plyoung\plyCommon\readme.txt" />
+    <None Include="Assets\plyoung\plyCommon\version.txt" />
+    <None Include="Assets\plyoung\plyGame\Documentation\readme.txt" />
+    <None Include="Assets\plyoung\plyGame\Documentation\version.txt" />
+    <None Include="Assets\plyoung\plyGame\Editor\plyGameEditor.XML" />
+    <None Include="Assets\plyoung\plyGame\plyGame.XML" />
+    <None Include="Assets\plyoung\plyRPG\Documentation\readme.txt" />
+    <None Include="Assets\plyoung\plyRPG\Documentation\version.txt" />
+    <None Include="Assets\plyoung\plyRPG\Editor\plyRPGEditor.XML" />
+    <None Include="Assets\plyoung\plyRPG\plyRPG.XML" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2012\UnityVS.CSharp.targets" />
 </Project>

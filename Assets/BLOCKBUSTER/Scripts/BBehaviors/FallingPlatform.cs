@@ -72,7 +72,7 @@ using UnityEditor;
 
 
 
-    [ExecuteInEditMode()] // same no exec in editor might be done here 
+
     public class FallingPlatform : BBehavior
     {
         // derived from dataset this is the overrided custom data set 

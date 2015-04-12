@@ -106,12 +106,15 @@ public class Actor : MonoBehaviour
     public List<object> argsbuff = new List<object>();
 
 
+    // mandatory for node editor 
+    public BaseActorProperties GetActorProps()
+    {
+        return Actorprops;
+    }
+
     public void OutputString(string s, string s2)
     {
-                
         EditorUtility.DisplayDialog("arg 1 ", s + "atg 2 " +s2 , "yes");
-
-
     }
 
 

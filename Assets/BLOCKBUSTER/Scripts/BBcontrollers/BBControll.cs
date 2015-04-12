@@ -149,8 +149,11 @@ public class EditorTimer
     private float timeOut;
     public float timeremaining;
     public float s;
-   
 
+    public float timefromstart ()
+    {
+       return  Time.realtimeSinceStartup;
+    }
 
     public  void StartCountdown( float seconds )
     {
@@ -206,7 +209,8 @@ public  class BBCtrl
     private static int      gridcelnumber;
     private static int      count;
 
-    private static bool     isfocused;
+    /*
+    //private static bool     isfocused;
     private static int      mousebttn;
     private static bool     mousemove;
     private static bool     mouseclic;
@@ -215,24 +219,26 @@ public  class BBCtrl
     private static int      leftmouseclickeventnumber;
     private static Vector2  lastmousepos;
     private static Vector2 mousepos;
+    */
+    
 
 
-    public static bool      GOTFOCUS()  
+
+    public static int MOUSECLIC()
     {
-        CheckInput();
-        return isfocused;  
-    }
 
-    public static int       MOUSECLIC()
-    {
-        CheckInput();
+        BBDrawing.CheckInput();
 
-        if (mouseclic)
-            return mousebttn ;
+        if (BBDrawing.mouseclic)
+            return BBDrawing.mousebttn;
         else 
             return -1;
 
     }
+
+ 
+
+
 
     public  static int      MVPTXTSZ            { get { return ((int)gridsize * (int)buttonsize); } }
     public  static int      MVPCELLNB           { get { return ((int)gridsize * (int)buttonsize); } }
@@ -263,19 +269,17 @@ public  class BBCtrl
         // do cleaning task 
     }
 
-
+    /*
     public static int MVPMOUSECLIC      
     { 
         get 
         {
-            CheckInput();
-            return mousebttn; 
+            //BBDrawing.CheckInput();
+            return BBDrawing.mousebttn; 
         } 
     }
-    
-    public  static bool     MVPMOUSEMOVE        { get { return mousemove; } }
-    //public  static bool     MVPMOUSECLIC        { get { return mouseclic; } }
-    public  static bool     MVPMOUSEDRAG        { get { return mousedrag; } }
+    */
+  
 
     // where the final txt stand 
 
@@ -325,53 +329,7 @@ public  class BBCtrl
 
 
 
-    private static void CheckInput()
-    {
-        Rect MouseCursor = new Rect();
-        // Get a unique ID for your control.
-        int controlID = GUIUtility.GetControlID(FocusType.Passive);
-        mousepos = Event.current.mousePosition;
-        MouseCursor.Set(mousepos.x, mousepos.y, 1, 1);
-        GUI.Box(MouseCursor, "");
-        if (MouseCursor.Overlaps(mvpd_rect))
-            isfocused = true;
-        else
-        {
-            isfocused = false;
-            return;
-        }
 
-        switch (Event.current.GetTypeForControl(controlID))
-        {
-            case EventType.MouseDown:
-                if (Event.current.button == 0)
-                {
-
-                    mouseclic = true;
-                    GUIUtility.hotControl = controlID;
-                    Event.current.Use();
-                    mousebttn = 1;
-                }
-                break;
-            case EventType.MouseMove:
-                
-                break;
-            case EventType.MouseDrag:
-                break;
-            case EventType.MouseUp:
-                // If this control is currently active.
-                if (GUIUtility.hotControl == controlID)
-                {
-                    // Release lock on it :)
-                    mouseclic = false;
-                    GUIUtility.hotControl = 0;
-                    Event.current.Use();
-                    mousebttn = 0;
-                    leftmouseclickeventnumber = 0;
-                }
-                break;
-        }
-    }
 
 
     public static Texture2D GetTextureFromLayer (string layer , TXTINDEX type   )
@@ -462,6 +420,7 @@ public  class BBCtrl
     public static bool  RenderSingleButton (string layername,TXTINDEX textureindex , Vector2 frompos )
     {
         int index = GetGridIndexFromXY(frompos);
+        
 
         BBControll BBC = GetControll("bbmain", index);
         if (BBC == null)
@@ -623,10 +582,7 @@ public  class BBCtrl
             if (BBCL.TryGetValue(index, out BBC))
                 return BBC;
             else
-            {
-                Debug.Log("cannot get a valid bbcontroller for layer " + layer + "at index " + index);
                 return null;
-            }
         }
         else
         {
@@ -674,8 +630,8 @@ public  class BBCtrl
         TXTLIST.Add( LoadPNG(FileArray[ (int) TXTINDEX.NORMAL ]) );
         TXTLIST.Add( LoadPNG(FileArray[ (int) TXTINDEX.CLICKED ]) );
         TXTLIST.Add( LoadPNG(FileArray[ (int) TXTINDEX.FLYOVER ]) );
-        TXTLIST.Add( LoadPNG( null ) ); // init with 0x00
-        TXTLIST.Add( LoadPNG( null ) ); // init with 0x00
+        TXTLIST.Add( LoadPNG( null ) ); // init with 0x00 
+        TXTLIST.Add(LoadPNG(FileArray[(int)TXTINDEX.CLEAR]));
 
 
         if (TXTLIST.Count > 0)
