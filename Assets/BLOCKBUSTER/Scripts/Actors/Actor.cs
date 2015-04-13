@@ -14,7 +14,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Diagnostics;
 
-public class BuildLogUtility
+public class BBuildLogUtility
 {
     public static void outlog(string s)
     {
@@ -77,9 +77,9 @@ public class BaseActorProperties
 
     public virtual void Save(string path, System.Type type)
     {
-        System.Type[] extraTypes = { type  };
+        //System.Type[] extraTypes = { type  };
 
-        XmlSerializer serializer = new XmlSerializer(type, extraTypes);
+        XmlSerializer serializer = new XmlSerializer(type );
         Stream stream = new FileStream(path, FileMode.Create);
         serializer.Serialize(stream, this);
         stream.Flush();

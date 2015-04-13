@@ -15,7 +15,7 @@ using UnityEditor;
 
 
 
-public class ReplayerLogOutput : MonoBehaviour
+public class BBReplayerLogOutput : MonoBehaviour
 {
     public XmlDocument playerposlog = new XmlDocument();
     public string m_mapname;

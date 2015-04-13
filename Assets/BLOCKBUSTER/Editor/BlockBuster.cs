@@ -320,7 +320,7 @@ public static class BBTools
         public List<GameObject> m_replayactors = new List<GameObject>();
         public List<string> xmlfoldercontent = new List<string>();
         private bool b_applyfilter;
-        private RePlayer m_replayer;
+        private BBRePlayer m_replayer;
         private float replayspeed;
         public static System.Enum behaviourenum;
         Vector2 MovepadMousePos = new Vector2();
@@ -348,7 +348,7 @@ public static class BBTools
         {
             string repo = "";
             string defname = "";
-            Scene scenetosave = new Scene();
+            BBScene scenetosave = new BBScene();
             GameObject go;
             object[] obj;
 
@@ -463,7 +463,7 @@ public static class BBTools
                 path = EditorUtility.OpenFilePanel("load scene", sfolder, "xml");
             else
                 path = sfolder + "/" + scenename;
-            S = Scene.Load(path);
+            S = BBScene.Load(path);
             foreach (BaseActorProperties blk in S.baseassetproplist)
             {
                 string basename = blk.assetname.Split(char.Parse("_"))[0] +"/";
@@ -1144,8 +1144,8 @@ public static class BBTools
             {
                 GameObject ReplayerObjectBody = (GameObject)Resources.LoadAssetAtPath(("Assets/ReplayerObjects/ReplayerObjectBody.FBX"), typeof(GameObject));
                 GameObject O = (GameObject)Instantiate(ReplayerObjectBody, Vector3.zero, Quaternion.identity);
-                O.AddComponent(typeof(RePlayer));
-                RePlayer m_replayer = (RePlayer)O.GetComponent(typeof(RePlayer));
+                O.AddComponent(typeof(BBRePlayer));
+                BBRePlayer m_replayer = (BBRePlayer)O.GetComponent(typeof(BBRePlayer));
                 m_replayer.m_replayfiletag = ".xml";
                 O.name = "REPLAYERINSTANCE";
                 m_replayactors.Add(O);
@@ -1173,7 +1173,7 @@ public static class BBTools
 
         void SwitchReplayerPath(string filename)
         {
-            foreach (Replay ri in m_replayer.replaylist)
+            foreach (BBReplay ri in m_replayer.replaylist)
                 if (ri.m_xmlfilename.Contains(filename))
                     m_replayer.m_playerreplay = ri;
             m_replayer.targetindex = 0;
@@ -1607,6 +1607,10 @@ public static class BBTools
 
                 }
                 GUILayout.EndHorizontal();
+
+                if (blockbuster.behaviourenum == null)
+                    InitGUIValues();
+
                 blockbuster.behaviourenum = (System.Enum)EditorGUILayout.EnumPopup("behaviour:", blockbuster.behaviourenum, GUILayout.MinWidth(280), GUILayout.MaxWidth(280));
                 foreach (BBehavior B in blist)
                 {
@@ -1631,7 +1635,7 @@ public static class BBTools
                     pathindex = 0;
                     AddReplayerObject();
                 }
-                m_replayer = (RePlayer)m_replayactors[0].GetComponent(typeof(RePlayer));
+                m_replayer = (BBRePlayer)m_replayactors[0].GetComponent(typeof(BBRePlayer));
                 
                 m_replayer.RefreshXmlBase();
 
@@ -1659,7 +1663,7 @@ public static class BBTools
                     if (!b_applyfilter)
                     {
 
-                        m_replayer = (RePlayer)m_replayactors[0].GetComponent(typeof(RePlayer));
+                        m_replayer = (BBRePlayer)m_replayactors[0].GetComponent(typeof(BBRePlayer));
                         
                         if (m_replayer.m_replayfiletag != L[pathindex] + ".xml")
                         {

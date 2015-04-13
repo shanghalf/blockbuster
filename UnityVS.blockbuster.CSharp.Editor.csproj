@@ -166,6 +166,7 @@
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\AssetList.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\assettransfert.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\9a380e7d-0ac4-41c3-8fa3-2bee8c2020f0.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\03fe2863-fc2e-4cba-a95f-b7eb1d299c3b.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\0460dd9c-0256-4c1b-90dc-4ea0f010d727.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\050db306-969b-4ac4-ac21-c878a52f322d.xml" />

@@ -24,13 +24,13 @@ public class scenecluster
 
 [System.Serializable]
 [XmlInclude(typeof(scenecluster))]
-public class Scene
+public class BBScene
 {
     //public Scene scene = new Scene();
 
     public string name;
     public scenecluster cluster = new scenecluster();
-    public Scene()
+    public BBScene()
     {
         name = "test";
 

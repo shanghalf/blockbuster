@@ -15,7 +15,7 @@ using UnityEditor;
 
 
 [System.Serializable]
-public class ReplayPathnode
+public class BBReplayPathnode
 {
     public Vector3 pos;
     public Quaternion rot;
@@ -23,7 +23,7 @@ public class ReplayPathnode
     //public List<Vector3> orb = new List<Vector3>() ;
     public float lookatspeed;
     public float translatespeed;
-    public ReplayPathnode()
+    public BBReplayPathnode()
     {
     }
     public Vector3 Getlookatpoint(int lookatindex, float radius)
@@ -37,10 +37,10 @@ public class ReplayPathnode
 }
 
 [System.Serializable]
-public class Replay
+public class BBReplay
 {
     public Vector3 m_last_pos;
-    public List<ReplayPathnode> m_replayPathnodes = new List<ReplayPathnode>();
+    public List<BBReplayPathnode> m_replayPathnodes = new List<BBReplayPathnode>();
     public float m_replayspeed = 0.5f;
     public Vector3 m_v3target;
     public bool m_bismoving = false;
@@ -52,7 +52,7 @@ public class Replay
     public Color m_color;
     public string m_xmlfilename;
 
-    public Replay(string filename)
+    public BBReplay(string filename)
     {
         m_xmlfilename = filename;
         m_replayxmldoc.Load(filename);
@@ -66,8 +66,8 @@ public class Replay
 #if UNITY_EDITOR
 
 
-[CustomEditor(typeof(RePlayer)), CanEditMultipleObjects]
-public class Replayinspector : Editor
+[CustomEditor(typeof(BBRePlayer)), CanEditMultipleObjects]
+public class BBReplayinspector : Editor
 {
     public override void OnInspectorGUI()
     {
@@ -90,7 +90,7 @@ public class Replayinspector : Editor
 
 
 [ExecuteInEditMode()]
-public class RePlayer : MonoBehaviour
+public class BBRePlayer : MonoBehaviour
 {
 
     //public Replay m_replay = new Replay();
@@ -100,10 +100,10 @@ public class RePlayer : MonoBehaviour
     public XmlDocument m_doc = new XmlDocument();
     public string m_loadedfile = "";
     private static Vector3 pointSnap = Vector3.one * 0.001f;
-    public List<Replay> replaylist = new List<Replay>();
+    public List<BBReplay> replaylist = new List<BBReplay>();
     // Use this for initialization
     public int targetindex = 0;
-    public Replay m_playerreplay;
+    public BBReplay m_playerreplay;
     public bool bviewportcamfollowing = false;
 
 #if UNITY_EDITOR
@@ -125,7 +125,7 @@ public class RePlayer : MonoBehaviour
             string[] mapname = xmlname.Split(char.Parse("\\"));
             if (mapname[mapname.Length - 1].Contains(currenteditormapname))
             {
-                Replay R = new Replay(xmlname);
+                BBReplay R = new BBReplay(xmlname);
                 if (xmlname.Contains("PM.xml") | xmlname.Contains("AM.xml"))
                     m_playerreplay = R;
 
@@ -142,12 +142,12 @@ public class RePlayer : MonoBehaviour
 
 
 
-    void ReadPathNodes(Replay r)
+    void ReadPathNodes(BBReplay r)
     {
         foreach (XmlNode i in r.m_replayxmldoc.ChildNodes[0].ChildNodes)
         {
             string[] tokens = i.InnerText.Split(new char[] { ',', '(', ')', '_' });
-            ReplayPathnode pn = new ReplayPathnode();
+            BBReplayPathnode pn = new BBReplayPathnode();
             pn.pos.x = float.Parse(tokens[1]);
             pn.pos.y = float.Parse(tokens[2]);
             pn.pos.z = float.Parse(tokens[3]);
@@ -218,7 +218,7 @@ public class RePlayer : MonoBehaviour
 
 #if UNITY_EDITOR
 
-    void DrawReplay(Replay R)
+    void DrawReplay(BBReplay R)
     {
 
         bool bypass = false;
@@ -239,7 +239,7 @@ public class RePlayer : MonoBehaviour
 
     void OnCustomSceneGUI(SceneView sceneview)
     {
-        foreach (Replay RI in replaylist)
+        foreach (BBReplay RI in replaylist)
         {
             DrawReplay(RI);
         }

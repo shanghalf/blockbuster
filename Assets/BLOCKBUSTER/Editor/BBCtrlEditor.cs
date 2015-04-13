@@ -72,14 +72,12 @@ public class BBCtrlEditor : EditorWindow
 
     // list of timers used in the editor view 
     public static Dictionary<string,EditorTimer> BBCtrlEditortimerList = new Dictionary<string,EditorTimer>();
-
-    // ROOT NODE DEFAULT POSITION 
-   
-
     public static bool BBCTRLEditorFocused = false ;
-
-    // display debug info flag 
     public static bool showdebuginfo;
+
+  
+
+
 
     /// <summary>
     ///  check if a type can be converted 
@@ -91,22 +89,12 @@ public class BBCtrlEditor : EditorWindow
     public static bool CanChangeType(object value, Type conversionType)
     {
         if (conversionType == null)
-        {
             return false;
-        }
-
         if (value == null)
-        {
             return false;
-        }
-
         IConvertible convertible = value as IConvertible;
-
         if (convertible == null)
-        {
             return false;
-        }
-
         return true;
     }
     
@@ -193,6 +181,18 @@ public class BBCtrlEditor : EditorWindow
     /// </summary>
     void OnGUI()
     {
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("SAVE"))
+        {
+           BBCtrlNode.THEGRAPH.Save();
+        }
+        if (GUILayout.Button("LOAD"))
+        {
+            string path = BBDir.Get(BBpath.SETING) + BBCtrlNode.THEGRAPH.Guid.ToString() + ".xml";
+            BBCtrlNode.THEGRAPH = NodeGraph.Load(path);
+        }
+        GUILayout.EndHorizontal();
+
         float fade = 0.8f;
         // for link blink 
         EditorTimer T;
@@ -211,17 +211,34 @@ public class BBCtrlEditor : EditorWindow
         root.gotfocus = BBDrawing.GetRectFocus(root.Windowpos,true);
 
 
-        if (BBCtrlNode.scrolllock = GUI.Toggle(new Rect(10, 180, 100, 20), BBCtrlNode.scrolllock, "scroll lock"))
-
-        // debug mode 
-        if (BBCtrlNode.editordebugmode = GUI.Toggle(new Rect(10, 200, 100, 20), BBCtrlNode.editordebugmode, "debug mode"))
+        if (BBCtrlNode.scrolllock = GUI.Toggle(new Rect(10, Screen.height - 150, 100, 20), BBCtrlNode.scrolllock, "scroll lock"))
+        if (BBCtrlNode.editordebugmode = GUI.Toggle(new Rect(10, 200, 100, 20), BBCtrlNode.editordebugmode, "Sliders"))
         {
-
             BBCtrlNode.debugfloat1 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat1, 0f, 1f);
             BBCtrlNode.debugfloat2 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat2, 0f, 10f);
             BBCtrlNode.debugfloat3 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat3, 0f, 100f);
             BBCtrlNode.debugfloat4 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat4, 0f, 1000f);
         }
+
+        BBCtrlNode.angrynodes = GUI.Toggle(new Rect(10, Screen.height - 100, 100, 20), BBCtrlNode.angrynodes, "Angry Nodes");
+
+        String str = "";
+
+        foreach (BBCtrlNode n in root.Childrens.Values)
+        {
+            str += n.name + "\n";
+            str += "velocity" + n.velocity.ToString() + "\n";
+
+        }
+        str += "\n\n\n\n";
+
+       
+
+
+
+
+        GUILayout.Label(str);
+
         
         BeginWindows(); // ---------------------------------------------------------------------------------------------- START WINDOWS LOOP
         
@@ -238,16 +255,9 @@ public class BBCtrlEditor : EditorWindow
         // DO THE ROOTINE .... ( at least .. )
         root.Windowpos = GUI.Window(root.windowid, root.Windowpos, root.DoNodeWindow, root.windowid.ToString());
         root.DoNode();
-
-        // at this point we fill up a list to iterate cause the Root children list 
-        // might change during the Window loop and cause troubles 
-        List<BBCtrlNode> AllNodesList = new List<BBCtrlNode>();
-        foreach (KeyValuePair<int, BBCtrlNode> kvp in root.Childrens)
-            AllNodesList.Add(kvp.Value);
-
      
         // process all Nodes 
-        foreach (BBCtrlNode node  in AllNodesList )
+        foreach (BBCtrlNode node  in root.Childrens.Values )
         {
             // check conditions to cancel this node 
             if (node.windowid == 0 || node.ParentFeedSlotInfo == null || node.Parent.slotspos.Count <= node.ParentFeedSlotInfo.index)
@@ -279,7 +289,7 @@ public class BBCtrlEditor : EditorWindow
 
                 if (canchange || entryfit )    
                     fade = 0.8f;
-                BBDrawing.curveFromTo(node.outputslotbutton, node.Parent.slotspos[node.ParentFeedSlotInfo.index].R, new Color(0.2f, fade * 0.8f, 0.2f ),node.Windowpos.width );
+                BBDrawing.curveFromTo(node.outputslotbutton, node.Parent.slotspos[node.ParentFeedSlotInfo.index].R, new Color(0.2f, fade * 0.8f, 0.2f ),node.Windowpos.width , out node.velocity );
 
                 
 
