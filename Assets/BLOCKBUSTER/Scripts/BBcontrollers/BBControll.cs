@@ -149,19 +149,16 @@ public class EditorTimer
     private float timeOut;
     public float timeremaining;
     public float s;
-
     public float timefromstart ()
     {
        return  Time.realtimeSinceStartup;
     }
-
     public  void StartCountdown( float seconds )
     {
         timeOut = Time.realtimeSinceStartup + seconds;
         s = seconds;
         run = true;
     }
- 
     public float Update(bool loop)
     {
         timeremaining = timeOut - Time.realtimeSinceStartup;

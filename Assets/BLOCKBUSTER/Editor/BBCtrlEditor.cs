@@ -49,18 +49,22 @@ public class BBCtrlEditor : EditorWindow
         BBCtrlEditortimerList["T2"].StartCountdown(1.0f);
 
         // ROOT IS THE FIRST AND MANDATORY NODE FOR THE VIEW 
-        BBCtrlNode.ROOT = new BBCtrlNode(BBCtrlNode.ROOTPOS);
-        BBCtrlNode.ROOT.isroot = true;
- 
-        //BBCtrleditorNode.ROOT.CutBranch();
-        
-        BBCtrlNode.ROOT.Childrens.Clear();
 
-        
 
-        BBCtrlNode.ROOT.name = "ROOT";
-        BBCtrlNode.ROOT.isroot = true;
-        BBCtrlNode.ROOT.windowid = -1;
+
+        BBCtrlNode.THEGRAPH.ROOTNODE = new BBCtrlNode(BBCtrlNode.ROOTPOS, "ROOT");
+        BBCtrlNode.THEGRAPH.ROOTNODE.isroot = true;
+
+
+
+
+
+        BBCtrlNode.THEGRAPH.ROOTNODE.name = "ROOT";
+        BBCtrlNode.THEGRAPH.ROOTNODE.isroot = true;
+
+
+    
+
 
 
         // init BBCTRL 
@@ -75,6 +79,7 @@ public class BBCtrlEditor : EditorWindow
     public static bool BBCTRLEditorFocused = false ;
     public static bool showdebuginfo;
 
+    public static BBCtrlNode RootNode;
   
 
 
@@ -163,11 +168,11 @@ public class BBCtrlEditor : EditorWindow
     {
         Rect SCR = new Rect(0, 0, Screen.width, Screen.height);
 
-        if (BBCtrlNode.ROOT == null)
+        if (BBCtrlNode.THEGRAPH.ROOTNODE == null)
             init();
         List<BBCtrlNode> L = new List<BBCtrlNode>();
 
-        Vector2 NodeSize = new Vector2(BBCtrlNode.ROOT.Windowpos.width, BBCtrlNode.ROOT.Windowpos.height);
+        Vector2 NodeSize = new Vector2(BBCtrlNode.THEGRAPH.ROOTNODE.Windowpos.width, BBCtrlNode.THEGRAPH.ROOTNODE.Windowpos.height);
         BBDrawing.BBDoGridLayout( SCR, NodeSize);
 
 
@@ -181,6 +186,19 @@ public class BBCtrlEditor : EditorWindow
     /// </summary>
     void OnGUI()
     {
+
+        BBCtrlNode.hierarchy = "";
+        if (BBCtrlNode.dirty)
+        {
+            BBCtrlNode.THEGRAPH.FlushBuffer();
+            BBCtrlNode.THEGRAPH.ROOTNODE.REcusiveCollectNodes();
+            BBCtrlNode.dirty = false;
+
+        }
+        
+  
+
+
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("SAVE"))
         {
@@ -189,26 +207,29 @@ public class BBCtrlEditor : EditorWindow
         if (GUILayout.Button("LOAD"))
         {
             string path = BBDir.Get(BBpath.SETING) + BBCtrlNode.THEGRAPH.Guid.ToString() + ".xml";
-            BBCtrlNode.THEGRAPH = NodeGraph.Load(path);
+            BBCtrlNode.THEGRAPH.Load(path);
+    
         }
+
+
+    
+    
+
+
         GUILayout.EndHorizontal();
 
-        float fade = 0.8f;
-        // for link blink 
-        EditorTimer T;
-        if ( BBCtrlEditortimerList.TryGetValue("T2",out T)) 
-            fade = BBCtrlEditortimerList["T2"].Update(true);
 
         BBDrawing.CheckInput();  // update inputs 
-        BBCtrlNode root = BBCtrlNode.ROOT;
 
 
+
+        // perform the layout routine 
         DisplayPlacementGrid();
-        Repaint();
+   
 
 
         // set node focus 
-        root.gotfocus = BBDrawing.GetRectFocus(root.Windowpos,true);
+       
 
 
         if (BBCtrlNode.scrolllock = GUI.Toggle(new Rect(10, Screen.height - 150, 100, 20), BBCtrlNode.scrolllock, "scroll lock"))
@@ -224,89 +245,29 @@ public class BBCtrlEditor : EditorWindow
 
         String str = "";
 
-        foreach (BBCtrlNode n in root.Childrens.Values)
+        // get all nodes from root 
+
+
+        foreach (BBCtrlNode n in BBCtrlNode.THEGRAPH.Nodes)
         {
             str += n.name + "\n";
             str += "velocity" + n.velocity.ToString() + "\n";
-
+            GUI.Box(n.Windowpos, "");
         }
         str += "\n\n\n\n";
-
-       
-
-
-
-
         GUILayout.Label(str);
-
-        
         BeginWindows(); // ---------------------------------------------------------------------------------------------- START WINDOWS LOOP
-        
-        // a problem in the root initialization 
-        // useless to keep going further 
-        if (root == null)
-        {
-            Debug.Log("ROOT HAS NOT BEEN INITIALIZED SOMETHING WENT CRAZY HERE !! ");
-            return;
-        }
 
-        
+        GUILayout.Label(BBCtrlNode.createdlist);
+        GUILayout.Label(BBCtrlNode.hierarchy);
 
-        // DO THE ROOTINE .... ( at least .. )
-        root.Windowpos = GUI.Window(root.windowid, root.Windowpos, root.DoNodeWindow, root.windowid.ToString());
-        root.DoNode();
-     
-        // process all Nodes 
-        foreach (BBCtrlNode node  in root.Childrens.Values )
-        {
-            // check conditions to cancel this node 
-            if (node.windowid == 0 || node.ParentFeedSlotInfo == null || node.Parent.slotspos.Count <= node.ParentFeedSlotInfo.index)
-            {
-                
-                if (! node.isroot )
-                //node.CutBranch();
-                continue;
-            }
-            // this is for the animation ( useless but lovely ) 
-            if (node.Timer.run)
-            {
-                // node timer is running the node is not ready to display 
-                node.deploychildren(node.Rectorg, node.RectDest);
-                GUI.Box(node.RectCurrent, "");
-            }
-            else
-            {
-                // Do the Node Window 
-                node.Windowpos = GUI.Window(node.windowid, node.Windowpos, node.DoNodeWindow, node.name);
-                // and blink link that not fit conditions 
-                // here node output Type != parent input 
+        BBCtrlNode.THEGRAPH.ROOTNODE.DoNode();
 
-                bool canchange = CanChangeType(node.ReturnTye, node.Parent.slotspos[node.ParentFeedSlotInfo.index].T);
-                bool entryfit =(node.ReturnTye == node.Parent.slotspos[node.ParentFeedSlotInfo.index].T);
-
-
-
-
-                if (canchange || entryfit )    
-                    fade = 0.8f;
-                BBDrawing.curveFromTo(node.outputslotbutton, node.Parent.slotspos[node.ParentFeedSlotInfo.index].R, new Color(0.2f, fade * 0.8f, 0.2f ),node.Windowpos.width , out node.velocity );
-
-                
-
-            }
-            // the node stuff that might be done out of the window ( slot etc )
-            // the link draw should be done also there as soon as i redo the spline draw 
-            // for something faster and more accurate 
-            node.DoNode();
-
-            
-            foreach (BBCtrlNode BBC in node.Childrens.Values)
-                GUI.Box(BBC.Windowpos, "");
-
-
-      
-        }
         EndWindows();
+
+        Repaint();
+
+
     }
 }
 
