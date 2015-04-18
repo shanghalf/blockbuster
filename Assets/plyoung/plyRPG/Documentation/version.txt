@@ -1,0 +1,219 @@
+version: 1.2.3
+© Leslie Young
+http://plyoung.com/plygame/
+
+===============================================================
+
+Version 1.2.3
+
+- Updated RPG Sample script. There was a difference between the code in the unity 4 and 5 versions
+
+Version 1.2.2
+
+- Fixed: Item set to "auto-pickup" would go to bag when trying to equip it
+- Fixed: UpdateActionBar was not removing icon set in slot that was cleared
+- Fixed: Default Layers where not being created in new projects under Unity 5.
+
+Version 1.2.1
+
+- Updated: Made Unity 5 compatible
+- Fixed: Items being picked/ dropped will restore the active blox state too
+- Fixed: Error in loot tables
+- Updated: The camera controller was setting Camera reference null when destroyed but this could mess things up if the camera was changed just before destroying the player
+- Updated: Added basic support for moving platforms to top-down and 3rd person player controllers. See PF_Support option in Inspector. Note that jumping does not work well when it is enabled
+
+Version 1.2.0
+
+- Updated: The Item Bag now has option to prevent multiple stacks of the same item
+- Updated: Item Bag can auto sort to fill prior slots when Items added or Removed. Should only be used in bags where items do not span multiple slots
+- Updated: Changed defaults of cursor locks on player and camera controllers to false
+- Fixed: Error in Actor when trying to restore Skills after scene change
+- Fixed: Skill Block was forcing caching of the Skill when a string name was used; rather the other way around when you chose the Skill from a list
+- Fixed: NPC was not disengaging dead target
+
+Version 1.1.9
+
+- Added: `Select Next Target` Block
+- Added: `Do Interact` Block
+- Updated: Attribute related Events now add two more temporary variables to tell with how much the Value and Consumable Value changed that caused the Event to be triggered
+- Updated: Added "Always to Scene" and "Always Destroy" drop options to UnEquip Block
+
+Version 1.1.8
+
+- Updated: Simple customiser with more control over which objects and materials to influence
+- Updated: Start code will warn you about undefined Skill if you forgot to remove deleted skills from character's known skills
+- Fixed: NPC was not disengaging when too far from home position
+
+Version 1.1.7
+
+- Added: Simple Skills window to sample UI
+- Added: More Blocks under `Character > NPC`
+- Updated: Simple Customizer now allows you to specify which material on an object should be influenced (for colour and texture)
+- Updated: You can now use a String Block for the Animation name field in Character Legacy Animation related Blocks
+- Updated: Add rotation limit option to Top-Down camera
+- Updated: Added Auto-Queue option to Skills
+- Updated: Added Can Move/Rotate options to NPC Simple Move controller so that these can be turned off if needed
+- Fixed: Queued skill would not be cleared when player click on floor to move character
+- Fixed: Bug in "Interact With" Block that could fail when instructed to interact with a character
+- Fixed: Warnings in Sample UI script
+- Fixed: NPC was not auto-engaging its attacker (when HP attribute value dropped)
+
+Version 1.1.6
+
+- Added: `plyRPG > Skill > On Validate` Event for Skills. It is optional and if used it should set a Boolean return value (True or False) to indicate whether the Skill may execute or not. Useful when you need to check if certain attribute value and other requirements are met before a skill may be executed
+- Added: Block to get Skill property value `Character > Skills > Get Skill Property`
+- Added: Character > Skills related Blocks. `Known Count` and `Get Known` to run through the list of known skill
+- Fixed: XP-Level growth curve was not working correctly and would level up the character too soon for given XP
+- Fixed: Position of scrollable content of Bag, Quest Log, and Character Sheet
+
+Version 1.1.5
+
+- Added: Various new Blocks
+- Fixed: Attribute values where not be restored correctly after scene change
+
+Version 1.1.4
+
+- Added: `Character > Control> Find Interact Target` Block
+- Added: Blocks related Skills
+- Fixed: Skills could not target RPGObject
+
+Version 1.1.3
+
+- Added: Block to read the cooldown progress of a Skill
+- Added: Block to get type or sub-type of an Item
+- Updated: Projectile to check if owner dead and fizzle if so
+- Updated: Made some changes to allow interact and select and move to be on same mouse button without 
+		causing problems when wanting to interact with an item. "auto move to interact" in the player
+		controller must be on in this case
+		
+Version 1.1.2
+
+- Fixed: Problem with follower NPC (Pet) not engaging other characters
+- Fixed: NPC was using the Follow mode's values in the engage distance checks
+- Fixed: Possible nullref error in saving Action Slot states
+- Fixed: Loot Table was only dropping one copy of Item even if set to drop more than one
+
+Version 1.1.1
+
+- Added: Sample runtime user interface
+http://www.plyoung.com/docs/rpg-ui.html
+	+ Item Bag Panel
+	+ Character Panel with Equip Slots and attributes
+	+ Interface for Action Slots
+	+ Status (Health bar) of Player and Target
+	+ Dialogue Panel
+	+ Quest Log Panel
+- Added: Currency Add/ Remove Events
+- Added: Block to check if Skill is known by Actor
+- Added: Block to check if specified Item is equipped
+- Updated: Action Slots persistence added
+- Updated: Changed the `Item from Bag Slot` Block to return null of slot is not origin of item but only a slot spanned by the item
+- Updated: Added count option to `Add to Bag` Block
+- Updated: Added "Trigger" as reward type to Loot Table to trigger Events
+- Updated: `Drop Loot` Block with *Direct to Bag* option
+- Fixed: Item slot/ weight options was not being saved correctly
+- Fixed: Camera controllers initialise from current position/ rotation when control component enabled
+
+Version 1.1.0
+
+- Added: Loot Tables. See http://www.plyoung.com/docs/loot.html
+- Added: Action Slots to Player Controllers. More info http://www.plyoung.com/docs/player.html
+- Updated: The Legacy Animation Controller now supports Animation Groups
+- Updated: The Player Manager settings has been changed such that you can now specify one of the listed player character definitions as the default character when you do not want to specify a `default player prefab`
+- Updated: Added the `validInteractTarget` property to player character. More info http://www.plyoung.com/docs/player.html
+- Updated: Skills with 'instant' option changed to collect targets only once hit delay passed
+- Fixed: Problem with NPC running up to last way point before going after detected target
+- Fixed: XP was not being updated when a specific level was forced on character
+
+Version 1.0.9
+
+- Added: Option in Attribute Blocks that allows you set a "Bonus Value" for the attribute
+- Added: Blocks to get Item weight and value
+- Updated: NPC will first check for new target, after disengaging, before defaulting to going to home location
+- Updated: NPC Pro-Move will now first check (or find closest) point on the navmesh before trying to move to requested position
+- Updated: NPC will now auto-engage its attacker when attacked (when Health linked attribute decreased). Will not work if no HP set up or when already engaged. Note that Attribute Blocks where updated to support this, see the `Influence` field of the Blocks.
+- Fixed: Error message related to factions when accessed before it was initialised
+- Fixed: Queued skills would be cleared when character moves, even if set not to
+- Fixed: Possible error when leaving/ joining faction at runtime
+
+Version 1.0.8
+
+- Added: `Interact With` Block for characters
+- Updated: Added 'engaged range' options to NPC Controller
+- Updated: Home location for disengaged NPC changed to spawn point location from within disengage home range setting
+- Fixed: Skills triggered activate event more than once when used
+- Fixed: Bug in NPC controller that would sometimes prevent NPC from attacking targeted
+
+Version 1.0.7
+
+- Added: Block to get character's current movement speed
+- Updated: The Skills related Blocks where changed to improve their usability
+- Updated: Skills can now save and restore their local variables that are set to persist
+- Updated: Changed some functions in Skill class to be virtual so that it is easier to create derived functionality
+- Updated: Items no longer need a PersistObject to be able to save. It will be added automatically when needed
+- Fixed: Errors in Factions System
+- Fixed: Item Bag was not removing all save data related to removed items
+- Fixed: Bug in Item Bag when restoring Item variable values
+- Fixed: Error with Item not being removed when doing unequip
+- Fixed: Equipment Slots was not correctly saving and restoring equipped Items
+
+Version 1.0.6
+
+- Updated: The Items System has been totally reworked and should be much easier to work with now. See docs to learn more. http://www.plyoung.com/docs/item.html 
+- Updated: ItemBag and EquipmentSlots systems to work with new Items System
+- Updated: Player does not need to face an Item to be able to pick it up
+- Updated: Remove Item from Bag now allows to set if it should auto-drop to scene or not
+- Updated: 3rd Person Player controller now support auto-turn and auto-move requests
+- Updated: Top-Down Player controller now has 'always face mouse' option
+- Updated: Added Pause check to Projectiles
+- Updated: Added a confirmation when choosing to delete something in the plyGame editor
+- Fixed: NPC would not disengage dead character
+- Fixed: Player would sometime get stuck in a command to look at interactable object
+- Fixed: Player Manager: The player character position was restored when changing to a previous scene, causing a player to potentially spawn in the trigger that send it to a scene and thus causing endless loop of scenes loading back and forth
+- Fixed: PersistObject Load() could fail when distance based (en)disable is on an object
+- Fixed: Sometimes run-time created objects would not restore themselves - assuming they are the kind that is supposed to be able to do so
+- Fixed: Faction Manager event handler where not being detect
+- Fixed: Spawn Point event handler where not being detected 
+
+Version 1.0.5
+
+- Fixed: Bug that would cause `Player Ready` to not return True when it should.
+- Fixed: There was a bug in the Curve Editor. It caused Attributes to start at the wrong value in relation to level.
+- Fixed: Bonus values would have no affect if the attribute was already at its max.
+
+Version 1.0.4
+
+- Updated: Area Trigger now has options to set what kind of object can trigger it. All other will be ignored.
+- Added: Area Trigger specific Blox Events (under Events > Triggers > Area Trigger)
+- Added: `Player is Ready` Block which can be used to check if player is ready before accessing values in it.
+
+Version 1.0.3
+
+- Added: Player Manager. See http://www.plyoung.com/docs/player-manager.html
+- Added: Events and Blocks related to the Player manager
+- Added: Simple Customizer. See http://www.plyoung.com/docs/simple-customizer.html
+- Added: Blocks related to customizer
+- Added: Skill Effect Event, triggered when the effect would be created (for example a projectile)
+- Changed: Projectile based Skill no longer require projectile prefabs but will then not handle projectile and hit detection
+
+Version 1.0.2
+
+- Added: Block that returns the plyBlox of an Item
+- Fixed: Bag would return wrong number of slots used when using weight-based system
+- Change: Player now only jumps when jump button pressed and not while held (need to release and press to jump again)
+- Added: Block to change bag max-weight
+
+Version 1.0.1
+
+- Fixed: Problem with Skills sometimes not activating when using mouse button as trigger
+- Fixed: Made triggers on non-plyGame layers to be click-through for click-to-move
+- Fixed: Problem with the Speed parameter in 'Basic Mecanim Controller'
+- Fixed: Auto-death detection was destroying the character immediately, ignoring any delay specified
+- Fixed: Auto-death sink and destroy not working on characters that uses navmesh
+- Fixed: Actor and Marker editor panels where not refreshing properly
+
+Version 1.0.0
+
+- Moved the plyGame RPG module's version notes to own file
+
+-eof-

@@ -34,6 +34,6 @@
   <rotationspeed>2.39</rotationspeed>
   <rotationstepnumber>5</rotationstepnumber>
   <rotationtempo>0.42</rotationtempo>
-  <rotateindex>0</rotateindex>
+  <rotateindex>1</rotateindex>
   <m_pathnodes />
 </RotatingPlatformDataset>

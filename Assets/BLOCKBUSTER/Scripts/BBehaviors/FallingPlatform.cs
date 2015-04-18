@@ -17,8 +17,8 @@ using UnityEditor;
 
     public class FallingPlatformPathnode : Pathnode
     {
-        public Vector3 pos;
-        public float timer = 0.0f;
+        //public Vector3 pos = new Vector3();
+        //public float timer = 0.0f;
         /// <summary>
         /// custom constructor 
         /// </summary>
@@ -82,7 +82,7 @@ using UnityEditor;
             // draw specific gizmo
         }
 
-        public override void SetDataset(object o)
+        public override void SetDataset(Dataset o)
         {
             throw new System.NotImplementedException();
         }

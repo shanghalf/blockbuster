@@ -141,7 +141,6 @@ public class MovingPlatformDataset  : Dataset
         private Vector3 front = new Vector3(0.0f, 0.0f, 1.0f);
         private Vector3 right = new Vector3(1.0f, 0.0f, 0.0f);
         private Vector3 back = new Vector3(0.0f, 0.0f, -1.0f);
-        private bool b_front_x;
         
 
         /// <summary>
@@ -178,9 +177,8 @@ public class MovingPlatformDataset  : Dataset
         /// </summary>
         /// <param name="D"></param>
         /// 
-        public override void SetDataset(object o)
+        public override void SetDataset(Dataset o)
         {
-            
             paramblock =(MovingPlatformDataset) o;
         }
   
@@ -238,69 +236,9 @@ public class MovingPlatformDataset  : Dataset
             }
         }
 
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public int  TestForLinBlink(float ftest, string stringtest )
-        {
-            return 1;
-        }
 
-        /// <summary>
-        /// crap this is defined in several point but not in the same namespace
-        /// editor for block move and for movepad 
-        /// should find a way to simplify 
-        /// and share the logic without adding useless value to paramblock base 
-        /// </summary>
-        /// 
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public  void GetDir()
-        {
+  
 
-            if (SceneView.currentDrawingSceneView == null) return;
-            Transform cam = SceneView.currentDrawingSceneView.camera.transform;
-            Vector3 flatcamvector = new Vector3(cam.forward.x, 0.0f, cam.forward.z);
-            float AF = Vector3.Angle(flatcamvector, Vector3.forward);
-            float AB = Vector3.Angle(flatcamvector, Vector3.back);
-            float AL = Vector3.Angle(flatcamvector, Vector3.left);
-            float AR = Vector3.Angle(flatcamvector, Vector3.right);
-
-            float[] anglearray = new float[] { AF, AB, AL, AR };
-
-            System.Array.Sort(anglearray);
-            if (AF == anglearray[0])
-            {
-                front = Vector3.forward;
-                back = Vector3.back;
-                left = Vector3.right;
-                right = Vector3.left;
-                b_front_x = false;
-            }
-            if (AB == anglearray[0])
-            {
-                front = Vector3.back;
-                back = Vector3.forward;
-                left = Vector3.left;
-                right = Vector3.right;
-                b_front_x= false;
-            }
-            if (AL == anglearray[0])
-            {
-                front = Vector3.left;
-                back = Vector3.right;
-                left = Vector3.forward;
-                right = Vector3.back;
-                b_front_x = false;
-            }
-            if (AR == anglearray[0])
-            {
-                front = Vector3.right;
-                back = Vector3.left;
-                left = Vector3.back;
-                right = Vector3.forward;
-                b_front_x = false;
-            }
-
-
-        }
 
 
         /// <summary>
@@ -312,13 +250,13 @@ public class MovingPlatformDataset  : Dataset
         /// <param name="mainwindow"></param>
         public override void DoGUILoop(Rect mainwindow)
         {
-            GetDir();
+            m_actor.GetDir();
             if (paramblock == null)
                 return;
             // catch a handle on the host actor for this behavior 
-            Actor tmpactor = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
+            //Actor tmpactor = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
             int movepadofset = 0; // for the movepad ( temporary solution ill make a better thing here ) 
-            int bsz = 20; // that roughly the unit size for movepad layout (crap i ll do something better soon) 
+            //int bsz = 20; // that roughly the unit size for movepad layout (crap i ll do something better soon) 
             float ofset = 0.0f;
             paramblock.ismoving = !paramblock.editsub;
             // ========== add limitation to the target index 
@@ -430,7 +368,7 @@ public class MovingPlatformDataset  : Dataset
             for (int i = 0; i < paramblock.m_pathnodes.Count; i++)
             {
                 Handles.color = Color.blue;
-                Actor AP = (Actor)GetComponent(typeof(Actor));
+                //Actor AP = (Actor)GetComponent(typeof(Actor));
                 if (paramblock.b_showdebuginfos)
                 {
                     Handles.Label(transform.position + Vector3.right * 5, S);
@@ -486,7 +424,9 @@ public class MovingPlatformDataset  : Dataset
         {
             paramblock.ismoving = false;
             var a = new WaitForSeconds(tempo);
+            Debug.Log(a.ToString());
             WaitForSeconds s = new WaitForSeconds(tempo);
+            Debug.Log(s.ToString());
             paramblock.ismoving = true;
         }
 

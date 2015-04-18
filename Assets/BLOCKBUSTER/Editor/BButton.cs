@@ -2,27 +2,42 @@
 using System.Collections;
 
 [System.Serializable]
-public abstract class BButton  
+public abstract class BBMovepadControll  
 {
-    int m_functionID;
+
+    System.Guid guid = System.Guid.NewGuid();
+    NodeGraph nodegraph = new NodeGraph();
+    string nodegraphpath;
+
+
 	// Use this for initialization
-	public virtual int GetID() 
+	public int GetID() 
     {
-        return m_functionID;
+        return guid.GetHashCode();
 	}
-	// Update is called once per frame
-	public virtual void SetID(int I) 
+
+    public void Init ()
     {
-        m_functionID = I;
-	}
+
+        nodegraphpath = BBDir.Get(BBpath.SETING) + guid.GetHashCode() + ".xml";
+        if (!System.IO.File.Exists(nodegraphpath))
+        {
+            BBCtrlEditor.MovepadButtonEdited = this;
+            BBCtrlEditor.init();
+        }
+
+    }
+
+
 
     public abstract void Invoke();
 
 }
 
 
-public class BButtonMove : BButton 
+public class BButton : BBMovepadControll 
 {
+
     public override void Invoke()
     {
        // DoBlockMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));

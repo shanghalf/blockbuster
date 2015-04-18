@@ -11,11 +11,13 @@ public class triggerscript : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
     {
+        /*
         BBehavior bb ;
         if (parentobject)
         {
             bb = (BBehavior)parentobject.GetComponent("Platform");
         }
+         * */
    	
 	}
 	

@@ -234,12 +234,15 @@ public abstract class BBehavior : MonoBehaviour
     /// need override ( no meaning to get any generic implementation 
     /// </summary>
     /// <returns></returns>
+    /// 
+    [BBCtrlVisible] 
     public abstract Dataset GetDataset();
     //public  abstract void SetDataset(System.Type T);
     public  abstract void DoGUILoop(Rect Mainwindow);
     public abstract void OnDrawGizmosSelected();
     public abstract void OnCustomSceneGUI(SceneView sceneview);
-    public abstract void SetDataset(object o);
+    [BBCtrlVisible] 
+    public abstract void SetDataset(Dataset o);
 
 
 
@@ -313,6 +316,7 @@ public abstract class BBehavior : MonoBehaviour
     {
         //var a = new WaitForSeconds(tempo);
         WaitForSeconds s = new WaitForSeconds(tempo);
+        Debug.Log(s.ToString());
     }
 
 

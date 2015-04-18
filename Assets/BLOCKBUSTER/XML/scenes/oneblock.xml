@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="gb2312"?>
+<scenecluster xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <rootnodepos>
+    <x>0</x>
+    <y>0</y>
+    <z>0</z>
+  </rootnodepos>
+  <baseassetproplist>
+    <BaseActorProperties>
+      <parentgui>cb928dba-21be-4158-8d6b-1695c388d13a</parentgui>
+      <guid>41580f36-f58b-419e-8215-318fd521d20e</guid>
+      <assetname>SANDBOX_BUILD_2_2_2_04_B</assetname>
+      <orig_rotation>
+        <x>-0.6849711</x>
+        <y>-0.175540969</y>
+        <z>-0.175540984</z>
+        <w>0.6849711</w>
+        <eulerAngles>
+          <x>270</x>
+          <y>331.25177</y>
+          <z>0</z>
+        </eulerAngles>
+      </orig_rotation>
+      <orig_pos>
+        <x>26.7379646</x>
+        <y>140.145508</y>
+        <z>-36.97979</z>
+      </orig_pos>
+      <last_pos>
+        <x>26.7379646</x>
+        <y>140.145508</y>
+        <z>-36.8197861</z>
+      </last_pos>
+      <block_size>
+        <x>2.77754974</x>
+        <y>5.072296</y>
+        <z>2.77754974</z>
+      </block_size>
+      <BehaviorListID>
+        <string>b38ee01b-9672-4738-b657-464affbf55a8</string>
+        <string>34551ab9-9954-4011-b0ea-e23c4177b264</string>
+      </BehaviorListID>
+      <grouped>false</grouped>
+    </BaseActorProperties>
+  </baseassetproplist>
+</scenecluster>

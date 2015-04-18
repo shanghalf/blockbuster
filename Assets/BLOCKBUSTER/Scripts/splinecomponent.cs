@@ -70,7 +70,7 @@ public class splinecomponent : MonoBehaviour {
     
     void OnDrawGizmos()
     {
-        Vector3 p = transform.position;
+        //Vector3 p = transform.position;
 
         for (int c = 0; c < handles.GetLength(0); c++)
             if (handles[c].objref == null)

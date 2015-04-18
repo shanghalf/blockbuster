@@ -66,14 +66,14 @@ public class RotatingPlatform : BBehavior
     // should implement only shared props for all behaviors 
     public RotatingPlatformDataset paramblock = new RotatingPlatformDataset();
 
-
+    [BBCtrlVisible] // define a function visible for BBControl 
     public override Dataset GetDataset()
     {
         return paramblock;
     }
 
     [BBCtrlVisible] // define a function visible for BBControl 
-    public override void SetDataset(object o )  
+    public override void SetDataset(Dataset o )  
     {
         
         paramblock = (RotatingPlatformDataset)o;
@@ -178,7 +178,7 @@ public class RotatingPlatform : BBehavior
 
         Vector3 v = new Vector3(0, 0, 0);
         v = paramblock.rotatelookpoint.Getlookatpoint(paramblock.rotateindex, 1.0f, paramblock.rotationstepnumber);
-        var direction = v + transform.position;
+        //var direction = v + transform.position;
         var rr = Quaternion.LookRotation(Vector3.up, v);
         rr *= Quaternion.Euler(Vector3.forward);
         if (v.magnitude < 0.1)

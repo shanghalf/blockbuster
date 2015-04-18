@@ -64,9 +64,6 @@
     <Reference Include="AssetStoreToolsExtra">
       <HintPath>Assets\AssetStoreTools\Editor\AssetStoreToolsExtra.dll</HintPath>
     </Reference>
-    <Reference Include="BlockbusterControll">
-      <HintPath>Assets\BLOCKBUSTER\Editor\BlockbusterControll.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Assets\BLOCKBUSTER\Editor\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
@@ -166,18 +163,14 @@
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\AssetList.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\assettransfert.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\07ead1c5-8772-4e3e-bd1e-d9a0f312b6d0.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\16ca4903-0ba0-43d3-930b-c01f7cf06f68.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\27fbbfb6-ebdc-430b-b19c-33028890967e.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\3403780a-f24d-4c5a-ac8f-d0d8ef37dba2.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\3c737715-2678-4663-b5e7-a65400096d9d.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\5821a673-c91f-4679-bdf1-a132f010e6d3.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\6a78c13c-f9f4-4f9a-bf77-db8e2582dd05.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\7d93063f-0f01-499d-a3ec-ff25d0af8e37.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\94351902-e240-4f2c-8095-3c232ae1400f.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\a3e92644-0a66-42d1-b4c5-5bee51974792.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\d67b115d-1661-4612-8a89-598b496c51f9.xml" />
-    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\ddb84231-c8d1-410a-a0ed-14debc0ff4ca.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\graph.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\graph_V.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\move45.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\movebackward.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\movebase.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveforward.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveside.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\rotatebase.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\03fe2863-fc2e-4cba-a95f-b7eb1d299c3b.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\0460dd9c-0256-4c1b-90dc-4ea0f010d727.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\050db306-969b-4ac4-ac21-c878a52f322d.xml" />
@@ -304,6 +297,7 @@
     <None Include="Assets\BLOCKBUSTER\XML\preset\preset1.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\preset\preset2.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scene.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\scenes\oneblock.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene2.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\scenes\scene3.xml" />

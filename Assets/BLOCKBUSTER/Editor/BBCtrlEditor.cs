@@ -32,7 +32,7 @@ public class BBCtrlEditorLayer
 public class BBCtrlEditor : EditorWindow
 {
     [MenuItem("BlockBuster/BBControllEditor")]
-    static void init()
+    public static void init()
     {
         EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
         MethodInfo[] MethodInfoList = typeof(BBCtrlNode).GetMethods();
@@ -41,48 +41,36 @@ public class BBCtrlEditor : EditorWindow
             {
                 MethodBody B=  i.GetMethodBody();
             }
-
         // 2 TIMERS FOR EDITOR PURPOSES 
         BBCtrlEditortimerList.Clear();
         BBCtrlEditortimerList.Add("T1", new EditorTimer());
         BBCtrlEditortimerList.Add("T2", new EditorTimer());
         BBCtrlEditortimerList["T2"].StartCountdown(1.0f);
-
         // ROOT IS THE FIRST AND MANDATORY NODE FOR THE VIEW 
-
-
-
         BBCtrlNode.THEGRAPH.ROOTNODE = new BBCtrlNode(BBCtrlNode.ROOTPOS, "ROOT");
         BBCtrlNode.THEGRAPH.ROOTNODE.isroot = true;
-
-
-
-
-
         BBCtrlNode.THEGRAPH.ROOTNODE.name = "ROOT";
         BBCtrlNode.THEGRAPH.ROOTNODE.isroot = true;
-
-
-    
-
-
-
         // init BBCTRL 
         // since this view is linked to Movepad ( BBCTRL is the movepad ) 
-        BBCtrl.Init();
+        BBMovepad.Init();
+        if (NodeGraph.autoload)
+        {
+            if (System.IO.File.Exists(NodeGraph.autosavefilename))
+                BBCtrlNode.THEGRAPH.Load(NodeGraph.autosavefilename);
+        }
+        
     }
     // the ofset from window title bar to drawing area 
     int WINDOWHEADOFFSET = 20;
-
     // list of timers used in the editor view 
     public static Dictionary<string,EditorTimer> BBCtrlEditortimerList = new Dictionary<string,EditorTimer>();
     public static bool BBCTRLEditorFocused = false ;
     public static bool showdebuginfo;
-
     public static BBCtrlNode RootNode;
-  
 
 
+    public static BBMovepadControll MovepadButtonEdited;
 
     /// <summary>
     ///  check if a type can be converted 
@@ -112,10 +100,10 @@ public class BBCtrlEditor : EditorWindow
     /// <param name="layername"></param>
     /// <param name="pos"></param>
     /// <param name="linear"></param>
-    public void ShowMovePadGrid(string layername, Vector2 pos, bool linear)
+    public void ShowMovePadGrid(BBMovepadLayerDescriptor layer, Vector2 pos, bool linear)
     {
         // call inside a gui event draw 
-        for (int ic = 0; ic < Math.Pow(BBCtrl.MVPGSZ, 2); ic++)
+        for (int ic = 0; ic < Math.Pow(BBMovepad.MVPGSZ, 2); ic++)
         {
             int index = 0;
             switch (linear)
@@ -124,16 +112,15 @@ public class BBCtrlEditor : EditorWindow
                     index = ic;
                     break;
                 case false:
-                    Vector2 mpos = Event.current.mousePosition - BBCtrl.mvpd_rect.position;
-                    Texture2D T = BBCtrl.GetTextureFromLayer(layername, TXTINDEX.NORMAL);
-                    Color32 C = T.GetPixel((int)mpos.x, BBCtrl.MVPGSZ - (int)mpos.y);
+                    Vector2 mpos = Event.current.mousePosition - BBMovepad.mvpd_rect.position;
+                    Color32 C = layer.TEXTURES[(int)TXTINDEX.NORMAL].GetPixel((int)mpos.x, BBMovepad.MVPGSZ - (int)mpos.y);
                     index = C.r;
                     break;
             }
-            int[] I = BBCtrl.CalcRectFromIndex(ic);  //Rect(px, py, bsz, bsz);
+            int[] I = BBMovepad.CalcRectFromIndex(ic);  //Rect(px, py, bsz, bsz);
             Rect NR = new Rect(I[0], I[1], I[2], I[3]);
             NR.position += pos;
-            GUI.TextField(NR, (index).ToString(), BBCtrl.BBGuiStyle );
+            GUI.TextField(NR, (index).ToString(), BBMovepad.BBGuiStyle );
         }
     }
 
@@ -145,9 +132,8 @@ public class BBCtrlEditor : EditorWindow
     /// <param name="id"></param>
     void DoBBCtrlWindow(int id)
     {
-        Rect R = new Rect(0, WINDOWHEADOFFSET, BBCtrl.mvpd_rect.width, BBCtrl.mvpd_rect.height );
-        Texture2D T = BBCtrl.GetTextureFromLayer("bbmain", TXTINDEX.TARGET);
-        GUI.DrawTexture( R , T); // draw the target 
+        Rect R = new Rect(0, WINDOWHEADOFFSET, BBMovepad.mvpd_rect.width, BBMovepad.mvpd_rect.height );
+        GUI.DrawTexture( R , BBMovepad.Mainlayer.TEXTURES[(int)TXTINDEX.TARGET]); // draw the target 
         //ShowMovePadGrid("bbmain", new Vector2(0, WINDOWHEADOFFSET), true);
         GUI.DragWindow();
     }
@@ -163,19 +149,17 @@ public class BBCtrlEditor : EditorWindow
         return;
     }
 
-
-    void DisplayPlacementGrid ()
+    /// <summary>
+    /// debug grid 
+    /// </summary>
+    void DrawGrid ()
     {
         Rect SCR = new Rect(0, 0, Screen.width, Screen.height);
-
         if (BBCtrlNode.THEGRAPH.ROOTNODE == null)
             init();
         List<BBCtrlNode> L = new List<BBCtrlNode>();
-
         Vector2 NodeSize = new Vector2(BBCtrlNode.THEGRAPH.ROOTNODE.Windowpos.width, BBCtrlNode.THEGRAPH.ROOTNODE.Windowpos.height);
         BBDrawing.BBDoGridLayout( SCR, NodeSize);
-
-
     }
 
   
@@ -186,28 +170,32 @@ public class BBCtrlEditor : EditorWindow
     /// </summary>
     void OnGUI()
     {
-
         BBCtrlNode.hierarchy = "";
         if (BBCtrlNode.dirty)
         {
             BBCtrlNode.THEGRAPH.FlushBuffer();
             BBCtrlNode.THEGRAPH.ROOTNODE.REcusiveCollectNodes();
             BBCtrlNode.dirty = false;
-
         }
-        
-  
-
-
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("SAVE"))
+        if (GUILayout.Button("APPLY"))
         {
            BBCtrlNode.THEGRAPH.Save();
+           EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
+           E.Close();
         }
+        if (GUILayout.Button("SAVE"))
+        {
+            BBCtrlNode.THEGRAPH.Save(true);
+        }
+
         if (GUILayout.Button("LOAD"))
         {
-            string path = BBDir.Get(BBpath.SETING) + BBCtrlNode.THEGRAPH.Guid.ToString() + ".xml";
-            BBCtrlNode.THEGRAPH.Load(path);
+            string path ;
+            if (BBMovepadLayerDescriptor.autoload)
+                path = BBDir.Get(BBpath.SETING) + BBCtrlNode.THEGRAPH.Guid.ToString() + ".xml";
+            else path = null;
+            BBCtrlNode.THEGRAPH.ForceLoad();
     
         }
 
@@ -224,12 +212,14 @@ public class BBCtrlEditor : EditorWindow
 
 
         // perform the layout routine 
-        DisplayPlacementGrid();
+        DrawGrid();
    
 
 
         // set node focus 
        
+
+        BBMovepadLayerDescriptor.autoload = GUI.Toggle(new Rect(10, Screen.height -  200, 100, 20), BBMovepadLayerDescriptor.autoload, "autoload");
 
 
         if (BBCtrlNode.scrolllock = GUI.Toggle(new Rect(10, Screen.height - 150, 100, 20), BBCtrlNode.scrolllock, "scroll lock"))
@@ -241,7 +231,7 @@ public class BBCtrlEditor : EditorWindow
             BBCtrlNode.debugfloat4 = GUILayout.HorizontalSlider(BBCtrlNode.debugfloat4, 0f, 1000f);
         }
 
-        BBCtrlNode.angrynodes = GUI.Toggle(new Rect(10, Screen.height - 100, 100, 20), BBCtrlNode.angrynodes, "Angry Nodes");
+        BBCtrlNode.unfiltered = GUI.Toggle(new Rect(10, Screen.height - 100, 100, 20), BBCtrlNode.unfiltered, "show all method");
 
         String str = "";
 
@@ -252,20 +242,26 @@ public class BBCtrlEditor : EditorWindow
         {
             str += n.name + "\n";
             str += "velocity" + n.velocity.ToString() + "\n";
-            GUI.Box(n.Windowpos, "");
+            //GUI.Box(n.Windowpos, "");
+            
+
         }
         str += "\n\n\n\n";
         GUILayout.Label(str);
         BeginWindows(); // ---------------------------------------------------------------------------------------------- START WINDOWS LOOP
 
-        GUILayout.Label(BBCtrlNode.createdlist);
         GUILayout.Label(BBCtrlNode.hierarchy);
+
 
         BBCtrlNode.THEGRAPH.ROOTNODE.DoNode();
 
         EndWindows();
 
+        
+
         Repaint();
+        BBCtrlNode.NodeDebuginfos = "";
+
 
 
     }

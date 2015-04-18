@@ -1,0 +1,394 @@
+version: 2.4.0
+© Leslie Young
+http://plyoung.com/plygame/
+
+Note: 	plyCommon, plyBlox, plyRPG, and DiaQ version notes
+		will be in their respective folders
+
+===============================================================
+
+Version 2.4.0
+
+- Fixed the Layers fix for Unity 5. For some reason this update never reached the Asset Store
+- Updated to plyRPG 1.2.3 and DiaQ 1.3.7
+
+Version 2.3.9
+
+- Updated to plyRPG 1.2.2, plyBlox 1.3.6, and DiaQ 2.1.3
+
+Version 2.3.8
+
+- Updated: Made Unity 5 compatible
+- Updated to include plyRPG 1.2.1, DiaQ 2.1.2 and plyBlox 1.3.6
+
+Version 2.3.7
+
+- Updated to include RPG 1.2.0, Blox 1.3.5, DiaQ 2.1.1
+
+Version 2.3.6
+
+- Updated to plyRPG 1.1.9, plyBlox 1.3.4, and DiaQ 2.1.0
+
+Version 2.3.5
+
+- Added: `Mouse Button Handled` Block
+- Updated: Input Manager set to accept motion from all joysticks and not only joystick 1
+- Updated: Added a way to change the "now loading ..." text (see Loading Screen Editor)
+- Fixed: Blox where not being enabled when a delayed Event was queued for execution causing it to fail if the Blox does not have an event like Update present which forced it to stay enabled
+- Updated: to DiaQ 2.0.9, Blox 1.3.3, and RPG 1.1.8
+
+Version 2.3.4
+
+- Updated to plyRPG 1.1.7 and plyBlox 1.3.2
+
+Version 2.3.3
+
+- Added: Localization support
+- Added: Language strings Editor
+- Added: Block to set/ get Event's "return value" under `Flow > System`
+- Updated: The Language Screen now has a function
+- Updated: Events are now able to set a "return value"
+- Updated to plyRPG 1.1.6, plyBlox 1.3.1, DiaQ 2.0.8
+
+Version 2.3.2
+
+- Updated to plyRPG 1.1.5, plyBlox 1.3.0
+- Updated: Removed IDs check request widow that pop-up when using plyGame Play button
+
+Version 2.3.1
+
+- Updated to plyRPG 1.1.4, plyBlox 1.2.9, DiaQ 2.0.7
+- Added: Option to check Unique IDs for Persistable Objects during refresh/ update option
+- Fixed: Errors in Unique Key generator (mostly used by LoadSave System)
+
+Version 2.3.0
+
+- Updated: Changed the way LoadSave keys are saved as it caused problems with those keys
+	that should be 'global' and not be bound to a specific scene. You need to use the 
+	Delete button in the plyGame Main Editor LoadSave section to clear old data
+	after applying this update.
+- Updated to plyRPG 1.1.3 and plyBlox 1.2.8
+
+Version 2.2.9
+
+- Updated to plyRPG 1.1.2 and plyBlox 1.2.7
+
+Version 2.2.8
+
+- Updated to plyRPG 1.1.1 and plyBlox 1.2.6
+
+Version 2.2.7
+
+- Fixed: The `reset last load` was not clearing the temp key store, resulting in errors when starting new game
+- Updated to plyRPG 1.1.0, plyBlox 1.2.5, and DiaQ 2.0.6
+
+Version 2.2.6
+
+- Updated: `Pause` Block was moved to `Flow > System`
+- Updated to plyRPG 1.0.9 and plyBlox 1.2.4
+
+Version 2.2.5
+
+- Updated to plyRPG 1.0.8, plyBlox 1.2.3, DiaQ 2.0.5
+
+Version 2.2.4
+
+- Added: Block to delete LoadSave profiles
+- Fixed: Error in Sound Volume Updater during startup
+- Fixed: Problem with Screens System Blox not triggering Update events
+- Updated to plyRPG 1.0.7, plyBlox 1.2.2, and DiaQ 2.0.4
+
+Version 2.2.3
+
+- Updated: Added a confirmation when choosing to delete something in the plyGame main, and Screens editors
+- Updated to plyRPG 1.0.6, plyBlox 1.2.1 and DiaQ 2.0.3
+
+Version 2.2.2
+
+- Added: Pause game and Blocks to control this
+- Updated with plyRPG 1.0.5 and DiaQ 2.0.2
+
+Version 2.2.1
+
+- Updated with plyRPG 1.0.4 and plyBlox 1.2.0
+
+Version 2.2.0
+
+- Update: PersistableObject now allows for a custom save/ load key for object at runtime
+- Added: Block to get Screens System's plyBlox object
+- Fixed: Global Variables where not being saved/ restored correctly
+
+Version 2.1.9
+
+- Fixed: Interface effects not correctly updating when volume changed
+- Added: Block to get what item is equipped on a slot
+- Added: Block to set what object the audio listener should follow
+- Added: Option to disable creation of a default audio listener
+- Added: 'Click-to-continue' option in Load Screens
+- Updated: 'Show Load Screen' Block
+
+Version 2.1.8
+
+- Added: Sound Auto-Volume System http://www.plyoung.com/docs/sound-settings.html
+- Added: New Audio Blocks
+- Added: plyGame Global now has a default audio listener which can be controlled via new Blocks under Audio group
+- Added: New Screens system related Blocks
+- Added: Auto-init objects support. See http://www.plyoung.com/docs/auto-instantiate.html
+- Updated: The Screens Button element can now send a string value to param1 of the called event
+- Fixed: Game would get stuck after splash screens if loading screens where defined
+- Fixed: The 'Is Visible' Block was returning true even when a Screen was not visible
+
+Version 2.1.7
+
+- Fixed: Screens System Blocks could cause non-critical error messages when used in Update event
+- Added: Screens System related Events
+
+Version 2.1.6
+
+- Added Graph and Nodes system to plyCommon
+- Added the Data Providers system to pyCommon
+- DiaQ.2 plugin added to plyGame
+
+Version 2.1.5
+
+- Updates to plyRPG and plyBlox
+
+Version 2.1.4
+
+- Major restructure of plyGame code
+- It is now possible to turn off sections of plyGame that you do not need in your game (See the new options in plyGame's Main Editor Window, under Plugins)
+- RPG systems moved to plyRPG plugin (see plyoung/plyRPG/Documentation/version.txt for update notes)
+- Fixed bug with the "mouse over" option of skill where the character would run up to and hit empty space if target NPC moved away
+- Changed skill projectile instantiation code such that custom projectile controllers can be used. See Skill docs.
+- Interact system do not trigger if NPC is not Friendly
+- plyBlox
+	+ Fixed bug in Vector3 SmoothDamp Block
+	+ When using "Stop Movement" Block, the selected is not cleared, if any selected
+	+ Moved Screen and Cursor related Blocks to Render group (from Common)
+	+ Added the GetProperty and SetProperty Blocks (under Common). These allows you to get and set just about any value of GameObjects and their Components
+	+ Added more blocks to Common > Conversion
+- Deprecated Blocks
+	+ Math > 'as Vector2'. Please use Common > 'as Vector2'
+	+ Math > 'as Vector3'. Please use Common > 'as Vector3'
+	
+Version 2.1.3
+
+- Changed Interact action so that interact is not triggered on Hostile and Neutral NPCs, since they are normally to be attack (skill used on)
+- Fixed queued skill to be canceled when the player perform input that moves the character
+- Fixed "mouse over" option not finding the 'target' when player is too far from NPC
+- Tweaked the skill auto-move in range code so that character stops at a better distance
+- plyBlox
+	+ Fixed bug in the "Is Loading" Block
+	+ Added options to "Look At" Blocks to limit to horizontal or vertical rotation
+	
+Version 2.1.2
+
+- Fixed possible null reference errors inside GameGlobal
+- Fixed various problems with the Status system, including bugs and how it works. It should be easier to use now
+- Fixed bug with bag weight not being updated when item is removed
+- Skills
+	+ Fixed various small issues with the skills system
+	+ Fixed problem with target selection (it would choose NPCs that have higher status than valid targets status)
+	+ Fixed bug where skill would not activate if set to not 'perform while moving' and character is on sloped terrain
+	+ Added option to choose a dummy object that can be used as position/ offset from which a projectile is created
+	+ On Skill Activate now sets more private variables that might be useful
+	+ Implemented the AtClickPosition option
+	+ Added the CameraDirection and CameraForward options for execution direction
+- plyBlox
+	+ Fixed bug in the stripping support (link.xml generator)
+	
+Version 2.1.1.beta
+
+- Added support for Stripping (used to make smaller mobile builds)
+- Major updates to LoadSave System. See LoadSave docs and the Block under IO for more info
+- Added support for runtime objects in LoadSave (restoring of objects when added at runtime - only for objects that supports this, like Items)
+- Added Item & Bag/Inventory Systems. See Items documentation to learn more
+- Added ability to Equip Items to a character
+- Fixed potential null-ref error in input system
+- Fixed Top-Down Cam z-offset calculation
+- Fixed error where the wrong Custom Screen is shown, after splash screens, if custom screens where moved up or down in the list of screens
+- Fixed the Screen fields that where not accepting input
+- SpawnPoint are now LoadSave aware
+- Factions are now LoadSave aware
+- Items & Bags are now LoadSave aware
+- plyBlox
+	+ Faction Blocks where moved to the Character group
+	+ Added Blocks & Events related to Items, Bag, and Equipment
+	+ Added new Blocks related LoadSave System
+	+ Added data retrieval Blocks that can retrieve ident, name, meta and images from objects that has this data
+	+ Added Blocks to get System.Object type values from plyBlox Variables
+	+ Updated various plyGame Events to send System.Object temp variables that can be used in the new data retrieval blocks
+	+ The Editor now resets the scroll position when switching between Events
+	
+Version 2.1.0.beta
+
+- Updated the Input Settings editor with new layout of definitions and a new input selection wizard
+- Change the default input binds that are create and used by various systems
+- Made improvement to when character decides to move depending on click or held for click-to-move in top-down controllers
+- Added support for modifier keys to Input system
+- Added click-to-move click marker support to top-down player controllers
+- Added 'Auto-Destroy after Timeout' component
+- Added 'Auto-Disable after Timeout' component
+- Added 'Start Anim State when Enable' component
+- Added option to disable click-hold to move character in top-down controllers
+- Added Interaction System (mainly used to trigger interact events by player with NPCs and Intractable Objects)
+- Added Interact Object which can be used to create objects the player interacts with, for example a treasure chest
+- Fixed the Player Top-Down Nav controller to update the speed of the agent too when a call to change player speed is made
+- Fixed a bug where camera look-at offset was calculated incorrectly in camera controllers
+- plyBlox
+	+ Events and Blocks related to Interact System
+	
+Version 2.0.9.beta
+
+- Updated Screens Editor to show changes on Screen Element as custom style is changed
+- Added general purpose Location Marker object
+- Added Actors List to plyGame Editor
+- Added Spawn Point functionality
+- More improvements to the Editor GUI theme and cleanup of the skin resources
+- plyBlox
+	+ Cleaned Blox editor skin
+	+ Added Events related to Spawn Points
+	
+Version 2.0.8.beta
+
+- Added the Markers system: used for selection markers, marking of special NPCs like quest givers or shop keepers, etc.
+- Added a Camera Facing Billboard component, making it it easier to create objects that always face the camera. Useful for markers that are simple textures planes
+- plyBlox
+	+ Added Input Blocks to read mouse, key and touch input
+	+ Added Screen related Blocks
+	+ Added Mouse Cursor related Blocks
+	+ Added Blocks related to Unity CharacterController
+	+ Updated the "with info" variants of Trigger and Collision Events. Please make sure to check what the temporary variables are called now if you use these Events.
+	+ Added Blocks related to the markers system
+	
+Version 2.0.7.beta
+
+- Added a way to list additional components to disable when an actor/ character enters death state
+- Added option to legacy animation controllers for setting a death animation to play when character is killed
+- Added OnDeath and Dead parameter options to BasicMecanimController
+- Fixed BasicMecanimController to set the Forward and LeftRight parameters with velocity and not movement input which was clamped to 0..1
+- Changed the current Top-Down and 3rd-person Cameras to be smoother and respond better
+- plyBlox
+	+ Improved editor for local and global variables
+	
+Version 2.0.6.beta
+
+- Restructuring of the Game Global and how various assets, created in the plyGame Editor, are accessed
+- Fixed an error in ActorClass editor that occur when deleting a class
+- Added rectangular option to NPC wander settings, in addition to circular
+- Changed Character mecanim controller to work more like the legacy animation controller with strafe support and the character controller handling the motion and rotation of the character rather than the animation controller
+- Fixed problem with skill queue option not working on skill on cool-down
+- Made some changes to the options that controls if a character can use a skill when moving
+- Fixed bug with Character still performing a queued skill after control of the character was disabled (for example when disabling an NPC AI)
+- Added a way to 'Kill' a character via either plyBlox or automatically when HP reaches zero
+- Made some improvements to how options in inspector are presented
+- plyBlox
+	+ Made improvements to the error messages printed by Blocks so that it is easier to track down what is wrong
+	+ Added inspector property that can be set to indicate that the object should not be disabled
+	+ Updated GetComponent Block to specify which component in order to get when more than one of same type of component is on an object
+	+ Fixed bug in Comparison Blocks that where wrongly returning an Error Code
+	+ Added Block to Kill Actor (character)
+	+ New Event 'Actor > On Actor Death'
+	
+Version 2.0.5.beta
+
+- Added a basic mecanim based character animation controller
+- Made a few changes to existing character controllers to support the new mecanim controller
+- Various cosmetic changes to editor
+- Fixed an error that occur when running a scene that was not yet added to the build settings
+- Fixed bug with in Factions editor. The status/ relation buttons where being drawn in wrong order
+- Added more options to the Skills 'valid targets' property
+- Updated Factions with variable lists. These could be used to for example create a reputation system
+- Added new option to Skills to set whether the Skill can be queued or not when the character is already performing another
+- plyBlox
+	+ Various visual improvements to blocks
+	+ Added Mecanim Blocks
+	+ Made GetComponent Block able to also look in child objects of target
+	+ Added a way to hide block fields and block properties depending on the status of another block
+	+ See plyBlockFieldAttribute.ShowIfTargetFieldInvalid in API docs
+	+ Added Blocks and Events related to Factions
+	+ Added Blocks for generating random numbers and vectors
+	+ Changed the Skills related blocks, allowing you to specify the Skill via its name, etc in addition to being able to select it from a list
+	+ Fixed bug with OnXP/HP Change events not being triggered. Note that an attribute change by a change in level will not trigger the Change events for attributes
+	+ Changed the Set State Block to not fail, and return an Error code, when the blox is already in the requested State.
+		It will print a warning so that you know Events like the State Enter will not trigger
+		
+Version 2.0.4.beta
+
+- Updated the Factions Editor with settings to change how Factions are related to each other
+- Added NPC Detection System, Events and Blocks to drive the AI
+- Added the Follow option to NPCs
+- Added Factions system to Characters
+- Updated NPC movement controllers, fixing some bugs and making overall improvements
+- Updated Skills with options to control effect/ hit timing
+- Refined the Skill's projectile creation code some more so it looks better
+- Fixed bug with triggers preventing mouse input for click-to-move to not work over trigger area
+- Fixed bug that prevented plyGame builds from starting on mobile devices (tested on Android 3.2)
+- Fixed bug that prevented delayed triggered events from running
+- plyBlox
+	+ Updated the description (help text) of the fields for many of the Blocks
+	+ Fixed problem that can occur when there are Blocks with the same name (even though in different groups)
+	+ Vector3 SmoothDamp block fixed to accept Variable for velocity field
+	+ Added more Blocks related to Characters (Actors)
+	+ Added Blend Block under Animation
+	+ Added Blocks for Character Legacy Animation Controller for easier character animation control
+	
+Version 2.0.3.beta
+
+- Added Top-Down Nav Player Controller that uses Unity navmesh navigation to move the character
+- Made improvements to how jumping works in the Top-Don and 3rd Person player controller
+- Fixed problem with the cameras not always snapping forward when obstacle between the view and player
+- Fixed bugs in Skills (projectile related)
+- plyBlox
+	+ Added more Blocks under character
+	+ Added more Blocks under Math Vector2/3
+	+ Added more Transform and GameObject related Blocks under Object
+	+ Added Blocks that can execute Blocks timeout (under Flow)
+	+ Change Trigger Event Block to allow a delay before Event is triggered
+	
+Version 2.0.2.beta
+
+- Fixed bug with Skill events not triggering
+- Fixed various bugs in the Screens System
+- Fixed bug that could cause objects to not initialise correctly if they where set to use persistence but the PersistableObject is missing
+- Fixed bug where character wold continue to move even if Skill request no movement while being executed
+- Fixed error where Horizontal and Vertical movement Input definition where swapped
+	+ Please use Reset button in input manager to reset the incorrect defaults
+- plyBlox related updates
+	+ Fixed bugs in some existing blocks trying to access their owning blox too early after being created
+	+ Fixed bug in Hide Custom Screen, hiding all screens and not only specified one
+	+ Changed the Use Skill block to allow selection of Skill from a list. Please check and update Blox where you use this Block
+	+ Added blocks related to the Light component
+	+ Added blocks related to the AudioListener component
+	+ Added blocks related to the AudioSource component
+	+ Added blocks related to the Animation component
+	+ Added blocks to Vector3 and Vector2 (under math)
+	+ Added blocks related to plyGame Screens System
+	+ Added blocks related to Actor and Skills
+	+ Added blocks related to Character
+
+Version 2.0.1.beta
+
+- Now includes the XML doc for the DLLs (API)
+- Fixed exception when viewing Actor debug info while HP or XP is not defined and linked
+- Fixed bug with Splash screens not initializing properly - causing some elements to fail (like movie not playing sound)
+- Attributes linked to Leveling now correctly updates when the level increases
+- Attribute's consumable value can be set to restore to the max value when character level up
+- API updated to allow plugins to add own tab and editor to the plyGame Main Editor window
+- Added the LoadSave System and a default provider based on Unity PlayerPrefs to handle saving and loading game state
+- LoadSave Provider API allows you to create own provider
+- A new option in the Main Editor will allow you to choose and configure the LoadSave provider
+- Runtime API updates related to the LoadSave system and changes to how character and such are made, to hook them into the LoadSave system
+- Actor (Character) and related components are now LoadSave aware
+- Updated Screens System and InputManager to not allow GUI mouse click-through
+- plyBlox
+	+ Added new Blocks related to Screens system
+	+ Added Blocks related to LoadSave System found under `IO > LoadSave (plyGame)`
+	+ Added PlayerPrefs Blocks
+	+ Added error catching to detect when Block field types where changed since it was last serialized
+
+Version 2.0.0.beta
+
+- First beta release version of plyGame, formerly known as UniRPG.
+
+-eof-
