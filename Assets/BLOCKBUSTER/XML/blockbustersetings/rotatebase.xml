@@ -3,49 +3,50 @@
   <GraphOK>true</GraphOK>
   <ROOTNODE>
     <SUBNodesKEY>
-      <int>646145831</int>
-      <int>1296266119</int>
-      <int>-1544782840</int>
-      <int>-288491962</int>
+      <int>-594919333</int>
+      <int>-1465497851</int>
+      <int>-2099240540</int>
+      <int>-1402354550</int>
     </SUBNodesKEY>
-    <NodeId>865082550</NodeId>
+    <NodeId>-1925467543</NodeId>
     <ParentID>0</ParentID>
     <Windowpos>
-      <x>679.6267</x>
-      <y>160.797211</y>
+      <x>894.0729</x>
+      <y>296.8243</y>
       <position>
-        <x>679.6267</x>
-        <y>160.797211</y>
+        <x>894.0729</x>
+        <y>296.8243</y>
       </position>
       <center>
-        <x>774.6687</x>
-        <y>255.8392</y>
+        <x>990.6803</x>
+        <y>393.431732</y>
       </center>
       <min>
-        <x>679.6267</x>
-        <y>160.797211</y>
+        <x>894.0729</x>
+        <y>296.8243</y>
       </min>
       <max>
-        <x>869.7107</x>
-        <y>350.8812</y>
+        <x>1087.28772</x>
+        <y>490.039154</y>
       </max>
-      <width>190.083984</width>
-      <height>190.083984</height>
+      <width>193.214844</width>
+      <height>193.214844</height>
       <size>
-        <x>190.083984</x>
-        <y>190.083984</y>
+        <x>193.214844</x>
+        <y>193.214844</y>
       </size>
-      <xMin>679.6267</xMin>
-      <yMin>160.797211</yMin>
-      <xMax>869.7107</xMax>
-      <yMax>350.8812</yMax>
+      <xMin>894.0729</xMin>
+      <yMin>296.8243</yMin>
+      <xMax>1087.28772</xMax>
+      <yMax>490.039154</yMax>
     </Windowpos>
     <name>ROOT</name>
     <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
-    <Guid>7174d20a-ea5b-47db-a369-6c1f0bd6e578</Guid>
+    <Guid>5894cfa5-5359-4463-b8cb-c45a3e3dfdf5</Guid>
     <ParamFQ>System.Void, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
     <checknodevalid>true</checknodevalid>
     <LookupClassindex>0</LookupClassindex>
+    <lookupclassname>Actor</lookupclassname>
     <Lookupmethodindex>7</Lookupmethodindex>
     <LookupMethodName>Rotate</LookupMethodName>
     <ArglistFQ>
@@ -58,25 +59,25 @@
       <SlotInfo>
         <paramname>camspace</paramname>
         <index>0</index>
-        <linkedto>646145831</linkedto>
+        <linkedto>-2099240540</linkedto>
         <R>
-          <x>658.2934</x>
-          <y>160.797211</y>
+          <x>872.739563</x>
+          <y>296.8243</y>
           <position>
-            <x>658.2934</x>
-            <y>160.797211</y>
+            <x>872.739563</x>
+            <y>296.8243</y>
           </position>
           <center>
-            <x>674.2934</x>
-            <y>176.797211</y>
+            <x>888.739563</x>
+            <y>312.8243</y>
           </center>
           <min>
-            <x>658.2934</x>
-            <y>160.797211</y>
+            <x>872.739563</x>
+            <y>296.8243</y>
           </min>
           <max>
-            <x>690.2934</x>
-            <y>192.797211</y>
+            <x>904.739563</x>
+            <y>328.8243</y>
           </max>
           <width>32</width>
           <height>32</height>
@@ -84,35 +85,35 @@
             <x>32</x>
             <y>32</y>
           </size>
-          <xMin>658.2934</xMin>
-          <yMin>160.797211</yMin>
-          <xMax>690.2934</xMax>
-          <yMax>192.797211</yMax>
+          <xMin>872.739563</xMin>
+          <yMin>296.8243</yMin>
+          <xMax>904.739563</xMax>
+          <yMax>328.8243</yMax>
         </R>
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
       </SlotInfo>
       <SlotInfo>
         <paramname>Axis</paramname>
         <index>1</index>
-        <linkedto>1296266119</linkedto>
+        <linkedto>-680054935</linkedto>
         <R>
-          <x>658.2934</x>
-          <y>192.797211</y>
+          <x>872.739563</x>
+          <y>328.8243</y>
           <position>
-            <x>658.2934</x>
-            <y>192.797211</y>
+            <x>872.739563</x>
+            <y>328.8243</y>
           </position>
           <center>
-            <x>674.2934</x>
-            <y>208.797211</y>
+            <x>888.739563</x>
+            <y>344.8243</y>
           </center>
           <min>
-            <x>658.2934</x>
-            <y>192.797211</y>
+            <x>872.739563</x>
+            <y>328.8243</y>
           </min>
           <max>
-            <x>690.2934</x>
-            <y>224.797211</y>
+            <x>904.739563</x>
+            <y>360.8243</y>
           </max>
           <width>32</width>
           <height>32</height>
@@ -120,35 +121,35 @@
             <x>32</x>
             <y>32</y>
           </size>
-          <xMin>658.2934</xMin>
-          <yMin>192.797211</yMin>
-          <xMax>690.2934</xMax>
-          <yMax>224.797211</yMax>
+          <xMin>872.739563</xMin>
+          <yMin>328.8243</yMin>
+          <xMax>904.739563</xMax>
+          <yMax>360.8243</yMax>
         </R>
         <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
       </SlotInfo>
       <SlotInfo>
         <paramname>fullselection</paramname>
         <index>2</index>
-        <linkedto>-1544782840</linkedto>
+        <linkedto>-1402354550</linkedto>
         <R>
-          <x>658.2934</x>
-          <y>224.797211</y>
+          <x>872.739563</x>
+          <y>360.8243</y>
           <position>
-            <x>658.2934</x>
-            <y>224.797211</y>
+            <x>872.739563</x>
+            <y>360.8243</y>
           </position>
           <center>
-            <x>674.2934</x>
-            <y>240.797211</y>
+            <x>888.739563</x>
+            <y>376.8243</y>
           </center>
           <min>
-            <x>658.2934</x>
-            <y>224.797211</y>
+            <x>872.739563</x>
+            <y>360.8243</y>
           </min>
           <max>
-            <x>690.2934</x>
-            <y>256.7972</y>
+            <x>904.739563</x>
+            <y>392.8243</y>
           </max>
           <width>32</width>
           <height>32</height>
@@ -156,35 +157,35 @@
             <x>32</x>
             <y>32</y>
           </size>
-          <xMin>658.2934</xMin>
-          <yMin>224.797211</yMin>
-          <xMax>690.2934</xMax>
-          <yMax>256.7972</yMax>
+          <xMin>872.739563</xMin>
+          <yMin>360.8243</yMin>
+          <xMax>904.739563</xMax>
+          <yMax>392.8243</yMax>
         </R>
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
       </SlotInfo>
       <SlotInfo>
         <paramname>step</paramname>
         <index>3</index>
-        <linkedto>-288491962</linkedto>
+        <linkedto>-1465497851</linkedto>
         <R>
-          <x>658.2934</x>
-          <y>256.7972</y>
+          <x>872.739563</x>
+          <y>392.8243</y>
           <position>
-            <x>658.2934</x>
-            <y>256.7972</y>
+            <x>872.739563</x>
+            <y>392.8243</y>
           </position>
           <center>
-            <x>674.2934</x>
-            <y>272.7972</y>
+            <x>888.739563</x>
+            <y>408.8243</y>
           </center>
           <min>
-            <x>658.2934</x>
-            <y>256.7972</y>
+            <x>872.739563</x>
+            <y>392.8243</y>
           </min>
           <max>
-            <x>690.2934</x>
-            <y>288.7972</y>
+            <x>904.739563</x>
+            <y>424.8243</y>
           </max>
           <width>32</width>
           <height>32</height>
@@ -192,10 +193,10 @@
             <x>32</x>
             <y>32</y>
           </size>
-          <xMin>658.2934</xMin>
-          <yMin>256.7972</yMin>
-          <xMax>690.2934</xMax>
-          <yMax>288.7972</yMax>
+          <xMin>872.739563</xMin>
+          <yMin>392.8243</yMin>
+          <xMax>904.739563</xMax>
+          <yMax>424.8243</yMax>
         </R>
         <TypeFullString>System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
       </SlotInfo>
@@ -205,45 +206,210 @@
   <Nodes>
     <BBCtrlNode>
       <SUBNodesKEY />
-      <NodeId>646145831</NodeId>
-      <ParentID>865082550</ParentID>
+      <NodeId>-594919333</NodeId>
+      <ParentID>-1925467543</ParentID>
       <Windowpos>
-        <x>414.499359</x>
-        <y>62.7430878</y>
+        <x>197.030457</x>
+        <y>321.68103</y>
         <position>
-          <x>414.499359</x>
-          <y>62.7430878</y>
+          <x>197.030457</x>
+          <y>321.68103</y>
         </position>
         <center>
-          <x>467.488617</x>
-          <y>115.732346</y>
+          <x>297.030457</x>
+          <y>421.68103</y>
         </center>
         <min>
-          <x>414.499359</x>
-          <y>62.7430878</y>
+          <x>197.030457</x>
+          <y>321.68103</y>
         </min>
         <max>
-          <x>520.4779</x>
-          <y>168.7216</y>
+          <x>397.030426</x>
+          <y>521.681</y>
         </max>
-        <width>105.978516</width>
-        <height>105.978516</height>
+        <width>199.999969</width>
+        <height>199.999969</height>
         <size>
-          <x>105.978516</x>
-          <y>105.978516</y>
+          <x>199.999969</x>
+          <y>199.999969</y>
         </size>
-        <xMin>414.499359</xMin>
-        <yMin>62.7430878</yMin>
-        <xMax>520.4779</xMax>
-        <yMax>168.7216</yMax>
+        <xMin>197.030457</xMin>
+        <yMin>321.68103</yMin>
+        <xMax>397.030426</xMax>
+        <yMax>521.681</yMax>
+      </Windowpos>
+      <name>Vector3 Axis</name>
+      <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <Guid>a60d7c4f-9b22-47c2-8e20-4ca86f85377e</Guid>
+      <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
+      <checknodevalid>true</checknodevalid>
+      <LookupClassindex>0</LookupClassindex>
+      <lookupclassname>Actor</lookupclassname>
+      <Lookupmethodindex>2</Lookupmethodindex>
+      <LookupMethodName>front</LookupMethodName>
+      <ArglistFQ />
+      <slotspos />
+      <ParentFeedSlotInfo>
+        <index>1</index>
+        <linkedto>0</linkedto>
+        <R>
+          <x>0</x>
+          <y>0</y>
+          <position>
+            <x>0</x>
+            <y>0</y>
+          </position>
+          <center>
+            <x>0</x>
+            <y>0</y>
+          </center>
+          <min>
+            <x>0</x>
+            <y>0</y>
+          </min>
+          <max>
+            <x>0</x>
+            <y>0</y>
+          </max>
+          <width>0</width>
+          <height>0</height>
+          <size>
+            <x>0</x>
+            <y>0</y>
+          </size>
+          <xMin>0</xMin>
+          <yMin>0</yMin>
+          <xMax>0</xMax>
+          <yMax>0</yMax>
+        </R>
+        <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
+      </ParentFeedSlotInfo>
+      <isroot>false</isroot>
+    </BBCtrlNode>
+    <BBCtrlNode>
+      <SUBNodesKEY />
+      <NodeId>-1465497851</NodeId>
+      <ParentID>-1925467543</ParentID>
+      <Windowpos>
+        <x>563.809448</x>
+        <y>427.5885</y>
+        <position>
+          <x>563.809448</x>
+          <y>427.5885</y>
+        </position>
+        <center>
+          <x>663.809448</x>
+          <y>527.5885</y>
+        </center>
+        <min>
+          <x>563.809448</x>
+          <y>427.5885</y>
+        </min>
+        <max>
+          <x>763.809448</x>
+          <y>627.5885</y>
+        </max>
+        <width>200</width>
+        <height>200</height>
+        <size>
+          <x>200</x>
+          <y>200</y>
+        </size>
+        <xMin>563.809448</xMin>
+        <yMin>427.5885</yMin>
+        <xMax>763.809448</xMax>
+        <yMax>627.5885</yMax>
+      </Windowpos>
+      <name>Int32 step</name>
+      <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <Guid>f0ba4d8f-cf69-4ae5-b418-701e236d3071</Guid>
+      <ParamFQ>System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
+      <checknodevalid>true</checknodevalid>
+      <LookupClassindex>0</LookupClassindex>
+      <lookupclassname>Actor</lookupclassname>
+      <Lookupmethodindex>10</Lookupmethodindex>
+      <LookupMethodName>ANGLE45</LookupMethodName>
+      <ArglistFQ />
+      <slotspos />
+      <ParentFeedSlotInfo>
+        <index>3</index>
+        <linkedto>0</linkedto>
+        <R>
+          <x>0</x>
+          <y>0</y>
+          <position>
+            <x>0</x>
+            <y>0</y>
+          </position>
+          <center>
+            <x>0</x>
+            <y>0</y>
+          </center>
+          <min>
+            <x>0</x>
+            <y>0</y>
+          </min>
+          <max>
+            <x>0</x>
+            <y>0</y>
+          </max>
+          <width>0</width>
+          <height>0</height>
+          <size>
+            <x>0</x>
+            <y>0</y>
+          </size>
+          <xMin>0</xMin>
+          <yMin>0</yMin>
+          <xMax>0</xMax>
+          <yMax>0</yMax>
+        </R>
+        <TypeFullString>System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
+      </ParentFeedSlotInfo>
+      <isroot>false</isroot>
+    </BBCtrlNode>
+    <BBCtrlNode>
+      <SUBNodesKEY />
+      <NodeId>-2099240540</NodeId>
+      <ParentID>-1925467543</ParentID>
+      <Windowpos>
+        <x>506.843567</x>
+        <y>63.52762</y>
+        <position>
+          <x>506.843567</x>
+          <y>63.52762</y>
+        </position>
+        <center>
+          <x>593.9842</x>
+          <y>150.668243</y>
+        </center>
+        <min>
+          <x>506.843567</x>
+          <y>63.52762</y>
+        </min>
+        <max>
+          <x>681.1248</x>
+          <y>237.808868</y>
+        </max>
+        <width>174.28125</width>
+        <height>174.28125</height>
+        <size>
+          <x>174.28125</x>
+          <y>174.28125</y>
+        </size>
+        <xMin>506.843567</xMin>
+        <yMin>63.52762</yMin>
+        <xMax>681.1248</xMax>
+        <yMax>237.808868</yMax>
       </Windowpos>
       <name>Boolean camspace</name>
-      <ClassnameFQ>BBBLocks.BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
-      <Guid>9c008bb0-d27b-4aec-aca1-31fac4599781</Guid>
+      <ClassnameFQ>BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <Guid>c5355cfc-57ff-41b5-97f4-7cbe87de4053</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <checknodevalid>true</checknodevalid>
       <LookupClassindex>1</LookupClassindex>
-      <Lookupmethodindex>2</Lookupmethodindex>
+      <lookupclassname>BBBLocks</lookupclassname>
+      <Lookupmethodindex>3</Lookupmethodindex>
       <LookupMethodName>TRUE</LookupMethodName>
       <ArglistFQ />
       <slotspos />
@@ -286,126 +452,46 @@
     </BBCtrlNode>
     <BBCtrlNode>
       <SUBNodesKEY />
-      <NodeId>1296266119</NodeId>
-      <ParentID>865082550</ParentID>
+      <NodeId>-1402354550</NodeId>
+      <ParentID>-1925467543</ParentID>
       <Windowpos>
-        <x>398.9602</x>
-        <y>147.213043</y>
+        <x>546.2862</x>
+        <y>296.8243</y>
         <position>
-          <x>398.9602</x>
-          <y>147.213043</y>
+          <x>546.2862</x>
+          <y>296.8243</y>
         </position>
         <center>
-          <x>453.780029</x>
-          <y>202.032867</y>
+          <x>642.8936</x>
+          <y>393.431732</y>
         </center>
         <min>
-          <x>398.9602</x>
-          <y>147.213043</y>
+          <x>546.2862</x>
+          <y>296.8243</y>
         </min>
         <max>
-          <x>508.599854</x>
-          <y>256.8527</y>
+          <x>739.501038</x>
+          <y>490.039154</y>
         </max>
-        <width>109.639648</width>
-        <height>109.639648</height>
+        <width>193.214844</width>
+        <height>193.214844</height>
         <size>
-          <x>109.639648</x>
-          <y>109.639648</y>
+          <x>193.214844</x>
+          <y>193.214844</y>
         </size>
-        <xMin>398.9602</xMin>
-        <yMin>147.213043</yMin>
-        <xMax>508.599854</xMax>
-        <yMax>256.8527</yMax>
-      </Windowpos>
-      <name>Vector3 Axis</name>
-      <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
-      <Guid>7fc6696a-78a5-4151-ba39-cc7cf01997c0</Guid>
-      <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
-      <checknodevalid>true</checknodevalid>
-      <LookupClassindex>0</LookupClassindex>
-      <Lookupmethodindex>5</Lookupmethodindex>
-      <LookupMethodName>up</LookupMethodName>
-      <ArglistFQ />
-      <slotspos />
-      <ParentFeedSlotInfo>
-        <index>1</index>
-        <linkedto>0</linkedto>
-        <R>
-          <x>0</x>
-          <y>0</y>
-          <position>
-            <x>0</x>
-            <y>0</y>
-          </position>
-          <center>
-            <x>0</x>
-            <y>0</y>
-          </center>
-          <min>
-            <x>0</x>
-            <y>0</y>
-          </min>
-          <max>
-            <x>0</x>
-            <y>0</y>
-          </max>
-          <width>0</width>
-          <height>0</height>
-          <size>
-            <x>0</x>
-            <y>0</y>
-          </size>
-          <xMin>0</xMin>
-          <yMin>0</yMin>
-          <xMax>0</xMax>
-          <yMax>0</yMax>
-        </R>
-        <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
-      </ParentFeedSlotInfo>
-      <isroot>false</isroot>
-    </BBCtrlNode>
-    <BBCtrlNode>
-      <SUBNodesKEY />
-      <NodeId>-1544782840</NodeId>
-      <ParentID>865082550</ParentID>
-      <Windowpos>
-        <x>332.681519</x>
-        <y>261.320618</y>
-        <position>
-          <x>332.681519</x>
-          <y>261.320618</y>
-        </position>
-        <center>
-          <x>389.105835</x>
-          <y>317.744934</y>
-        </center>
-        <min>
-          <x>332.681519</x>
-          <y>261.320618</y>
-        </min>
-        <max>
-          <x>445.530151</x>
-          <y>374.16925</y>
-        </max>
-        <width>112.848633</width>
-        <height>112.848633</height>
-        <size>
-          <x>112.848633</x>
-          <y>112.848633</y>
-        </size>
-        <xMin>332.681519</xMin>
-        <yMin>261.320618</yMin>
-        <xMax>445.530151</xMax>
-        <yMax>374.16925</yMax>
+        <xMin>546.2862</xMin>
+        <yMin>296.8243</yMin>
+        <xMax>739.501038</xMax>
+        <yMax>490.039154</yMax>
       </Windowpos>
       <name>Boolean fullselection</name>
-      <ClassnameFQ>BBBLocks.BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
-      <Guid>85d7410d-213c-47bf-b409-79c2b30e0378</Guid>
+      <ClassnameFQ>BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <Guid>61fcec85-1c1c-4d71-bb0c-2b986a854ee6</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <checknodevalid>true</checknodevalid>
       <LookupClassindex>1</LookupClassindex>
-      <Lookupmethodindex>2</Lookupmethodindex>
+      <lookupclassname>BBBLocks</lookupclassname>
+      <Lookupmethodindex>3</Lookupmethodindex>
       <LookupMethodName>TRUE</LookupMethodName>
       <ArglistFQ />
       <slotspos />
@@ -447,131 +533,51 @@
       <isroot>false</isroot>
     </BBCtrlNode>
     <BBCtrlNode>
-      <SUBNodesKEY />
-      <NodeId>-288491962</NodeId>
-      <ParentID>865082550</ParentID>
-      <Windowpos>
-        <x>440.925171</x>
-        <y>310.743164</y>
-        <position>
-          <x>440.925171</x>
-          <y>310.743164</y>
-        </position>
-        <center>
-          <x>508.9364</x>
-          <y>378.7544</y>
-        </center>
-        <min>
-          <x>440.925171</x>
-          <y>310.743164</y>
-        </min>
-        <max>
-          <x>576.947632</x>
-          <y>446.765625</y>
-        </max>
-        <width>136.022461</width>
-        <height>136.022461</height>
-        <size>
-          <x>136.022461</x>
-          <y>136.022461</y>
-        </size>
-        <xMin>440.925171</xMin>
-        <yMin>310.743164</yMin>
-        <xMax>576.947632</xMax>
-        <yMax>446.765625</yMax>
-      </Windowpos>
-      <name>Int32 step</name>
-      <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
-      <Guid>6a742092-2d46-43a8-a3af-704a0a50e536</Guid>
-      <ParamFQ>System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
-      <checknodevalid>true</checknodevalid>
-      <LookupClassindex>0</LookupClassindex>
-      <Lookupmethodindex>11</Lookupmethodindex>
-      <LookupMethodName>ANGLE90</LookupMethodName>
-      <ArglistFQ />
-      <slotspos />
-      <ParentFeedSlotInfo>
-        <index>3</index>
-        <linkedto>0</linkedto>
-        <R>
-          <x>0</x>
-          <y>0</y>
-          <position>
-            <x>0</x>
-            <y>0</y>
-          </position>
-          <center>
-            <x>0</x>
-            <y>0</y>
-          </center>
-          <min>
-            <x>0</x>
-            <y>0</y>
-          </min>
-          <max>
-            <x>0</x>
-            <y>0</y>
-          </max>
-          <width>0</width>
-          <height>0</height>
-          <size>
-            <x>0</x>
-            <y>0</y>
-          </size>
-          <xMin>0</xMin>
-          <yMin>0</yMin>
-          <xMax>0</xMax>
-          <yMax>0</yMax>
-        </R>
-        <TypeFullString>System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
-      </ParentFeedSlotInfo>
-      <isroot>false</isroot>
-    </BBCtrlNode>
-    <BBCtrlNode>
       <SUBNodesKEY>
-        <int>646145831</int>
-        <int>1296266119</int>
-        <int>-1544782840</int>
-        <int>-288491962</int>
+        <int>-594919333</int>
+        <int>-1465497851</int>
+        <int>-2099240540</int>
+        <int>-1402354550</int>
       </SUBNodesKEY>
-      <NodeId>865082550</NodeId>
+      <NodeId>-1925467543</NodeId>
       <ParentID>0</ParentID>
       <Windowpos>
-        <x>679.6267</x>
-        <y>160.797211</y>
+        <x>894.0729</x>
+        <y>296.8243</y>
         <position>
-          <x>679.6267</x>
-          <y>160.797211</y>
+          <x>894.0729</x>
+          <y>296.8243</y>
         </position>
         <center>
-          <x>774.6687</x>
-          <y>255.8392</y>
+          <x>990.6803</x>
+          <y>393.431732</y>
         </center>
         <min>
-          <x>679.6267</x>
-          <y>160.797211</y>
+          <x>894.0729</x>
+          <y>296.8243</y>
         </min>
         <max>
-          <x>869.7107</x>
-          <y>350.8812</y>
+          <x>1087.28772</x>
+          <y>490.039154</y>
         </max>
-        <width>190.083984</width>
-        <height>190.083984</height>
+        <width>193.214844</width>
+        <height>193.214844</height>
         <size>
-          <x>190.083984</x>
-          <y>190.083984</y>
+          <x>193.214844</x>
+          <y>193.214844</y>
         </size>
-        <xMin>679.6267</xMin>
-        <yMin>160.797211</yMin>
-        <xMax>869.7107</xMax>
-        <yMax>350.8812</yMax>
+        <xMin>894.0729</xMin>
+        <yMin>296.8243</yMin>
+        <xMax>1087.28772</xMax>
+        <yMax>490.039154</yMax>
       </Windowpos>
       <name>ROOT</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
-      <Guid>7174d20a-ea5b-47db-a369-6c1f0bd6e578</Guid>
+      <Guid>5894cfa5-5359-4463-b8cb-c45a3e3dfdf5</Guid>
       <ParamFQ>System.Void, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <checknodevalid>true</checknodevalid>
       <LookupClassindex>0</LookupClassindex>
+      <lookupclassname>Actor</lookupclassname>
       <Lookupmethodindex>7</Lookupmethodindex>
       <LookupMethodName>Rotate</LookupMethodName>
       <ArglistFQ>
@@ -584,25 +590,25 @@
         <SlotInfo>
           <paramname>camspace</paramname>
           <index>0</index>
-          <linkedto>646145831</linkedto>
+          <linkedto>-2099240540</linkedto>
           <R>
-            <x>658.2934</x>
-            <y>160.797211</y>
+            <x>872.739563</x>
+            <y>296.8243</y>
             <position>
-              <x>658.2934</x>
-              <y>160.797211</y>
+              <x>872.739563</x>
+              <y>296.8243</y>
             </position>
             <center>
-              <x>674.2934</x>
-              <y>176.797211</y>
+              <x>888.739563</x>
+              <y>312.8243</y>
             </center>
             <min>
-              <x>658.2934</x>
-              <y>160.797211</y>
+              <x>872.739563</x>
+              <y>296.8243</y>
             </min>
             <max>
-              <x>690.2934</x>
-              <y>192.797211</y>
+              <x>904.739563</x>
+              <y>328.8243</y>
             </max>
             <width>32</width>
             <height>32</height>
@@ -610,35 +616,35 @@
               <x>32</x>
               <y>32</y>
             </size>
-            <xMin>658.2934</xMin>
-            <yMin>160.797211</yMin>
-            <xMax>690.2934</xMax>
-            <yMax>192.797211</yMax>
+            <xMin>872.739563</xMin>
+            <yMin>296.8243</yMin>
+            <xMax>904.739563</xMax>
+            <yMax>328.8243</yMax>
           </R>
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         </SlotInfo>
         <SlotInfo>
           <paramname>Axis</paramname>
           <index>1</index>
-          <linkedto>1296266119</linkedto>
+          <linkedto>-680054935</linkedto>
           <R>
-            <x>658.2934</x>
-            <y>192.797211</y>
+            <x>872.739563</x>
+            <y>328.8243</y>
             <position>
-              <x>658.2934</x>
-              <y>192.797211</y>
+              <x>872.739563</x>
+              <y>328.8243</y>
             </position>
             <center>
-              <x>674.2934</x>
-              <y>208.797211</y>
+              <x>888.739563</x>
+              <y>344.8243</y>
             </center>
             <min>
-              <x>658.2934</x>
-              <y>192.797211</y>
+              <x>872.739563</x>
+              <y>328.8243</y>
             </min>
             <max>
-              <x>690.2934</x>
-              <y>224.797211</y>
+              <x>904.739563</x>
+              <y>360.8243</y>
             </max>
             <width>32</width>
             <height>32</height>
@@ -646,35 +652,35 @@
               <x>32</x>
               <y>32</y>
             </size>
-            <xMin>658.2934</xMin>
-            <yMin>192.797211</yMin>
-            <xMax>690.2934</xMax>
-            <yMax>224.797211</yMax>
+            <xMin>872.739563</xMin>
+            <yMin>328.8243</yMin>
+            <xMax>904.739563</xMax>
+            <yMax>360.8243</yMax>
           </R>
           <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
         </SlotInfo>
         <SlotInfo>
           <paramname>fullselection</paramname>
           <index>2</index>
-          <linkedto>-1544782840</linkedto>
+          <linkedto>-1402354550</linkedto>
           <R>
-            <x>658.2934</x>
-            <y>224.797211</y>
+            <x>872.739563</x>
+            <y>360.8243</y>
             <position>
-              <x>658.2934</x>
-              <y>224.797211</y>
+              <x>872.739563</x>
+              <y>360.8243</y>
             </position>
             <center>
-              <x>674.2934</x>
-              <y>240.797211</y>
+              <x>888.739563</x>
+              <y>376.8243</y>
             </center>
             <min>
-              <x>658.2934</x>
-              <y>224.797211</y>
+              <x>872.739563</x>
+              <y>360.8243</y>
             </min>
             <max>
-              <x>690.2934</x>
-              <y>256.7972</y>
+              <x>904.739563</x>
+              <y>392.8243</y>
             </max>
             <width>32</width>
             <height>32</height>
@@ -682,35 +688,35 @@
               <x>32</x>
               <y>32</y>
             </size>
-            <xMin>658.2934</xMin>
-            <yMin>224.797211</yMin>
-            <xMax>690.2934</xMax>
-            <yMax>256.7972</yMax>
+            <xMin>872.739563</xMin>
+            <yMin>360.8243</yMin>
+            <xMax>904.739563</xMax>
+            <yMax>392.8243</yMax>
           </R>
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         </SlotInfo>
         <SlotInfo>
           <paramname>step</paramname>
           <index>3</index>
-          <linkedto>-288491962</linkedto>
+          <linkedto>-1465497851</linkedto>
           <R>
-            <x>658.2934</x>
-            <y>256.7972</y>
+            <x>872.739563</x>
+            <y>392.8243</y>
             <position>
-              <x>658.2934</x>
-              <y>256.7972</y>
+              <x>872.739563</x>
+              <y>392.8243</y>
             </position>
             <center>
-              <x>674.2934</x>
-              <y>272.7972</y>
+              <x>888.739563</x>
+              <y>408.8243</y>
             </center>
             <min>
-              <x>658.2934</x>
-              <y>256.7972</y>
+              <x>872.739563</x>
+              <y>392.8243</y>
             </min>
             <max>
-              <x>690.2934</x>
-              <y>288.7972</y>
+              <x>904.739563</x>
+              <y>424.8243</y>
             </max>
             <width>32</width>
             <height>32</height>
@@ -718,10 +724,10 @@
               <x>32</x>
               <y>32</y>
             </size>
-            <xMin>658.2934</xMin>
-            <yMin>256.7972</yMin>
-            <xMax>690.2934</xMax>
-            <yMax>288.7972</yMax>
+            <xMin>872.739563</xMin>
+            <yMin>392.8243</yMin>
+            <xMax>904.739563</xMax>
+            <yMax>424.8243</yMax>
           </R>
           <TypeFullString>System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         </SlotInfo>
@@ -730,11 +736,11 @@
     </BBCtrlNode>
   </Nodes>
   <nodekeys>
-    <int>646145831</int>
-    <int>1296266119</int>
-    <int>-1544782840</int>
-    <int>-288491962</int>
-    <int>865082550</int>
+    <int>-594919333</int>
+    <int>-1465497851</int>
+    <int>-2099240540</int>
+    <int>-1402354550</int>
+    <int>-1925467543</int>
   </nodekeys>
-  <Guid>e1c9e211-0f00-4151-8e42-a00aac0fd3e5</Guid>
+  <Guid>b618c8e1-8012-4d6e-be25-18e4bfda1467</Guid>
 </NodeGraph>

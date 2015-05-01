@@ -8,21 +8,29 @@ using System.Text;
 using System.Xml;
 using System.Reflection;
 using System.Reflection.Emit;
-//using BlockbusterControll;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+
 
 /// <summary>
 /// WRITE YOUR OWN FUNCTION BLOCK HERE 
 /// </summary>
 /// 
-namespace BBBLocks
-{
     public class BBBLocks
     {
-
         public BBBLocks()
         { 
         }
 
+
+        [BBCtrlVisible]
+        public static void DeleteSelection()
+        {
+            foreach (GameObject tgo in Selection.objects)
+                GameObject.DestroyImmediate(tgo);
+        }
 
 
         [BBCtrlVisible] // define a function visible for BBControl 
@@ -30,6 +38,19 @@ namespace BBBLocks
         {
             return -VIN;
         }
+
+        public static int I;
+
+
+
+        [BBCtrlProp( "testint")]
+        public int IntSlider()
+        {
+            I =EditorGUILayout.IntSlider(I, 0, 100);
+            return I;
+        }
+
+
 
 
         [BBCtrlVisible] // define a function visible for BBControl 
@@ -42,6 +63,8 @@ namespace BBBLocks
         {
             return true;
         }
+
+
 
         [BBCtrlVisible] // define a function visible for BBControl 
         public static int BBMathsAddint(int a, int b)
@@ -102,31 +125,15 @@ namespace BBBLocks
 
 
         [BBCtrlVisible] // define a function visible for BBControl 
-        public static Type CanChangeType(object value, Type conversionType)
+        public static Type ZCanChangeType(object value, Type conversionType)
         {
             if (conversionType == null)
-            {
                 return null;
-            }
-
             if (value == null)
-            {
                 return null;
-            }
-
             IConvertible convertible = value as IConvertible;
-
             if (convertible == null)
-            {
                 return null;
-            }
-
             return conversionType;
         }
-
-
-
-
-
-    }
 }

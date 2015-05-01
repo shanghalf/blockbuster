@@ -251,12 +251,6 @@ public class Actor : MonoBehaviour
     }
 
 
-    [BBCtrlVisible]
-    public float dummy (bool a,bool s , bool t )
-    {
-        return 0;
-
-    }
 
     [BBCtrlVisible]
     public float GetSize()
@@ -264,7 +258,6 @@ public class Actor : MonoBehaviour
             Actor m_actor;
             m_actor = (Actor) Selection.activeGameObject.GetComponent(typeof(Actor));
             return m_actor.Actorprops.block_size.magnitude;
-
     }
 
 

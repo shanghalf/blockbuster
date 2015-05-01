@@ -65,11 +65,25 @@
       <id>1142501470</id>
     </BBControll>
     <BBControll>
+      <linearindex>11</linearindex>
+      <iconindex>12</iconindex>
+      <Graphfilename>E:/BlockBuster_G/blockbuster/Assets/BLOCKBUSTER/XML/blockbustersetings/8eb30c9e-509e-4e54-8db5-d574751fbd10.bbxml</Graphfilename>
+      <guid>8eb30c9e-509e-4e54-8db5-d574751fbd10</guid>
+      <id>646392494</id>
+    </BBControll>
+    <BBControll>
+      <linearindex>9</linearindex>
+      <iconindex>10</iconindex>
+      <Graphfilename>E:/BlockBuster_G/blockbuster/Assets/BLOCKBUSTER/XML/blockbustersetings/115bd4c0-1470-4fa4-8447-4fbcd150e825.bbxml</Graphfilename>
+      <guid>115bd4c0-1470-4fa4-8447-4fbcd150e825</guid>
+      <id>1346125053</id>
+    </BBControll>
+    <BBControll>
       <linearindex>7</linearindex>
-      <iconindex>7</iconindex>
-      <Graphfilename>E:/BlockBuster_G/blockbuster/Assets/BLOCKBUSTER/XML/blockbustersetings/ef06648a-f2bb-4a5b-8ced-b47eaff4d9bd.bbxml</Graphfilename>
-      <guid>ef06648a-f2bb-4a5b-8ced-b47eaff4d9bd</guid>
-      <id>1050952466</id>
+      <iconindex>11</iconindex>
+      <Graphfilename>E:/BlockBuster_G/blockbuster/Assets/BLOCKBUSTER/XML/blockbustersetings/d2b7faa6-e088-4070-b78d-095a8157b943.bbxml</Graphfilename>
+      <guid>d2b7faa6-e088-4070-b78d-095a8157b943</guid>
+      <id>82119375</id>
     </BBControll>
   </BBControllersAray>
   <Texturelistname>

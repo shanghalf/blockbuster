@@ -1166,6 +1166,8 @@ public static class BBTools
 
 
 
+
+
         public void refreshActorDatasetList(  GameObject o , BaseActorProperties BAP)
         {
             BBehavior[] BHL = (BBehavior[])o.GetComponents<BBehavior>();
@@ -1393,10 +1395,12 @@ public static class BBTools
             if (BBMovepad.Mainlayer.TEXTURES.Count == 0)
                 InitGUIValues();
 
+            TXTINDEX active = (BBControll.unlayered) ? TXTINDEX.NORMAL : TXTINDEX.TARGET; 
+
             Vector2 mpos = Event.current.mousePosition - BBMovepad.mvpd_rect.position;
             // define a output area for the movepad 
             BBMovepad.mvpd_rect.Set(Screen.width / 2 - (BBMovepad.MVPTXTSZ / 2), 30, BBMovepad.MVPTXTSZ, BBMovepad.MVPTXTSZ);
-            GUI.DrawTexture(BBMovepad.mvpd_rect, BBMovepad.Mainlayer.TEXTURES[(int) TXTINDEX.TARGET]); // draw the target 
+            GUI.DrawTexture(BBMovepad.mvpd_rect, BBMovepad.Mainlayer.TEXTURES[(int)active]); // draw the target 
             if (!BBDrawing.GetRectFocus(BBMovepad.mvpd_rect))
             {
                 GUI.DragWindow();
@@ -1404,14 +1408,16 @@ public static class BBTools
             }
             if (BBDrawing.mousedown)
             {
-                BBMovepad.RenderSingleButton(BBMovepad.Mainlayer, TXTINDEX.CLICKED, mpos);
+                //BBMovepad.RenderSingleButton(BBMovepad.Mainlayer, TXTINDEX.CLICKED, mpos);
                 Actor A = Selection.activeGameObject.GetComponent<Actor>();
-                object[] result; // returned by function ( not yet ) 
-
                 if (BBDrawing.leftmouseclickeventnumber == 0) // crappy mouse management 
                 {
                     BBMovepad.RenderSingleButton(BBMovepad.Mainlayer, TXTINDEX.CLICKED, mpos);
-                    BBMovepad.InvokeCtrlMethod(BBMovepad.Mainlayer, mpos, (object)A, null, out result);
+                    if (!BBControll.editgraph)
+                        BBMovepad.InvokeCtrlMethod(BBMovepad.Mainlayer, mpos);
+                    else
+                        EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
+
                     BBDrawing.lastmousepos = mpos;
                 }
 
@@ -1420,11 +1426,15 @@ public static class BBTools
             else if (BBDrawing.mouseup)
             {
                 // hold the last mouse pos 
+                //BBMovepad.RenderLayer(BBMovepad.Mainlayer, TXTINDEX.NORMAL);
+
                 BBMovepad.RenderSingleButton(BBMovepad.Mainlayer, TXTINDEX.NORMAL, BBDrawing.lastmousepos);
-                BBDrawing.leftmouseclickeventnumber=0;
+                BBDrawing.leftmouseclickeventnumber = 0;
             }
         }
  
+        int controlposfrom ;
+        int controlposto ;
 
         void OnGUI()
         {
@@ -1490,6 +1500,53 @@ public static class BBTools
                 GUILayout.EndHorizontal();
 
                 BBControll.editgraph = GUILayout.Toggle(BBControll.editgraph, "Edit Mode");
+                BBControll.unlayered= GUILayout.Toggle(BBControll.unlayered, "Unlayered");
+
+     
+
+
+                BBControll.RenderToMaterial = GUILayout.Toggle(BBControll.RenderToMaterial, "Render To material");
+
+                if (BBControll.RenderToMaterial)
+                    EditorGUILayout.SelectableLabel("mat");
+
+                List<string> indexstrings  = new List<string> () ;
+                for (int i = 0; i < BBMovepad.Mainlayer.GridSize * BBMovepad.Mainlayer.GridSize; i++)
+                    indexstrings.Add(i.ToString());
+
+                GUILayout.BeginHorizontal();
+                controlposfrom = EditorGUILayout.Popup(controlposfrom, indexstrings.ToArray());
+                controlposto = EditorGUILayout.Popup(controlposto, indexstrings.ToArray());
+
+                string buttonstring; 
+                BBControll bbc ;
+                if (BBMovepad.Mainlayer.DicCtrl.TryGetValue(controlposto, out bbc))
+                    buttonstring = "REMOVE";
+                else
+                    buttonstring = "ASSIGN";
+
+
+                if (GUILayout.Button(buttonstring))
+                {
+
+                    if (buttonstring == "ASSIGN")
+                    {
+                        BBMovepad.RegisterButton(BBMovepad.Mainlayer, controlposto, controlposfrom);
+                        BBMovepad.RenderLayer(BBMovepad.Mainlayer, TXTINDEX.NORMAL);
+                    }
+                    else
+                    {
+                        BBMovepad.Mainlayer.DicCtrl.Remove(controlposto);
+                        BBMovepad.RenderLayer(BBMovepad.Mainlayer, TXTINDEX.NORMAL);
+                    }
+                }
+
+
+
+                GUILayout.EndHorizontal();
+                    
+
+
                 //EditorGUILayout.EnumPopup(BBControll.textureddlist, "state");
 
 
@@ -1721,41 +1778,7 @@ public static class BBTools
                 GUILayout.EndHorizontal();
 
                 m_actor.bbeditor_fixedstep = b_fixedstepedit;
-
-
-                /*
-                if (GUI.Button(new Rect(bsz * 3, bsz * 12, bsz, bsz), "")) //-------------- 	BACK BUTTON
-                    DoBlockMove(false, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 2, bsz * 11, bsz, bsz), "")) //-------------- 	LEFT BUTTON
-                    DoBlockMove(false, (right * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 4, bsz * 11, bsz, bsz), "")) //-------------- 	RIGHT BUTTON
-                    DoBlockMove(false, (left * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 10, bsz, bsz), "")) //-------------- 	FRONT BUTTON
-                    DoBlockMove(false, (Vector3.up * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 12, bsz, bsz), "")) //-------------- 	DOWN BUTTON
-                    DoBlockMove(false, (Vector3.down * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-                if (GUI.Button(new Rect(bsz * 3, bsz * 9, bsz, bsz), "")) //-------------- FRONT BUTTON
-                    DoBlockMove(true, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 3, bsz * 13, bsz, bsz), "")) //-------------- BACK BUTTON
-                    DoBlockMove(true, (back * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz, bsz * 11, bsz, bsz), "")) //-------------- 	LEFT BUTTON
-                    DoBlockMove(true, (right * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 5, bsz * 11, bsz, bsz), "")) //-------------- RIGHT BUTTON
-                    DoBlockMove(true, (left * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 9, bsz, bsz), "")) //-------------- UP BUTTON
-                    DoBlockMove(true, (Vector3.up * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-                if (GUI.Button(new Rect(bsz * 7, bsz * 13, bsz, bsz), "")) //-------------- DOWN BUTTON
-                    DoBlockMove(true, (Vector3.down * (ofset = (b_fixedstepedit) ? BlockSize.y : stepvalue)));
-                if (GUI.Button(new Rect(bsz * 9, bsz * 11, bsz, bsz), "Y")) //---------------------- ROTATE Y BUTTON  ( ZUP ?? ) 
-                    for (int c = 0; c < Selection.gameObjects.GetLength(0); c++)
-                        Selection.gameObjects[c].transform.Rotate(Vector3.up * 90, Space.Self);
-                if (GUI.Button(new Rect(bsz * 11, bsz * 11, bsz, bsz), "X")) //----------------- ROTATE X BUTTON
-                    for (int c = 0; c < Selection.gameObjects.GetLength(0); c++)
-                        Selection.gameObjects[c].transform.Rotate(Vector3.left * 90, Space.Self);
-                if (GUI.Button(new Rect(bsz * 13, bsz * 11, bsz, bsz), "Z")) ///---------------- ROTATE Z BUTTON
-                    for (int c = 0; c < Selection.gameObjects.GetLength(0); c++)
-                        Selection.gameObjects[c].transform.Rotate(Vector3.forward * 90, Space.Self);
-                 */
+  
             }
         
 

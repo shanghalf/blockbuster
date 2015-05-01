@@ -84,6 +84,7 @@
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBcontrollers\BBControll.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBcontrollers\BBCtrlEditorNodes.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\FallingPlatform.cs" />
+    <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\MovepadActionBlock.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\MovingPlatform.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\Platform.cs" />
     <Compile Include="Assets\BLOCKBUSTER\Scripts\BBehaviors\RotatingPlatform.cs" />
@@ -154,12 +155,15 @@
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\AssetList.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\assettransfert.xml" />
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\delete.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\duplicatenomove.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\graph.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\graph_V.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\move45.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\movebackward.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\movebase.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveforward.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveonsize.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveside.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\rotatebase.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\03fe2863-fc2e-4cba-a95f-b7eb1d299c3b.xml" />

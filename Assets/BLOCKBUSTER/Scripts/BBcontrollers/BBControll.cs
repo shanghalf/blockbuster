@@ -9,7 +9,6 @@ using System.Xml;
 using System.Reflection;
 using System.Reflection.Emit;
 using UnityEditor;
-using BBBLocks;
 
 //using BlockbusterControll;
 
@@ -75,12 +74,13 @@ public enum MVPBUTTONSIZE
 /// function name not order that could change each 
 /// time to do >> 
 /// </summary>
+/// 
+
+[System.Serializable]
 public class BBCtrlVisible : System.Attribute
 {
     private static  bool bbvisible;
-    private Guid guid ;
-
-    public int id { get { return guid.GetHashCode(); } }
+    public Guid guid ;
 
     public BBCtrlVisible()
     {
@@ -92,6 +92,27 @@ public class BBCtrlVisible : System.Attribute
         get { return bbvisible; }
     }
 }
+
+
+public class BBCtrlProp : System.Attribute
+{
+    public Guid guid;
+    public Type T;
+    public object Value;
+    public string name;
+
+    public int id { get { return guid.GetHashCode(); } }
+    public BBCtrlProp(string aname )
+    {
+        name = aname;
+        guid = Guid.NewGuid();
+    }
+}
+
+
+
+
+
 /// <summary>
 /// custom attribute used to get text field 
 /// in path enum for BBPATH ( really convenient for developping )
@@ -142,7 +163,9 @@ public enum BBpath
     [BBTextEnumattribute("/BLOCKBUSTER/BBGBASE/")]
     BBGBASE = 12,
     [BBTextEnumattribute("Assets/BLOCKBUSTER/BBGBASE/")]
-    ROOTGBASE = 13
+    ROOTGBASE = 13,
+    [BBTextEnumattribute("Assets/BLOCKBUSTER/Resources/")]
+    RESOURCESFOLDER = 14
 
 }
 /// <summary>
@@ -232,25 +255,22 @@ public class EditorTimer
 [System.Serializable]
 public class BBMovepadLayerDescriptor
 {
-
-
     // hope it wil be enough 
 
     public BBMovepadLayerDescriptor()
     { 
     }
-
-
     [XmlIgnore]
     public Dictionary<int, BBControll> DicCtrl = new Dictionary<int, BBControll>();
     public List<BBControll> BBControllersAray = new List<BBControll>();
-
     public List<string> Texturelistname = new List<string>();
-
     [XmlIgnore]
     public List<Texture2D> TEXTURES = new List<Texture2D>();
 
-
+    [XmlIgnore]
+    public Texture2D RtTxt ;
+    [XmlIgnore]
+    public Material MovepadMat;
 
 
     public int GridSize;
@@ -261,7 +281,26 @@ public class BBMovepadLayerDescriptor
     public string name;
     public static bool autoload = false;
     public static string bbmainfilename = "bbmain";
-
+    
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    [BBCtrlVisible]
+    public static string GetLayerame ()
+    {
+        return BBMovepad.Mainlayer.name;
+    }
+    [BBCtrlVisible]
+    public static BBMovepadLayerDescriptor GetMainLayer()
+    {
+        return BBMovepad.Mainlayer;
+    }
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
     public BBMovepadLayerDescriptor(string newname , int initgridsize , int initbutonsize , int inittexturesize)
     {
         guid = new Guid();
@@ -270,15 +309,20 @@ public class BBMovepadLayerDescriptor
         GridSize = initgridsize;
         ButtonSize = initbutonsize;
         TextureSize = inittexturesize;
+        RtTxt = new Texture2D(inittexturesize, inittexturesize);
     }
 
+    public void AssignMovepadTextureToMaterial(string matname)
+    {
+      MovepadMat = Resources.Load(matname, typeof(Material)) as Material;
+    }
 
 
 
     public BBMovepadLayerDescriptor Load(string path , BBMovepadLayerDescriptor layer)
     {
         if (autoload)
-            path = NodeGraph.autosavefilename;
+            path = NodeGraph.autofilename;
         else
             path = EditorUtility.OpenFilePanel("load Movepad Layer", BBDir.Get(BBpath.SETING), "MVPL");
 
@@ -296,11 +340,8 @@ public class BBMovepadLayerDescriptor
         DicCtrl.Clear();
         foreach (BBControll button in Movepadlayer.BBControllersAray )
             DicCtrl.Add(button.linearindex, button);
-
         BBMovepad.RegisterLayer(layer, Movepadlayer.Texturelistname, Movepadlayer.GridSize, Movepadlayer.ButtonSize, layer.name);
         BBMovepad.RenderLayer(layer, TXTINDEX.NORMAL);
-
-
         return Movepadlayer;
     }
 
@@ -315,14 +356,18 @@ public class BBMovepadLayerDescriptor
         }
         else
         {
-            path = BBDir.Get(BBpath.SETING) + savepath + ".MVPL";
+            //path = BBDir.Get(BBpath.SETING) + savepath + ".MVPL";
+
+            path = EditorUtility.SaveFilePanel("load Movepad Layer", BBDir.Get(BBpath.SETING),"bbmain", "MVPL");
+
         }
 
         //BBControllersAray.
-
+        BBControllersAray.Clear();
         // populate serialized list 
         foreach (int key in DicCtrl.Keys) // key as linear index 
         {
+
             BBControll bbc;
             if (DicCtrl.TryGetValue(key, out bbc))
                 BBControllersAray.Add(bbc);
@@ -388,6 +433,10 @@ public class BBMovepadLayerDescriptor
             bbfont.material = M;
             BBGuiStyle.font = bbfont;
             BBGuiStyle.name = "bb";
+
+
+    
+
             initialized = true;
         }
 
@@ -398,17 +447,9 @@ public class BBMovepadLayerDescriptor
         /// </summary>
         /// <param name="layername"></param>
         /// <param name="type"></param>
-        public static void RenderLayer(BBMovepadLayerDescriptor layer, TXTINDEX type)
-        {
-            foreach (BBControll kvp in GetControlLayer(layer).DicCtrl.Values)
-            {
-                int[] r = CalcRectFromIndex(kvp.linearindex);
-                Vector2 V = new Vector2(r[0], r[1]);
-                RenderSingleButton(layer, type, V);
-                //Debug.Log(kvp.Key.ToString());
-            }
+        /// 
 
-        }
+    
         /// <summary>
         /// process a index grid 
         /// for button assign 
@@ -418,6 +459,22 @@ public class BBMovepadLayerDescriptor
         /// <param name="layername"></param>
         /// <param name="pos"></param>
         /// <param name="linear"></param>
+        /// 
+
+        [BBCtrlVisible]
+        public static Vector2 GetMovePadPos()
+        {
+            return mvpd_rect.position;
+        }
+        [BBCtrlVisible]
+        public TXTINDEX indexbase() { return TXTINDEX.NORMAL; }
+        [BBCtrlVisible]
+        public TXTINDEX indexactive() { return TXTINDEX.CLICKED; }
+        [BBCtrlVisible]
+        public TXTINDEX indextarget() { return TXTINDEX.TARGET; }            
+
+
+        [BBCtrlVisible]
         public static void ShowMovePadGrid(BBMovepadLayerDescriptor layer, Vector2 pos, bool linear , TXTINDEX type)
         {
             // call inside a gui event draw 
@@ -451,6 +508,10 @@ public class BBMovepadLayerDescriptor
         /// </summary>
         /// <param name="layername"></param>
         /// <returns></returns>
+        /// 
+
+
+        [BBCtrlVisible]
         public static BBMovepadLayerDescriptor GetControlLayer(BBMovepadLayerDescriptor layer)
         {
             BBMovepadLayerDescriptor CTRLIST;
@@ -465,11 +526,38 @@ public class BBMovepadLayerDescriptor
                 return null;
             }
         }
+
+
+        [BBCtrlVisible]
+        public static BBMovepadLayerDescriptor GetMovepadLayer ()
+        {
+            return Mainlayer;
+        }
+
+
+        [BBCtrlVisible]
+        public static BBControll GetControlLayerAtMousepos (BBMovepadLayerDescriptor layer,bool lastmousepos = false )
+        {
+            Vector2 pos ;
+            if (lastmousepos)
+                pos = BBDrawing.lastmousepos;
+            else
+                pos =  Event.current.mousePosition;
+
+            int index = GetGridIndexFromXY(layer,pos  );
+            return  GetControll(layer, index);
+        }
+
         /// <summary>
         /// to move in Draw Class could be usefull for other purpose 
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
+        /// 
+
+        [BBCtrlVisible]
+        public Vector2 GetMousepos() { return Event.current.mousePosition;  }
+        [BBCtrlVisible]
         public static int GetGridIndexFromXY(BBMovepadLayerDescriptor layer, Vector2 pos)
         {
             //return(int)  y / mvpd_bsz * mvpd_grsz   + x / mvpd_bsz; // base index 1 
@@ -484,6 +572,8 @@ public class BBMovepadLayerDescriptor
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
+        /// 
+        [BBCtrlVisible]
         public static int[] CalcRectFromIndex(int index)
         {
             int px = ((index) * (int)MVPBSZ) % MVPTXTSZ;// base index 0
@@ -501,15 +591,15 @@ public class BBMovepadLayerDescriptor
         /// <param name="args"></param>
         /// <param name="Out"></param>
         /// <returns></returns>
-        public static object[] InvokeCtrlMethod(BBMovepadLayerDescriptor layer, Vector2 frompos, object In, object[] args, out object[] Out)
+        /// 
+        [BBCtrlVisible]
+        public static void InvokeCtrlMethod(BBMovepadLayerDescriptor layer, Vector2 frompos)
         {
-            Out = null;
             int index = GetGridIndexFromXY(layer, frompos);
             BBControll MPC = GetControll(layer, index);
             if (MPC == null)
-                return null;
+                return ;
             MPC.BBinvoke();
-            return Out;
         }
         /// <summary>
         /// render a button in movepad 
@@ -519,12 +609,28 @@ public class BBMovepadLayerDescriptor
         /// <param name="textureindex"></param>
         /// <param name="frompos"></param>
         /// <returns></returns>
+        /// 
+        [BBCtrlVisible]
+        public static Color[] ClearButton ( BBMovepadLayerDescriptor layer )
+        {
+            List<Color> CB = new List<Color>();
+            for (int c = 0; c < layer.ButtonSize * layer.ButtonSize; c++)
+                CB.Add(new Color(0, 0, 0, 0));
+            return CB.ToArray();
+        }
+
+  
+        [BBCtrlVisible]
         public static bool RenderSingleButton(BBMovepadLayerDescriptor layer, TXTINDEX textureindex, Vector2 frompos)
         {
-            int index = GetGridIndexFromXY(layer,frompos);
+            int index = GetGridIndexFromXY(layer, frompos);
             BBControll BBC = GetControll(layer, index);
             if (BBC == null)
                 return false;
+
+            // fill up the graph file name in case of edition required  
+            NodeGraph.autofilename = BBDir.Get(BBpath.SETING) + BBC.guid.ToString() + ".bbxml";
+
 
             if ((int)textureindex > layer.TEXTURES.Count)
             {
@@ -551,10 +657,80 @@ public class BBMovepadLayerDescriptor
 
             layer.TEXTURES[(int)TXTINDEX.TARGET].SetPixels(R[0], y - R[1], R[2], R[3], pix);
             layer.TEXTURES[(int)TXTINDEX.TARGET].Apply();
+
+            if ( BBControll.RenderToMaterial)
+                RenderTargetoMaterial(Mainlayer);
+
             return true;
 
 
         }
+
+
+
+        //public static  RenderTexture renderTexture = new RenderTexture(Mainlayer.TextureSize, Mainlayer.TextureSize,32);
+        //public static Texture2D movepadtexture = new Texture2D(Mainlayer.TextureSize, Mainlayer.TextureSize, TextureFormat.ARGB32, true);
+
+        [BBCtrlVisible]
+        public static  void RenderTargetoMaterial(BBMovepadLayerDescriptor layer)
+        {
+            Byte[] buf = layer.TEXTURES[(int)TXTINDEX.TARGET].EncodeToPNG();
+            layer.RtTxt.LoadImage(buf);
+            layer.RtTxt.Apply();
+            Graphics.Blit(layer.RtTxt,layer.MovepadMat, 1);
+        }
+
+
+        [BBCtrlVisible]
+        public static void SaveTargetToFile(BBMovepadLayerDescriptor layer )
+        {
+
+            //Byte[] buf  = layer.TEXTURES[(int)TXTINDEX.TARGET].EncodeToPNG();
+            //Stream file = File.Open(  BBDir.Get(BBpath.RES)+"Targout.png", FileMode.Create );
+            //BinaryWriter  B =  new BinaryWriter(file);
+            //B.Write(buf);
+            //file.Close();
+        }
+
+        [BBCtrlVisible]
+        public static bool RenderLayer(BBMovepadLayerDescriptor layer, TXTINDEX textureindex)
+        {
+            if ((int)textureindex > layer.TEXTURES.Count)
+            {
+                Debug.Log("no texture at index : " + textureindex.ToString());
+                return false;
+            }
+            int y = layer.TextureSize - layer.ButtonSize;
+
+            for (int c = 0; c < layer.GridSize * layer.GridSize; c++)
+            {
+
+                BBControll bbc;
+                if (layer.DicCtrl.TryGetValue(c, out bbc))
+                {
+                    int[] i4 = CalcRectFromIndex(bbc.iconindex);
+                    Color[] pix = layer.TEXTURES[(int)textureindex].GetPixels(i4[0], y - i4[1], i4[2], i4[3]);
+                    int[] R = CalcRectFromIndex(bbc.linearindex);
+                    //GUI.Box(new Rect(i4[0], i4[1], i4[3] - i4[0], i4[1] - i4[3]), "A");
+                    layer.TEXTURES[(int)TXTINDEX.TARGET].SetPixels(R[0], y - R[1], R[2], R[3], pix);
+                    layer.TEXTURES[(int)TXTINDEX.TARGET].Apply();
+                }
+                else
+                {
+                    int[] i4 = CalcRectFromIndex(c);
+                    Color[] pix = layer.TEXTURES[(int)TXTINDEX.CLEAR].GetPixels(i4[0], y - i4[1], i4[2], i4[3]);
+                    int[] R = CalcRectFromIndex(c);
+                    layer.TEXTURES[(int)TXTINDEX.TARGET].SetPixels(R[0], y - R[1], R[2], R[3], pix);
+                    layer.TEXTURES[(int)TXTINDEX.TARGET].Apply();
+                    //GUI.Box(new Rect(i4[0],i4[1],i4[3]-i4[0],i4[1]-i4[3] ),"B");
+
+                }
+                
+            }
+            return true;
+
+        }
+
 
         /// <summary>
         /// called on texture load 
@@ -642,6 +818,8 @@ public class BBMovepadLayerDescriptor
         /// <param name="layer"></param>
         /// <param name="index"></param>
         /// <returns></returns>
+        /// 
+        [BBCtrlVisible]
         public static BBControll GetControll(BBMovepadLayerDescriptor layer, int index)
         {
             BBControll BBC;
@@ -658,6 +836,7 @@ public class BBMovepadLayerDescriptor
         /// <param name="layername"></param>
         /// <param name="TEXLIST"></param>
         ///   BBControllManager.RegisterLayer(layername, tlist, MVPGRIDSISE.MVP8, MVPBUTTONSIZE.MVP32);
+        [BBCtrlVisible]
         public static void RegisterLayer(BBMovepadLayerDescriptor layer, List<string> TEXLIST, int gsz, int bsz, string layername)
         {
             // add layer the size should be moved in another dic 
@@ -701,6 +880,7 @@ public class BBMovepadLayerDescriptor
         /// <param name="layername"></param>
         /// <param name="linearindex"></param>
         /// <returns></returns>
+        [BBCtrlVisible]
         public static BBControll GetButon(string layername, int linearindex)
         {
             BBMovepadLayerDescriptor L;
@@ -734,6 +914,8 @@ public class BBMovepadLayerDescriptor
         /// <param name="linearindex"></param>
         /// <param name="iconindex"></param>
         /// <returns></returns>
+        /// 
+        [BBCtrlVisible]
         public static bool RegisterButton(BBMovepadLayerDescriptor layer, int linearindex, int iconindex)
         {
             int linearmax = BBMovepad.MVPCELLNB;
@@ -755,6 +937,9 @@ public class BBMovepadLayerDescriptor
                 Debug.Log("no layer " + layer.name);
                 return false;
             }
+
+           
+
         }
 
     }
@@ -784,7 +969,13 @@ public class BBMovepadLayerDescriptor
         public int id;
 
         public static bool editgraph = false;
+        public static bool unlayered = false;
+        public static bool RenderToMaterial = false;
+
         public static TXTINDEX textureddlist;
+
+
+
 
         /// <summary>
         /// default constructor that just assign a file name to this action
@@ -806,12 +997,14 @@ public class BBMovepadLayerDescriptor
         /// i ll do it once back from thailand
         /// </summary>
         /// <param name="path"></param>
+        /// 
+        [BBCtrlVisible]
         public void LoadGraph(string path)
         {
             if (path != null || editgraph)
             {
-                path = NodeGraph.autosavefilename;
-                //NodeGraph.autoload = true;
+                path = NodeGraph.autofilename;
+                NodeGraph.autoload = true;
             }
             else
                 path = EditorUtility.OpenFilePanel("load scene", BBDir.Get(BBpath.SETING), "xml");
@@ -864,7 +1057,7 @@ public class BBMovepadLayerDescriptor
 
             }
         }
-
+        [BBCtrlVisible]
         public void Save()
         {
             string path;
@@ -880,7 +1073,7 @@ public class BBMovepadLayerDescriptor
 
 
 
-
+        [BBCtrlVisible]
         public object InvokeGraph(BBCtrlNode NCaller)
         {
             Dictionary<string, object> Args = new Dictionary<string, object>();
@@ -900,7 +1093,7 @@ public class BBMovepadLayerDescriptor
                 }
             if (classInstance == null)
             {
-                Debug.Log("cannot get or create an instance of )" + T.Name);
+
                 return null;
             }
             for (int c = 0; c < NCaller.SUBNodes.Count; c++)
@@ -909,13 +1102,15 @@ public class BBMovepadLayerDescriptor
                 NCaller.SUBNodes[c].m_OutputObj = InvokeGraph(N);
                 if (N.m_OutputObj == null)
                     Debug.Log("no result for node " + N.NodeId.ToString());
-                Args.Add(N.name, N.m_OutputObj);
+                    Args.Add(N.name + N.Guid.GetHashCode(), N.m_OutputObj);
             }
             // push args in right order fo the call 
             for (int c = 0; c < NCaller.slotspos.Count; c++)
                 foreach (KeyValuePair<string, object> kvp in Args)
                     if (kvp.Key.Contains(NCaller.slotspos[c].paramname))
                         objlist.Add(kvp.Value);
+
+
             MethodInfo[] MI = T.GetMethods();
             // method filtered by customtag [need to add id to method since the index change and saved index get obsolete]
             // the filtering function is on caller that allow to overide and create later different kind of nodes
@@ -929,6 +1124,8 @@ public class BBMovepadLayerDescriptor
         /// open the graph editor if  no action file is bound to this 
         /// </summary>
         /// <returns></returns>
+        [BBCtrlVisible]
+
         public bool BBinvoke()
         {
 
@@ -940,7 +1137,7 @@ public class BBMovepadLayerDescriptor
             // choose which file to edit 
             NodeGraph.autoload = true;
             NodeGraph.autosave = true;
-            NodeGraph.autosavefilename = Graphfilename;
+            NodeGraph.autofilename = Graphfilename;
 
             LoadGraph(Graphfilename);
             if (thisgraph != null)
