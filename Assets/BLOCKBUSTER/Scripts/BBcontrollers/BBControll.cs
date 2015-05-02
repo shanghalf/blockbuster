@@ -102,9 +102,8 @@ public class BBCtrlProp : System.Attribute
     public string name;
 
     public int id { get { return guid.GetHashCode(); } }
-    public BBCtrlProp(string aname )
+    public BBCtrlProp()
     {
-        name = aname;
         guid = Guid.NewGuid();
     }
 }
@@ -321,16 +320,10 @@ public class BBMovepadLayerDescriptor
 
     public BBMovepadLayerDescriptor Load(string path , BBMovepadLayerDescriptor layer)
     {
-        if (autoload)
-            path = NodeGraph.autofilename;
-        else
-            path = EditorUtility.OpenFilePanel("load Movepad Layer", BBDir.Get(BBpath.SETING), "MVPL");
 
         if (!System.IO.File.Exists(path))
-        {
-            // open the layer editor when it will be done 
-            return null;
-        }
+            path = EditorUtility.OpenFilePanel("load Movepad Layer", BBDir.Get(BBpath.SETING), "MVPL");
+
         XmlSerializer serializer = new XmlSerializer(typeof(BBMovepadLayerDescriptor));
         Stream stream = new FileStream(path, FileMode.Open);
         BBMovepadLayerDescriptor Movepadlayer = serializer.Deserialize(stream) as BBMovepadLayerDescriptor;
@@ -619,7 +612,13 @@ public class BBMovepadLayerDescriptor
             return CB.ToArray();
         }
 
-  
+        /// <summary>
+        /// render a single control on movepad texture 
+        /// </summary>
+        /// <param name="layer"></param>
+        /// <param name="textureindex"></param>
+        /// <param name="frompos"></param>
+        /// <returns></returns>
         [BBCtrlVisible]
         public static bool RenderSingleButton(BBMovepadLayerDescriptor layer, TXTINDEX textureindex, Vector2 frompos)
         {
@@ -627,11 +626,8 @@ public class BBMovepadLayerDescriptor
             BBControll BBC = GetControll(layer, index);
             if (BBC == null)
                 return false;
-
             // fill up the graph file name in case of edition required  
             NodeGraph.autofilename = BBDir.Get(BBpath.SETING) + BBC.guid.ToString() + ".bbxml";
-
-
             if ((int)textureindex > layer.TEXTURES.Count)
             {
                 Debug.Log("no texture at index : " + textureindex.ToString());
@@ -639,31 +635,13 @@ public class BBMovepadLayerDescriptor
             }
             int y = MVPTXTSZ - (int)MVPBSZ;
             int[] i4 = CalcRectFromIndex(BBC.iconindex);
-
-            //Rect A = new Rect(i4[0], i4[1], i4[2], i4[3]);
-            //A.position += mvpd_rect.position;
-            //GUI.Box(A,"A");
-
-
-
             Color[] pix = layer.TEXTURES[(int)textureindex].GetPixels(i4[0], y - i4[1], i4[2], i4[3]);
-            //Debug.Log("texture size for" + textureindex.ToString() + " >>> " + TXTBUF[(int)TXTINDEX.TARGET].width.ToString()); 
-
             int[] R = CalcRectFromIndex(BBC.linearindex);
-
-            //Rect B = new Rect(i4[0], i4[1], i4[2], i4[3]);
-            //B.position += mvpd_rect.position;
-            //GUI.Box(B, "B");
-
             layer.TEXTURES[(int)TXTINDEX.TARGET].SetPixels(R[0], y - R[1], R[2], R[3], pix);
             layer.TEXTURES[(int)TXTINDEX.TARGET].Apply();
-
             if ( BBControll.RenderToMaterial)
                 RenderTargetoMaterial(Mainlayer);
-
             return true;
-
-
         }
 
 
@@ -1093,7 +1071,7 @@ public class BBMovepadLayerDescriptor
                 }
             if (classInstance == null)
             {
-
+                Debug.Log("something wrong in class instanciate");
                 return null;
             }
             for (int c = 0; c < NCaller.SUBNodes.Count; c++)
@@ -1115,6 +1093,12 @@ public class BBMovepadLayerDescriptor
             // method filtered by customtag [need to add id to method since the index change and saved index get obsolete]
             // the filtering function is on caller that allow to overide and create later different kind of nodes
             MethodInfo[] filterlist = NCaller.BuildFilteredMethodArray(-1, MI); // pass -1 to fail and not return shit
+
+            // reassign index before doing popup action 
+            for (int c = 0; c < filterlist.GetLength(0); c++)
+                if (filterlist[c].Name == NCaller.LookupMethodName)
+                    NCaller.Lookupmethodindex = c;
+            
             NCaller.m_OutputObj = filterlist[NCaller.Lookupmethodindex].Invoke(classInstance, objlist.ToArray());
             return NCaller.m_OutputObj;
         }

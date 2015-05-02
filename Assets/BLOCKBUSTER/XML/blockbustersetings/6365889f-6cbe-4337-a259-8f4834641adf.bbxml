@@ -47,8 +47,10 @@
     <checknodevalid>true</checknodevalid>
     <LookupClassindex>0</LookupClassindex>
     <lookupclassname>Actor</lookupclassname>
+    <savedclassname>Actor</savedclassname>
     <Lookupmethodindex>7</Lookupmethodindex>
     <LookupMethodName>Rotate</LookupMethodName>
+    <savedMethodName>Rotate</savedMethodName>
     <ArglistFQ>
       <string>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
       <string>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</string>
@@ -245,8 +247,10 @@
       <checknodevalid>true</checknodevalid>
       <LookupClassindex>0</LookupClassindex>
       <lookupclassname>Actor</lookupclassname>
+      <savedclassname>Actor</savedclassname>
       <Lookupmethodindex>1</Lookupmethodindex>
       <LookupMethodName>left</LookupMethodName>
+      <savedMethodName>left</savedMethodName>
       <ArglistFQ />
       <slotspos />
       <ParentFeedSlotInfo>
@@ -291,23 +295,23 @@
       <NodeId>-288491962</NodeId>
       <ParentID>865082550</ParentID>
       <Windowpos>
-        <x>315.970764</x>
-        <y>347.739441</y>
+        <x>330.970764</x>
+        <y>281.739441</y>
         <position>
-          <x>315.970764</x>
-          <y>347.739441</y>
+          <x>330.970764</x>
+          <y>281.739441</y>
         </position>
         <center>
-          <x>383.982</x>
-          <y>415.750671</y>
+          <x>398.982</x>
+          <y>349.750671</y>
         </center>
         <min>
-          <x>315.970764</x>
-          <y>347.739441</y>
+          <x>330.970764</x>
+          <y>281.739441</y>
         </min>
         <max>
-          <x>451.993225</x>
-          <y>483.7619</y>
+          <x>466.993225</x>
+          <y>417.7619</y>
         </max>
         <width>136.022461</width>
         <height>136.022461</height>
@@ -315,10 +319,10 @@
           <x>136.022461</x>
           <y>136.022461</y>
         </size>
-        <xMin>315.970764</xMin>
-        <yMin>347.739441</yMin>
-        <xMax>451.993225</xMax>
-        <yMax>483.7619</yMax>
+        <xMin>330.970764</xMin>
+        <yMin>281.739441</yMin>
+        <xMax>466.993225</xMax>
+        <yMax>417.7619</yMax>
       </Windowpos>
       <name>Int32 step</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
@@ -327,8 +331,10 @@
       <checknodevalid>true</checknodevalid>
       <LookupClassindex>0</LookupClassindex>
       <lookupclassname>Actor</lookupclassname>
+      <savedclassname>Actor</savedclassname>
       <Lookupmethodindex>11</Lookupmethodindex>
       <LookupMethodName>ANGLE90</LookupMethodName>
+      <savedMethodName>ANGLE90</savedMethodName>
       <ArglistFQ />
       <slotspos />
       <ParentFeedSlotInfo>
@@ -373,23 +379,23 @@
       <NodeId>-66900120</NodeId>
       <ParentID>865082550</ParentID>
       <Windowpos>
-        <x>231.289032</x>
-        <y>213.152</y>
+        <x>99.28903</x>
+        <y>170.152</y>
         <position>
-          <x>231.289032</x>
-          <y>213.152</y>
+          <x>99.28903</x>
+          <y>170.152</y>
         </position>
         <center>
-          <x>326.331024</x>
-          <y>308.19397</y>
+          <x>194.331024</x>
+          <y>265.19397</y>
         </center>
         <min>
-          <x>231.289032</x>
-          <y>213.152</y>
+          <x>99.28903</x>
+          <y>170.152</y>
         </min>
         <max>
-          <x>421.373016</x>
-          <y>403.235962</y>
+          <x>289.373016</x>
+          <y>360.235962</y>
         </max>
         <width>190.083984</width>
         <height>190.083984</height>
@@ -397,20 +403,22 @@
           <x>190.083984</x>
           <y>190.083984</y>
         </size>
-        <xMin>231.289032</xMin>
-        <yMin>213.152</yMin>
-        <xMax>421.373016</xMax>
-        <yMax>403.235962</yMax>
+        <xMin>99.28903</xMin>
+        <yMin>170.152</yMin>
+        <xMax>289.373016</xMax>
+        <yMax>360.235962</yMax>
       </Windowpos>
       <name>Boolean camspace</name>
       <ClassnameFQ>BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
       <Guid>d6be7dbf-44ef-436c-8944-1df2e7160c49</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>1</LookupClassindex>
+      <LookupClassindex>2</LookupClassindex>
       <lookupclassname>BBBLocks</lookupclassname>
-      <Lookupmethodindex>2</Lookupmethodindex>
+      <savedclassname>BBBLocks</savedclassname>
+      <Lookupmethodindex>3</Lookupmethodindex>
       <LookupMethodName>FALSE</LookupMethodName>
+      <savedMethodName>FALSE</savedMethodName>
       <ArglistFQ />
       <slotspos />
       <ParentFeedSlotInfo>
@@ -455,23 +463,23 @@
       <NodeId>1081485492</NodeId>
       <ParentID>865082550</ParentID>
       <Windowpos>
-        <x>284.289032</x>
-        <y>408.151978</y>
+        <x>241.289032</x>
+        <y>444.151978</y>
         <position>
-          <x>284.289032</x>
-          <y>408.151978</y>
+          <x>241.289032</x>
+          <y>444.151978</y>
         </position>
         <center>
-          <x>379.331024</x>
-          <y>503.19397</y>
+          <x>336.331024</x>
+          <y>539.194</y>
         </center>
         <min>
-          <x>284.289032</x>
-          <y>408.151978</y>
+          <x>241.289032</x>
+          <y>444.151978</y>
         </min>
         <max>
-          <x>474.373016</x>
-          <y>598.235962</y>
+          <x>431.373016</x>
+          <y>634.235962</y>
         </max>
         <width>190.083984</width>
         <height>190.083984</height>
@@ -479,20 +487,22 @@
           <x>190.083984</x>
           <y>190.083984</y>
         </size>
-        <xMin>284.289032</xMin>
-        <yMin>408.151978</yMin>
-        <xMax>474.373016</xMax>
-        <yMax>598.235962</yMax>
+        <xMin>241.289032</xMin>
+        <yMin>444.151978</yMin>
+        <xMax>431.373016</xMax>
+        <yMax>634.235962</yMax>
       </Windowpos>
       <name>Boolean fullselection</name>
       <ClassnameFQ>BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
       <Guid>71127618-2df5-4a2b-8c71-f8ee90e0ec69</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>1</LookupClassindex>
+      <LookupClassindex>2</LookupClassindex>
       <lookupclassname>BBBLocks</lookupclassname>
-      <Lookupmethodindex>2</Lookupmethodindex>
+      <savedclassname>BBBLocks</savedclassname>
+      <Lookupmethodindex>3</Lookupmethodindex>
       <LookupMethodName>FALSE</LookupMethodName>
+      <savedMethodName>TRUE</savedMethodName>
       <ArglistFQ />
       <slotspos />
       <ParentFeedSlotInfo>
@@ -578,8 +588,10 @@
       <checknodevalid>true</checknodevalid>
       <LookupClassindex>0</LookupClassindex>
       <lookupclassname>Actor</lookupclassname>
+      <savedclassname>Actor</savedclassname>
       <Lookupmethodindex>7</Lookupmethodindex>
       <LookupMethodName>Rotate</LookupMethodName>
+      <savedMethodName>Rotate</savedMethodName>
       <ArglistFQ>
         <string>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</string>
         <string>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</string>

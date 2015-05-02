@@ -249,7 +249,7 @@ public class NodeGraph
         public int ParentID;
 
         [XmlIgnore]
-        public MethodInfo Controll;
+        public List<MethodInfo> Controlls = new List<MethodInfo>();
 
 
         [XmlIgnore]
@@ -305,6 +305,9 @@ public class NodeGraph
         public System.Type ReturnTye;
         [XmlIgnore]
         List<System.Type> NodeClassTypeArray = new List<Type>();
+        [XmlIgnore]
+        public static List<System.Type> MandatoryNodeClassTypeArray = new List<Type>();
+
         
         // member used for exec loop but not needed for serialization
         // to replace with private and get/set
@@ -752,6 +755,12 @@ public class NodeGraph
 
         }
 
+        /// <summary>
+        /// process nodes GUI
+        /// </summary>
+
+
+
 
         
         // List<string> argnamelist = new List<string>();
@@ -790,12 +799,11 @@ public class NodeGraph
                 return;
             }
 
+    
+
             lookupclassname = localclassarray[LookupClassindex];
-
-            
-
-
             localmethodarray.Clear();
+            Controlls.Clear();
             filteredmethods = BuildFilteredMethodArray(LookupClassindex);
             foreach (MethodInfo mi in filteredmethods)
                 localmethodarray.Add(mi.Name);
@@ -821,11 +829,8 @@ public class NodeGraph
 
 
 
-            if (Controll != null)
-            {
-                object classInstance = Activator.CreateInstance(typeof(BBBLocks));
-                this.Controll.Invoke(classInstance, null);
-            }
+
+
 
             EditorGUILayout.LabelField(STR);
             // store the fullQF class name
@@ -877,6 +882,19 @@ public class NodeGraph
             foreach (ParameterInfo pi in selectedmethodinfo.GetParameters())
                 ArglistFQ.Add(pi.ParameterType.AssemblyQualifiedName);
             checknodevalid = true;
+
+            object classInstance = Activator.CreateInstance(typeof(BBUInodes));
+
+            foreach (MethodInfo mi in Controlls)
+            {
+                if (mi.Name == selectedmethodinfo.Name && )
+                {
+                    mi.Invoke(classInstance, null);
+                }
+
+            }
+
+
 
             GUI.DragWindow(); // anyway
         }
@@ -934,6 +952,17 @@ public class NodeGraph
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        public void MandatoryClassType ()
+        {
+            MandatoryNodeClassTypeArray.Add(typeof(BBBLocks));
+            MandatoryNodeClassTypeArray.Add(typeof(BBMovepad));
+            MandatoryNodeClassTypeArray.Add(typeof(BBUInodes));
+            MandatoryNodeClassTypeArray.Add(typeof(BBMovepadLayerDescriptor));
+            MandatoryNodeClassTypeArray.Add(typeof(BBControll));
+        }
+
+
+        
         /// <summary>
         /// here is the place to add class to inspect by the reflectornode editor
         /// </summary>
@@ -949,11 +978,18 @@ public class NodeGraph
                 foreach (MonoBehaviour o in scripts)
                     NodeClassTypeArray.Add(o.GetType());
             }
-            NodeClassTypeArray.Add(typeof(BBBLocks));
-            NodeClassTypeArray.Add(typeof(BBMovepad));
-            NodeClassTypeArray.Add(typeof(BBMovepadLayerDescriptor));
 
-            NodeClassTypeArray.Add(typeof(BBControll));
+            // BBcontroll default nodes
+
+            if (MandatoryNodeClassTypeArray.Count == 0)
+                    MandatoryClassType();
+
+
+            foreach (Type T in MandatoryNodeClassTypeArray)
+                NodeClassTypeArray.Add(T); 
+
+
+
             foreach (System.Type T in NodeClassTypeArray)
             {
                 L.Add(T.Name);
@@ -1000,7 +1036,7 @@ public class NodeGraph
                     if (o.GetType() == typeof(BBCtrlVisible) || BBCtrlNode.unfiltered)
                         L.Add(MethodInfoList[mc]); // store the index on the name 
                     if (o.GetType() == typeof(BBCtrlProp))
-                        Controll = MethodInfoList[mc];
+                        Controlls.Add ( MethodInfoList[mc]) ;
                 }
                 // try to get those anyway to replace by a customizable list of predefined methods 
                 if (MethodInfoList[mc].Name == "GetDataset" || MethodInfoList[mc].Name == "GetActorProps")

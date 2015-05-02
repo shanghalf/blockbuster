@@ -205,8 +205,7 @@ public static class BBTools
         Actor m_actor = null;
         bool
             b_front_X,          // determine if editor camera point roughly along X axis ( to keep a viewport relative block move ) 
-            b_fixedstepedit,    // manipulate actor on defined step offset instead of using it block size 
-            b_groupselectmode   // used to 
+            b_fixedstepedit    // manipulate actor on defined step offset instead of using it block size 
             ;
         float
             stepvalue = 0.0f,
@@ -789,7 +788,7 @@ public static class BBTools
             // ***************************************************************
             // browse asset from base todo  should be changeed to manage multiple base 
 
-            if (b_groupselectmode) return;
+            if (Actor.b_groupselectmode) return;
             GameObject tgo = (GameObject)Selection.activeObject;
             if (tgo == null)
                 return;
@@ -896,13 +895,13 @@ public static class BBTools
                     GameObject instance = (GameObject)Instantiate(prefab, pos, rot);
                     instance.name = prefab.name + instance.GetInstanceID();
                     AddActorComponent(instance,  null);
-                    if (b_groupselectmode)
+                    if (Actor.b_groupselectmode)
                     {
                         tempobjarray.Add(instance);
                         ////debug.Log( tempobjarray.length.ToString());
                     }
                 }
-                if (b_groupselectmode)
+                if (Actor.b_groupselectmode)
                 {
                     ////debug.Log( b_groupselectmode.ToString() ) ;
                     for (int i = 0; i < tempobjarray.Count; i++)
@@ -1009,7 +1008,7 @@ public static class BBTools
                 return; 																// out of Unity nothing to refresh 
             var gg = Selection.activeGameObject.transform.parent;
 
-            if (gg != null && b_groupselectmode)
+            if (gg != null && Actor.b_groupselectmode)
             {
                 Selection.activeObject = gg;
             }
@@ -1029,7 +1028,7 @@ public static class BBTools
             }
 
             GameObject tg = (GameObject)Selection.activeGameObject;
-            if (b_groupselectmode && tg.transform.parent)
+            if (Actor.b_groupselectmode && tg.transform.parent)
             {
                 ////debug.Log("select");
                 //Selection.activeObject = Selection.activeObject.transform.parent;
@@ -1207,7 +1206,7 @@ public static class BBTools
 
         void DisplayToolPannel(bool showobjectactionbuttons)
         {
-                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
+            Actor.b_groupselectmode = EditorGUILayout.Toggle("GrpMode", Actor.b_groupselectmode);
 
                 GUILayout.BeginHorizontal();
                     if (GUILayout.Button(">> 3ds MAX"))
@@ -1732,8 +1731,8 @@ public static class BBTools
 
             if (selectedtab == 0)
             {
-                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
-                b_fixedstepedit = EditorGUILayout.Toggle("fixed predefined move  ", b_fixedstepedit );
+                Actor.b_groupselectmode = EditorGUILayout.Toggle("GrpMode", Actor.b_groupselectmode);
+                b_fixedstepedit = EditorGUILayout.Toggle("fixed predefined move  ", b_fixedstepedit);
                   
 
                 //------------------------------------------------------------------ SLIDER FOR FIXED OFSET MOVE #2
@@ -1790,7 +1789,7 @@ public static class BBTools
                 //ShowMovePadGrid();
 
                 //EditorGUILayout.BeginFadeGroup(10.0f);
-                b_groupselectmode = EditorGUILayout.Toggle("GrpMode", b_groupselectmode);
+                Actor.b_groupselectmode = EditorGUILayout.Toggle("GrpMode", Actor.b_groupselectmode);
                 //EditorGUILayout.EndFadeGroup();
 
                 movepadpos.width = Screen.width;

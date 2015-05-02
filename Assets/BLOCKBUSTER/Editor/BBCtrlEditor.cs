@@ -116,6 +116,10 @@ public class BBCtrlEditor : EditorWindow
         {
             BBCtrlNode.THEGRAPH.Save(true);
         }
+
+
+
+
         if (GUILayout.Button("LOAD"))
         {
             string path ;

@@ -98,6 +98,9 @@ public class Actor : MonoBehaviour
 {
     //public List<Dataset> DatasetTable = new List<Dataset>();
     // serializable properties 
+
+    public static bool b_groupselectmode;
+
     public BaseActorProperties Actorprops = new BaseActorProperties();
 
     public bool bbeditor_fixedstep;
@@ -253,19 +256,29 @@ public class Actor : MonoBehaviour
 
 
     [BBCtrlVisible]
-    public float GetSize()
+    public float GetSize(Vector3 Axis , bool camspace)
     {
+        // updtae direction 
+        if (camspace)
+            GetDir();
             Actor m_actor;
             m_actor = (Actor) Selection.activeGameObject.GetComponent(typeof(Actor));
-            return m_actor.Actorprops.block_size.magnitude;
+            Vector3 vr =  Vector3.Scale(m_actor.Actorprops.block_size , Axis);
+
+            return vr.magnitude; 
     }
+
+
+
+
 
 
     [BBCtrlVisible] 
     public void DoBlockMove( bool instanciate, Vector3 dir, bool moveallpath  , bool camspace)
     {
 
-
+        if (camspace)
+            GetDir();
 
         //************************************************************************************************
         // perform block manipulation in move block section of the tool 
@@ -283,8 +296,7 @@ public class Actor : MonoBehaviour
             //GameObject ts = (GameObject)Selection.gameObjects.GetValue(i);
             Actor m_actor;
             m_actor = (Actor)go.GetComponent(typeof(Actor));						// should be there 
-            if (camspace)
-                m_actor.GetDir();
+
 
             m_actor.Actorprops.last_pos = go.transform.position; // make sure the pos is right 
             if (m_actor == null)
