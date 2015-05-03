@@ -14,6 +14,15 @@ using UnityEditor;
 
 
 
+/// <summary>
+/// BBUInodes store the GUI controll based nodes 
+/// those nodes can only have a single parameter 
+/// this parameter is passed to the graph execution and 
+/// value is stored in a dictionnary 
+/// ann kind of GUI are not managed yet 
+/// sliders ok int and float right now 
+/// 
+/// </summary>
 public class BBUInodes
 {
     public static float F;
@@ -21,18 +30,84 @@ public class BBUInodes
     
     [BBCtrlProp]
     [BBCtrlVisible]
-    public float floatSlider(float max=5.0f)
+    public  float  floatSliderNode(float F)
     {
-        F = EditorGUILayout.Slider(F, 0, max);
+        F = EditorGUILayout.Slider(F, 0, 10.0f);
         return F;
     }
     [BBCtrlProp]
     [BBCtrlVisible]
-    public int IntSlider()
+    public int IntSliderNode(int I)
     {
+        //I=EditorGUI.IntSlider(new Rect(10, 80, 80, 30), I, 0, 100);
         I = EditorGUILayout.IntSlider(I, 0, 100);
         return I;
     }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public TXTINDEX EnumpopupNode (TXTINDEX t )
+    {
+        t = (TXTINDEX)EditorGUILayout.EnumPopup( t); ;
+        return t;
+    }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public int popupNode(int t)
+    {
+        // use public static string list 
+        List<string> L = new List<string>();
+        L.Add("this");
+        L.Add("is");
+        L.Add("a");
+        L.Add("string");
+        L.Add("test");
+        t = EditorGUILayout.Popup(t,L.ToArray());
+        //new Rect(10, 80, 80, 30)
+        //t = (TXTINDEX)EditorGUILayout.EnumPopup(c, t );
+        return t;
+    }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public object ObjectFieldNode(UnityEngine.Object o)
+    {
+        o =  EditorGUILayout.ObjectField(o, typeof(GameObject)); ;
+        return o;
+    }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public bool ToggleNode (bool b)
+    {
+        b = EditorGUILayout.Toggle (b);
+        return b;
+    }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public Vector3 Vector3Node(Vector3 v)
+    {
+        v = EditorGUILayout.Vector3Field("",v);
+        return v;
+    }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public Vector3 Vector2Node(Vector3 v)
+    {
+        v = EditorGUILayout.Vector2Field("", v);
+        return v;
+    }
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public AnimationCurve  AnimcurveNode(AnimationCurve c)
+    {
+        c = EditorGUILayout.CurveField(c);
+        return c;
+    }
+
 }
 
 

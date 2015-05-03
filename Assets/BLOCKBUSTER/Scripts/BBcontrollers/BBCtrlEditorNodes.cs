@@ -20,6 +20,7 @@ public class SlotInfo
 
 {
     public string paramname;
+    public bool UIControllparamslot = false;
     public int index= 0 ;
     public int linkedto;
     public Rect R;
@@ -248,8 +249,6 @@ public class NodeGraph
         public int NodeId;
         public int ParentID;
 
-        [XmlIgnore]
-        public List<MethodInfo> Controlls = new List<MethodInfo>();
 
 
         [XmlIgnore]
@@ -264,8 +263,7 @@ public class NodeGraph
         public System.Guid Guid; // this is the real identifier 
         public String ParamFQ;
 
-        //[XmlIgnore]
-        //public List<ParameterInfo> ArgsList; // this Function args 
+        public bool iscontroll = false;
 
         public bool checknodevalid = true;
 
@@ -477,7 +475,9 @@ public class NodeGraph
         /// <returns></returns>
         public bool CheckNodesconection ()
         {
-            if (isroot) // check is from children to parent root have no parent
+
+
+            if (isroot || iscontroll) // check is from children to parent root have no parent
                 return true;
             BBCtrlNode parent = THEGRAPH.GetnodeFromID(ParentID);
             int I = GetThisNodeIndexInParentSlots();
@@ -572,6 +572,11 @@ public class NodeGraph
         /// </summary>
         public void REbuildSlots()
         {
+            // lets say that the first parameter of a controll node 
+            // is the gui feed parameter managed by internal UI and not by external 
+            // input 
+
+
             slotspos.Clear();
             for (int c = 0; c < ArglistFQ.Count; c++)
             {
@@ -588,6 +593,8 @@ public class NodeGraph
                 ParameterInfo[] p = selectedmethodinfo.GetParameters();
                 S.paramname = p[c].Name;
                 S.R = slotbuttonpos;
+                if (iscontroll)
+                    S.UIControllparamslot = true;
                 slotspos.Add(S);
             }
         }
@@ -643,25 +650,26 @@ public class NodeGraph
                                     Windowpos.position.y + ((BZ) * c),
                                     BZ, BZ
                                    );
-                // here the button is clicked and children is created 
-                if (GUI.Button(slotspos[c].R, Textureloader.slot_questionmark, textonly))
-                {
-                    //float zoom = (isroot) ? 0.5f : 1.0f; // root childs smallers 
-                    Rect NR = GetNewPosFromThisNode(slotYoffset); //new Rect(10, 50, 80, 80);
-                    ParameterInfo[] p  =  selectedmethodinfo.GetParameters();
-                    BBCtrlNode Child = new BBCtrlNode(NR,p[c].ParameterType.Name+ " " +  p[c].Name, this);
-                    Child.ParentFeedSlotInfo = new SlotInfo(c); // but i put on recently created Slot classs
-                    Child.ParentFeedSlotInfo.TypeFullString = ArglistFQ[c]; // Parent input type 
-                    Child.ParentFeedSlotInfo.index = c; // the parent slot index 
-                    // for serialization 
-                    Child.RectDest.Set(NR.xMin, NR.yMin, NR.width, NR.height); // for popup anim
-                    Child.Rectorg = slotspos[c].R;    // for popup anim 
-                    // launch the node popup anim 
-                    Child.Timer.StartCountdown(0.5f);
-                    slotspos[c].linkedto = Child.Guid.GetHashCode();
-                    dirty = true;
+                // do not draw a UI parameter on controllnode
+                if ( ! slotspos[c].UIControllparamslot ) 
+                    if (GUI.Button(slotspos[c].R, Textureloader.slot_questionmark, textonly))
+                    {
+                        //float zoom = (isroot) ? 0.5f : 1.0f; // root childs smallers 
+                        Rect NR = GetNewPosFromThisNode(slotYoffset); //new Rect(10, 50, 80, 80);
+                        ParameterInfo[] p  =  selectedmethodinfo.GetParameters();
+                        BBCtrlNode Child = new BBCtrlNode(NR,p[c].ParameterType.Name+ " " +  p[c].Name, this);
+                        Child.ParentFeedSlotInfo = new SlotInfo(c); // but i put on recently created Slot classs
+                        Child.ParentFeedSlotInfo.TypeFullString = ArglistFQ[c]; // Parent input type 
+                        Child.ParentFeedSlotInfo.index = c; // the parent slot index 
+                        // for serialization 
+                        Child.RectDest.Set(NR.xMin, NR.yMin, NR.width, NR.height); // for popup anim
+                        Child.Rectorg = slotspos[c].R;    // for popup anim 
+                        // launch the node popup anim 
+                        Child.Timer.StartCountdown(0.5f);
+                        slotspos[c].linkedto = Child.Guid.GetHashCode();
+                        dirty = true;
 
-                }
+                    }
             }
             Windowpos = GUI.Window(Guid.GetHashCode(), Windowpos, DoNodeWindow, name);
             if (!isroot)
@@ -675,8 +683,13 @@ public class NodeGraph
                 {
                     if (!CheckNodesconection() || !checknodevalid)
                     {
-                        checknodevalid = false;
-                        linkcolor = Color.red;
+                        if (iscontroll)
+                            checknodevalid = true;
+                        else
+                        {
+                            //Debug.Log(name + " Fail b");
+                            linkcolor = Color.red;
+                        }
                     }
                     else
                         linkcolor = Color.green;
@@ -716,13 +729,15 @@ public class NodeGraph
                 // stop at the first problem useless to perform more check 
                 valid = false;
                 N.checknodevalid = false;
+                //Debug.Log( name + "Fail c");
                 return;
             }
 
-            if (N.slotspos.Count != N.SUBNodes.Count)
+            if (N.slotspos.Count != N.SUBNodes.Count  && !N.iscontroll )
             {
                 valid = false;
                 N.checknodevalid = false;
+                //Debug.Log(name + " IS CONTROL : " + iscontroll.ToString() + " Fail d");
                 return;
             }
             BBCtrlNode parent = THEGRAPH.GetnodeFromID(N.ParentID);
@@ -796,6 +811,7 @@ public class NodeGraph
             if (LookupClassindex >= localclassarray.GetLength(0)) 
             {
                 checknodevalid = false;
+                //Debug.Log("Fail f");
                 return;
             }
 
@@ -803,7 +819,7 @@ public class NodeGraph
 
             lookupclassname = localclassarray[LookupClassindex];
             localmethodarray.Clear();
-            Controlls.Clear();
+
             filteredmethods = BuildFilteredMethodArray(LookupClassindex);
             foreach (MethodInfo mi in filteredmethods)
                 localmethodarray.Add(mi.Name);
@@ -818,6 +834,7 @@ public class NodeGraph
             if (filteredmethods.Length <= Lookupmethodindex || Lookupmethodindex < 0)
             {
                 checknodevalid = false;
+                //Debug.Log("Fail G");
                 GUI.DragWindow();
                 return;
             }
@@ -826,19 +843,16 @@ public class NodeGraph
             if (ParamFQ != null)
                 STR = NodeId.ToString();   //Paraminfo.ParameterType.ToString();
 
+            if (BBCtrlNode.scrolllock)  
+                EditorGUILayout.LabelField(STR);
 
-
-
-
-
-
-            EditorGUILayout.LabelField(STR);
             // store the fullQF class name
             if (NodeClassTypeArray.Count < LookupClassindex)
             {
                 // EXIT FAIL 
                 GUI.DragWindow(); // anyway
-                checknodevalid = false;
+                //checknodevalid = false;
+                //Debug.Log("Fail H");
                 return;
             }
             if (NodeClassTypeArray.Count <= LookupClassindex)
@@ -846,6 +860,7 @@ public class NodeGraph
                 GUILayout.Label("wrong selection for the node setup \n need a Game object ?  ");
                 selectedmethodinfo = null;
                 checknodevalid = false;
+                //Debug.Log("Fail i");
                 GUI.DragWindow(); // anyway
                 return;
             }
@@ -856,7 +871,7 @@ public class NodeGraph
             THEGRAPH.GraphOK = true; 
 
             CheckfullGraph(this, out THEGRAPH.GraphOK);
-            if (THEGRAPH.GraphOK && checknodevalid)
+            if (THEGRAPH.GraphOK && checknodevalid && !iscontroll)
                 if (GUILayout.Button("INVOKE"))
                         Nodeinvoke(0);
 
@@ -871,8 +886,13 @@ public class NodeGraph
                 subnodesname += "child " + N.NodeId + "\n";
             if (!isroot)
             {
-                GUILayout.Label(subnodesname);
-                GUILayout.Label(NodeDebuginfos);
+
+                if (BBCtrlNode.editordebugmode)
+                {
+                    GUILayout.Label(subnodesname);
+                    GUILayout.Label(NodeDebuginfos);
+                }
+
             }
 
             selectedmethodinfo = filteredmethods[Lookupmethodindex];
@@ -883,16 +903,19 @@ public class NodeGraph
                 ArglistFQ.Add(pi.ParameterType.AssemblyQualifiedName);
             checknodevalid = true;
 
-            object classInstance = Activator.CreateInstance(typeof(BBUInodes));
-
-            foreach (MethodInfo mi in Controlls)
+            // this node is a ui controll 
+            // have to perform the user input to store the value 
+            iscontroll = false;
+            object[] atributelist = selectedmethodinfo.GetCustomAttributes(true);
+            foreach (object o in atributelist)
             {
-                if (mi.Name == selectedmethodinfo.Name && )
+                if (o.GetType() == typeof(BBCtrlProp))
                 {
-                    mi.Invoke(classInstance, null);
+                    iscontroll = true;
+                    ControllInvoke(selectedmethodinfo);
                 }
-
             }
+
 
 
 
@@ -900,6 +923,47 @@ public class NodeGraph
         }
 
 
+
+        static Dictionary<string, object> ControllsArgs= new Dictionary<string, object>();
+
+        public void ControllInvoke( MethodInfo M )
+        {
+            // flag this node as control 
+            object classInstance = Activator.CreateInstance(typeof(BBUInodes));
+            object controllarg = new object();
+
+            ParameterInfo[] pi = M.GetParameters();
+            if (pi.GetLength(0) == 0)
+                controllarg = null;
+            else
+            {
+                if (pi.GetLength(0) > 1)
+                    return;    
+
+                bool matcharg = false;
+                foreach ( KeyValuePair<string,object> kvp in  ControllsArgs )
+                    if (ControllsArgs.ContainsKey(M.Name))
+                    {
+                        controllarg = (ControllsArgs[M.Name]);
+                        matcharg = true;
+                        break;
+                    }
+                if (!matcharg)
+                {
+
+                    controllarg = Activator.CreateInstance(pi[0].ParameterType);
+                    ControllsArgs.Add(M.Name, controllarg);
+                }
+
+            }
+                ControllsArgs[M.Name] = M.Invoke(classInstance, new object[] { controllarg });
+                m_OutputObj = ControllsArgs[M.Name];
+                
+         }
+
+        
+
+    
         /// <summary>
         ///  Node invoke recursively the full graph chain starting from this 
         ///  node 
@@ -932,7 +996,12 @@ public class NodeGraph
             {
                 BBCtrlNode N = SUBNodes[c];
 
-                N.Nodeinvoke(c);
+
+                if (N.iscontroll) // controll is invoked in edit loop on user input
+                    N.ControllInvoke(N.selectedmethodinfo);
+                else
+                    N.Nodeinvoke(c);
+
                 if (N.m_OutputObj==null)
                     Debug.Log("no result for node "+ N.NodeId.ToString() );
                 Args.Add(N.name,N.m_OutputObj);
@@ -1035,8 +1104,6 @@ public class NodeGraph
                 {
                     if (o.GetType() == typeof(BBCtrlVisible) || BBCtrlNode.unfiltered)
                         L.Add(MethodInfoList[mc]); // store the index on the name 
-                    if (o.GetType() == typeof(BBCtrlProp))
-                        Controlls.Add ( MethodInfoList[mc]) ;
                 }
                 // try to get those anyway to replace by a customizable list of predefined methods 
                 if (MethodInfoList[mc].Name == "GetDataset" || MethodInfoList[mc].Name == "GetActorProps")
@@ -1088,6 +1155,7 @@ public class NodeGraph
             {
                 GUILayout.Label("graph not apply to this selection");
                 checknodevalid = false;
+                //Debug.Log("Fail A");
                 return MTHIDX; // FAIL 
             }
 
