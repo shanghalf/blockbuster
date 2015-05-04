@@ -128,7 +128,7 @@ public class MovingPlatformDataset  : Dataset
 
 
 
-    [ExecuteInEditMode()]
+    //[ExecuteInEditMode()]
     public class MovingPlatform : BBehavior
     {
         // paramblock is a custom data set that hold serializables 

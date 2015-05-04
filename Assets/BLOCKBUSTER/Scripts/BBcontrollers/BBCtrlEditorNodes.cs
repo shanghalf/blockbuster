@@ -43,6 +43,11 @@ public class SlotInfo
 /// manage multiple graph
 /// </summary>
 [System.Serializable]
+[XmlInclude(typeof(Vector3))]
+[XmlInclude(typeof(TXTINDEX))]
+[XmlInclude(typeof(AnimationCurve))]
+[XmlInclude(typeof(BBGameObjectHandle))]
+
 public class NodeGraph
 {
     public bool GraphOK = true;
@@ -238,6 +243,15 @@ public class NodeGraph
         static GUIStyle textonly = new GUIStyle();
         static int BZ = (int)MVPBUTTONSIZE.MVP32;
         static Color linkcolor = Color.green;
+        // should be handled separately in serialization 
+
+        static Dictionary<string, object> ControllsArgs = new Dictionary<string, object>(); // for ui nodes 
+
+        //public KeyValuePair<string, object> ControllKVP = new KeyValuePair<string, object>(); // for ui nodes 
+
+        public object controllarg;
+        public string controllargname;
+
 
 
         [XmlIgnore]
@@ -894,7 +908,6 @@ public class NodeGraph
                 }
 
             }
-
             selectedmethodinfo = filteredmethods[Lookupmethodindex];
             LookupMethodName = selectedmethodinfo.Name;
             ReturnTye = selectedmethodinfo.ReturnType; // return type ys stored in the node 
@@ -915,36 +928,59 @@ public class NodeGraph
                     ControllInvoke(selectedmethodinfo);
                 }
             }
-
-
-
-
             GUI.DragWindow(); // anyway
         }
 
 
+        public void ControllInvoke(MethodInfo M)
+        {
+            // flag this node as control 
+            object classInstance = Activator.CreateInstance(typeof(BBUInodes));
+            string entryID = M.Name + Guid.GetHashCode().ToString();
+            ParameterInfo[] pi = M.GetParameters();
+            if (pi.GetLength(0) > 1)
+                return; // right now parameter of a control node is final and do not support other param
+            
+            if (pi.GetLength(0) == 0)
+                controllarg = null;
+            if (controllarg == null)
+                controllarg = Activator.CreateInstance(pi[0].ParameterType);
 
-        static Dictionary<string, object> ControllsArgs= new Dictionary<string, object>();
+            Type T = controllarg.GetType();
+            if (  T  != pi[0].ParameterType )
+                controllarg = Activator.CreateInstance(pi[0].ParameterType);
 
-        public void ControllInvoke( MethodInfo M )
+
+            controllarg = M.Invoke(classInstance, new object[] { controllarg });
+            m_OutputObj = controllarg;
+
+            if (controllarg.GetType() == typeof(GameObject))
+                Debug.Log(controllarg.ToString());
+
+        }
+
+
+        public void ControllInvokebackup( MethodInfo M )
         {
             // flag this node as control 
             object classInstance = Activator.CreateInstance(typeof(BBUInodes));
             object controllarg = new object();
-
+            string entryID = M.Name + Guid.GetHashCode().ToString();
             ParameterInfo[] pi = M.GetParameters();
             if (pi.GetLength(0) == 0)
                 controllarg = null;
             else
             {
                 if (pi.GetLength(0) > 1)
-                    return;    
-
+                {
+                    Debug.Log("this version do not support extra parameters for a ui controll ");
+                    return; // right now parameter of a control node is final and do not support other param
+                }
                 bool matcharg = false;
                 foreach ( KeyValuePair<string,object> kvp in  ControllsArgs )
-                    if (ControllsArgs.ContainsKey(M.Name))
+                    if (ControllsArgs.ContainsKey(entryID))
                     {
-                        controllarg = (ControllsArgs[M.Name]);
+                        controllarg = (ControllsArgs[entryID]);
                         matcharg = true;
                         break;
                     }
@@ -952,12 +988,12 @@ public class NodeGraph
                 {
 
                     controllarg = Activator.CreateInstance(pi[0].ParameterType);
-                    ControllsArgs.Add(M.Name, controllarg);
+                    ControllsArgs.Add(entryID, controllarg);
                 }
 
             }
-                ControllsArgs[M.Name] = M.Invoke(classInstance, new object[] { controllarg });
-                m_OutputObj = ControllsArgs[M.Name];
+            ControllsArgs[entryID] = M.Invoke(classInstance, new object[] { controllarg });
+            m_OutputObj = ControllsArgs[entryID];
                 
          }
 
@@ -972,9 +1008,6 @@ public class NodeGraph
         /// <returns></returns>
         public object Nodeinvoke(int returnindex )
         {
-
-            
-
             if (!THEGRAPH.GraphOK)
             {
                 BBCtrlNode.NodeDebuginfos = "graph is not valid for exec"; 
@@ -995,13 +1028,10 @@ public class NodeGraph
             for (int c = 0 ; c< SUBNodes.Count;c++)
             {
                 BBCtrlNode N = SUBNodes[c];
-
-
                 if (N.iscontroll) // controll is invoked in edit loop on user input
                     N.ControllInvoke(N.selectedmethodinfo);
                 else
                     N.Nodeinvoke(c);
-
                 if (N.m_OutputObj==null)
                     Debug.Log("no result for node "+ N.NodeId.ToString() );
                 Args.Add(N.name,N.m_OutputObj);

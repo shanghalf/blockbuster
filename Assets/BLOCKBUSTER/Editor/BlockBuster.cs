@@ -989,68 +989,28 @@ public static class BBTools
 
 
 
-
+        /*
         void Update()
         {
             if (Selection.activeGameObject == null)
                 return;
         }
-
+        */
+        
         void OnInspectorUpdate()
         {
-            //***********************************************************************************
-            // update inspector sheet according to the tool value 
             Repaint();
             return;//unactivated next 
-
-
-            if (Selection.gameObjects.Length == 0 || EditorWindow.focusedWindow == null)
-                return; 																// out of Unity nothing to refresh 
-            var gg = Selection.activeGameObject.transform.parent;
-
-            if (gg != null && Actor.b_groupselectmode)
-            {
-                Selection.activeObject = gg;
-            }
-
-
-            if ((EditorWindow.focusedWindow.title == "blockbuster"))
-            {				// Block Buster got the focus: so play that funky music white boy  
- 
-                if (assetsliderindex - 1 != oldindexstorage)
-                    BrowseAsset(assetsliderindex - 1);												// till you die ....:::..::...::...::.::.:.:.:::
-                oldindexstorage = assetsliderindex - 1;
-                Repaint();
-                //SceneView.RepaintAll();
-                //DebugUtils.Log(Core.LogCategory.Gamelogic, R.replayspeed.ToString());
-                if (m_replayer != null)
-                    m_replayer.Update();
-            }
-
-            GameObject tg = (GameObject)Selection.activeGameObject;
-            if (Actor.b_groupselectmode && tg.transform.parent)
-            {
-                ////debug.Log("select");
-                //Selection.activeObject = Selection.activeObject.transform.parent;
-            }
-
-            
-            ////debug.Log(bs.parent.name) ;
         }
-
+        
 
 
         string[] ReturnXmlContent()
         {
-
-
-
-
             string[] files = Directory.GetFiles(BBDir.Get(BBpath.REPLAY), "*.xml");
             List<string> l = new List<string>();
             string[] path = EditorApplication.currentScene.Split(char.Parse("/"));
             string currenteditormapname = path[path.Length - 1].Split(char.Parse("."))[0];
-
             foreach (var f in files)
             {
                 string[] mapname = f.Split(char.Parse("\\"));
@@ -1060,7 +1020,6 @@ public static class BBTools
                     string fn = spath[spath.Length - 1].Split(char.Parse("."))[0];
                     l.Add(fn);
                 }
-
             }
             if (l.Count == 0)
             {
@@ -1068,7 +1027,6 @@ public static class BBTools
                 m_replayactors.Clear();
             }
             return l.ToArray();
-
         }
 
 

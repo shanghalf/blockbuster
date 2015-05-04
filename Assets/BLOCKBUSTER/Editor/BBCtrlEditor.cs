@@ -63,7 +63,7 @@ public class BBCtrlEditor : EditorWindow
 
 
    
-
+    
     /// <summary>
     ///  Repaint on external event 
     /// </summary>
@@ -75,6 +75,8 @@ public class BBCtrlEditor : EditorWindow
         Repaint();
         return;
     }
+    
+
     /// <summary>
     /// debug grid 
     /// </summary>

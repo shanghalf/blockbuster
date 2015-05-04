@@ -13,6 +13,33 @@ using UnityEditor;
 #endif
 
 
+[System.Serializable]
+public class BBGameObjectHandle
+{
+    public BBGameObjectHandle()
+    {
+    }
+
+    [XmlIgnore]
+    public GameObject go ;
+
+    public string Name;
+    public bool bfromscene;
+
+    public string assetpath;
+
+    public void GetonName ()
+    {
+       
+
+    }
+    
+
+
+}
+
+
+
 
 /// <summary>
 /// BBUInodes store the GUI controll based nodes 
@@ -27,7 +54,7 @@ public class BBUInodes
 {
     public static float F;
     public static int I;
-    
+
     [BBCtrlProp]
     [BBCtrlVisible]
     public  float  floatSliderNode(float F)
@@ -35,6 +62,7 @@ public class BBUInodes
         F = EditorGUILayout.Slider(F, 0, 10.0f);
         return F;
     }
+
     [BBCtrlProp]
     [BBCtrlVisible]
     public int IntSliderNode(int I)
@@ -71,10 +99,20 @@ public class BBUInodes
 
     [BBCtrlProp]
     [BBCtrlVisible]
-    public object ObjectFieldNode(UnityEngine.Object o)
+    public BBGameObjectHandle ObjectFieldNode(BBGameObjectHandle o)
     {
-        o =  EditorGUILayout.ObjectField(o, typeof(GameObject)); ;
+        if (o.go == null && o.assetpath != null)
+            o.go = (GameObject)Resources.LoadAssetAtPath(o.assetpath, typeof(GameObject));
+
+
+        o.go = (GameObject)EditorGUILayout.ObjectField(o.go, typeof(GameObject), true);
+        if (o.go != null)
+        {
+            o.Name = o.go.name;
+            o.assetpath = AssetDatabase.GetAssetPath(o.go);
+        }
         return o;
+
     }
 
     [BBCtrlProp]
@@ -89,7 +127,7 @@ public class BBUInodes
     [BBCtrlVisible]
     public Vector3 Vector3Node(Vector3 v)
     {
-        v = EditorGUILayout.Vector3Field("",v);
+        v= EditorGUILayout.Vector3Field("",   v);
         return v;
     }
 

@@ -1098,8 +1098,12 @@ public class BBMovepadLayerDescriptor
             for (int c = 0; c < filterlist.GetLength(0); c++)
                 if (filterlist[c].Name == NCaller.LookupMethodName)
                     NCaller.Lookupmethodindex = c;
-            
-            NCaller.m_OutputObj = filterlist[NCaller.Lookupmethodindex].Invoke(classInstance, objlist.ToArray());
+
+            if (NCaller.iscontroll) // a controll hold the parameter set manualy on graph and saved no need to invoke 
+                NCaller.m_OutputObj = NCaller.controllarg;
+            else
+                NCaller.m_OutputObj = filterlist[NCaller.Lookupmethodindex].Invoke(classInstance, objlist.ToArray());
+
             return NCaller.m_OutputObj;
         }
 

@@ -60,7 +60,7 @@ public class RotatingPlatformDataset : Dataset
 
 
 
-[ExecuteInEditMode()]
+//[ExecuteInEditMode()]
 public class RotatingPlatform : BBehavior
 {
     // should implement only shared props for all behaviors 
