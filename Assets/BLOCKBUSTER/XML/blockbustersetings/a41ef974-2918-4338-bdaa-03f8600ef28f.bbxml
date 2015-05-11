@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="gb2312"?>
 <NodeGraph xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <GraphOK>true</GraphOK>
+  <filename>E:/BlockBuster_G/blockbuster/Assets/BLOCKBUSTER/XML/blockbustersetings/a41ef974-2918-4338-bdaa-03f8600ef28f.bbxml</filename>
   <ROOTNODE>
+    <needinvoke>false</needinvoke>
     <SUBNodesKEY>
       <int>-981503856</int>
       <int>1001230882</int>
@@ -213,6 +215,7 @@
   <Nodes>
     <BBCtrlNode>
       <controllarg xsi:type="xsd:boolean">false</controllarg>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY />
       <NodeId>-981503856</NodeId>
       <ParentID>-925078793</ParentID>
@@ -252,10 +255,10 @@
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>5</LookupClassindex>
+      <LookupClassindex>3</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <savedclassname>BBBLocks</savedclassname>
-      <Lookupmethodindex>5</Lookupmethodindex>
+      <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
       <savedMethodName>FALSE</savedMethodName>
       <ArglistFQ>
@@ -340,6 +343,7 @@
     </BBCtrlNode>
     <BBCtrlNode>
       <controllarg xsi:type="xsd:boolean">true</controllarg>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY />
       <NodeId>1001230882</NodeId>
       <ParentID>-925078793</ParentID>
@@ -379,10 +383,10 @@
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>5</LookupClassindex>
+      <LookupClassindex>3</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <savedclassname>BBBLocks</savedclassname>
-      <Lookupmethodindex>5</Lookupmethodindex>
+      <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
       <savedMethodName>FALSE</savedMethodName>
       <ArglistFQ>
@@ -467,6 +471,7 @@
     </BBCtrlNode>
     <BBCtrlNode>
       <controllarg xsi:type="xsd:boolean">true</controllarg>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY />
       <NodeId>804418003</NodeId>
       <ParentID>-925078793</ParentID>
@@ -506,10 +511,10 @@
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>5</LookupClassindex>
+      <LookupClassindex>3</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <savedclassname>BBBLocks</savedclassname>
-      <Lookupmethodindex>5</Lookupmethodindex>
+      <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
       <savedMethodName>TRUE</savedMethodName>
       <ArglistFQ>
@@ -598,6 +603,7 @@
         <y>1</y>
         <z>0</z>
       </controllarg>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY />
       <NodeId>22922874</NodeId>
       <ParentID>571100722</ParentID>
@@ -637,10 +643,10 @@
       <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>5</LookupClassindex>
+      <LookupClassindex>3</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <savedclassname>Actor</savedclassname>
-      <Lookupmethodindex>6</Lookupmethodindex>
+      <Lookupmethodindex>7</Lookupmethodindex>
       <LookupMethodName>Vector3Node</LookupMethodName>
       <savedMethodName>up</savedMethodName>
       <ArglistFQ>
@@ -729,6 +735,7 @@
         <y>1</y>
         <z>0</z>
       </controllarg>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY />
       <NodeId>-1848208643</NodeId>
       <ParentID>-70290930</ParentID>
@@ -768,10 +775,10 @@
       <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>5</LookupClassindex>
+      <LookupClassindex>3</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <savedclassname>Actor</savedclassname>
-      <Lookupmethodindex>6</Lookupmethodindex>
+      <Lookupmethodindex>7</Lookupmethodindex>
       <LookupMethodName>Vector3Node</LookupMethodName>
       <savedMethodName>up</savedMethodName>
       <ArglistFQ>
@@ -856,6 +863,7 @@
     </BBCtrlNode>
     <BBCtrlNode>
       <controllarg xsi:type="xsd:boolean">true</controllarg>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY />
       <NodeId>665872009</NodeId>
       <ParentID>-70290930</ParentID>
@@ -895,10 +903,10 @@
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>5</LookupClassindex>
+      <LookupClassindex>3</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <savedclassname>BBBLocks</savedclassname>
-      <Lookupmethodindex>5</Lookupmethodindex>
+      <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
       <savedMethodName>TRUE</savedMethodName>
       <ArglistFQ>
@@ -982,6 +990,7 @@
       <isroot>false</isroot>
     </BBCtrlNode>
     <BBCtrlNode>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY>
         <int>-1848208643</int>
         <int>665872009</int>
@@ -1039,7 +1048,7 @@
           <paramname>Axis</paramname>
           <UIControllparamslot>false</UIControllparamslot>
           <index>0</index>
-          <linkedto>-1848208643</linkedto>
+          <linkedto>-349057450</linkedto>
           <R>
             <x>315.941</x>
             <y>338.4334</y>
@@ -1149,6 +1158,7 @@
       <isroot>false</isroot>
     </BBCtrlNode>
     <BBCtrlNode>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY>
         <int>22922874</int>
         <int>-70290930</int>
@@ -1156,23 +1166,23 @@
       <NodeId>571100722</NodeId>
       <ParentID>-925078793</ParentID>
       <Windowpos>
-        <x>616.225952</x>
-        <y>188.605072</y>
+        <x>617.225952</x>
+        <y>173.605072</y>
         <position>
-          <x>616.225952</x>
-          <y>188.605072</y>
+          <x>617.225952</x>
+          <y>173.605072</y>
         </position>
         <center>
-          <x>716.225952</x>
-          <y>288.605072</y>
+          <x>717.225952</x>
+          <y>273.605072</y>
         </center>
         <min>
-          <x>616.225952</x>
-          <y>188.605072</y>
+          <x>617.225952</x>
+          <y>173.605072</y>
         </min>
         <max>
-          <x>816.225952</x>
-          <y>388.605072</y>
+          <x>817.225952</x>
+          <y>373.605072</y>
         </max>
         <width>200</width>
         <height>200</height>
@@ -1180,21 +1190,21 @@
           <x>200</x>
           <y>200</y>
         </size>
-        <xMin>616.225952</xMin>
-        <yMin>188.605072</yMin>
-        <xMax>816.225952</xMax>
-        <yMax>388.605072</yMax>
+        <xMin>617.225952</xMin>
+        <yMin>173.605072</yMin>
+        <xMax>817.225952</xMax>
+        <yMax>373.605072</yMax>
       </Windowpos>
       <name>Vector3 dir</name>
-      <ClassnameFQ>BBBLocks, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <ClassnameFQ>BBMathnodes, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
       <Guid>5881322c-efd6-4612-b150-6cb9240d56b5</Guid>
       <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
       <iscontroll>false</iscontroll>
       <checknodevalid>true</checknodevalid>
-      <LookupClassindex>3</LookupClassindex>
-      <lookupclassname>BBBLocks</lookupclassname>
+      <LookupClassindex>6</LookupClassindex>
+      <lookupclassname>BBMathnodes</lookupclassname>
       <savedclassname>BBBLocks</savedclassname>
-      <Lookupmethodindex>10</Lookupmethodindex>
+      <Lookupmethodindex>3</Lookupmethodindex>
       <LookupMethodName>Multiplyvector</LookupMethodName>
       <savedMethodName>Multiplyvector</savedMethodName>
       <ArglistFQ>
@@ -1206,25 +1216,25 @@
           <paramname>vin</paramname>
           <UIControllparamslot>false</UIControllparamslot>
           <index>0</index>
-          <linkedto>22922874</linkedto>
+          <linkedto>571100722</linkedto>
           <R>
-            <x>594.892639</x>
-            <y>188.605072</y>
+            <x>595.892639</x>
+            <y>173.605072</y>
             <position>
-              <x>594.892639</x>
-              <y>188.605072</y>
+              <x>595.892639</x>
+              <y>173.605072</y>
             </position>
             <center>
-              <x>610.892639</x>
-              <y>204.605072</y>
+              <x>611.892639</x>
+              <y>189.605072</y>
             </center>
             <min>
-              <x>594.892639</x>
-              <y>188.605072</y>
+              <x>595.892639</x>
+              <y>173.605072</y>
             </min>
             <max>
-              <x>626.892639</x>
-              <y>220.605072</y>
+              <x>627.892639</x>
+              <y>205.605072</y>
             </max>
             <width>32</width>
             <height>32</height>
@@ -1232,10 +1242,10 @@
               <x>32</x>
               <y>32</y>
             </size>
-            <xMin>594.892639</xMin>
-            <yMin>188.605072</yMin>
-            <xMax>626.892639</xMax>
-            <yMax>220.605072</yMax>
+            <xMin>595.892639</xMin>
+            <yMin>173.605072</yMin>
+            <xMax>627.892639</xMax>
+            <yMax>205.605072</yMax>
           </R>
           <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
         </SlotInfo>
@@ -1243,25 +1253,25 @@
           <paramname>by</paramname>
           <UIControllparamslot>false</UIControllparamslot>
           <index>1</index>
-          <linkedto>-70290930</linkedto>
+          <linkedto>571100722</linkedto>
           <R>
-            <x>594.892639</x>
-            <y>220.605072</y>
+            <x>595.892639</x>
+            <y>205.605072</y>
             <position>
-              <x>594.892639</x>
-              <y>220.605072</y>
+              <x>595.892639</x>
+              <y>205.605072</y>
             </position>
             <center>
-              <x>610.892639</x>
-              <y>236.605072</y>
+              <x>611.892639</x>
+              <y>221.605072</y>
             </center>
             <min>
-              <x>594.892639</x>
-              <y>220.605072</y>
+              <x>595.892639</x>
+              <y>205.605072</y>
             </min>
             <max>
-              <x>626.892639</x>
-              <y>252.605072</y>
+              <x>627.892639</x>
+              <y>237.605072</y>
             </max>
             <width>32</width>
             <height>32</height>
@@ -1269,10 +1279,10 @@
               <x>32</x>
               <y>32</y>
             </size>
-            <xMin>594.892639</xMin>
-            <yMin>220.605072</yMin>
-            <xMax>626.892639</xMax>
-            <yMax>252.605072</yMax>
+            <xMin>595.892639</xMin>
+            <yMin>205.605072</yMin>
+            <xMax>627.892639</xMax>
+            <yMax>237.605072</yMax>
           </R>
           <TypeFullString>System.Single, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         </SlotInfo>
@@ -1316,6 +1326,7 @@
       <isroot>false</isroot>
     </BBCtrlNode>
     <BBCtrlNode>
+      <needinvoke>false</needinvoke>
       <SUBNodesKEY>
         <int>-981503856</int>
         <int>1001230882</int>

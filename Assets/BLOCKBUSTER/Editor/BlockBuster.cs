@@ -966,22 +966,12 @@ public static class BBTools
             BBMovepad.Mainlayer.DicCtrl.Clear();
 
 
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 1, 0);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 8, 2);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 10, 3);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 17, 1);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 19, 9);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 3, 8);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 5, 4);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 13, 5);
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 21, 6);
-            //********* test with parameters to pass 
-            BBMovepad.RegisterButton(BBMovepad.Mainlayer, 7, 7);
 
-            BBMovepad.RenderLayer(BBMovepad.Mainlayer, TXTINDEX.NORMAL);
+           
 
             BBMovepad.Init();
 
+            BBMovepad.Mainlayer.Load( BBDir.Get(BBpath.SETING)+ "movepadmain.MVPL", BBMovepad.Mainlayer);
 
             return true;
         }
@@ -1265,8 +1255,7 @@ public static class BBTools
         }
         public static void MVP_ComposeMovepad(int mousestate)
         {
-
-            BBdebug.SaveMovepadTarget("test.png", mvp_texture_target);
+            BBDebugLog.SaveMovepadTarget("test.png", mvp_texture_target);
         }
 
         public static void MVP_dClearTarget (Texture2D txt )
@@ -1357,7 +1346,12 @@ public static class BBTools
             Vector2 mpos = Event.current.mousePosition - BBMovepad.mvpd_rect.position;
             // define a output area for the movepad 
             BBMovepad.mvpd_rect.Set(Screen.width / 2 - (BBMovepad.MVPTXTSZ / 2), 30, BBMovepad.MVPTXTSZ, BBMovepad.MVPTXTSZ);
+
+            if (BBMovepad.Mainlayer.TEXTURES[(int)active] == null)
+                InitGUIValues();
+
             GUI.DrawTexture(BBMovepad.mvpd_rect, BBMovepad.Mainlayer.TEXTURES[(int)active]); // draw the target 
+            
             if (!BBDrawing.GetRectFocus(BBMovepad.mvpd_rect))
             {
                 GUI.DragWindow();
@@ -1373,8 +1367,22 @@ public static class BBTools
                     if (!BBControll.editgraph)
                         BBMovepad.InvokeCtrlMethod(BBMovepad.Mainlayer, mpos);
                     else
-                        EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
+                    {
+                        int index = BBMovepad.GetGridIndexFromXY(BBMovepad.Mainlayer, mpos);
+                        BBControll MPC = BBMovepad.GetControll(BBMovepad.Mainlayer, index);
+                        if (MPC != null)
+                        {
 
+                            NodeGraph.EditedControll = MPC;
+
+                            if (MPC.thisgraph == null)
+                                MPC.thisgraph = NodeGraph.LoadGraph(MPC);
+
+                            NodeGraph.EditedControll.thisgraph.filename = MPC.Graphfilename;
+                            NodeGraph.EditedControll.thisgraph = MPC.thisgraph;
+                            EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
+                        }
+                    }
                     BBDrawing.lastmousepos = mpos;
                 }
 

@@ -12,6 +12,9 @@ using UnityEditor;
 //using BlockbusterControll;
 
 
+
+
+
 /// <summary>
 ///  The editor window and prety much all the conection with unity 
 ///  everything else is mainly easy to split 
@@ -25,30 +28,41 @@ public class BBCtrlEditor : EditorWindow
     {
         EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
         MethodInfo[] MethodInfoList = typeof(BBCtrlNode).GetMethods();
-        
+        /*
         foreach (MethodInfo i in MethodInfoList)
             if (i.Name == "onhwcalback")
             {
                 MethodBody B=  i.GetMethodBody();
-            }
+            }*/
+
         // 2 TIMERS FOR EDITOR PURPOSES 
         BBCtrlEditortimerList.Clear();
         BBCtrlEditortimerList.Add("T1", new EditorTimer());
         BBCtrlEditortimerList.Add("T2", new EditorTimer());
         BBCtrlEditortimerList["T2"].StartCountdown(1.0f);
         // ROOT IS THE FIRST AND MANDATORY NODE FOR THE VIEW 
-        BBCtrlNode.THEGRAPH.ROOTNODE = new BBCtrlNode(BBCtrlNode.ROOTPOS, "ROOT");
-        BBCtrlNode.THEGRAPH.ROOTNODE.isroot = true;
-        BBCtrlNode.THEGRAPH.ROOTNODE.name = "ROOT";
-        BBCtrlNode.THEGRAPH.ROOTNODE.isroot = true;
+
+        /*
+        if (NodeGraph.EditedControll.thisgraph.ROOTNODE == null)
+        {
+            NodeGraph.EditedControll.thisgraph.ROOTNODE = new BBCtrlNode(BBCtrlNode.ROOTPOS, "ROOT");
+            NodeGraph.EditedControll.thisgraph.ROOTNODE.isroot = true;
+            NodeGraph.EditedControll.thisgraph.ROOTNODE.name = "ROOT";
+            NodeGraph.EditedControll.thisgraph.ROOTNODE.isroot = true;
+
+        }*/
+        
         // init BBCTRL 
         // since this view is linked to Movepad ( BBCTRL is the movepad ) 
+        
+
         BBMovepad.Init();
+        /*
         if (NodeGraph.autoload)
         {
             if (System.IO.File.Exists(NodeGraph.autofilename))
-                BBCtrlNode.THEGRAPH.Load(NodeGraph.autofilename);
-        }
+                GraphHandle.ActiveGraph = NodeGraph.LoadGraph(NodeGraph.autofilename);
+        }*/
         
     }
     // the ofset from window title bar to drawing area 
@@ -62,8 +76,19 @@ public class BBCtrlEditor : EditorWindow
 
 
 
-   
-    
+    void OnEnable()
+    {
+        NodeGraph.editoropen = true;
+    }
+
+    void OnDisable ()
+    {
+        NodeGraph.editoropen = false;
+
+
+    }
+
+
     /// <summary>
     ///  Repaint on external event 
     /// </summary>
@@ -83,40 +108,53 @@ public class BBCtrlEditor : EditorWindow
     void DrawGrid ()
     {
         Rect SCR = new Rect(0, 0, Screen.width, Screen.height);
-        if (BBCtrlNode.THEGRAPH.ROOTNODE == null)
-            init();
+        if (NodeGraph.EditedControll.thisgraph.ROOTNODE == null)
+            return;
         List<BBCtrlNode> L = new List<BBCtrlNode>();
-        Vector2 NodeSize = new Vector2(BBCtrlNode.THEGRAPH.ROOTNODE.Windowpos.width, BBCtrlNode.THEGRAPH.ROOTNODE.Windowpos.height);
+        Vector2 NodeSize = new Vector2(NodeGraph.EditedControll.thisgraph.ROOTNODE.Windowpos.width, NodeGraph.EditedControll.thisgraph.ROOTNODE.Windowpos.height);
         BBDrawing.BBDoGridLayout( SCR, NodeSize);
     }
+    /*
     void Update()
     {
         if (!BBControll.editgraph )
         EditorWindow.GetWindow<BBCtrlEditor>().Close();
     }
+     */
+
     /// <summary>
     /// that the main purpose of the Editor 
     /// call and display node hierarchy 
     /// </summary>
     void OnGUI()
     {
+
+        if (NodeGraph.EditedControll == null)
+        {
+            NodeGraph.EditedControll = new BBControll();
+            // no node to edit create a default 
+            NodeGraph.EditedControll.thisgraph = NodeGraph.LoadGraph(NodeGraph.EditedControll, BBDir.Get(BBpath.SETING) + "default.xml"); 
+        }
+
+
         BBCtrlNode.hierarchy = "";
         if (BBCtrlNode.dirty)
         {
-            BBCtrlNode.THEGRAPH.FlushBuffer();
-            BBCtrlNode.THEGRAPH.ROOTNODE.REcusiveCollectNodes();
+
+            NodeGraph.EditedControll.thisgraph.FlushBuffer();
+            NodeGraph.EditedControll.thisgraph.ROOTNODE.REcusiveCollectNodes();
             BBCtrlNode.dirty = false;
         }
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("APPLY"))
         {
-           BBCtrlNode.THEGRAPH.Save();
+            NodeGraph.EditedControll.thisgraph.Save();
            EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
            E.Close();
         }
         if (GUILayout.Button("SAVE"))
         {
-            BBCtrlNode.THEGRAPH.Save(true);
+            NodeGraph.EditedControll.thisgraph.Save(true);
         }
 
 
@@ -124,16 +162,22 @@ public class BBCtrlEditor : EditorWindow
 
         if (GUILayout.Button("LOAD"))
         {
-            string path ;
-            if (BBMovepadLayerDescriptor.autoload)
-                path = BBDir.Get(BBpath.SETING) + BBCtrlNode.THEGRAPH.Guid.ToString() + ".xml";
-            else path = null;
-            BBCtrlNode.THEGRAPH.ForceLoad();
+            string path=null ;
+            if (NodeGraph.EditedControll.thisgraph != null)
+                path = BBDir.Get(BBpath.SETING) + NodeGraph.EditedControll.thisgraph.Guid.ToString() + ".xml";
+            if (! File.Exists(path))
+                NodeGraph.EditedControll.Graphfilename = EditorUtility.OpenFilePanel("open graph ", BBDir.Get(BBpath.SETING), "xml");
+
+            NodeGraph.EditedControll.thisgraph = NodeGraph.LoadGraph(NodeGraph.EditedControll);
+            return;
+
+
         }
         GUILayout.EndHorizontal();
         BBDrawing.CheckInput();  // update inputs 
         // perform the layout routine 
-        DrawGrid();
+        if (NodeGraph.EditedControll.thisgraph != null)
+            DrawGrid();
         // set node focus 
         BBMovepadLayerDescriptor.autoload = GUI.Toggle(new Rect(10, Screen.height -  200, 100, 20), BBMovepadLayerDescriptor.autoload, "autoload");
         if (BBCtrlNode.scrolllock = GUI.Toggle(new Rect(10, Screen.height - 150, 100, 20), BBCtrlNode.scrolllock, "scroll lock"))
@@ -146,16 +190,24 @@ public class BBCtrlEditor : EditorWindow
         }
         BBCtrlNode.unfiltered = GUI.Toggle(new Rect(10, Screen.height - 100, 100, 20), BBCtrlNode.unfiltered, "show all method");
         String str = "";
-        foreach (BBCtrlNode n in BBCtrlNode.THEGRAPH.Nodes)
+
+        /*
+
+        foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)
         {
             str += n.name + "\n";
             str += "velocity" + n.velocity.ToString() + "\n";
+            n.Windowpos.position -= n.velocity;
+
         }
+        */
         str += "\n\n\n\n";
         GUILayout.Label(str);
         BeginWindows(); // ---------------------------------------------------------------------------------------------- START WINDOWS LOOP
         GUILayout.Label(BBCtrlNode.hierarchy);
-        BBCtrlNode.THEGRAPH.ROOTNODE.DoNode();
+        if (NodeGraph.EditedControll.thisgraph!= null)
+            if (NodeGraph.EditedControll.thisgraph.ROOTNODE != null ) 
+                NodeGraph.EditedControll.thisgraph.ROOTNODE.DoNode();
         EndWindows();
         Repaint();
         BBCtrlNode.NodeDebuginfos = "";

@@ -41,6 +41,7 @@ public class BBGameObjectHandle
 
 
 
+
 /// <summary>
 /// BBUInodes store the GUI controll based nodes 
 /// those nodes can only have a single parameter 
@@ -52,8 +53,13 @@ public class BBGameObjectHandle
 /// </summary>
 public class BBUInodes
 {
+    // nodes are called both in runtime game mode and from editor 
+    // this is a editor mode switch ;
+    public static bool gamemode =true;
     public static float F;
     public static int I;
+    public Rect Rwindow;
+
 
     [BBCtrlProp]
     [BBCtrlVisible]
@@ -62,6 +68,16 @@ public class BBUInodes
         F = EditorGUILayout.Slider(F, 0, 10.0f);
         return F;
     }
+
+    [BBCtrlProp]
+    [BBCtrlVisible]
+    public float clampslider(float F)
+    {
+        F = EditorGUILayout.Slider(F, 0, 1f);
+        return F;
+    }
+
+
 
     [BBCtrlProp]
     [BBCtrlVisible]
@@ -97,23 +113,29 @@ public class BBUInodes
         return t;
     }
 
-    [BBCtrlProp]
+    [BBCtrlProp(true)] // this controll do not hold the return value and need invoke get the Gameobject 
     [BBCtrlVisible]
     public BBGameObjectHandle ObjectFieldNode(BBGameObjectHandle o)
     {
+        // game is running stick with 
+        // selected value 
+        if (gamemode)
+            return o;
+
+
+        Texture2D prev;
         if (o.go == null && o.assetpath != null)
-            o.go = (GameObject)Resources.LoadAssetAtPath(o.assetpath, typeof(GameObject));
-
-
+        o.go = (GameObject)Resources.LoadAssetAtPath(o.assetpath, typeof(GameObject));
+        prev = AssetPreview.GetAssetPreview(o.go);
+        if (prev != null) 
+                GUI.DrawTexture(new Rect(45, 80, Rwindow.width - 90, Rwindow.height - 90), prev);
         o.go = (GameObject)EditorGUILayout.ObjectField(o.go, typeof(GameObject), true);
-        if (o.go != null)
-        {
-            o.Name = o.go.name;
-            o.assetpath = AssetDatabase.GetAssetPath(o.go);
-        }
+        o.Name = o.go.name;
+        o.assetpath = AssetDatabase.GetAssetPath(o.go);
         return o;
 
     }
+
 
     [BBCtrlProp]
     [BBCtrlVisible]
@@ -122,6 +144,11 @@ public class BBUInodes
         b = EditorGUILayout.Toggle (b);
         return b;
     }
+
+
+
+
+
 
     [BBCtrlProp]
     [BBCtrlVisible]
@@ -146,11 +173,82 @@ public class BBUInodes
         return c;
     }
 
+
+
+
+
+
 }
 
+    /// <summary>
+    /// maths Blocks 
+    /// </summary>
+    public class BBMathnodes
+    {
+        // vector3 invert
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public  Vector3 invertVector(Vector3 VIN)
+        {
+            return -VIN;
+        }
+        // vector3 addition 
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public  Vector3 BBMathsAddVector(Vector3 a, Vector3 b)
+        {
+            return a + b;
+        }
+        // integer addition 
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public  int BBMathsAddint(int a, int b)
+        {
+            Debug.Log((a + b).ToString());
+            return a + b;
+        }
+        // Vector3 multiply 
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public  Vector3 Multiplyvector(Vector3 vin, float by)
+        {
+            return vin * by;
+        }
+        // compose a vector with 3 float
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public Vector3 ComposeVector(float x, float y, float z)
+        {
+            return new Vector3(x, y, z);
+        }
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public float FloatMultiply(float a, float b)
+        {
+            return a * b;
+        }
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public float FloatAdd(float a, float b)
+        {
+            return a + b;
+        }
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public float FloatDivide(float a, float b=1)
+        {
+            return a / b;
+        }
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public int Mod(int max, int by)
+        {
+            return max % by;
+        }
 
 
 
+        
+
+
+    }
+
+
+    /// <summary>
+    /// misc Blocks for diferent purpose 
+    /// can use it before sorting to another class to  get tiddy 
+    /// </summary>
     public class BBBLocks
     {
 
@@ -166,139 +264,48 @@ public class BBUInodes
         { 
         }
 
+        // compose a vector with 3 float
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public float  GetCurveValueAtTime(AnimationCurve C, float time)
+        {
+            return C.Evaluate(time);
+        }
+        
         /// <summary>
         /// delete selected object 
         /// </summary>
         [BBCtrlVisible]
-        public static void DeleteSelection()
+        public  void DeleteSelection()
         {
             foreach (GameObject tgo in Selection.objects)
                 GameObject.DestroyImmediate(tgo);
         }
-
-        /// <summary>
-        /// vector operation 
-        /// </summary>
-        /// <param name="VIN"></param>
-        /// <returns></returns>
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static Vector3 invertVector(Vector3 VIN)
+        /// realtimeSinceStartup
+        [BBCtrlVisible]
+        public float TimeNode()
         {
-            return -VIN;
+           return (float) Time.realtimeSinceStartup;
         }
-
-        /// <summary>
-        /// extend to add nodes with embeded ui control like slider ddlist etc 
-        /// </summary>
-
-
-   
-
-
-
-
+        /// temporary 
         [BBCtrlVisible] // define a function visible for BBControl 
-        public static bool FALSE()
-        {
-            return false;
-        }
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static bool TRUE()
-        {
-            return true;
-        }
-
-
-
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static int BBMathsAddint(int a, int b)
-        {
-            Debug.Log((a + b).ToString());
-            return a + b;
-
-        }
-
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static int BBMathsGenint()
-        {
-            Debug.Log("1967");
-            return 1967;
-
-        }
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static int increment()
+        public  int increment()
         {
             return 1;
         }
+        // temp
         [BBCtrlVisible] // define a function visible for BBControl 
-        public static int decrement()
+        public  int decrement()
         {
             return -1;
         }
-
-
-
+        // gettype
         [BBCtrlVisible] // define a function visible for BBControl 
-        public static Vector3 BBMathsAddVector(Vector3 a, Vector3 b)
+        public  Type GetType (object value)
         {
-            return a + b;
-        }
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static BaseActorProperties returnbaseactorprop(Actor A)
-        {
-            return A.Actorprops;
-        }
-
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static Vector3 Multiplyvector(Vector3 vin, float by)
-        {
-            return vin * by;
-        }
-
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static object Convert(object objin ,Type T , bool canconvert )
-        {
-            if (canconvert)
-            {
-                var instance = Activator.CreateInstance(T);
-                instance = objin;
-                return instance;
-            }
-            else
-                return null;
-           
-        }
-
-
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static Type GetType (object value)
-        {
-
             return value.GetType();
-
         }
 
-
-
-        [BBCtrlVisible] // define a function visible for BBControl 
-        public static Type ZCanChangeType(object value, Type conversionType)
-        {
-            if (conversionType == null)
-                return null;
-            if (value == null)
-                return null;
-            IConvertible convertible = value as IConvertible;
-            if (convertible == null)
-                return null;
-            return conversionType;
-        }
-
-
-
-        /// <summary>
-        /// read content of the selected base 
-        /// </summary>
-        /// <returns></returns>
+        // read content of the selected base 
         public static bool ReadAssetBase()
         {
             if (data != null)
@@ -327,6 +334,56 @@ public class BBUInodes
                 Debug.Log(data.Count.ToString() + " no XML database");
             return false;
         }
+
+
+
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public int iterator (int max , int current)
+        {
+            return max % current;
+        }
+
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public int currentframe ()
+        {
+            return Time.frameCount;
+        }
+
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public float Deltatime()
+        {
+            return Time.deltaTime;
+        }
+        // getlookatpoint
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public static Vector3 Getlookatpoint(int lookatindex, float deltatime, int max=8)
+        {
+            float a = ((360.0f / max) * Mathf.Deg2Rad) *  (lookatindex * deltatime ) ;
+            float ca = Mathf.Cos(a);
+            float sa = Mathf.Sin(a);
+            // radius 1
+            Vector3 RV = new Vector3(1 * ca - 1 * sa, 0.0f, 1 * sa + 1 * ca);
+            return (RV);//+ pos) ;
+        }
+
+
+
+
+
+
+        [BBCtrlVisible] // define a function visible for BBControl 
+        public Quaternion Lookat (GameObject obj,Vector3 lookatpoint, float clamp )
+        {
+            //var direction = v + transform.position;
+            var rr = Quaternion.LookRotation(Vector3.up, lookatpoint);
+            rr *= Quaternion.Euler(Vector3.forward);
+            return  Quaternion.Lerp(obj.transform.rotation, rr, clamp);
+
+        }
+
+
+
+
 
 
 

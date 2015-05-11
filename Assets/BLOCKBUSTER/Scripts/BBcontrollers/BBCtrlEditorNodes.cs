@@ -35,6 +35,11 @@ public class SlotInfo
 }
 
 
+// need a class to manage the editor handle on the active graph that could change often 
+// depending on the context of graph use ( as active gameobject component or interface ) 
+
+
+
 
 /// <summary>
 /// the graphnode 
@@ -50,10 +55,14 @@ public class SlotInfo
 
 public class NodeGraph
 {
+
+    public static bool editoropen;
+    public static BBControll EditedControll = new BBControll();
+
     public bool GraphOK = true;
-    public static bool autoload = false;
-    public static bool autosave = false;
-    public static string  autofilename;
+
+    public string filename;
+
     public BBCtrlNode ROOTNODE;
     public List<BBCtrlNode> Nodes = new List<BBCtrlNode>();
     public List<int> nodekeys = new List<int>();
@@ -67,125 +76,62 @@ public class NodeGraph
     }
     public  void FlushBuffer()
     {
-        BBCtrlNode.THEGRAPH.Nodes.Clear();
-        BBCtrlNode.THEGRAPH.nodekeys.Clear();
+        Nodes.Clear();
+        nodekeys.Clear();
     }
     public void Save(bool saveas=false)
     {
         string path ;
-        if (autosave && !saveas)
-            path = NodeGraph.autofilename;
+        if (!saveas)
+            EditedControll.Graphfilename  = BBDir.Get(BBpath.SETING) + EditedControll.guid.ToString() + ".bbxml";   
         else
-            path = EditorUtility.SaveFilePanel("filename to save", BBDir.Get(BBpath.SETING), "graph", "xml");
+            EditedControll.Graphfilename  = EditorUtility.SaveFilePanel("filename to save", BBDir.Get(BBpath.SETING), "graph", "xml");
+
         System.Type T = typeof(NodeGraph); 
         System.Type[] extraTypes = { };
         XmlSerializer serializer = new XmlSerializer(T, extraTypes);
-        Stream stream = new FileStream(path, FileMode.Create);
+        Stream stream = new FileStream(EditedControll.Graphfilename, FileMode.Create);
         serializer.Serialize(stream, this);
         stream.Flush();
         stream.Close();
     }
 
 
-
-    public void  Load(string path )
+    [BBCtrlVisible]
+    public static NodeGraph LoadGraph(BBControll bbc,string path =null)
     {
-        if (autoload )
-            path = NodeGraph.autofilename ;
-        else
-            path =  EditorUtility.OpenFilePanel("load scene", BBDir.Get(BBpath.SETING), "xml");
-
-        if (!System.IO.File.Exists(path))
+        if (bbc.Graphfilename==null || ! File.Exists( bbc.Graphfilename  ) )
         {
-            EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
-            autoload = false;
-           // return;
+            if (path == null)
+            {
+                EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
+                return null;
+            }
+
         }
+
+        string pathtoload = (path == null) ? bbc.Graphfilename : path;
+
+        NodeGraph NG = new NodeGraph();
         XmlSerializer serializer = new XmlSerializer(typeof(NodeGraph));
-        Stream stream = new FileStream(path, FileMode.Open);
-        BBCtrlNode.THEGRAPH = serializer.Deserialize(stream) as NodeGraph;
+        Stream stream = new FileStream(pathtoload, FileMode.Open);
+        NG = serializer.Deserialize(stream) as NodeGraph;
         stream.Close();
+
         // A create a list to process the hierarchy 
         List<BBCtrlNode> processnodelist = new List<BBCtrlNode>();
-        processnodelist.Add(BBCtrlNode.THEGRAPH.ROOTNODE);
-        foreach (BBCtrlNode bbc in BBCtrlNode.THEGRAPH.Nodes)
-            processnodelist.Add(bbc);
+        processnodelist.Add(NG.ROOTNODE);
+        foreach (BBCtrlNode B in NG.Nodes)
+            processnodelist.Add(B);
         // add the coresponding number of node to match the key ref list 
+        
         foreach (BBCtrlNode node in processnodelist)
             for (int c = 0; c < node.SUBNodesKEY.Count; c++)
             {
                 BBCtrlNode fillnode = new BBCtrlNode();
                 node.SUBNodes.Add(fillnode);
             }
-
-        // push the child node in the correct index in the subnodearray 
-        foreach (BBCtrlNode node in processnodelist)
-        {
-            for (int c = 0; c < node.SUBNodesKEY.Count; c++)
-                foreach (BBCtrlNode BBC in processnodelist)
-                    if (BBC.Guid.GetHashCode() == node.SUBNodesKEY[c])
-                        node.SUBNodes[c] = BBC;
-
-            // keep a handle on the original class and method 
-            node.savedclassname = node.lookupclassname;
-            node.savedMethodName = node.LookupMethodName;
-
-        }
-
-        // flush the buffers 
-        BBCtrlNode.THEGRAPH.Nodes.Clear();
-        BBCtrlNode.THEGRAPH.nodekeys.Clear();
-
-
-
-
-        // split the list ROOT / NOROOT 
-        foreach (BBCtrlNode node in processnodelist)
-        {
-            if (node.isroot)
-                BBCtrlNode.THEGRAPH.ROOTNODE = node;
-            else
-            {
-                BBCtrlNode.THEGRAPH.Nodes.Add(node);
-                BBCtrlNode.THEGRAPH.nodekeys.Add(node.Guid.GetHashCode());
-            }
-
-        }
-        BBCtrlNode.dirty = true;
-        }
-
-    /// <summary>
-    /// duplicated .. patch for the prez to remove and make a better autoloading 
-    /// system 
-    /// </summary>
-    public void ForceLoad()
-    {
-        // patch a la con 
-        string path = EditorUtility.OpenFilePanel("load scene", BBDir.Get(BBpath.SETING), "xml");
-
-        if (!System.IO.File.Exists(path))
-        {
-            //EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
-            //autoload = false;
-            //return;
-        }
-        XmlSerializer serializer = new XmlSerializer(typeof(NodeGraph));
-        Stream stream = new FileStream(path, FileMode.Open);
-        BBCtrlNode.THEGRAPH = serializer.Deserialize(stream) as NodeGraph;
-        stream.Close();
-
-        // A create a list to process the hierarchy 
-        List<BBCtrlNode> processnodelist = new List<BBCtrlNode>();
-        processnodelist.Add(BBCtrlNode.THEGRAPH.ROOTNODE);
-        foreach (BBCtrlNode bbc in BBCtrlNode.THEGRAPH.Nodes)
-            processnodelist.Add(bbc);
-        // add the coresponding number of node to match the key ref list 
-        foreach (BBCtrlNode node in processnodelist)
-            for (int c = 0; c < node.SUBNodesKEY.Count; c++)
-            {
-                BBCtrlNode fillnode = new BBCtrlNode();
-                node.SUBNodes.Add(fillnode);
-            }
+        
 
         // push the child node in the correct index in the subnodearray 
         foreach (BBCtrlNode node in processnodelist)
@@ -195,28 +141,39 @@ public class NodeGraph
                         node.SUBNodes[c] = BBC;
 
 
-        // flush the buffers 
-        BBCtrlNode.THEGRAPH.Nodes.Clear();
-        BBCtrlNode.THEGRAPH.nodekeys.Clear();
+        NG.Nodes.Clear();
+        NG.nodekeys.Clear();
+
 
         // split the list ROOT / NOROOT 
         foreach (BBCtrlNode node in processnodelist)
         {
             if (node.isroot)
-                BBCtrlNode.THEGRAPH.ROOTNODE = node;
+                NG.ROOTNODE = node;
             else
             {
-                BBCtrlNode.THEGRAPH.Nodes.Add(node);
-                BBCtrlNode.THEGRAPH.nodekeys.Add(node.Guid.GetHashCode());
+                NG.Nodes.Add(node);
+                NG.nodekeys.Add(node.Guid.GetHashCode());
             }
 
         }
         BBCtrlNode.dirty = true;
-    }  
+        NodeGraph.EditedControll.thisgraph = NG;
+        return NG;
+    }
+
 
 
     }
 
+    /// <summary>
+    /// node option 
+    /// </summary>
+    public class nodeoption
+    {
+        public List<ParameterInfo> paraminfos = new List<ParameterInfo>();
+        public List<object> values = new List<object>();
+    }
 
 
 
@@ -251,11 +208,15 @@ public class NodeGraph
 
         public object controllarg;
         public string controllargname;
+        public bool needinvoke;
+
+
+        
 
 
 
-        [XmlIgnore]
-        public static  NodeGraph THEGRAPH = new NodeGraph();
+
+
         [XmlIgnore] // cannot serialize that 
         public List<BBCtrlNode> SUBNodes = new List<BBCtrlNode>();
         // but keep a key list instead and rebuild on deserialize 
@@ -299,12 +260,18 @@ public class NodeGraph
         //**********************************
 
 
-        public List<string> ArglistFQ = new List<string>();
+        //public List<string> ArglistFQ = new List<string>();
+
+        public List<ParameterInfo> Arglist = new List<ParameterInfo>();
+
+
         public List<SlotInfo> slotspos = new List<SlotInfo>();
         public SlotInfo ParentFeedSlotInfo;
         MethodInfo selectedmethodinfo;
         // this is the tag for Rootnode 
-        public bool isroot = false; 
+        public bool isroot = false;
+        
+
         // fill up to keep function updated ( system not done yet ) 
         List<string> classnamelist = new List<string>();
         List<string> methodnamelist = new List<string>();
@@ -338,8 +305,6 @@ public class NodeGraph
         [XmlIgnore]
         public bool minimized;
         [XmlIgnore]
-        private List<int> iknowit = new List<int>();
-        [XmlIgnore]
         public EditorTimer Timer = new EditorTimer();
         [XmlIgnore]
         public bool nodedebug;
@@ -361,8 +326,8 @@ public class NodeGraph
         {
             foreach (BBCtrlNode N in SUBNodes)
                 N.REcusiveCollectNodes();
-            BBCtrlNode.THEGRAPH.Nodes.Add(this);
-            BBCtrlNode.THEGRAPH.nodekeys.Add(Guid.GetHashCode());
+            NodeGraph.EditedControll.thisgraph.Nodes.Add(this);
+            NodeGraph.EditedControll.thisgraph.nodekeys.Add(Guid.GetHashCode());
             //display the node hierarchy ( for debug ) 
             //BBCtrlNode.hierarchy += "\n node: " + this.NodeId;
             //foreach ( BBCtrlNode child in this.SUBNodes)
@@ -416,9 +381,9 @@ public class NodeGraph
         /// </summary>
         public void NodeRemoveThis()
         {
-            BBCtrlNode.THEGRAPH.GetnodeFromID(ParentID).SUBNodesKEY.Remove(Guid.GetHashCode());
-            BBCtrlNode.THEGRAPH.GetnodeFromID(ParentID).SUBNodes.Remove(this);
-            Debug.Log("remove this " + this.NodeId + " from parent " + BBCtrlNode.THEGRAPH.GetnodeFromID(ParentID).NodeId);
+            NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).SUBNodesKEY.Remove(Guid.GetHashCode());
+            NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).SUBNodes.Remove(this);
+            Debug.Log("remove this " + this.NodeId + " from parent " + NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).NodeId);
         }
         /// <summary>
         /// same comment as nodeaddchild
@@ -444,6 +409,7 @@ public class NodeGraph
         /// </summary>
         public BBCtrlNode(Rect initpos, string newname, BBCtrlNode nodeParent = null)
         {
+
             Guid = System.Guid.NewGuid();
             NodeId = Guid.GetHashCode();
             Windowpos = initpos;
@@ -458,10 +424,16 @@ public class NodeGraph
             {
                 //AddChildrenToGRAPH(Guid.GetHashCode(), this);
                 ParentID = nodeParent.NodeId;
-                NodeAddChild(BBCtrlNode.THEGRAPH.GetnodeFromID(ParentID), this);
+                NodeAddChild(NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID), this);
             }
-            BBCtrlNode.THEGRAPH.Nodes.Add(this);
-            BBCtrlNode.THEGRAPH.nodekeys.Add(Guid.GetHashCode());
+            if (NodeGraph.EditedControll.thisgraph != null)
+            {
+                NodeGraph.EditedControll.thisgraph.Nodes.Add(this);
+                NodeGraph.EditedControll.thisgraph.nodekeys.Add(Guid.GetHashCode());
+            }
+            else
+                Debug.Log("global crap graph is null");
+
         }
         /// <summary>
         /// return this index in parent child buffer
@@ -470,7 +442,7 @@ public class NodeGraph
         /// <returns></returns>
         public int GetThisNodeIndexInParentSlots ()
         {
-            BBCtrlNode parent =  THEGRAPH.GetnodeFromID(ParentID);
+            BBCtrlNode parent = NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID);
             if (parent == null)
                 return -1;
 
@@ -490,10 +462,13 @@ public class NodeGraph
         public bool CheckNodesconection ()
         {
 
+            if (nodedebug)
+                nodedebug = true;
+
 
             if (isroot || iscontroll) // check is from children to parent root have no parent
                 return true;
-            BBCtrlNode parent = THEGRAPH.GetnodeFromID(ParentID);
+            BBCtrlNode parent = NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID);
             int I = GetThisNodeIndexInParentSlots();
             if (I < 0 || I > parent.slotspos.Count)
                 return false ;
@@ -573,11 +548,12 @@ public class NodeGraph
         /// <returns></returns>
         public bool Checkslot()
         {
-            if (slotspos.Count != ArglistFQ.Count)
+            if (slotspos.Count != Arglist.Count)
                 return false;
-            for (int c = 0; c < ArglistFQ.Count; c++)
-                if (slotspos[c].TypeFullString != ArglistFQ[c])
-                    return false;
+            for (int c = 0; c < Arglist.Count; c++)
+                if (Arglist[c].ParameterType != null)
+                    if (slotspos[c].TypeFullString != Arglist[c].ParameterType.AssemblyQualifiedName)
+                        return false;
             return true;
         }
         /// <summary>
@@ -592,7 +568,7 @@ public class NodeGraph
 
 
             slotspos.Clear();
-            for (int c = 0; c < ArglistFQ.Count; c++)
+            for (int c = 0; c < Arglist.Count; c++)
             {
                 int BZ = (int)MVPBUTTONSIZE.MVP32;
                 SlotInfo S = new SlotInfo(c);
@@ -602,7 +578,7 @@ public class NodeGraph
                 S.linkedto = 0;
                 S.linkedto = this.Guid.GetHashCode();
                 // cannoit serialize type so i store full class  qualified name 
-                S.TypeFullString = ArglistFQ[c] ; // to store type as full qualified classname
+                S.TypeFullString = Arglist[c].ParameterType.AssemblyQualifiedName ; // to store type as full qualified classname
                 S.index = c;
                 ParameterInfo[] p = selectedmethodinfo.GetParameters();
                 S.paramname = p[c].Name;
@@ -650,10 +626,10 @@ public class NodeGraph
             if (GUI.Button(outputslotbutton, Textureloader.slot_ok, textonly))
                 FlushNode = true;
             // FUCTION DO NOT HAVE PARAMETERS 
-            if (ArglistFQ.Count == 0)
+            if (Arglist.Count == 0)
                 slotspos.Clear();
             //****************************************************** CREATE NEW SLOTS
-            for (int c = 0; c < ArglistFQ.Count; c++)
+            for (int c = 0; c < Arglist.Count; c++)
             {
                 if (!Checkslot())
                     REbuildSlots();
@@ -673,7 +649,7 @@ public class NodeGraph
                         ParameterInfo[] p  =  selectedmethodinfo.GetParameters();
                         BBCtrlNode Child = new BBCtrlNode(NR,p[c].ParameterType.Name+ " " +  p[c].Name, this);
                         Child.ParentFeedSlotInfo = new SlotInfo(c); // but i put on recently created Slot classs
-                        Child.ParentFeedSlotInfo.TypeFullString = ArglistFQ[c]; // Parent input type 
+                        Child.ParentFeedSlotInfo.TypeFullString = Arglist[c].ParameterType.AssemblyQualifiedName; // Parent input type 
                         Child.ParentFeedSlotInfo.index = c; // the parent slot index 
                         // for serialization 
                         Child.RectDest.Set(NR.xMin, NR.yMin, NR.width, NR.height); // for popup anim
@@ -688,7 +664,7 @@ public class NodeGraph
             Windowpos = GUI.Window(Guid.GetHashCode(), Windowpos, DoNodeWindow, name);
             if (!isroot)
             {
-                BBCtrlNode P = BBCtrlNode.THEGRAPH.GetnodeFromID(ParentID);
+                BBCtrlNode P = NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID);
                 if (P == null)
                     return;
 
@@ -707,7 +683,15 @@ public class NodeGraph
                     }
                     else
                         linkcolor = Color.green;
-                    BBDrawing.curveFromTo(outputslotbutton, BBCtrlNode.THEGRAPH.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R, linkcolor, Windowpos.width * 2, out velocity);
+
+                    Vector2 A=  outputslotbutton.center;
+                    Vector2 B=  NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R.center;
+
+                   
+
+                    // temp the spline is too expensive 
+                    //BBDrawing.DrawLine(A, B, linkcolor, 3f, true);
+                    BBDrawing.curveFromTo(outputslotbutton, NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R, linkcolor, Windowpos.width * 2, out velocity);
                 }
             }
         }
@@ -733,12 +717,12 @@ public class NodeGraph
         /// <param name="valid"></param>
         public void CheckfullGraph(BBCtrlNode N , out bool valid)
         {
-            
-            if ( BBCtrlNode.THEGRAPH.GraphOK ) // stop check at first invalid node connection
+
+            if (NodeGraph.EditedControll.thisgraph.GraphOK) // stop check at first invalid node connection
                 foreach (BBCtrlNode Sub in N.SUBNodes)
                     CheckfullGraph(Sub, out valid);
 
-            if (!THEGRAPH.GraphOK)
+            if (!NodeGraph.EditedControll.thisgraph.GraphOK)
             {
                 // stop at the first problem useless to perform more check 
                 valid = false;
@@ -754,7 +738,7 @@ public class NodeGraph
                 //Debug.Log(name + " IS CONTROL : " + iscontroll.ToString() + " Fail d");
                 return;
             }
-            BBCtrlNode parent = THEGRAPH.GetnodeFromID(N.ParentID);
+            BBCtrlNode parent = NodeGraph.EditedControll.thisgraph.GetnodeFromID(N.ParentID);
             if (parent == null) // only root allowed to have no parent so it is root
             {
                 bool subcheck = true;
@@ -789,6 +773,8 @@ public class NodeGraph
         /// </summary>
 
 
+
+        
 
 
         
@@ -882,12 +868,17 @@ public class NodeGraph
 
             //--------------------------------------- GUI ELEMENT 
 
-            THEGRAPH.GraphOK = true; 
+            NodeGraph.EditedControll.thisgraph.GraphOK = true;
 
-            CheckfullGraph(this, out THEGRAPH.GraphOK);
-            if (THEGRAPH.GraphOK && checknodevalid && !iscontroll)
+            CheckfullGraph(this, out NodeGraph.EditedControll.thisgraph.GraphOK);
+            if (NodeGraph.EditedControll.thisgraph.GraphOK && checknodevalid && !iscontroll)
                 if (GUILayout.Button("INVOKE"))
                         Nodeinvoke(0);
+
+            nodedebug = GUILayout.Toggle(nodedebug, "debugnode");
+
+
+
 
             string subnodesname = "";
             if (selectedmethodinfo != null)
@@ -901,7 +892,7 @@ public class NodeGraph
             if (!isroot)
             {
 
-                if (BBCtrlNode.editordebugmode)
+                if (nodedebug)
                 {
                     GUILayout.Label(subnodesname);
                     GUILayout.Label(NodeDebuginfos);
@@ -911,9 +902,9 @@ public class NodeGraph
             selectedmethodinfo = filteredmethods[Lookupmethodindex];
             LookupMethodName = selectedmethodinfo.Name;
             ReturnTye = selectedmethodinfo.ReturnType; // return type ys stored in the node 
-            ArglistFQ.Clear();
+            Arglist.Clear();
             foreach (ParameterInfo pi in selectedmethodinfo.GetParameters())
-                ArglistFQ.Add(pi.ParameterType.AssemblyQualifiedName);
+                Arglist.Add(pi);
             checknodevalid = true;
 
             // this node is a ui controll 
@@ -924,7 +915,10 @@ public class NodeGraph
             {
                 if (o.GetType() == typeof(BBCtrlProp))
                 {
+                    BBCtrlProp bbctrltag = (BBCtrlProp)o;
+                    needinvoke = bbctrltag.needinvoke; 
                     iscontroll = true;
+
                     ControllInvoke(selectedmethodinfo);
                 }
             }
@@ -934,68 +928,28 @@ public class NodeGraph
 
         public void ControllInvoke(MethodInfo M)
         {
-            // flag this node as control 
-            object classInstance = Activator.CreateInstance(typeof(BBUInodes));
-            string entryID = M.Name + Guid.GetHashCode().ToString();
-            ParameterInfo[] pi = M.GetParameters();
-            if (pi.GetLength(0) > 1)
-                return; // right now parameter of a control node is final and do not support other param
-            
-            if (pi.GetLength(0) == 0)
-                controllarg = null;
+            BBUInodes controllnode = (BBUInodes)Activator.CreateInstance(typeof(BBUInodes));
+            controllnode.Rwindow = Windowpos;
+            ParameterInfo pi = M.GetParameters()[0];
+
+            if (controllarg == null || controllarg.GetType() != pi.ParameterType)
+                controllarg = Activator.CreateInstance(pi.ParameterType);
             if (controllarg == null)
-                controllarg = Activator.CreateInstance(pi[0].ParameterType);
+            {
+                BBDebugLog.singleWarning("cannot create new ui controll during Gameplay yet stop play to assign a new UI controll node ");
+                return;
+            }
 
-            Type T = controllarg.GetType();
-            if (  T  != pi[0].ParameterType )
-                controllarg = Activator.CreateInstance(pi[0].ParameterType);
+            if (nodedebug)
+                BBDebugLog.singleWarning("break");
 
 
-            controllarg = M.Invoke(classInstance, new object[] { controllarg });
+                controllarg = M.Invoke(controllnode, new object[] { controllarg });
             m_OutputObj = controllarg;
-
-            if (controllarg.GetType() == typeof(GameObject))
-                Debug.Log(controllarg.ToString());
-
         }
 
 
-        public void ControllInvokebackup( MethodInfo M )
-        {
-            // flag this node as control 
-            object classInstance = Activator.CreateInstance(typeof(BBUInodes));
-            object controllarg = new object();
-            string entryID = M.Name + Guid.GetHashCode().ToString();
-            ParameterInfo[] pi = M.GetParameters();
-            if (pi.GetLength(0) == 0)
-                controllarg = null;
-            else
-            {
-                if (pi.GetLength(0) > 1)
-                {
-                    Debug.Log("this version do not support extra parameters for a ui controll ");
-                    return; // right now parameter of a control node is final and do not support other param
-                }
-                bool matcharg = false;
-                foreach ( KeyValuePair<string,object> kvp in  ControllsArgs )
-                    if (ControllsArgs.ContainsKey(entryID))
-                    {
-                        controllarg = (ControllsArgs[entryID]);
-                        matcharg = true;
-                        break;
-                    }
-                if (!matcharg)
-                {
 
-                    controllarg = Activator.CreateInstance(pi[0].ParameterType);
-                    ControllsArgs.Add(entryID, controllarg);
-                }
-
-            }
-            ControllsArgs[entryID] = M.Invoke(classInstance, new object[] { controllarg });
-            m_OutputObj = ControllsArgs[entryID];
-                
-         }
 
         
 
@@ -1006,46 +960,58 @@ public class NodeGraph
         /// </summary>
         /// <param name="returnindex"></param>
         /// <returns></returns>
-        public object Nodeinvoke(int returnindex )
+
+
+        public object Nodeinvoke(int returnindex)
         {
-            if (!THEGRAPH.GraphOK)
-            {
-                BBCtrlNode.NodeDebuginfos = "graph is not valid for exec"; 
+            if (!NodeGraph.EditedControll.thisgraph.GraphOK)
                 return null;
-            }
+
             Dictionary<string, object> Args = new Dictionary<string, object>();
             List<object> objlist = new List<object>();
+
+
             object classInstance = null;
             if (Selection.activeGameObject != null)
-                classInstance = Selection.activeGameObject.GetComponent(NodeClassTypeArray[LookupClassindex].Name); 
-            if ( classInstance == null )
+                classInstance = Selection.activeGameObject.GetComponent(NodeClassTypeArray[LookupClassindex].Name);
+            if (classInstance == null)
                 classInstance = Activator.CreateInstance(NodeClassTypeArray[LookupClassindex]);
             if (classInstance == null)
             {
                 Debug.Log("cannot get or create an instance of " + NodeClassTypeArray[LookupClassindex].Name);
                 return null;
             }
-            for (int c = 0 ; c< SUBNodes.Count;c++)
+            for (int c = 0; c < SUBNodes.Count; c++)
             {
                 BBCtrlNode N = SUBNodes[c];
                 if (N.iscontroll) // controll is invoked in edit loop on user input
                     N.ControllInvoke(N.selectedmethodinfo);
                 else
                     N.Nodeinvoke(c);
-                if (N.m_OutputObj==null)
-                    Debug.Log("no result for node "+ N.NodeId.ToString() );
-                Args.Add(N.name,N.m_OutputObj);
+                if (N.m_OutputObj == null)
+                    Debug.Log("no result for node " + N.NodeId.ToString());
+                Args.Add(N.name, N.m_OutputObj);
             }
 
             // push args in right order fo the call 
             for (int c = 0; c < slotspos.Count; c++)
-                foreach ( KeyValuePair<string,object> kvp in Args )
+                foreach (KeyValuePair<string, object> kvp in Args)
                     if (kvp.Key.Contains(slotspos[c].paramname))
                         objlist.Add(kvp.Value);
-            m_OutputObj = selectedmethodinfo.Invoke(classInstance, objlist.ToArray());
+
+            try
+            {
+                m_OutputObj = selectedmethodinfo.Invoke(classInstance, objlist.ToArray());
+            }
+
+            catch
+            {
+                //Debug.Log("method " + selectedmethodinfo.Name + "throw : error  on node " + name + " set a default value for return " );
+                m_OutputObj = (object)Activator.CreateInstance(selectedmethodinfo.ReturnParameter.GetType());
+            }
+
             return m_OutputObj;
         }
-
 
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -1058,6 +1024,7 @@ public class NodeGraph
             MandatoryNodeClassTypeArray.Add(typeof(BBUInodes));
             MandatoryNodeClassTypeArray.Add(typeof(BBMovepadLayerDescriptor));
             MandatoryNodeClassTypeArray.Add(typeof(BBControll));
+            MandatoryNodeClassTypeArray.Add(typeof(BBMathnodes));
         }
 
 
@@ -1068,7 +1035,10 @@ public class NodeGraph
         /// <param name="go"></param>
         /// <returns></returns>
         public List<string> FillClassArray(GameObject go = null)
+        
         {
+
+
             NodeClassTypeArray.Clear();
             List<String> L = new List<string>();
             if (go != null)
@@ -1193,9 +1163,11 @@ public class NodeGraph
             selectedmethodinfo = filteredmethods[MTHIDX];
             LookupMethodName = selectedmethodinfo.Name;
             ReturnTye = selectedmethodinfo.ReturnType; // return type ys stored in the node 
-            ArglistFQ .Clear();
+            Arglist .Clear();
             foreach (ParameterInfo pi in selectedmethodinfo.GetParameters())
-                ArglistFQ.Add(pi.ParameterType.AssemblyQualifiedName);
+            {
+                Arglist.Add(pi);
+            }
             checknodevalid = true;
             return MTHIDX;
         }

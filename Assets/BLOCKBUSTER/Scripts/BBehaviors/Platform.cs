@@ -6,6 +6,9 @@ using System.Xml;
 using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
+using System.Reflection;
+using System.Reflection.Emit;
+
 #if UNITY_EDITOR
     using UnityEditor;
 #endif
@@ -60,6 +63,13 @@ public   class Dataset
     public string fullqualifiedclassname;                       // for reflection purpose in class use 
     public string suportedclassname;                            // the class that could use this kind of dataset <todo> use a list instead  
 
+    public System.Guid Guid;
+
+    public Dataset()
+    {
+        Guid = System.Guid.NewGuid();
+        guid = Guid.ToString();
+    }
 
     /// <summary>
     /// <todo>useless remove</todo>
@@ -244,6 +254,20 @@ public abstract class BBehavior : MonoBehaviour
     [BBCtrlVisible] 
     public abstract void SetDataset(Dataset o);
 
+
+    public static object nulldefault()
+    {
+        return null;
+    }
+
+
+    [BBCtrlVisible]
+    public virtual void SetGraphTransformation(Vector3 pos , Quaternion Rot, Vector3 scale )
+    {
+            transform.position = pos;
+            transform.rotation = Rot;
+            transform.localScale = scale;
+    }
 
 
     public  virtual string GetFullQualifiedClassName()

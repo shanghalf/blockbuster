@@ -1,31 +1,132 @@
 <?xml version="1.0" encoding="gb2312"?>
-<BaseActorProperties xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <orig_transform>
-    <x>0</x>
-    <y>0</y>
-    <z>0</z>
-    <w>1</w>
-    <eulerAngles>
-      <x>0</x>
-      <y>0</y>
-      <z>0</z>
-    </eulerAngles>
-  </orig_transform>
-  <orig_pos>
-    <x>0</x>
-    <y>0</y>
-    <z>0</z>
-  </orig_pos>
-  <last_pos>
-    <x>0</x>
-    <y>0</y>
-    <z>0</z>
-  </last_pos>
-  <block_size>
-    <x>2.00799561</x>
-    <y>5.072296</y>
-    <z>2.00799561</z>
-  </block_size>
-  <BehaviorListID />
-  <grouped>false</grouped>
-</BaseActorProperties>
+<FallingPlatformDataset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <targetindex>0</targetindex>
+  <b_front_x>false</b_front_x>
+  <timer>0</timer>
+  <editsub>true</editsub>
+  <b_showdebuginfos>false</b_showdebuginfos>
+  <b_hideedition>false</b_hideedition>
+  <ismoving>false</ismoving>
+  <indexbound>MIDDLE</indexbound>
+  <guid />
+  <speed>0.5</speed>
+  <b_triggeronce>false</b_triggeronce>
+  <b_triggered>false</b_triggered>
+  <movedir>1</movedir>
+  <respawn>false</respawn>
+  <m_pathnodes />
+  <BBC>
+    <linearindex>0</linearindex>
+    <iconindex>0</iconindex>
+    <Graphfilename>E:/BlockBuster_G/blockbuster/Assets/BLOCKBUSTER/XML/blockbustersetings/b46b2a4b-09be-4302-be3b-bf43b64dda63.bbxml</Graphfilename>
+    <guid>b46b2a4b-09be-4302-be3b-bf43b64dda63</guid>
+    <id>-1247605655</id>
+  </BBC>
+  <theGraph>
+    <GraphOK>true</GraphOK>
+    <ROOTNODE>
+      <needinvoke>false</needinvoke>
+      <SUBNodesKEY />
+      <NodeId>-803539075</NodeId>
+      <ParentID>0</ParentID>
+      <Windowpos>
+        <x>426</x>
+        <y>319</y>
+        <position>
+          <x>426</x>
+          <y>319</y>
+        </position>
+        <center>
+          <x>526</x>
+          <y>419</y>
+        </center>
+        <min>
+          <x>426</x>
+          <y>319</y>
+        </min>
+        <max>
+          <x>626</x>
+          <y>519</y>
+        </max>
+        <width>200</width>
+        <height>200</height>
+        <size>
+          <x>200</x>
+          <y>200</y>
+        </size>
+        <xMin>426</xMin>
+        <yMin>319</yMin>
+        <xMax>626</xMax>
+        <yMax>519</yMax>
+      </Windowpos>
+      <name>ROOT</name>
+      <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <Guid>369620e3-b9e5-4efb-8b09-cdd0d46054b5</Guid>
+      <ParamFQ>BaseActorProperties, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
+      <iscontroll>false</iscontroll>
+      <checknodevalid>true</checknodevalid>
+      <LookupClassindex>0</LookupClassindex>
+      <lookupclassname>Actor</lookupclassname>
+      <Lookupmethodindex>0</Lookupmethodindex>
+      <LookupMethodName>GetActorProps</LookupMethodName>
+      <ArglistFQ />
+      <slotspos />
+      <isroot>true</isroot>
+    </ROOTNODE>
+    <Nodes>
+      <BBCtrlNode>
+        <needinvoke>false</needinvoke>
+        <SUBNodesKEY />
+        <NodeId>-803539075</NodeId>
+        <ParentID>0</ParentID>
+        <Windowpos>
+          <x>426</x>
+          <y>319</y>
+          <position>
+            <x>426</x>
+            <y>319</y>
+          </position>
+          <center>
+            <x>526</x>
+            <y>419</y>
+          </center>
+          <min>
+            <x>426</x>
+            <y>319</y>
+          </min>
+          <max>
+            <x>626</x>
+            <y>519</y>
+          </max>
+          <width>200</width>
+          <height>200</height>
+          <size>
+            <x>200</x>
+            <y>200</y>
+          </size>
+          <xMin>426</xMin>
+          <yMin>319</yMin>
+          <xMax>626</xMax>
+          <yMax>519</yMax>
+        </Windowpos>
+        <name>ROOT</name>
+        <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+        <Guid>369620e3-b9e5-4efb-8b09-cdd0d46054b5</Guid>
+        <ParamFQ>BaseActorProperties, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
+        <iscontroll>false</iscontroll>
+        <checknodevalid>true</checknodevalid>
+        <LookupClassindex>0</LookupClassindex>
+        <lookupclassname>Actor</lookupclassname>
+        <Lookupmethodindex>0</Lookupmethodindex>
+        <LookupMethodName>GetActorProps</LookupMethodName>
+        <ArglistFQ />
+        <slotspos />
+        <isroot>true</isroot>
+      </BBCtrlNode>
+    </Nodes>
+    <nodekeys>
+      <int>-803539075</int>
+    </nodekeys>
+    <Guid>d156847b-f91a-445c-bbdc-567b15e4f6b1</Guid>
+  </theGraph>
+</FallingPlatformDataset>

@@ -12,6 +12,33 @@ using UnityEditor;
 
 //using BlockbusterControll;
 
+public class BBDebugLog
+{
+    static List<int> iknowit = new List<int>();
+
+    public static void singleWarning (string message )
+    {
+        int h = message.GetHashCode();
+        if (!iknowit.Contains(h))
+        {
+            Debug.Log(message);
+            iknowit.Add(h);
+        }
+    }
+    
+    public static void SaveMovepadTarget(String filename, Texture2D Txt)
+    {
+        FileStream fs = new FileStream(BBDir.Get(BBpath.RES) + filename, FileMode.Create);
+        BinaryWriter bw = new BinaryWriter(fs);
+        bw.Write(Txt.EncodeToPNG());
+        bw.Close();
+        fs.Close();
+    }
+
+
+
+}
+
 
 /// <summary>
 /// state of the interface 
@@ -94,18 +121,29 @@ public class BBCtrlVisible : System.Attribute
 }
 
 
+
+
 public class BBCtrlProp : System.Attribute
 {
     public Guid guid;
     public Type T;
     public object Value;
     public string name;
+    private bool _needinvoke;
 
     public int id { get { return guid.GetHashCode(); } }
+    public bool needinvoke { get { return _needinvoke; } }
+
     public BBCtrlProp()
     {
         guid = Guid.NewGuid();
     }
+    public BBCtrlProp(bool needinvoke)
+    {
+        _needinvoke = needinvoke;
+        guid = Guid.NewGuid();
+    }
+    
 }
 
 
@@ -196,17 +234,7 @@ public static class BBDir
 /// write more convenient function 
 /// for debug hey .. you know that !
 /// </summary>
-public static class BBdebug
-{
-    public static void SaveMovepadTarget(String filename, Texture2D Txt)
-    {
-        FileStream fs = new FileStream(BBDir.Get(BBpath.RES) + filename, FileMode.Create);
-        BinaryWriter bw = new BinaryWriter(fs);
-        bw.Write(Txt.EncodeToPNG());
-        bw.Close();
-        fs.Close();
-    }
-}
+
 /// <summary>
 /// timer for editor cosmetic 
 /// like slack efffect on nodelinks 
@@ -626,8 +654,6 @@ public class BBMovepadLayerDescriptor
             BBControll BBC = GetControll(layer, index);
             if (BBC == null)
                 return false;
-            // fill up the graph file name in case of edition required  
-            NodeGraph.autofilename = BBDir.Get(BBpath.SETING) + BBC.guid.ToString() + ".bbxml";
             if ((int)textureindex > layer.TEXTURES.Count)
             {
                 Debug.Log("no texture at index : " + textureindex.ToString());
@@ -750,7 +776,7 @@ public class BBMovepadLayerDescriptor
             bool returnclearbuffer = false;
             if (!File.Exists(filePath) || filePath == null)
             {
-                Debug.Log("no file to load , init a blank texture for this entry " + filePath);
+                BBDebugLog.singleWarning("no file to load , init a blank texture for this entry " + filePath);
                 returnclearbuffer = true;
             }
             try
@@ -762,7 +788,7 @@ public class BBMovepadLayerDescriptor
                     GenerateTexture(TXTINDEX.CLEAR, out tex, layer.TextureSize);
                     tex.EncodeToPNG();
                     tex.alphaIsTransparency = true;
-                    BBdebug.SaveMovepadTarget(Directory.GetDirectoryRoot(filePath) + "outputtargetclear.png", tex);
+                    BBDebugLog.SaveMovepadTarget(Directory.GetDirectoryRoot(filePath) + "outputtargetclear.png", tex);
                     return tex;
                 }
                 else
@@ -774,7 +800,7 @@ public class BBMovepadLayerDescriptor
                 tex = new Texture2D(layer.TextureSize, layer.TextureSize);
                 tex.LoadImage(tData);
                 tex.EncodeToPNG();
-                BBdebug.SaveMovepadTarget(Directory.GetDirectoryRoot(filePath) + "outputtargetclear.png", tex);
+                BBDebugLog.SaveMovepadTarget(Directory.GetDirectoryRoot(filePath) + "outputtargetclear.png", tex);
 
                 //Debug.Log("load texture done: " + filePath + "byte size : " + texturesize);
                 return tex;
@@ -962,7 +988,7 @@ public class BBMovepadLayerDescriptor
         {
             guid = Guid.NewGuid();
             id = guid.GetHashCode();
-            Graphfilename = BBDir.Get(BBpath.SETING) + guid.ToString() + ".bbxml";
+            //Graphfilename = BBDir.Get(BBpath.SETING) + guid.ToString() + ".bbxml";
         }
 
         public void Clean()
@@ -976,65 +1002,9 @@ public class BBMovepadLayerDescriptor
         /// </summary>
         /// <param name="path"></param>
         /// 
-        [BBCtrlVisible]
-        public void LoadGraph(string path)
-        {
-            if (path != null || editgraph)
-            {
-                path = NodeGraph.autofilename;
-                NodeGraph.autoload = true;
-            }
-            else
-                path = EditorUtility.OpenFilePanel("load scene", BBDir.Get(BBpath.SETING), "xml");
-
-            if (!System.IO.File.Exists(path) || editgraph)
-            {
-                EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
-                return;
-            }
-            XmlSerializer serializer = new XmlSerializer(typeof(NodeGraph));
-            Stream stream = new FileStream(path, FileMode.Open);
-            thisgraph = serializer.Deserialize(stream) as NodeGraph;
-            stream.Close();
-
-            // A create a list to process the hierarchy 
-            List<BBCtrlNode> processnodelist = new List<BBCtrlNode>();
-            processnodelist.Add(thisgraph.ROOTNODE);
-            foreach (BBCtrlNode bbc in thisgraph.Nodes)
-                processnodelist.Add(bbc);
-            // add the coresponding number of node to match the key ref list 
-            foreach (BBCtrlNode node in processnodelist)
-                for (int c = 0; c < node.SUBNodesKEY.Count; c++)
-                {
-                    BBCtrlNode fillnode = new BBCtrlNode();
-                    node.SUBNodes.Add(fillnode);
-                }
-
-            // push the child node in the correct index in the subnodearray 
-            foreach (BBCtrlNode node in processnodelist)
-                for (int c = 0; c < node.SUBNodesKEY.Count; c++)
-                    foreach (BBCtrlNode BBC in processnodelist)
-                        if (BBC.Guid.GetHashCode() == node.SUBNodesKEY[c])
-                            node.SUBNodes[c] = BBC;
 
 
-            // flush the buffers 
-            BBCtrlNode.THEGRAPH.Nodes.Clear();
-            BBCtrlNode.THEGRAPH.nodekeys.Clear();
 
-            // split the list ROOT / NOROOT 
-            foreach (BBCtrlNode node in processnodelist)
-            {
-                if (node.isroot)
-                    thisgraph.ROOTNODE = node;
-                else
-                {
-                    thisgraph.Nodes.Add(node);
-                    thisgraph.nodekeys.Add(node.Guid.GetHashCode());
-                }
-
-            }
-        }
         [BBCtrlVisible]
         public void Save()
         {
@@ -1052,14 +1022,35 @@ public class BBMovepadLayerDescriptor
 
 
         [BBCtrlVisible]
-        public object InvokeGraph(BBCtrlNode NCaller)
+        public object InvokeGraph(BBCtrlNode NCaller , GameObject o =null)
         {
+            if (NCaller == null)
+                return null ;
             Dictionary<string, object> Args = new Dictionary<string, object>();
             List<object> objlist = new List<object>();
+            string debuglog="";
+
+
+            if (NCaller.nodedebug)
+                debuglog += "startdebug \n"; // right now just to setup a breakpoint 
+
+
+            if (NCaller.ClassnameFQ == null)
+                return null;
+
             string classname = NCaller.ClassnameFQ.Split(char.Parse(","))[0];
             Type T = Type.GetType(NCaller.ClassnameFQ);
+            object classInstance;
 
-            object classInstance = Selection.activeGameObject.GetComponent(classname);
+            if (o == null)
+            {
+                if (Selection.activeGameObject == null)
+                    return null ;
+                classInstance = Selection.activeGameObject.GetComponent(classname);
+            }
+            else
+                classInstance = o.GetComponent(classname);
+
             if (classInstance == null)
                 try
                 {
@@ -1077,9 +1068,9 @@ public class BBMovepadLayerDescriptor
             for (int c = 0; c < NCaller.SUBNodes.Count; c++)
             {
                 BBCtrlNode N = NCaller.SUBNodes[c];
-                NCaller.SUBNodes[c].m_OutputObj = InvokeGraph(N);
-                if (N.m_OutputObj == null)
-                    Debug.Log("no result for node " + N.NodeId.ToString());
+                NCaller.SUBNodes[c].m_OutputObj = InvokeGraph(N , o);
+                //if (N.m_OutputObj == null)
+                    //Debug.Log("no result for node " + N.name.ToString());
                     Args.Add(N.name + N.Guid.GetHashCode(), N.m_OutputObj);
             }
             // push args in right order fo the call 
@@ -1092,17 +1083,41 @@ public class BBMovepadLayerDescriptor
             MethodInfo[] MI = T.GetMethods();
             // method filtered by customtag [need to add id to method since the index change and saved index get obsolete]
             // the filtering function is on caller that allow to overide and create later different kind of nodes
-            MethodInfo[] filterlist = NCaller.BuildFilteredMethodArray(-1, MI); // pass -1 to fail and not return shit
+            //MethodInfo[] filterlist = NCaller.BuildFilteredMethodArray(-1, MI); // pass -1 to fail and not return shit
 
             // reassign index before doing popup action 
-            for (int c = 0; c < filterlist.GetLength(0); c++)
-                if (filterlist[c].Name == NCaller.LookupMethodName)
+            for (int c = 0; c < MI.GetLength(0); c++)
+                if (MI[c].Name == NCaller.LookupMethodName)
+                {
                     NCaller.Lookupmethodindex = c;
-
+                    break; // small optim useless to check for more but have to try another way to get index oof function 
+                }
             if (NCaller.iscontroll) // a controll hold the parameter set manualy on graph and saved no need to invoke 
-                NCaller.m_OutputObj = NCaller.controllarg;
+            {
+                if (NCaller.needinvoke)
+                    NCaller.ControllInvoke(MI[NCaller.Lookupmethodindex]);
+                else
+                    NCaller.m_OutputObj = NCaller.controllarg;
+            }
             else
-                NCaller.m_OutputObj = filterlist[NCaller.Lookupmethodindex].Invoke(classInstance, objlist.ToArray());
+            {
+
+                try
+                {
+                    NCaller.m_OutputObj = MI[NCaller.Lookupmethodindex].Invoke(classInstance, objlist.ToArray());
+                }
+
+                catch 
+                {
+
+                    NCaller.Windowpos.height += BBBLocks.Getlookatpoint(2, Time.realtimeSinceStartup, 4).x ;
+                    if (NCaller.nodedebug)
+                        BBDebugLog.singleWarning("method " + MI[NCaller.Lookupmethodindex].Name + "throw : error  on Controllnode " + NCaller.name + " set a default value for return ");
+                    NCaller.m_OutputObj = T.Assembly.CreateInstance(MI[NCaller.Lookupmethodindex].ReturnParameter.GetType().FullName);  
+                }
+
+            }
+
 
             return NCaller.m_OutputObj;
         }
@@ -1113,26 +1128,29 @@ public class BBMovepadLayerDescriptor
         /// </summary>
         /// <returns></returns>
         [BBCtrlVisible]
-
-        public bool BBinvoke()
+        public bool BBinvoke(GameObject o =null)
         {
-
-            if (Graphfilename == null)
-                Debug.Log("no graphnode for " + Graphfilename + " setup one in editor ");
-
-            // Open Graph editor behaviour 
-            // load and save on graph action name or let user 
-            // choose which file to edit 
-            NodeGraph.autoload = true;
-            NodeGraph.autosave = true;
-            NodeGraph.autofilename = Graphfilename;
-
-            LoadGraph(Graphfilename);
-            if (thisgraph != null)
-                InvokeGraph(thisgraph.ROOTNODE);
+            // to inform that inoke comes from a game object and 
+            // to not perform GUI node edition related stuff
+            if (o != null)
+                BBUInodes.gamemode = true;
             else
-                return false;
+                BBUInodes.gamemode = false;
 
+
+            if (thisgraph == null)
+            {
+                if (!File.Exists(BBDir.Get(BBpath.SETING)+guid.ToString()+".bbxml"))
+                {
+                    if (!NodeGraph.editoropen)
+                        EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
+                    NodeGraph.EditedControll = this;
+                    return false;
+                }
+                else
+                    thisgraph = NodeGraph.LoadGraph(this);
+            }
+            InvokeGraph(thisgraph.ROOTNODE , o);
             return true;
         }
 

@@ -16,7 +16,6 @@ using UnityEditor;
 
 
 
-
 //using BlockbusterControll;
 public static class Textureloader
 {
@@ -139,54 +138,37 @@ public static class BBDrawing
 
     public static Vector2[] ZoomNodeGraph ( Vector2[] posarray , float scale )
     {
-
-
         List<BBCtrlNode> LBBCN = new List<BBCtrlNode>();
-
-
-
-
-
-        foreach (BBCtrlNode n in BBCtrlNode.THEGRAPH.Nodes)
+        foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)
             LBBCN.Add(n);
-
         float xmax = 0;
         float xmin = Screen.width;
         float ymax = 0;
         float ymin = Screen.height;
-        
-                foreach (BBCtrlNode n in LBBCN)
-                {
-  
-                    if (n.Windowpos.position.x < xmin)
-                        xmin = n.Windowpos.position.x;
+        foreach (BBCtrlNode n in LBBCN)
+        {
+            if (n.Windowpos.position.x < xmin)
+                xmin = n.Windowpos.position.x;
 
-                    if (n.Windowpos.position.x > xmax  )
-                        xmax= n.Windowpos.position.x;
+            if (n.Windowpos.position.x > xmax  )
+                xmax= n.Windowpos.position.x;
 
-                    if (n.Windowpos.position.y < ymin)
-                        ymin = n.Windowpos.position.y;
+            if (n.Windowpos.position.y < ymin)
+                ymin = n.Windowpos.position.y;
                     
-                    if (n.Windowpos.position.y > ymax )
-                        ymax = n.Windowpos.position.y;
-                }
+            if (n.Windowpos.position.y > ymax )
+                ymax = n.Windowpos.position.y;
+        }
 
         Rect ARV = new Rect(xmin, ymin,xmax-xmin, ymax-ymin);
-
-  
-        
         float delta = BBDrawing.Zoomtimer.timeremaining * BBDrawing.zoomdir;
         /*
         ARV.width += (-delta);
         ARV.height += (-delta);
-
         ARV.x += (-delta) / 2;
         ARV.y += (-delta) / 2;
-
         */
-
         bool nodezoom = false;
-
         foreach (BBCtrlNode node in LBBCN)
         {
             if ( BBCtrlNode.RMAX.width - node.Windowpos.width < BBCtrlNode.RMAX.width *0.1 )
@@ -207,8 +189,6 @@ public static class BBDrawing
                     node.Windowpos.y += delta / 2;
                 }
         }
-
-
         if (nodezoom == false ) 
             foreach (BBCtrlNode n in LBBCN)
             {
@@ -227,13 +207,6 @@ public static class BBDrawing
             GUI.Box(new Rect(ARV.center.x, ARV.center.y, 20, 20), "");
 
         }
-
-        
-
-
-
-
-   
         // limitation on nodes 
         foreach (BBCtrlNode node in LBBCN)
         {
@@ -242,15 +215,7 @@ public static class BBDrawing
             if (node.Windowpos.width + (-delta) < BBCtrlNode.RMIN.width)
                 node.Windowpos.width = BBCtrlNode.RMIN.width;
         }
-        
-        
-        
-        
-        
         return null;
-
-
-
     }
 
 
@@ -261,12 +226,6 @@ public static class BBDrawing
     /// <param name="NSZ"></param>
     public static void  BBDoGridLayout(Rect SCRSZ, Vector2 NSZ)
     {
-
-        // stop the grid update for node debug 
-
-
-
-
         // check th window focused 
         string focusedwindow ;
         if (EditorWindow.mouseOverWindow != null)
@@ -277,9 +236,7 @@ public static class BBDrawing
         }
         mousepos = Event.current.mousePosition;
         bool nofocus = true;
-
-
-        foreach (BBCtrlNode n in BBCtrlNode.THEGRAPH.Nodes)// want to knoe if node is clicked 
+        foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)// want to knoe if node is clicked 
         if (BBDrawing.GetRectFocus(n.Windowpos , true))
         {
             griddraglock = true;
@@ -293,10 +250,14 @@ public static class BBDrawing
             offst = mousepos - lastclicdown;
             offstcunul += offst;
             lastclicdown = mousepos;
-            foreach (BBCtrlNode n in BBCtrlNode.THEGRAPH.Nodes)
-                n.Windowpos.position += offst;
+            
+            NodeGraph.EditedControll.thisgraph.ROOTNODE.Windowpos.position += offst;
+            foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)
+            {
+                if (! n.isroot) // crappy patch ( some conf get the root listed in nodes some dont to fix ) 
+                    n.Windowpos.position += offst;
+            }
         }
-
         // draw the grid
         if (BBCtrlNode.scrolllock)
         {
@@ -374,7 +335,7 @@ public static class BBDrawing
         if (speed <= 0) speed = 0;
         looptimer.s = 1.0f; // feed the timer 
         looptimer.Update(true);
-        float a = ((speed) * Mathf.Deg2Rad) * looptimer.timefromstart() * dist + (Mathf.Deg2Rad * 45.0f);
+        float a = ((speed) * Mathf.Deg2Rad) * looptimer.timefromstart() * dist + (Mathf.Deg2Rad * 90.0f);
         float ca = Mathf.Cos(a);
         float sa = Mathf.Sin(a);
         Vector3 RV = new Vector3(f * ca - f * sa, f, f * sa + f * ca).normalized;
@@ -412,13 +373,22 @@ public static class BBDrawing
 
 
 
+        Handles.DrawBezier(new Vector2(from.center.x, from.center.y - 8),
+                            new Vector2(to.x, to.y + (to.height / 2) - 8), 
+                            HandleA,
+
+                            HandleB,
+
+
+                            color, null, 3);
+        /*
         // finaly draw the spline 
         BBDrawing.bezierLine
             (   new Vector2(from.center.x, from.center.y - 8 ), //(from.x + from.width, from.y + from.height / 2),
                 HandleA,
                 new Vector2(to.x, to.y + (to.height/2) -8) ,
                 HandleB, 
-                color, 2, true, 30);
+                color, 2, true, 1);*/
 
     }
 

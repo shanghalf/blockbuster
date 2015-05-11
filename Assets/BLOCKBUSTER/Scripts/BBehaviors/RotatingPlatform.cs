@@ -60,7 +60,7 @@ public class RotatingPlatformDataset : Dataset
 
 
 
-//[ExecuteInEditMode()]
+[ExecuteInEditMode()]
 public class RotatingPlatform : BBehavior
 {
     // should implement only shared props for all behaviors 
@@ -102,25 +102,6 @@ public class RotatingPlatform : BBehavior
 
     public override  void OnDrawGizmosSelected()
     {
-
-        // replaced by scene handle callback 
-        /*
-        Actor A = (Actor) GetComponent(typeof(Actor));
-        if (A == null)
-        {
-            // shit happens .. 
-            Debug.Log("selected Gameobject Hve No Actor component");
-            return;     
-        }
-
-        for (int c = 0; c <= paramblock.rotationstepnumber; c++)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawSphere(paramblock.rotatelookpoint.Getlookatpoint(paramblock.rotateindex, 1.0f, paramblock.rotationstepnumber) + transform.position, 0.2f);
-            Gizmos.color = Color.blue;
-            Gizmos.DrawSphere(paramblock.rotatelookpoint.Getlookatpoint(c, 1.0f, paramblock.rotationstepnumber) + transform.position, 0.1f);
-        }
-        */
 
     }
 

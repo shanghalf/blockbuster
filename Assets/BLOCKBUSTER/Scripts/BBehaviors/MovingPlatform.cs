@@ -128,7 +128,7 @@ public class MovingPlatformDataset  : Dataset
 
 
 
-    //[ExecuteInEditMode()]
+    [ExecuteInEditMode()]
     public class MovingPlatform : BBehavior
     {
         // paramblock is a custom data set that hold serializables 
@@ -250,9 +250,10 @@ public class MovingPlatformDataset  : Dataset
         /// <param name="mainwindow"></param>
         public override void DoGUILoop(Rect mainwindow)
         {
-            m_actor.GetDir();
             if (paramblock == null)
                 return;
+            m_actor.GetDir();
+
             // catch a handle on the host actor for this behavior 
             //Actor tmpactor = (Actor)Selection.activeGameObject.GetComponent(typeof(Actor));
             int movepadofset = 0; // for the movepad ( temporary solution ill make a better thing here ) 
