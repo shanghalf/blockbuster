@@ -341,24 +341,24 @@ public static class BBDrawing
         Vector3 RV = new Vector3(f * ca - f * sa, f, f * sa + f * ca).normalized;
         return (new Vector2 ( RV.x,RV.z*t) * f);//+ pos) ;
     }
-    
 
 
-    public static void curveFromTo(Rect from, Rect to, Color color , float W ,out Vector2 V )
+
+    public static void curveFromTo(Vector2 from, Vector2 to, Color color, float W, out Vector2 V)
     {
         //calcuate handle tension on box distance and output velocity for nodes 
         // with arbitrary W = node children width 
 
-        Vector2 Dir = (from.position - to.position ).normalized;
+        Vector2 Dir = (from - to).normalized;
         //float ease = 3; // ease prevent node touch 
-        float D = Vector2.Distance(from.position, to.position); // distance 
+        float D = Vector2.Distance(from, to); // distance 
 
         float t = 1 - (D / W  );
         t =  (t<0) ? 0 : t  ;
 
         
-        Vector2 HandleA = new Vector2(from.x + from.width + Mathf.Abs(to.x - (from.x + from.width)) *t, from.y + W * t  );
-        Vector2 HandleB = new Vector2( to.x - Mathf.Abs(to.x - (from.x + from.width)) *t , to.y + W *t);
+        Vector2 HandleA = new Vector2(from.x + Mathf.Abs(to.x - from.x ) *t, from.y + W * t  );
+        Vector2 HandleB = new Vector2( to.x - Mathf.Abs(to.x - from.x ) *t , to.y + W *t);
 
         float ampl = 50; // *3 is an arbitrary speed based on amplitude 
         HandleA.y += Flex(new Vector2(0, HandleA.y), ampl * t, t, ampl*3).y;
@@ -373,8 +373,8 @@ public static class BBDrawing
 
 
 
-        Handles.DrawBezier(new Vector2(from.center.x, from.center.y - 8),
-                            new Vector2(to.x, to.y + (to.height / 2) - 8), 
+        Handles.DrawBezier(new Vector2(from.x+8, from.y),
+                            new Vector2(to.x-8, to.y ), 
                             HandleA,
 
                             HandleB,

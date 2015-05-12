@@ -67,6 +67,7 @@ public class NodeGraph
     public List<BBCtrlNode> Nodes = new List<BBCtrlNode>();
     public List<int> nodekeys = new List<int>();
     public Guid Guid = Guid.NewGuid();
+
     public BBCtrlNode  GetnodeFromID (int ID)
     {
         foreach (BBCtrlNode BBC in Nodes)
@@ -74,6 +75,8 @@ public class NodeGraph
                 return BBC;
         return null;
     }
+
+
     public  void FlushBuffer()
     {
         Nodes.Clear();
@@ -193,7 +196,8 @@ public class NodeGraph
         public static  string Nodeinfos = "";
 
         public string nodedebuglog = "";
-
+        public String GraphPerf="not evalued yet"; // benchnmark node or part of it 
+        public static int perfiiterationnumber;
 
         public static string hierarchy = "";
         public static Rect ROOTPOS = new Rect(Screen.width, Screen.height / 2, 200, 200);
@@ -225,6 +229,8 @@ public class NodeGraph
         public string controllargname;
         public bool needinvoke;
 
+        [XmlIgnore] // every node should keep a handle on it s own graph 
+        public NodeGraph NodeGraphHandle;
 
         
 
@@ -428,8 +434,8 @@ public class NodeGraph
             Windowpos = initpos;
             //ArgsList = new List<ParameterInfo>();
             name = newname;
-            textonly.imagePosition = ImagePosition.TextOnly;
-            textonly.clipping = TextClipping.Clip;
+            //textonly.imagePosition = ImagePosition.;
+
 
             Flood("Constructor called " + Guid.ToString());
             //EditorUtility.DisplayDialog("creator", "create ", "ok");
@@ -603,75 +609,96 @@ public class NodeGraph
                 slotspos.Add(S);
             }
         }
+
         /// <summary>
-        /// NODE ROUTINE THE IN AND OUT WINDOWS LOGIC  
+        /// DO NODE EXTERNAL 
         /// </summary>
-        public virtual void DoNode()
+        /// <returns></returns>
+        public virtual bool DoNode()
         {
+            // should be the current edited graph ;
+            NodeGraphHandle = NodeGraph.EditedControll.thisgraph;
+            if (NodeGraphHandle == null)
+                return false;
+
             m_gotfocus = BBDrawing.GetRectFocus(Windowpos, true);
             // collect the nodes that need to be deleted 
             List<BBCtrlNode> toremove = new List<BBCtrlNode>();
 
-            // do the node and add to the trashbin if it s not relevant anymore
-            // carefull it s a recursive call to execute or trash 
+            // RECURSIVE CALL 
             foreach (BBCtrlNode N in SUBNodes)
-            {
-                N.DoNode(); // do the call 
-                if (N.FlushNode)
-                {
-                    BBDebugLog.singleWarning("MARK FOR DELETE "+N.NodeId);
+                if (! N.DoNode())
                     toremove.Add(N);
-                }
-            }
 
             foreach (BBCtrlNode N in toremove)
-            {
                 NodeRemoveChild(this, N);
-                dirty = true;
-            }
+
             // Perform Inside Action (REFLECTOR)
             /// ===================================================== OUTPUT SLOT 
             if (Timer.run && !isroot) // prevent the out slot to show up during popup anim 
             {
-                // node timer is running the node is not ready to display 
                 DrawDeploychildren(Rectorg, RectDest);
                 GUI.Box(RectCurrent, "");
-                return;
+                return true; // normal thing 
             }
 
-            outputslotbutton = new Rect(Windowpos.width + Windowpos.position.x + 8,
-                Windowpos.height / 2 + Windowpos.position.y,
-                BZ, BZ);
+            outputslotbutton = new Rect(Windowpos.width + Windowpos.position.x ,
+                Windowpos.center.y,
+                16, 16);
 
 
 
             if (GUI.Button(outputslotbutton, Textureloader.slot_ok, textonly))
-                FlushNode = true;
+                return false;// node is deleted 
+            /*
+            if ( selectedmethodinfo != null )
+                GUI.Label(new Rect(outputslotbutton.x, outputslotbutton.y-40, 300, 80), selectedmethodinfo.ReturnType.ToString());
+            */
+
             // FUCTION DO NOT HAVE PARAMETERS 
-            if (Arglist.Count == 0)
-                slotspos.Clear();
+            if (Arglist.Count != slotspos.Count)
+            {
+                BBDebugLog.singleWarning("arg number do not fit the slot number >> rebuild slot" + name + Guid.GetHashCode().ToString());
+                REbuildSlots();
+            }
             //****************************************************** CREATE NEW SLOTS
             for (int c = 0; c < Arglist.Count; c++)
             {
+                
                 if (!Checkslot())
+                {
+                    BBDebugLog.singleWarning("Checkslot returned false on " + name + Guid.GetHashCode().ToString() + " >> REbuildSlots");
                     REbuildSlots();
+                }
+                 
                 //ParamFQ = ArglistFQ[c];
-
+                
                 slotspos[c].R.Set(
-                                    Windowpos.position.x - (BZ / 1.5f),
-                                    Windowpos.position.y + ((BZ) * c),
-                                    BZ, BZ
+                                    Windowpos.position.x - (16 ),
+                                    Windowpos.position.y + ((18) * c),
+                                    16, 16
                                    );
                 // do not draw a UI parameter on controllnode
-                if ( ! slotspos[c].UIControllparamslot ) 
+                if (!slotspos[c].UIControllparamslot)
+                {
+                    /*
+                    if (Arglist[c].ParameterType != null)
+                    GUI.Label(new Rect(slotspos[c].R.x - 100, slotspos[c].R.y - 40, 300, 80), Arglist[c].ParameterType.ToString());
+                    */
+
                     if (GUI.Button(slotspos[c].R, Textureloader.slot_questionmark, textonly))
                     {
+
                         //float zoom = (isroot) ? 0.5f : 1.0f; // root childs smallers 
                         Rect NR = GetNewPosFromThisNode(slotYoffset); //new Rect(10, 50, 80, 80);
-                        ParameterInfo[] p  =  selectedmethodinfo.GetParameters();
-                        BBCtrlNode Child = new BBCtrlNode(NR,p[c].ParameterType.Name+ " " +  p[c].Name, this);
+                        ParameterInfo[] p = selectedmethodinfo.GetParameters();
+                        BBCtrlNode Child = new BBCtrlNode(NR, p[c].ParameterType.Name + " " + p[c].Name, this);
                         Child.ParentFeedSlotInfo = new SlotInfo(c); // but i put on recently created Slot classs
                         Child.ParentFeedSlotInfo.TypeFullString = Arglist[c].ParameterType.AssemblyQualifiedName; // Parent input type 
+
+                        
+
+
                         Child.ParentFeedSlotInfo.index = c; // the parent slot index 
                         // for serialization 
                         Child.RectDest.Set(NR.xMin, NR.yMin, NR.width, NR.height); // for popup anim
@@ -682,14 +709,18 @@ public class NodeGraph
                         dirty = true;
 
                     }
+                }
             }
             Windowpos = GUI.Window(Guid.GetHashCode(), Windowpos, DoNodeWindow, name);
             if (!isroot)
             {
-                BBCtrlNode P = NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID);
+                // acting on node parent 
+                BBCtrlNode P =  NodeGraphHandle.GetnodeFromID(ParentID);
                 if (P == null)
-                    return;
-
+                {
+                    BBDebugLog.singleWarning("node :" + name +" have no parent >> Trash ");
+                    return false; // a child without parent is not allowed >> flush 
+                }
 
                 if (P.slotspos.Count > ParentFeedSlotInfo.index)
                 {
@@ -699,24 +730,25 @@ public class NodeGraph
                             checknodevalid = true;
                         else
                         {
-                            //Debug.Log(name + " Fail b");
+                            BBDebugLog.singleWarning("node :" + name + Guid.GetHashCode().ToString()+ " have missconnection ");
                             linkcolor = Color.red;
                         }
                     }
                     else
-                        linkcolor =  (nodewarning ) ? Color.gray  : Color.green;
+                        linkcolor = (nodewarning) ? Color.gray : Color.green;
 
-                    Vector2 A=  outputslotbutton.center;
-                    Vector2 B=  NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R.center;
+                    Vector2 A = outputslotbutton.center;
+                    Vector2 B = P.slotspos[ParentFeedSlotInfo.index].R.center;
 
-                   
-
-                    // temp the spline is too expensive 
-                    //BBDrawing.DrawLine(A, B, linkcolor, 3f, true);
-                    BBDrawing.curveFromTo(outputslotbutton, NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R, linkcolor, Windowpos.width * 2, out velocity);
+                    BBDrawing.curveFromTo(outputslotbutton.center, NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R.center, linkcolor, Windowpos.width*1.5f , out velocity);
                 }
+                
             }
+            return true;
+
         }
+
+     
         /// <summary>
         ///  check if the graph could be invoked 
         /// </summary>
@@ -757,7 +789,7 @@ public class NodeGraph
             {
                 valid = false;
                 N.checknodevalid = false;
-                //Debug.Log(name + " IS CONTROL : " + iscontroll.ToString() + " Fail d");
+                BBDebugLog.singleWarning (name + " IS CONTROL : " + iscontroll.ToString() + " Fail d");
                 return;
             }
             BBCtrlNode parent = NodeGraph.EditedControll.thisgraph.GetnodeFromID(N.ParentID);
@@ -773,6 +805,10 @@ public class NodeGraph
                 valid = false;
             else
             {
+                /*
+                if (parent.slotspos[I].TypeFullString != null)
+                    GUI.Label(new Rect(parent.slotspos[I].R.x, parent.slotspos[I].R.y + 40, 300, 80), parent.slotspos[I].TypeFullString);
+                */
                 string A = parent.slotspos[I].TypeFullString;
                 string B = N.ParamFQ;
                 if (A == B)
@@ -811,10 +847,167 @@ public class NodeGraph
         /// <param name="id"></param>
         /// 
 
-
-
-
         public virtual void DoNodeWindow(int id)
+        {
+            // clear debug log
+            checknodevalid = true;
+            nodewarning = false;
+
+            string[] localclassarray = FillClassArray(Selection.activeGameObject).ToArray();
+            // reassign the class index before use cause things changing all the time 
+            // depending on selection and behaviors assigned 
+            for (int c = 0; c < localclassarray.GetLength(0); c++)
+                if (lookupclassname == localclassarray[c])
+                    LookupClassindex = c;
+            
+            
+            
+            // user action to select which one to inspect 
+            LookupClassindex = EditorGUILayout.Popup(LookupClassindex, localclassarray);
+            if (LookupClassindex >= localclassarray.GetLength(0))
+            {
+                checknodevalid = false;
+                BBDebugLog.singleWarning("DoNodeWindow node fail : LookupClassindex is above localclassarray value:  " + id.ToString());
+                GUILayout.Label("classindex out of range");
+                return;
+            }
+            lookupclassname = localclassarray[LookupClassindex];
+
+
+
+            // huge optim .. avoid to parse [customatribute if not necessary]
+            // just the node under the window get a filtered list 
+
+            BBDrawing.CheckInput();
+
+            if (BBDrawing.mousedown && !BBDrawing.mousedrag)
+                filteredmethods = BuildFilteredMethodArray(LookupClassindex);
+            else
+                if (NodeClassTypeArray.Count > LookupClassindex)
+                    filteredmethods = NodeClassTypeArray[LookupClassindex].GetMethods();
+                else
+                {
+                    nodewarning = true;
+                }
+
+            
+
+
+            List<string> MethodnameList = new List<string>();
+            foreach (MethodInfo mi in filteredmethods)
+                MethodnameList.Add(mi.Name);
+
+            // reassign index before doing popup action 
+            for (int c = 0; c < filteredmethods.GetLength(0); c++)
+                if (filteredmethods[c].Name == LookupMethodName)
+                {
+                    Lookupmethodindex = c;
+                    selectedmethodinfo = filteredmethods[c];
+                    break;
+                }
+            GUILayout.Label(Lookupmethodindex.ToString());
+
+            Lookupmethodindex = EditorGUILayout.Popup(Lookupmethodindex, MethodnameList.ToArray());
+            if (filteredmethods.Length <= Lookupmethodindex || Lookupmethodindex < 0)
+            {
+                checknodevalid = false;
+                BBDebugLog.singleWarning("DoNodeWindow node fail : method index point out of range :  " + id.ToString());
+                GUILayout.Label("method index out of range");
+                GUI.DragWindow();
+                return;
+            }
+            string STR = "";
+            if (ParamFQ != null)
+                STR = NodeId.ToString();   //Paraminfo.ParameterType.ToString();
+            if (BBCtrlNode.scrolllock)
+                EditorGUILayout.LabelField(STR);
+            // store the fullQF class name
+            if (NodeClassTypeArray.Count <= LookupClassindex)
+            {
+                // this is the process to output string debug in node 
+                GUI.DragWindow(); // anyway
+                string msg = " LookupClassindex out of NodeClassTypeArray  range : ()  " + id.ToString();
+                BBDebugLog.singleWarning(msg);
+                GUILayout.Label("index out of range");
+                nodewarning = true;
+                return;
+            }
+            ClassnameFQ = NodeClassTypeArray[LookupClassindex].AssemblyQualifiedName;
+            classnameshort = NodeClassTypeArray[LookupClassindex].AssemblyQualifiedName.Split(char.Parse(","))[0];
+
+
+            //--------------------------------------- GUI ELEMENT 
+
+            NodeGraph.EditedControll.thisgraph.GraphOK = true;
+
+            CheckfullGraph(this, out NodeGraph.EditedControll.thisgraph.GraphOK);
+            if (NodeGraph.EditedControll.thisgraph.GraphOK && checknodevalid && !iscontroll)
+                if (GUILayout.Button("INVOKE"))
+                {
+                    if (nodedebug)
+                    {
+                        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                        watch.Start();
+                        // the code that you want to measure comes here
+                        for (int c = 0; c < perfiiterationnumber; c++)
+                            Nodeinvoke(0);
+                        watch.Stop();
+                        TimeSpan ts = watch.Elapsed;
+                        GraphPerf = String.Format("single: {0}\n{1} {2:00}:{3:00}:{4:00}.{5:00}", perfiiterationnumber, (float)ts.TotalMilliseconds / 100,
+                                  ts.Hours, ts.Minutes, ts.Seconds,
+                                   ts.Milliseconds / 10);
+                        Debug.Log(GraphPerf);
+                    }
+                    else
+                        Nodeinvoke(0);
+                }
+
+
+
+            nodedebug = GUILayout.Toggle(nodedebug, "debugnode");
+            //string subnodesname = "";
+            if (selectedmethodinfo != null)
+            {
+                Nodeinfos = "Return :" + selectedmethodinfo.ReturnParameter.ParameterType.Name;
+                ParamFQ = selectedmethodinfo.ReturnParameter.ParameterType.AssemblyQualifiedName;
+            }
+            //foreach (BBCtrlNode N in SUBNodes)
+            //  subnodesname += "child " + N.NodeId + "\n";
+            if (nodedebug)
+            {
+                //GUILayout.Label(subnodesname);
+                GUILayout.Label(Nodeinfos);
+                perfiiterationnumber = EditorGUILayout.IntSlider(perfiiterationnumber, 1, 1000);
+                GUILayout.Label(GraphPerf);
+            }
+
+
+            selectedmethodinfo = filteredmethods[Lookupmethodindex];
+            LookupMethodName = selectedmethodinfo.Name;
+            ReturnTye = selectedmethodinfo.ReturnType; // return type ys stored in the node 
+            Arglist.Clear();
+            foreach (ParameterInfo pi in selectedmethodinfo.GetParameters())
+                Arglist.Add(pi);
+            checknodevalid = true;
+            // this node is a ui controll 
+            // have to perform the user input to store the value 
+            iscontroll = false;
+            object[] atributelist = selectedmethodinfo.GetCustomAttributes(true);
+            foreach (object o in atributelist)
+            {
+                if (o.GetType() == typeof(BBCtrlProp))
+                {
+                    BBCtrlProp bbctrltag = (BBCtrlProp)o;
+                    needinvoke = bbctrltag.needinvoke;
+                    iscontroll = true;
+                    ControllInvoke(selectedmethodinfo);
+                }
+            }
+            GUI.DragWindow(); // anyway
+        }
+
+
+        public virtual void DoNodeWindowbackup(int id)
         {
             // clear debug log
             checknodevalid = true;
@@ -882,26 +1075,45 @@ public class NodeGraph
             CheckfullGraph(this, out NodeGraph.EditedControll.thisgraph.GraphOK);
             if (NodeGraph.EditedControll.thisgraph.GraphOK && checknodevalid && !iscontroll)
                 if (GUILayout.Button("INVOKE"))
+                {
+                    if (nodedebug)
+                    {
+                        System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+                        watch.Start();
+                        // the code that you want to measure comes here
+                        for (int c = 0; c < perfiiterationnumber; c++)
+                            Nodeinvoke(0);
+                        watch.Stop();
+                        TimeSpan ts = watch.Elapsed;
+                        GraphPerf = String.Format("single: {0}\n{1} {2:00}:{3:00}:{4:00}.{5:00}", perfiiterationnumber, (float)ts.TotalMilliseconds / 100,
+                                  ts.Hours, ts.Minutes, ts.Seconds,
+                                   ts.Milliseconds / 10);
+                        Debug.Log(GraphPerf);
+                    }
+                    else
                         Nodeinvoke(0);
+                }
+            
+
+
             nodedebug = GUILayout.Toggle(nodedebug, "debugnode");
-            string subnodesname = "";
+            //string subnodesname = "";
             if (selectedmethodinfo != null)
             {
-                Nodeinfos = "\nReturn :" + selectedmethodinfo.ReturnParameter.ParameterType.Name;
+                Nodeinfos = "Return :" + selectedmethodinfo.ReturnParameter.ParameterType.Name;
                 ParamFQ = selectedmethodinfo.ReturnParameter.ParameterType.AssemblyQualifiedName;
             }
-            foreach (BBCtrlNode N in SUBNodes)
-                subnodesname += "child " + N.NodeId + "\n";
-            if (!isroot)
+            //foreach (BBCtrlNode N in SUBNodes)
+              //  subnodesname += "child " + N.NodeId + "\n";
+            if (nodedebug)
             {
-                if (nodedebug)
-                {
-                    GUILayout.Label(subnodesname);
-                    GUILayout.Label(Nodeinfos);
-                }
+                //GUILayout.Label(subnodesname);
+                GUILayout.Label(Nodeinfos);
+                perfiiterationnumber = EditorGUILayout.IntSlider(perfiiterationnumber , 1, 1000);
+                GUILayout.Label(GraphPerf  );
+            }
                 
 
-            }
             selectedmethodinfo = filteredmethods[Lookupmethodindex];
             LookupMethodName = selectedmethodinfo.Name;
             ReturnTye = selectedmethodinfo.ReturnType; // return type ys stored in the node 
@@ -974,6 +1186,8 @@ public class NodeGraph
 
         public object Nodeinvoke(int returnindex)
         {
+
+
             if (!NodeGraph.EditedControll.thisgraph.GraphOK)
                 return null;
 
@@ -1109,7 +1323,7 @@ public class NodeGraph
             List<MethodInfo> L = new List<MethodInfo>();
             for (int mc = 0; mc < MethodInfoList.GetLength(0); mc++)
             {
-                object[] atributelist = MethodInfoList[mc].GetCustomAttributes(true);
+                object[] atributelist = MethodInfoList[mc].GetCustomAttributes(false);
                 foreach (object o in atributelist)
                 {
                     if (o.GetType() == typeof(BBCtrlVisible) || BBCtrlNode.unfiltered)
@@ -1165,7 +1379,7 @@ public class NodeGraph
             {
                 GUILayout.Label("graph not apply to this selection");
                 checknodevalid = false;
-                //Debug.Log("Fail A");
+                BBDebugLog.singleWarning ("filtermethod flse "+ name   );
                 return MTHIDX; // FAIL 
             }
 
