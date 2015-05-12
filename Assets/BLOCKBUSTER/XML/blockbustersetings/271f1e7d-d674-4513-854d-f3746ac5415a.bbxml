@@ -44,6 +44,7 @@
     </Windowpos>
     <name>ROOT</name>
     <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+    <classnameshort>Actor</classnameshort>
     <Guid>5d1ba678-2dc5-45c2-81ca-be1d39c83750</Guid>
     <ParamFQ>System.Void, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
     <iscontroll>false</iscontroll>
@@ -251,6 +252,7 @@
       </Windowpos>
       <name>Boolean instanciate</name>
       <ClassnameFQ>BBUInodes, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>BBUInodes</classnameshort>
       <Guid>ba06e99a-a9de-4c3f-bf46-9e8169e14bb4</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
@@ -379,6 +381,7 @@
       </Windowpos>
       <name>Boolean moveallpath</name>
       <ClassnameFQ>BBUInodes, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>BBUInodes</classnameshort>
       <Guid>190fe054-e6ac-4722-afd9-943e6bd7a16a</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
@@ -507,6 +510,7 @@
       </Windowpos>
       <name>Boolean camspace</name>
       <ClassnameFQ>BBUInodes, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>BBUInodes</classnameshort>
       <Guid>6395fd05-e074-45b8-b5a5-47ee19b68e80</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
@@ -634,6 +638,7 @@
       </Windowpos>
       <name>Vector3 Axis</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>Actor</classnameshort>
       <Guid>55be8b16-8902-4700-a784-c2d2eaee9c39</Guid>
       <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
       <iscontroll>false</iscontroll>
@@ -722,6 +727,7 @@
       </Windowpos>
       <name>Boolean camspace</name>
       <ClassnameFQ>BBUInodes, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>BBUInodes</classnameshort>
       <Guid>d6f329b7-00ac-447d-bc50-9d004dbf9643</Guid>
       <ParamFQ>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>true</iscontroll>
@@ -852,6 +858,7 @@
       </Windowpos>
       <name>Single by</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>Actor</classnameshort>
       <Guid>24ff37d3-50e6-4652-b6b0-d77e3966d4f1</Guid>
       <ParamFQ>System.Single, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>false</iscontroll>
@@ -1017,6 +1024,7 @@
       </Windowpos>
       <name>Vector3 vin</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>Actor</classnameshort>
       <Guid>924f64fa-85d6-497c-aa4a-e6a39fefaf1a</Guid>
       <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
       <iscontroll>false</iscontroll>
@@ -1105,6 +1113,7 @@
       </Windowpos>
       <name>Vector3 dir</name>
       <ClassnameFQ>BBMathnodes, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>BBMathnodes</classnameshort>
       <Guid>5881322c-efd6-4612-b150-6cb9240d56b5</Guid>
       <ParamFQ>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ParamFQ>
       <iscontroll>false</iscontroll>
@@ -1275,6 +1284,7 @@
       </Windowpos>
       <name>ROOT</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
+      <classnameshort>Actor</classnameshort>
       <Guid>5d1ba678-2dc5-45c2-81ca-be1d39c83750</Guid>
       <ParamFQ>System.Void, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ParamFQ>
       <iscontroll>false</iscontroll>

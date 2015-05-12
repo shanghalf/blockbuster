@@ -1372,12 +1372,9 @@ public static class BBTools
                         BBControll MPC = BBMovepad.GetControll(BBMovepad.Mainlayer, index);
                         if (MPC != null)
                         {
-
                             NodeGraph.EditedControll = MPC;
-
                             if (MPC.thisgraph == null)
                                 MPC.thisgraph = NodeGraph.LoadGraph(MPC);
-
                             NodeGraph.EditedControll.thisgraph.filename = MPC.Graphfilename;
                             NodeGraph.EditedControll.thisgraph = MPC.thisgraph;
                             EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");

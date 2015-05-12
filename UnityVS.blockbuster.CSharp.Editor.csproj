@@ -64,9 +64,6 @@
     <Reference Include="AssetStoreToolsExtra">
       <HintPath>Assets\AssetStoreTools\Editor\AssetStoreToolsExtra.dll</HintPath>
     </Reference>
-    <Reference Include="BlockbusterControll">
-      <HintPath>Assets\BLOCKBUSTER\Editor\BlockbusterControll.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.NRefactory">
       <HintPath>Assets\BLOCKBUSTER\Editor\ICSharpCode.NRefactory.dll</HintPath>
     </Reference>
@@ -168,6 +165,7 @@
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\AA.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\browseassetbase.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\combinedgraph.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\controlltest.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\delete.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\duplicatenomove.xml" />

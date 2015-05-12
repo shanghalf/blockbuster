@@ -260,13 +260,57 @@ public abstract class BBehavior : MonoBehaviour
         return null;
     }
 
+    [BBCtrlVisible]
+    public GameObject THIS()
+    {
+        return this.gameObject;
+    }
 
     [BBCtrlVisible]
-    public virtual void SetGraphTransformation(Vector3 pos , Quaternion Rot, Vector3 scale )
+    public Quaternion GetRotation()
+    {
+        return transform.rotation;
+    }
+
+    [BBCtrlVisible]
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    [BBCtrlVisible]
+    public float GetPositionX()
+    {
+        return transform.position.x;
+    }
+    [BBCtrlVisible]
+    public float GetPositionY()
+    {
+        return transform.position.y;
+    }
+    [BBCtrlVisible]
+    public float GetPositionZ()
+    {
+        return transform.position.z;
+    }
+    [BBCtrlVisible]
+    public Vector3 GetScale()
+    {
+        return transform.localScale;
+    }
+
+
+
+
+
+
+    [BBCtrlVisible]
+    public virtual bool SetGraphTransformation(Vector3 pos , Quaternion Rot, Vector3 scale )
     {
             transform.position = pos;
             transform.rotation = Rot;
             transform.localScale = scale;
+            return true;
     }
 
 

@@ -128,38 +128,26 @@ public class BBCtrlEditor : EditorWindow
     /// </summary>
     void OnGUI()
     {
-
-        if (NodeGraph.EditedControll == null)
-        {
-            NodeGraph.EditedControll = new BBControll();
-            // no node to edit create a default 
-            NodeGraph.EditedControll.thisgraph = NodeGraph.LoadGraph(NodeGraph.EditedControll, BBDir.Get(BBpath.SETING) + "default.xml"); 
-        }
-
-
         BBCtrlNode.hierarchy = "";
         if (BBCtrlNode.dirty)
         {
-
+            BBCtrlNode.dirty = false;
+            BBDebugLog.singleWarning("flush buffer et iterate graph on " + NodeGraph.EditedControll.guid.GetHashCode().ToString());
             NodeGraph.EditedControll.thisgraph.FlushBuffer();
             NodeGraph.EditedControll.thisgraph.ROOTNODE.REcusiveCollectNodes();
-            BBCtrlNode.dirty = false;
         }
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("APPLY"))
         {
+            BBDebugLog.singleWarning("save graph on " + NodeGraph.EditedControll.guid.GetHashCode().ToString()  ); 
             NodeGraph.EditedControll.thisgraph.Save();
-           EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
-           E.Close();
+            EditorWindow E = EditorWindow.GetWindow<BBCtrlEditor>();
+            E.Close();
         }
         if (GUILayout.Button("SAVE"))
         {
             NodeGraph.EditedControll.thisgraph.Save(true);
         }
-
-
-
-
         if (GUILayout.Button("LOAD"))
         {
             string path=null ;
@@ -167,11 +155,8 @@ public class BBCtrlEditor : EditorWindow
                 path = BBDir.Get(BBpath.SETING) + NodeGraph.EditedControll.thisgraph.Guid.ToString() + ".xml";
             if (! File.Exists(path))
                 NodeGraph.EditedControll.Graphfilename = EditorUtility.OpenFilePanel("open graph ", BBDir.Get(BBpath.SETING), "xml");
-
             NodeGraph.EditedControll.thisgraph = NodeGraph.LoadGraph(NodeGraph.EditedControll);
             return;
-
-
         }
         GUILayout.EndHorizontal();
         BBDrawing.CheckInput();  // update inputs 
@@ -190,15 +175,12 @@ public class BBCtrlEditor : EditorWindow
         }
         BBCtrlNode.unfiltered = GUI.Toggle(new Rect(10, Screen.height - 100, 100, 20), BBCtrlNode.unfiltered, "show all method");
         String str = "";
-
         /*
-
         foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)
         {
             str += n.name + "\n";
             str += "velocity" + n.velocity.ToString() + "\n";
             n.Windowpos.position -= n.velocity;
-
         }
         */
         str += "\n\n\n\n";
@@ -210,7 +192,7 @@ public class BBCtrlEditor : EditorWindow
                 NodeGraph.EditedControll.thisgraph.ROOTNODE.DoNode();
         EndWindows();
         Repaint();
-        BBCtrlNode.NodeDebuginfos = "";
+        BBCtrlNode.Nodeinfos = "";
     }
 }
 

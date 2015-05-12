@@ -82,6 +82,7 @@ using UnityEditor;
 
 
 
+
     [ExecuteInEditMode()]
     public class FallingPlatform : BBehavior
     {
@@ -107,13 +108,7 @@ using UnityEditor;
         public GameObject target ;
 
 
-        [BBCtrlVisible]
-        public GameObject THIS ()
-        {
-            return this.gameObject;
-
-        }
-
+   
 
 
 
@@ -134,6 +129,8 @@ using UnityEditor;
                     {
                         paramblock.BBC.Graphfilename = EditorUtility.OpenFilePanel("open graph", BBDir.Get(BBpath.SETING), "xml");
                         NodeGraph.EditedControll = paramblock.BBC;
+                        BBDebugLog.singleWarning("switch edited control to " + NodeGraph.EditedControll.guid.GetHashCode().ToString()); 
+
                         return;
                     }  
                     paramblock.BBC.thisgraph = NodeGraph.LoadGraph(paramblock.BBC);
@@ -141,6 +138,9 @@ using UnityEditor;
                 }
                 // NodeGraph.EditedControll  is the nodegraph actually edited by the graph editor 
                 NodeGraph.EditedControll = paramblock.BBC;
+
+                BBDebugLog.singleWarning("switch edited control to " + NodeGraph.EditedControll.guid.GetHashCode().ToString()); 
+                
                 EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
             }
         }

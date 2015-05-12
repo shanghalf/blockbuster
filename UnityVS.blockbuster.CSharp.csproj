@@ -157,6 +157,7 @@
     <None Include="Assets\BLOCKBUSTER\BBGBASE\TEMPLE\root.txt" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\AA.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\browseassetbase.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\combinedgraph.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\controlltest.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\delete.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\duplicatenomove.xml" />

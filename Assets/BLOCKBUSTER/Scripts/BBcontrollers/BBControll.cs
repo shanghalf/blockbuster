@@ -16,16 +16,22 @@ public class BBDebugLog
 {
     static List<int> iknowit = new List<int>();
 
-    public static void singleWarning (string message )
+    public static bool singleWarning (string message )
     {
         int h = message.GetHashCode();
         if (!iknowit.Contains(h))
         {
             Debug.Log(message);
             iknowit.Add(h);
+            return false ;
         }
+        else 
+            return true ;
     }
-    
+
+
+
+
     public static void SaveMovepadTarget(String filename, Texture2D Txt)
     {
         FileStream fs = new FileStream(BBDir.Get(BBpath.RES) + filename, FileMode.Create);
@@ -1026,51 +1032,59 @@ public class BBMovepadLayerDescriptor
         {
             if (NCaller == null)
                 return null ;
+
             Dictionary<string, object> Args = new Dictionary<string, object>();
             List<object> objlist = new List<object>();
             string debuglog="";
 
+            // in edition mode we want the graph to 
+            // keep the object up to date with editor action ;
+            if (!NodeGraph.gamemode)
+                NCaller.objtoinvoke = null;
+
+
 
             if (NCaller.nodedebug)
                 debuglog += "startdebug \n"; // right now just to setup a breakpoint 
-
-
             if (NCaller.ClassnameFQ == null)
                 return null;
-
-            string classname = NCaller.ClassnameFQ.Split(char.Parse(","))[0];
             Type T = Type.GetType(NCaller.ClassnameFQ);
-            object classInstance;
 
-            if (o == null)
+            // if the node object allready have an object assigned 
+            if (NCaller.objtoinvoke == null )
             {
-                if (Selection.activeGameObject == null)
-                    return null ;
-                classInstance = Selection.activeGameObject.GetComponent(classname);
-            }
-            else
-                classInstance = o.GetComponent(classname);
+                //string classname = NCaller.ClassnameFQ.Split(char.Parse(","))[0];
+                if (o == null)
+                {
+                    if (Selection.activeGameObject == null)
+                        return null;
+                    NCaller.objtoinvoke = Selection.activeGameObject.GetComponent(NCaller.classnameshort);
+                }
+                else
+                    NCaller.objtoinvoke = o.GetComponent(NCaller.classnameshort);
 
-            if (classInstance == null)
-                try
+                if (NCaller.objtoinvoke == null)
+                    try
+                    {
+                        NCaller.objtoinvoke = T.Assembly.CreateInstance(T.FullName);            // (T.Assembly.) Activator.CreateInstance( T);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e.Message);
+                    }
+                if (NCaller.objtoinvoke == null)
                 {
-                    classInstance = T.Assembly.CreateInstance(T.FullName);            // (T.Assembly.) Activator.CreateInstance( T);
+                    Debug.Log("something wrong in class instanciate");
+                    return null;
                 }
-                catch (Exception e)
-                {
-                    Debug.Log(e.Message);
-                }
-            if (classInstance == null)
-            {
-                Debug.Log("something wrong in class instanciate");
-                return null;
             }
+
+
+
             for (int c = 0; c < NCaller.SUBNodes.Count; c++)
             {
                 BBCtrlNode N = NCaller.SUBNodes[c];
                 NCaller.SUBNodes[c].m_OutputObj = InvokeGraph(N , o);
-                //if (N.m_OutputObj == null)
-                    //Debug.Log("no result for node " + N.name.ToString());
                     Args.Add(N.name + N.Guid.GetHashCode(), N.m_OutputObj);
             }
             // push args in right order fo the call 
@@ -1081,9 +1095,6 @@ public class BBMovepadLayerDescriptor
 
 
             MethodInfo[] MI = T.GetMethods();
-            // method filtered by customtag [need to add id to method since the index change and saved index get obsolete]
-            // the filtering function is on caller that allow to overide and create later different kind of nodes
-            //MethodInfo[] filterlist = NCaller.BuildFilteredMethodArray(-1, MI); // pass -1 to fail and not return shit
 
             // reassign index before doing popup action 
             for (int c = 0; c < MI.GetLength(0); c++)
@@ -1098,21 +1109,22 @@ public class BBMovepadLayerDescriptor
                     NCaller.ControllInvoke(MI[NCaller.Lookupmethodindex]);
                 else
                     NCaller.m_OutputObj = NCaller.controllarg;
+
             }
             else
             {
 
                 try
                 {
-                    NCaller.m_OutputObj = MI[NCaller.Lookupmethodindex].Invoke(classInstance, objlist.ToArray());
+                    NCaller.m_OutputObj = MI[NCaller.Lookupmethodindex].Invoke(NCaller.objtoinvoke, objlist.ToArray());
                 }
 
                 catch 
                 {
-
-                    NCaller.Windowpos.height += BBBLocks.Getlookatpoint(2, Time.realtimeSinceStartup, 4).x ;
                     if (NCaller.nodedebug)
+
                         BBDebugLog.singleWarning("method " + MI[NCaller.Lookupmethodindex].Name + "throw : error  on Controllnode " + NCaller.name + " set a default value for return ");
+                        
                     NCaller.m_OutputObj = T.Assembly.CreateInstance(MI[NCaller.Lookupmethodindex].ReturnParameter.GetType().FullName);  
                 }
 
@@ -1133,9 +1145,9 @@ public class BBMovepadLayerDescriptor
             // to inform that inoke comes from a game object and 
             // to not perform GUI node edition related stuff
             if (o != null)
-                BBUInodes.gamemode = true;
+                NodeGraph.gamemode = true;
             else
-                BBUInodes.gamemode = false;
+                NodeGraph.gamemode = false;
 
 
             if (thisgraph == null)
