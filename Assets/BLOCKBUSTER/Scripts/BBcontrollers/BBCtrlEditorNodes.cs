@@ -25,7 +25,12 @@ public class SlotInfo
     public int linkedto;
     public Rect R;
     public string TypeFullString;
-    SlotInfo()
+    public bool isoutputslot = false;
+    public bool isemiter = false;
+
+
+
+    public SlotInfo()
     {
     }
     public SlotInfo(int zid)
@@ -55,6 +60,10 @@ public class SlotInfo
 
 public class NodeGraph
 {
+
+    public static Dictionary<string, object> Emitters = new Dictionary<string, object>();    // EMITERS 
+
+
     public static bool gamemode = true;
     public static bool editoropen;
     public static BBControll EditedControll = new BBControll();
@@ -195,150 +204,112 @@ public class NodeGraph
         public static bool dirty;
         public static  string Nodeinfos = "";
 
-        public string nodedebuglog = "";
-        public String GraphPerf="not evalued yet"; // benchnmark node or part of it 
-        public static int perfiiterationnumber;
 
-        public static string hierarchy = "";
-        public static Rect ROOTPOS = new Rect(Screen.width, Screen.height / 2, 200, 200);
-        public static Rect RMIN = new Rect(Screen.width, Screen.height / 2, 100, 100);
-        public static Rect RMAX = new Rect(Screen.width, Screen.height / 2, 400, 400);
-        public static bool editordebugmode = false;
-        public static float debugfloat1;
+
+
+        public String GraphPerf="not evalued yet";                                              // benchnmark node or part of it 
+        public static int CheckPerfIterationNumber;                                             // number of loop to perfonm in invoke perf test 
+        public static string hierarchy = "";                                                    // subnode list 
+        public static Rect ROOTPOS = new Rect(Screen.width, Screen.height / 2, 200, 200);       // defaut pos for a new root window 
+        public static Rect RMIN = new Rect(Screen.width, Screen.height / 2, 100, 100);          // for popup ghost anim
+        public static Rect RMAX = new Rect(Screen.width, Screen.height / 2, 400, 400);          // for popup ghost anim
+        public static bool editordebugmode = false;                                             // global flag to switch editor in debug mode 
+        public static float debugfloat1;                                                        // few float values for interactive slider debug input
         public static float debugfloat2;
         public static float debugfloat3;
         public static float debugfloat4;
-        public static bool scrolllock = false;
-        public static bool unfiltered = false;
-        public static int slotYoffset = 0; // offset for slot creation ++ is size of node 
-        private static int WINDOWHEADOFFSET = 20; // ofset from head of windo bar 
-        public static bool editorfocused;
-        public static bool draglock = false;
-        static GUIStyle textonly = new GUIStyle();
-        static int BZ = (int)MVPBUTTONSIZE.MVP32;
-        Color linkcolor = Color.green;
-        // should be handled separately in serialization 
-
-        static Dictionary<string, object> ControllsArgs = new Dictionary<string, object>(); // for ui nodes 
-
-        //public KeyValuePair<string, object> ControllKVP = new KeyValuePair<string, object>(); // for ui nodes 
-
+        public static bool scrolllock = false;                                                  // lock the drag scroll ( debub )         
+        public static bool unfiltered = false;                                                  // define if methodinfo list is limited to bbvisible 
+        public static int slotYoffset = 0;                                                      // offset for slot creation ++ is size of node       
+        private static int WINDOWHEADOFFSET = 20;                                               // ofset from head of windo bar 
+        public static bool editorfocused;                                                       // is editor on focus 
+        static GUIStyle textonly = new GUIStyle();                                              // gui button style for slots
+        static int BZ = (int)MVPBUTTONSIZE.MVP32;                                               // movepad button size (could be found in layer desc as well)
+        Color linkcolor = Color.green;                                                          // color of the connecting line ( change according to test res )
+        static Dictionary<string, object> ControllsArgs = new Dictionary<string, object>();     // for ui nodes <unused> <todo> change single handle for dic
         [XmlIgnore]
-        public object objtoinvoke;
-        public object controllarg;
-        public string controllargname;
-        public bool needinvoke;
-
+        public object objtoinvoke;                                                              // store the GameObject that holding the BBctrl
+        public object controllarg;                                                              // single handle for controll arg to replace with dic
+        public string controllargname;                                                          // controll arg name for serialization
+        public bool needinvoke;                                                                 // some GUIcontroll need invoke some dont ( use directly the stored object..depending )
         [XmlIgnore] // every node should keep a handle on it s own graph 
-        public NodeGraph NodeGraphHandle;
-
-        
-
-
-
-
-
+        public NodeGraph NodeGraphHandle;                                                       // the Graph associated with this node 
         [XmlIgnore] // cannot serialize that 
-        public List<BBCtrlNode> SUBNodes = new List<BBCtrlNode>();
+        public List<BBCtrlNode> SUBNodes = new List<BBCtrlNode>();                              // handle on this node sub hierarchy
         // but keep a key list instead and rebuild on deserialize 
-        public List<int> SUBNodesKEY = new List<int>();
-        public int NodeId;
-        public int ParentID;
-
-
-
+        public List<int> SUBNodesKEY = new List<int>();                                         // nodes cannot be serialized just id to rebuild on load 
+        public int NodeId;                                                                      // the node id ( GUID hashtag )
+        public int ParentID;                                                                    // it s parent ID
         [XmlIgnore]
-        MethodInfo[] filteredmethods;
+        MethodInfo[] filteredmethods;                                                           // method list ( not allways filtered for perf optim )
         [XmlIgnore]
-        public Vector2 velocity = Vector2.zero;
-
-        public Rect Windowpos;
-        public string name; // name used for cosmetic purpose 
-        public string ClassnameFQ;
-        public string classnameshort; // store the short name to avoid a string manip on node invoke ( optim ) 
-        public string FunctionnameFQ;
-        public System.Guid Guid; // this is the real identifier 
-        public String ParamFQ;
-
-        public bool iscontroll = false;
-
-        public bool checknodevalid = true;
-        public bool nodewarning = false;
-
+        public Vector2 velocity = Vector2.zero;                                                 // for node physic ( FUN FACTOR )
+        public Rect Windowpos;                                                                  // position of this node 
+        public string name;                                                                     // for window title 
+        public string ClassnameFQ;                                                              // full qualified string of the class used for this function
+        public string classnameshort;                                                           // store the short name to avoid a string manip on node invoke ( optim ) 
+        public string FunctionnameFQ;                                                           // full qualified function name 
+        public System.Guid Guid;                                                                // this is the real identifier 
+        public String ParamFQ;                                                                  // full qualified name of the returned param     
+        public bool iscontroll = false;                                                         // guiNodes use a diferent flow 
+        public bool checknodevalid = true;                                                      // is this node ready to invoke 
+        public bool nodewarning = false;                                                        // warning turn links to grey but are not error just missmatch on obj selection for instance 
         [XmlIgnore]
-        public object m_OutputObj;
+        public object m_OutputObj;                                                              // object generated after invoke 
+        public int LookupClassindex;                                                            // for ui popup ddlist in donodewindow callback 
+        public string lookupclassname;                                                          // short name ??? may be duplicated @@@@
+        public int Lookupmethodindex;                                                           // for gui popup ddlist in  donodewindow callback        
+        public string LookupMethodName;                                                         // may be duplicated .. short name of the method @@@@
+        public List<ParameterInfo> Arglist = new List<ParameterInfo>();                         // list of args used by this function
+        public List<SlotInfo> slotspos = new List<SlotInfo>();                                  // slot info for args (input)
+        public SlotInfo ParentFeedSlotInfo;                                                     // return (output) info 
 
-        // important info that mainly where the system 
-        // get info on method and class to invoke 
-
-        //**********************************
-        public int LookupClassindex;           
-        public string lookupclassname;
-        // inform this field on deserializattion to store the original method name and find it again if the source has been changed
-        public string savedclassname; // graph comes from file and this is the place to store the saved class name         
-        public int Lookupmethodindex;          
-        public string LookupMethodName;
-        // inform this field on deserializattion to store the original method name and find it again if the source has been changed
-        public string savedMethodName;// graph comes from file and this is the place to store the saved method name 
-        //**********************************
-
-
-        //public List<string> ArglistFQ = new List<string>();
-
-        public List<ParameterInfo> Arglist = new List<ParameterInfo>();
-
-
-        public List<SlotInfo> slotspos = new List<SlotInfo>();
-        public SlotInfo ParentFeedSlotInfo;
-        MethodInfo selectedmethodinfo;
-        // this is the tag for Rootnode 
-        public bool isroot = false;
+        public static SlotInfo slotselectorhandle = new SlotInfo();                                   // slot handle for slotselector 
         
-
-        // fill up to keep function updated ( system not done yet ) 
-        List<string> classnamelist = new List<string>();
-        List<string> methodnamelist = new List<string>();
-
-
-        // serialization issue use fq name instead 
+        public SlotInfo outputslot;
+        MethodInfo selectedmethodinfo;                                                          // current method standing 
+        public bool isroot = false;                                                             // this node is a rootnode 
         [XmlIgnore]
-        private System.Type lookupclasstype;   
+        private System.Type lookupclasstype;                                                    // keep a handle on type <unused but should to save a lot of gettype>
         [XmlIgnore]
-        public System.Type ReturnTye;
+        public System.Type ReturnTye;                                                           // handle on returned param type 
         [XmlIgnore]
-        List<System.Type> NodeClassTypeArray = new List<Type>();
+        List<System.Type> NodeClassTypeArray = new List<Type>();                                // list of function type
         [XmlIgnore]
-        public static List<System.Type> MandatoryNodeClassTypeArray = new List<Type>();
+        public static List<System.Type> MandatoryNodeClassTypeArray = new List<Type>();         // user defined class to add on lookup
 
         
-        // member used for exec loop but not needed for serialization
+        
         // to replace with private and get/set
         [XmlIgnore]
-        public bool m_gotfocus = false;
+        public bool m_gotfocus = false;                                                         // if this node is focused or not 
         [XmlIgnore]
-        public Rect outputslotbutton;           
+        public Rect outputslotbutton;                                                           // output slot position
         [XmlIgnore]
-        public Rect RectCurrent = new Rect();    
+        public Rect RectCurrent = new Rect();                                                   // for popup creation ghost effect 
         [XmlIgnore]
-        public Rect RectDest = new Rect();      
+        public Rect RectDest = new Rect();                                                      // popup ghost effect 
         [XmlIgnore]
-        public Rect Rectorg = new Rect();       
+        public Rect Rectorg = new Rect();                                                       // same 
         [XmlIgnore]
-        public bool maximized;
+        public bool maximized;                                                                  // will be used to define the node content to display on size 
         [XmlIgnore]
-        public bool minimized;
+        public bool minimized;                                                                  // will be used to define the node content to display on size 
         [XmlIgnore]
-        public EditorTimer Timer = new EditorTimer();
+        public EditorTimer Timer = new EditorTimer();                                           // a timer for everything that move 
         [XmlIgnore]
-        public bool nodedebug;
+        public bool nodedebug;                                                                  // local node debug info
         [XmlIgnore]
-        public bool FlushNode = false;
+        public bool FlushNode = false;                                                          // if a node get corrupted it s removed from graph
 
+        [XmlIgnore]
+        public OUTSLOTTYPE outslottype;
 
-   
+        /// <summary>
+        /// destructor defaut 
+        /// </summary>
         ~BBCtrlNode()
         {
-            //Debug.Log("DESTRUCT  " + name+ " " + NodeId );
    
         }
         /// <summary>
@@ -366,35 +337,6 @@ public class NodeGraph
             Parent.SUBNodesKEY.Add(child.Guid.GetHashCode());
             Parent.SUBNodes.Add(child);
         }
-
-        /// <summary>
-        /// check if conversion is possible 
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="conversionType"></param>
-        /// <returns></returns>
-        public static bool CanConvert(Type Tin ,Type Tout)
-        {
-
-            try
-            {
-                object objin = (object)Activator.CreateInstance(Tin);
-                object objout = (object)Activator.CreateInstance(Tout);
-                object res = Convert.ChangeType(objin, objout.GetType());
-                if (res == null)
-                    return false;
-                else
-                    return true;
-            }
-            catch (Exception e)
-            {
-                Debug.Log(e.Message);
-                return false;
-            }
-
-        }
-
-
         /// <summary>
         /// same comment as nodeaddchild
         /// </summary>
@@ -428,22 +370,15 @@ public class NodeGraph
         /// </summary>
         public BBCtrlNode(Rect initpos, string newname, BBCtrlNode nodeParent = null)
         {
-
             Guid = System.Guid.NewGuid();
             NodeId = Guid.GetHashCode();
             Windowpos = initpos;
-            //ArgsList = new List<ParameterInfo>();
             name = newname;
-            //textonly.imagePosition = ImagePosition.;
-
-
-            Flood("Constructor called " + Guid.ToString());
             //EditorUtility.DisplayDialog("creator", "create ", "ok");
             if (nodeParent == null)
                 isroot = true;
             else
             {
-                //AddChildrenToGRAPH(Guid.GetHashCode(), this);
                 ParentID = nodeParent.NodeId;
                 NodeAddChild(NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID), this);
             }
@@ -453,8 +388,7 @@ public class NodeGraph
                 NodeGraph.EditedControll.thisgraph.nodekeys.Add(Guid.GetHashCode());
             }
             else
-                Debug.Log("global crap graph is null");
-
+                BBDebugLog.singleWarning("ERROR DURING NODE CREATION");
         }
         /// <summary>
         /// return this index in parent child buffer
@@ -482,11 +416,8 @@ public class NodeGraph
         /// <returns></returns>
         public bool CheckNodesconection ()
         {
-
             if (nodedebug)
                 nodedebug = true;
-
-
             if (isroot || iscontroll) // check is from children to parent root have no parent
                 return true;
             BBCtrlNode parent = NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID);
@@ -512,7 +443,6 @@ public class NodeGraph
             //ArgsList = new List<ParameterInfo>();
             name = "NEW NODE";
             textonly.imagePosition = ImagePosition.ImageOnly;
-            Flood("Constructor called " + Guid.ToString());
             //EditorUtility.DisplayDialog("creator", "create ", "ok");
             isroot = true;
         }
@@ -544,22 +474,8 @@ public class NodeGraph
                 Timer.Update(false);
                 float rt = Timer.timeremaining;
                 float max = Timer.s;
-
                 RectCurrent = BBDrawing.Rectinterpolate(parent, child, max - rt, max);
-                Flood(RectCurrent.ToString());
             }
-        }
-        /// <summary>
-        /// flood is useless logout .. for debug
-        /// </summary>
-        /// <param name="S"></param>
-        /// <param name="forced"></param>
-        public void Flood(string S, bool forced = false)
-        {
-            /* use another bool 
-            if (BBCtrlEditor.showdebuginfo || forced )
-                Debug.Log(S);
-             * */
         }
         /// <summary>
         /// check slot connection consistency 
@@ -586,8 +502,6 @@ public class NodeGraph
             // lets say that the first parameter of a controll node 
             // is the gui feed parameter managed by internal UI and not by external 
             // input 
-
-
             slotspos.Clear();
             for (int c = 0; c < Arglist.Count; c++)
             {
@@ -609,6 +523,8 @@ public class NodeGraph
                 slotspos.Add(S);
             }
         }
+
+        public bool outputslotselector = false;
 
         /// <summary>
         /// DO NODE EXTERNAL 
@@ -648,8 +564,45 @@ public class NodeGraph
 
 
 
-            if (GUI.Button(outputslotbutton, Textureloader.slot_ok, textonly))
-                return false;// node is deleted 
+            if (outputslotselector)
+            {
+                 GUIStyle s = new GUIStyle();
+                 outslottype =(OUTSLOTTYPE) EditorGUI.EnumPopup( outputslotbutton ,  outslottype,s);
+                 if (outputslot == null)
+                     outputslot = new SlotInfo();
+                switch (outslottype)
+                {
+                    case OUTSLOTTYPE.NORMAL:
+                        outputslot.isemiter = false;
+                        if (NodeGraph.Emitters.ContainsKey(Guid.GetHashCode().ToString() ))
+                            NodeGraph.Emitters.Remove(Guid.GetHashCode().ToString());
+                        break;
+                    case OUTSLOTTYPE.EMITTER:
+                        outputslot.isemiter = true;
+                        NodeGraph.Emitters.Add(Guid.GetHashCode().ToString(), m_OutputObj);
+                        break;
+                    case OUTSLOTTYPE.REMOVE:
+                        BBDrawing.mousedown = false;
+                        BBDrawing.mousedrag = false;
+                        return false;
+                }
+                BBDrawing.mousedown = false;
+                BBDrawing.mousedrag = false;
+                outslottype = default(OUTSLOTTYPE);
+            }
+
+
+            if (outputslot == null)
+                outputslot = new SlotInfo();
+
+            GUIContent sloticon = (outputslot.isemiter) ? Textureloader.slot_emitter : Textureloader.slot_ok;
+
+            if (GUI.Button(outputslotbutton, sloticon, textonly))
+            {
+                outputslotselector = true;
+                outslottype = default(OUTSLOTTYPE);
+            }
+
             /*
             if ( selectedmethodinfo != null )
                 GUI.Label(new Rect(outputslotbutton.x, outputslotbutton.y-40, 300, 80), selectedmethodinfo.ReturnType.ToString());
@@ -681,29 +634,24 @@ public class NodeGraph
                 // do not draw a UI parameter on controllnode
                 if (!slotspos[c].UIControllparamslot)
                 {
-                    /*
-                    if (Arglist[c].ParameterType != null)
-                    GUI.Label(new Rect(slotspos[c].R.x - 100, slotspos[c].R.y - 40, 300, 80), Arglist[c].ParameterType.ToString());
-                    */
+
 
                     if (GUI.Button(slotspos[c].R, Textureloader.slot_questionmark, textonly))
                     {
-
                         //float zoom = (isroot) ? 0.5f : 1.0f; // root childs smallers 
                         Rect NR = GetNewPosFromThisNode(slotYoffset); //new Rect(10, 50, 80, 80);
                         ParameterInfo[] p = selectedmethodinfo.GetParameters();
                         BBCtrlNode Child = new BBCtrlNode(NR, p[c].ParameterType.Name + " " + p[c].Name, this);
                         Child.ParentFeedSlotInfo = new SlotInfo(c); // but i put on recently created Slot classs
                         Child.ParentFeedSlotInfo.TypeFullString = Arglist[c].ParameterType.AssemblyQualifiedName; // Parent input type 
-
-                        
-
-
                         Child.ParentFeedSlotInfo.index = c; // the parent slot index 
                         // for serialization 
                         Child.RectDest.Set(NR.xMin, NR.yMin, NR.width, NR.height); // for popup anim
                         Child.Rectorg = slotspos[c].R;    // for popup anim 
                         // launch the node popup anim 
+                        Child.outputslot = new SlotInfo();
+                        Child.outputslot.R=new Rect(0,0,16,16);
+                        Child.outputslot.isoutputslot = true;
                         Child.Timer.StartCountdown(0.5f);
                         slotspos[c].linkedto = Child.Guid.GetHashCode();
                         dirty = true;
@@ -712,7 +660,7 @@ public class NodeGraph
                 }
             }
             Windowpos = GUI.Window(Guid.GetHashCode(), Windowpos, DoNodeWindow, name);
-            if (!isroot)
+            if (!isroot )
             {
                 // acting on node parent 
                 BBCtrlNode P =  NodeGraphHandle.GetnodeFromID(ParentID);
@@ -721,7 +669,6 @@ public class NodeGraph
                     BBDebugLog.singleWarning("node :" + name +" have no parent >> Trash ");
                     return false; // a child without parent is not allowed >> flush 
                 }
-
                 if (P.slotspos.Count > ParentFeedSlotInfo.index)
                 {
                     if (!CheckNodesconection() || !checknodevalid)
@@ -739,13 +686,13 @@ public class NodeGraph
 
                     Vector2 A = outputslotbutton.center;
                     Vector2 B = P.slotspos[ParentFeedSlotInfo.index].R.center;
+                    if (! outputslot.isemiter )
+                        BBDrawing.curveFromTo(outputslotbutton.center, NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R.center, linkcolor, Windowpos.width*1.5f , out velocity);
+ 
 
-                    BBDrawing.curveFromTo(outputslotbutton.center, NodeGraph.EditedControll.thisgraph.GetnodeFromID(ParentID).slotspos[ParentFeedSlotInfo.index].R.center, linkcolor, Windowpos.width*1.5f , out velocity);
                 }
-                
             }
             return true;
-
         }
 
      
@@ -847,6 +794,11 @@ public class NodeGraph
         /// <param name="id"></param>
         /// 
 
+
+
+
+
+
         public virtual void DoNodeWindow(int id)
         {
             // clear debug log
@@ -859,9 +811,6 @@ public class NodeGraph
             for (int c = 0; c < localclassarray.GetLength(0); c++)
                 if (lookupclassname == localclassarray[c])
                     LookupClassindex = c;
-            
-            
-            
             // user action to select which one to inspect 
             LookupClassindex = EditorGUILayout.Popup(LookupClassindex, localclassarray);
             if (LookupClassindex >= localclassarray.GetLength(0))
@@ -872,31 +821,19 @@ public class NodeGraph
                 return;
             }
             lookupclassname = localclassarray[LookupClassindex];
-
-
-
             // huge optim .. avoid to parse [customatribute if not necessary]
             // just the node under the window get a filtered list 
-
             BBDrawing.CheckInput();
-
             if (BBDrawing.mousedown && !BBDrawing.mousedrag)
                 filteredmethods = BuildFilteredMethodArray(LookupClassindex);
             else
                 if (NodeClassTypeArray.Count > LookupClassindex)
                     filteredmethods = NodeClassTypeArray[LookupClassindex].GetMethods();
                 else
-                {
                     nodewarning = true;
-                }
-
-            
-
-
             List<string> MethodnameList = new List<string>();
             foreach (MethodInfo mi in filteredmethods)
                 MethodnameList.Add(mi.Name);
-
             // reassign index before doing popup action 
             for (int c = 0; c < filteredmethods.GetLength(0); c++)
                 if (filteredmethods[c].Name == LookupMethodName)
@@ -906,7 +843,6 @@ public class NodeGraph
                     break;
                 }
             GUILayout.Label(Lookupmethodindex.ToString());
-
             Lookupmethodindex = EditorGUILayout.Popup(Lookupmethodindex, MethodnameList.ToArray());
             if (filteredmethods.Length <= Lookupmethodindex || Lookupmethodindex < 0)
             {
@@ -934,12 +870,7 @@ public class NodeGraph
             }
             ClassnameFQ = NodeClassTypeArray[LookupClassindex].AssemblyQualifiedName;
             classnameshort = NodeClassTypeArray[LookupClassindex].AssemblyQualifiedName.Split(char.Parse(","))[0];
-
-
-            //--------------------------------------- GUI ELEMENT 
-
             NodeGraph.EditedControll.thisgraph.GraphOK = true;
-
             CheckfullGraph(this, out NodeGraph.EditedControll.thisgraph.GraphOK);
             if (NodeGraph.EditedControll.thisgraph.GraphOK && checknodevalid && !iscontroll)
                 if (GUILayout.Button("INVOKE"))
@@ -949,11 +880,11 @@ public class NodeGraph
                         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                         watch.Start();
                         // the code that you want to measure comes here
-                        for (int c = 0; c < perfiiterationnumber; c++)
+                        for (int c = 0; c < CheckPerfIterationNumber; c++)
                             Nodeinvoke(0);
                         watch.Stop();
                         TimeSpan ts = watch.Elapsed;
-                        GraphPerf = String.Format("single: {0}\n{1} {2:00}:{3:00}:{4:00}.{5:00}", perfiiterationnumber, (float)ts.TotalMilliseconds / 100,
+                        GraphPerf = String.Format("single: {0}\n{1} {2:00}:{3:00}:{4:00}.{5:00}", CheckPerfIterationNumber, (float)ts.TotalMilliseconds / 100,
                                   ts.Hours, ts.Minutes, ts.Seconds,
                                    ts.Milliseconds / 10);
                         Debug.Log(GraphPerf);
@@ -977,7 +908,7 @@ public class NodeGraph
             {
                 //GUILayout.Label(subnodesname);
                 GUILayout.Label(Nodeinfos);
-                perfiiterationnumber = EditorGUILayout.IntSlider(perfiiterationnumber, 1, 1000);
+                CheckPerfIterationNumber = EditorGUILayout.IntSlider(CheckPerfIterationNumber, 1, 1000);
                 GUILayout.Label(GraphPerf);
             }
 
@@ -1081,11 +1012,11 @@ public class NodeGraph
                         System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
                         watch.Start();
                         // the code that you want to measure comes here
-                        for (int c = 0; c < perfiiterationnumber; c++)
+                        for (int c = 0; c < CheckPerfIterationNumber; c++)
                             Nodeinvoke(0);
                         watch.Stop();
                         TimeSpan ts = watch.Elapsed;
-                        GraphPerf = String.Format("single: {0}\n{1} {2:00}:{3:00}:{4:00}.{5:00}", perfiiterationnumber, (float)ts.TotalMilliseconds / 100,
+                        GraphPerf = String.Format("single: {0}\n{1} {2:00}:{3:00}:{4:00}.{5:00}", CheckPerfIterationNumber, (float)ts.TotalMilliseconds / 100,
                                   ts.Hours, ts.Minutes, ts.Seconds,
                                    ts.Milliseconds / 10);
                         Debug.Log(GraphPerf);
@@ -1109,7 +1040,7 @@ public class NodeGraph
             {
                 //GUILayout.Label(subnodesname);
                 GUILayout.Label(Nodeinfos);
-                perfiiterationnumber = EditorGUILayout.IntSlider(perfiiterationnumber , 1, 1000);
+                CheckPerfIterationNumber = EditorGUILayout.IntSlider(CheckPerfIterationNumber , 1, 1000);
                 GUILayout.Label(GraphPerf  );
             }
                 

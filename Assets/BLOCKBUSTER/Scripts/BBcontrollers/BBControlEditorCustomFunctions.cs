@@ -92,7 +92,7 @@ public class BBUInodes
     [BBCtrlVisible]
     public TXTINDEX EnumpopupNode (TXTINDEX t )
     {
-        t = (TXTINDEX)EditorGUILayout.EnumPopup( t); ;
+        t = (TXTINDEX)EditorGUILayout.EnumPopup( t); 
         return t;
     }
 

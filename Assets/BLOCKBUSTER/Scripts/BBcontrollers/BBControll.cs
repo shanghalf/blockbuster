@@ -62,6 +62,19 @@ public enum TXTINDEX
     TARGET = 3,
     CLEAR =4
 }
+
+[System.Serializable]
+public enum OUTSLOTTYPE
+{
+    NORMAL = 1,
+    EMITTER = 2,
+    REMOVE = 3
+}
+
+
+
+
+
 /// <summary>
 /// size of grids and button allowed 
 /// to add some control on exec level 

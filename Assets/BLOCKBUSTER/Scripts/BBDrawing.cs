@@ -24,7 +24,11 @@ public static class Textureloader
     public static Texture2D slot_main_output_txt = Resources.Load("slot_main_output", typeof(Texture2D)) as Texture2D;
     public static Texture2D slot_ok_txt = Resources.Load("slot_ok", typeof(Texture2D)) as Texture2D;
     public static Texture2D slot_error_txt = Resources.Load("slot_error", typeof(Texture2D)) as Texture2D;
+    public static Texture2D slot_emitter_txt = Resources.Load("slot_emiter", typeof(Texture2D)) as Texture2D;
     public static Texture2D slot_questionmark_txt = Resources.Load("slot_questionmark", typeof(Texture2D)) as Texture2D;
+
+
+    public static GUIContent slot_emitter = new GUIContent(slot_emitter_txt);
     public static GUIContent slot_main_output = new GUIContent(slot_main_output_txt);
     public static GUIContent slot_ok = new GUIContent(slot_ok_txt);
     public static GUIContent slot_error = new GUIContent(slot_error_txt);
