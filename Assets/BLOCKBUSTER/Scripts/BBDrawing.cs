@@ -49,8 +49,12 @@ public static class BBDrawing
     public static int leftmouseclickeventnumber = 0;
     public static bool isfocused;
     public static bool mousedrag;
+    public static Vector2 MDelta;
     public static bool mousemove;
     public static bool mouseup;
+    public static bool popupmenuopen=false;
+
+
     public static bool mousedown;
     public static Vector2 lastclicdown;
     public static Vector2 lastclicdup;
@@ -67,7 +71,9 @@ public static class BBDrawing
     public static  float zoomdir;
     public static Vector2 lastmousepos;
 
-  
+
+
+
 
 
 
@@ -79,7 +85,8 @@ public static class BBDrawing
     {
         Zoomtimer.Update(false);
         string focusedwindow;
-        if (EditorWindow.mouseOverWindow != null)
+        // 
+        if (EditorWindow.mouseOverWindow != null && EditorWindow.mouseOverWindow.name !=null)
         {
             focusedwindow = EditorWindow.mouseOverWindow.name;
             if (focusedwindow == "BBCtrlEditor")
@@ -113,6 +120,7 @@ public static class BBDrawing
                 break;
             case EventType.MouseDrag:
                 mousedrag = true;
+                MDelta = Event.current.delta;
                 break;
             case EventType.MouseUp:
                 mouseclic = false;
@@ -140,8 +148,10 @@ public static class BBDrawing
 
 
 
-    public static Vector2[] ZoomNodeGraph ( Vector2[] posarray , float scale )
+    public static void ZoomNodeGraph ( )
     {
+
+
         List<BBCtrlNode> LBBCN = new List<BBCtrlNode>();
         foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)
             LBBCN.Add(n);
@@ -153,17 +163,13 @@ public static class BBDrawing
         {
             if (n.Windowpos.position.x < xmin)
                 xmin = n.Windowpos.position.x;
-
             if (n.Windowpos.position.x > xmax  )
                 xmax= n.Windowpos.position.x;
-
             if (n.Windowpos.position.y < ymin)
                 ymin = n.Windowpos.position.y;
-                    
             if (n.Windowpos.position.y > ymax )
                 ymax = n.Windowpos.position.y;
         }
-
         Rect ARV = new Rect(xmin, ymin,xmax-xmin, ymax-ymin);
         float delta = BBDrawing.Zoomtimer.timeremaining * BBDrawing.zoomdir;
         /*
@@ -172,19 +178,20 @@ public static class BBDrawing
         ARV.x += (-delta) / 2;
         ARV.y += (-delta) / 2;
         */
-        bool nodezoom = false;
+        bool nodezoom = true; // desactivate the fullgraphzoom for now
         foreach (BBCtrlNode node in LBBCN)
         {
             if ( BBCtrlNode.RMAX.width - node.Windowpos.width < BBCtrlNode.RMAX.width *0.1 )
                 node.maximized = true;
             else
                 node.maximized = false;
+
             if (node.Windowpos.width-BBCtrlNode.RMIN.width < BBCtrlNode.RMIN.width * 0.1)
                 node.minimized = true;
             else
                 node.minimized = false;
             if (Math.Abs( delta ) > 0.01f)
-                if (GetRectFocus(node.Windowpos))
+                if (GetRectFocus(node.Windowpos , out node.flyover))
                 {
                     nodezoom = true;
                     node.Windowpos.width += (-delta);
@@ -205,10 +212,10 @@ public static class BBDrawing
                 //n.Windowpos.width += (-delta);
                 n.Windowpos.height = n.Windowpos.width;
             }
-        if (BBCtrlNode.scrolllock)
+        if (BBCtrlNode.showgrid)
         {
-            GUI.Box(ARV, "");
-            GUI.Box(new Rect(ARV.center.x, ARV.center.y, 20, 20), "");
+            //GUI.Box(ARV, "");
+            //GUI.Box(new Rect(ARV.center.x, ARV.center.y, 20, 20), "");
 
         }
         // limitation on nodes 
@@ -219,17 +226,31 @@ public static class BBDrawing
             if (node.Windowpos.width + (-delta) < BBCtrlNode.RMIN.width)
                 node.Windowpos.width = BBCtrlNode.RMIN.width;
         }
-        return null;
+        
     }
 
+    /// <summary>
+    ///  mobe node and sub
+    /// </summary>
+    /// <param name="N"></param>
+    /// <param name="delta"></param>
+    public static void movesubbranchnode(BBCtrlNode N, Vector2 delta)
+    {
+        // to prevent the clicked node from moving twice
+        float factor = (griddraglock) ? 0.5f : 1f;
+        foreach (BBCtrlNode bbc in N.SUBNodes)
+            movesubbranchnode(bbc, delta);
+        N.Windowpos.position += delta * factor;
+    }
 
     /// <summary>
     ///  node editor 2d space managment and grid 
     /// </summary>
     /// <param name="SCRSZ"></param>
     /// <param name="NSZ"></param>
-    public static void  BBDoGridLayout(Rect SCRSZ, Vector2 NSZ)
+    public static void  BBDoGridLayout(Rect SCRSZ, int NSZ)
     {
+        
         // check th window focused 
         string focusedwindow ;
         if (EditorWindow.mouseOverWindow != null)
@@ -238,58 +259,62 @@ public static class BBDrawing
             if (focusedwindow != "BBCtrlEditor")
                 return;
         }
-        mousepos = Event.current.mousePosition;
-        bool nofocus = true;
         foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)// want to knoe if node is clicked 
-        if (BBDrawing.GetRectFocus(n.Windowpos , true))
+        if (BBDrawing.GetRectFocus(n.Windowpos ,out n.flyover, true))
         {
             griddraglock = true;
-            nofocus = false;
             break;
         }
         // is grid focused and no node under the mouse clic
-        if (mousedrag && nofocus && !griddraglock  )
+        
+        if (mousedrag && !griddraglock  )
         {
-            // scroll the grid and nodes follow 
             offst = mousepos - lastclicdown;
             offstcunul += offst;
             lastclicdown = mousepos;
+
+            //NodeGraph.EditedControll.thisgraph.ROOTNODE.Windowpos.position += offst;
+
+            movesubbranchnode(NodeGraph.EditedControll.thisgraph.ROOTNODE, offst);
+            if (NodeGraph.EditedControll.thisgraph.EMITERROOTNODE != null)
+                movesubbranchnode(NodeGraph.EditedControll.thisgraph.EMITERROOTNODE, offst);
             
-            NodeGraph.EditedControll.thisgraph.ROOTNODE.Windowpos.position += offst;
+
+            /*
             foreach (BBCtrlNode n in NodeGraph.EditedControll.thisgraph.Nodes)
             {
-                if (! n.isroot) // crappy patch ( some conf get the root listed in nodes some dont to fix ) 
-                    n.Windowpos.position += offst;
-            }
+                if (!n.isroot  ) // crappy patch ( some conf get the root listed in nodes some dont to fix ) 
+                     n.Windowpos.position += offst * UnityEngine.Random.Range(1,1.2f);
+            }*/
+
+
         }
-        // draw the grid
-        if (BBCtrlNode.scrolllock)
+        if (BBCtrlNode.showgrid)
         {
             Rect D = new Rect();
-            for (int x = (int)offstcunul.x % (int)NSZ.x; x < SCRSZ.width; x += (int)NSZ.x)
+            for (int x = (int)offstcunul.x % NSZ; x < SCRSZ.width; x +=NSZ)
             {
                 D.x = x + offst.x;
                 D.y = SCRSZ.y;
                 D.width = 2;
                 D.height = SCRSZ.height;
-                if (BBCtrlNode.scrolllock)
+                if (BBCtrlNode.showgrid)
                     GUI.Box(D, "");
             }
-            for (int y = (int)offstcunul.y % (int)NSZ.y; y < SCRSZ.height; y += (int)NSZ.y)
+            for (int y = (int)offstcunul.y % NSZ; y < SCRSZ.height; y += NSZ)
             {
                 D.x = SCRSZ.x;
                 D.y = y + offst.y;
                 D.width = SCRSZ.width;
                 D.height = 2;
-                if (BBCtrlNode.scrolllock)
+                if (BBCtrlNode.showgrid)
                     GUI.Box(D, "");
             }
         }
-
-        ZoomNodeGraph(null, 0);
-
+        ZoomNodeGraph();
 
     }
+
     /// <summary>
     /// check if a rect is under the mouse cursor
     /// with an option to return true on mouse clic 
@@ -297,18 +322,25 @@ public static class BBDrawing
     /// <param name="R"></param>
     /// <param name="checkclick"></param>
     /// <returns></returns>
-    public static bool GetRectFocus(Rect R , bool checkclick=false )
+    public static bool GetRectFocus(Rect R , out bool flyover ,bool checkclick=false)
     {
+        // on clic event only no check during a drag 
+        if (mousedrag)
+        {
+            flyover = false ;
+            return false ;
+        }
         Rect MouseCursor = new Rect();
         BBDrawing.mousepos = Event.current.mousePosition;
-        BBDrawing.CheckInput();
+        //BBDrawing.CheckInput();
         MouseCursor.Set(BBDrawing.mousepos.x, BBDrawing.mousepos.y, 1, 1);
         if (MouseCursor.Overlaps(R))
         {
+            flyover = true;
             if (!checkclick)
             {
-                if (BBCtrlNode.scrolllock)
-                    GUI.Box(MouseCursor, ""); // for debug
+                // if (BBCtrlNode.showgrid)
+                //    GUI.Box(MouseCursor, ""); // for debug
                 return true;
             }
             if (mouseclic)
@@ -317,7 +349,10 @@ public static class BBDrawing
                 return false;
         }
         else
+        {
+            flyover = false;
             return false;
+        }
     }
     /// <summary>
     /// THE CRAPPY CURVE DRAWING 
@@ -336,6 +371,7 @@ public static class BBDrawing
     {
         float u = 1 / (f);
         float dist = 1 - (u * (t));
+
         if (speed <= 0) speed = 0;
         looptimer.s = 1.0f; // feed the timer 
         looptimer.Update(true);
@@ -348,51 +384,77 @@ public static class BBDrawing
 
 
 
-    public static void curveFromTo(Vector2 from, Vector2 to, Color color, float W, out Vector2 V)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="P"></param>
+    /// <param name="NDS"></param>
+    /// <param name="PP"></param>
+    public static void Calculatenodepos(BBCtrlNode P, List<BBCtrlNode> NDS, Vector2 PP)
     {
-        //calcuate handle tension on box distance and output velocity for nodes 
-        // with arbitrary W = node children width 
 
+
+        List<BBCtrlNode> sortedlist = new List<BBCtrlNode>();
+        // reorganise in ParameterInfo order 
+        for  (int c= 0 ; c < P.Arglist.Count ; c++ )
+        {
+            for (int i = 0; i < NDS.Count; i++)
+                if (P.Arglist[c].Name != null)
+                    if (NDS[i].name.Contains( P.Arglist[c].Name) )
+                        sortedlist.Add(NDS[i]);
+        }
+        float cumul = 0;
+        float S = 1.2f;
+        for (int c = 0; c < sortedlist.Count; c++)
+        {
+            float W = sortedlist[c].Windowpos.width;
+            cumul += W;
+            Vector2 V = new Vector2(PP.x - W , ( PP.y - W*S) + cumul );
+            sortedlist[c].BestPos = V;
+                    if (BBCtrlNode.showgrid)
+                        GUI.Box(new Rect(V.x, V.y, 120, 20), sortedlist[c].name);
+        }
+    }
+
+
+    public static float debugfloat1;
+ 
+
+    public static void curveFromTo( BBCtrlNode node ,Vector2 from, Vector2 to, Color color, float W, out Vector2 V)
+    {
+        Vector2 DDir;
+
+        // to prevent wrong pos on node that having errors on parameters (temp fix )
         Vector2 Dir = (from - to).normalized;
+            DDir = (from - node.BestPos).normalized;
+
+
         //float ease = 3; // ease prevent node touch 
         float D = Vector2.Distance(from, to); // distance 
-
-        float t = 1 - (D / W  );
+        float D2 = Vector2.Distance(from, node.BestPos); // distance 
+        float t = 1 - (D / W * 1.2f);
+        float t2 = 1 - (D2 );
         t =  (t<0) ? 0 : t  ;
-
-        
+        t2 = (t2 < 0) ? 0 : t2;
         Vector2 HandleA = new Vector2(from.x + Mathf.Abs(to.x - from.x ) *t, from.y + W * t  );
         Vector2 HandleB = new Vector2( to.x - Mathf.Abs(to.x - from.x ) *t , to.y + W *t);
-
-        float ampl = 50; // *3 is an arbitrary speed based on amplitude 
+        float ampl = 50 ; // *3 is an arbitrary speed based on amplitude 
         HandleA.y += Flex(new Vector2(0, HandleA.y), ampl * t, t, ampl*3).y;
         HandleB.x += Flex(new Vector2(0, HandleB.x), ampl * t, t, ampl*3).x;
-
         // a simple velocity pushed on node calling 
-
-        if (BBCtrlNode.unfiltered)
-            V = Dir * (1* (1 / W *D )  - t);
+        if (BBCtrlNode.autopos && !node.pined)
+            V = DDir * (1 * (1 / W * D2) - t2);
         else
             V = Vector2.zero;
-
-
 
         Handles.DrawBezier(new Vector2(from.x+8, from.y),
                             new Vector2(to.x-8, to.y ), 
                             HandleA,
-
                             HandleB,
-
-
                             color, null, 3);
-        /*
-        // finaly draw the spline 
-        BBDrawing.bezierLine
-            (   new Vector2(from.center.x, from.center.y - 8 ), //(from.x + from.width, from.y + from.height / 2),
-                HandleA,
-                new Vector2(to.x, to.y + (to.height/2) -8) ,
-                HandleB, 
-                color, 2, true, 1);*/
+
+        
+
 
     }
 
@@ -495,10 +557,10 @@ public static class BBDrawing
     /// <param name="segments"></param>
     public static void bezierLine(Vector2 start, Vector2 startTangent, Vector2 end, Vector2 endTangent, Color color, float width, bool antiAlias, int segments)
     {
-        if (BBCtrlNode.scrolllock)
+        if (BBCtrlNode.showgrid)
         {
-            GUI.Box(new Rect(startTangent.x, startTangent.y, 5, 5), "");
-            GUI.Box(new Rect(endTangent.x, endTangent.y, 5, 5), "");
+           // GUI.Box(new Rect(startTangent.x, startTangent.y, 5, 5), "");
+           // GUI.Box(new Rect(endTangent.x, endTangent.y, 5, 5), "");
         }
 
         Vector2 lastV = cubeBezier(start, startTangent, end, endTangent, 0);

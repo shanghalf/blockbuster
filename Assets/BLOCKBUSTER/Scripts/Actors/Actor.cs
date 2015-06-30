@@ -121,21 +121,21 @@ public class Actor : MonoBehaviour
     }
 
 
-    private bool b_front_x;
+     bool b_front_x;
     private static Vector3 _left = new Vector3(-1.0f, 0.0f, 0.0f);
     private static Vector3 _front = new Vector3(0.0f, 0.0f, 1.0f);
     private static Vector3 _right = new Vector3(1.0f, 0.0f, 0.0f);
     private static Vector3 _back = new Vector3(0.0f, 0.0f, -1.0f);
 
 
-    [BBCtrlVisible] 
-    public Vector3 left() { return _left; }
     [BBCtrlVisible]
-    public Vector3 front() { return _front; }
+    public Vector3 left() { GetDir(); return _left; }
     [BBCtrlVisible]
-    public Vector3 right() { return _right; }
+    public Vector3 front() { GetDir(); return _front; }
     [BBCtrlVisible]
-    public Vector3 back() { return _back; }
+    public Vector3 right() { GetDir(); return _right; }
+    [BBCtrlVisible]
+    public Vector3 back() { GetDir(); return _back; }
     [BBCtrlVisible]
     public Vector3 up() { return Vector3.up; }
     [BBCtrlVisible]
@@ -213,9 +213,7 @@ public class Actor : MonoBehaviour
         float AB = Vector3.Angle(flatcamvector, Vector3.back);
         float AL = Vector3.Angle(flatcamvector, Vector3.left);
         float AR = Vector3.Angle(flatcamvector, Vector3.right);
-
         float[] anglearray = new float[] { AF, AB, AL, AR };
-
         System.Array.Sort(anglearray);
         if (AF == anglearray[0])
         {
@@ -278,8 +276,9 @@ public class Actor : MonoBehaviour
     {
 
         if (camspace)
+        {
             GetDir();
-
+        }
         //************************************************************************************************
         // perform block manipulation in move block section of the tool 
         // there s 2 diferent way to move a block during the runtime ( dynamicaly ) have to pay atention to 
@@ -361,18 +360,22 @@ public class Actor : MonoBehaviour
     }
 
 
-
+    /*
     public virtual void OnDrawGizmosSelected()
     {
     }
+     * */
 	// Use this for initialization
 	public virtual void Start () 
     {
 	}
 	// Update is called once per frame
+    /*
 	public virtual void Update () 
     {
 	}
+    */
+    /*
     // acessor for serialized properties 
     public virtual BaseActorProperties GetActorprops()
     {
@@ -382,6 +385,6 @@ public class Actor : MonoBehaviour
     {
         Actorprops = A;
     }
-
+    */
 
 }

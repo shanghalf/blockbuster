@@ -100,6 +100,7 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </SlotInfo>
       <SlotInfo>
         <paramname>dir</paramname>
@@ -139,6 +140,7 @@
         <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </SlotInfo>
       <SlotInfo>
         <paramname>moveallpath</paramname>
@@ -178,6 +180,7 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </SlotInfo>
       <SlotInfo>
         <paramname>camspace</paramname>
@@ -217,8 +220,11 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </SlotInfo>
     </slotspos>
+    <inspectedinputslotindex>0</inspectedinputslotindex>
+    <selectedemiter>0</selectedemiter>
     <outputslot>
       <UIControllparamslot>false</UIControllparamslot>
       <index>0</index>
@@ -255,9 +261,9 @@
       </R>
       <isoutputslot>false</isoutputslot>
       <isemiter>false</isemiter>
+      <isreceiver>false</isreceiver>
     </outputslot>
     <isroot>true</isroot>
-    <outputslotselector>false</outputslotselector>
   </ROOTNODE>
   <Nodes>
     <BBCtrlNode>
@@ -305,7 +311,7 @@
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
       <nodewarning>false</nodewarning>
-      <LookupClassindex>4</LookupClassindex>
+      <LookupClassindex>5</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
@@ -351,6 +357,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
       <ParentFeedSlotInfo>
@@ -390,7 +397,10 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -427,9 +437,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -476,7 +486,7 @@
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
       <nodewarning>false</nodewarning>
-      <LookupClassindex>4</LookupClassindex>
+      <LookupClassindex>5</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
@@ -522,6 +532,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
       <ParentFeedSlotInfo>
@@ -561,7 +572,10 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -598,9 +612,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -647,7 +661,7 @@
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
       <nodewarning>false</nodewarning>
-      <LookupClassindex>4</LookupClassindex>
+      <LookupClassindex>5</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
@@ -693,6 +707,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
       <ParentFeedSlotInfo>
@@ -732,7 +747,10 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -769,9 +787,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -780,23 +798,23 @@
       <NodeId>-1848208643</NodeId>
       <ParentID>-70290930</ParentID>
       <Windowpos>
-        <x>232.195313</x>
-        <y>209.929047</y>
+        <x>62.1953125</x>
+        <y>98.92905</y>
         <position>
-          <x>232.195313</x>
-          <y>209.929047</y>
+          <x>62.1953125</x>
+          <y>98.92905</y>
         </position>
         <center>
-          <x>297.34375</x>
-          <y>275.077484</y>
+          <x>127.34375</x>
+          <y>164.077484</y>
         </center>
         <min>
-          <x>232.195313</x>
-          <y>209.929047</y>
+          <x>62.1953125</x>
+          <y>98.92905</y>
         </min>
         <max>
-          <x>362.4922</x>
-          <y>340.225922</y>
+          <x>192.492188</x>
+          <y>229.225922</y>
         </max>
         <width>130.296875</width>
         <height>130.296875</height>
@@ -804,10 +822,10 @@
           <x>130.296875</x>
           <y>130.296875</y>
         </size>
-        <xMin>232.195313</xMin>
-        <yMin>209.929047</yMin>
-        <xMax>362.4922</xMax>
-        <yMax>340.225922</yMax>
+        <xMin>62.1953125</xMin>
+        <yMin>98.92905</yMin>
+        <xMax>192.492188</xMax>
+        <yMax>229.225922</yMax>
       </Windowpos>
       <name>Vector3 Axis</name>
       <ClassnameFQ>Actor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</ClassnameFQ>
@@ -860,7 +878,10 @@
         <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -897,9 +918,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -946,7 +967,7 @@
       <iscontroll>true</iscontroll>
       <checknodevalid>true</checknodevalid>
       <nodewarning>false</nodewarning>
-      <LookupClassindex>4</LookupClassindex>
+      <LookupClassindex>5</LookupClassindex>
       <lookupclassname>BBUInodes</lookupclassname>
       <Lookupmethodindex>6</Lookupmethodindex>
       <LookupMethodName>ToggleNode</LookupMethodName>
@@ -992,6 +1013,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
       <ParentFeedSlotInfo>
@@ -1031,7 +1053,10 @@
         <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -1068,9 +1093,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -1166,6 +1191,7 @@
           <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
         <SlotInfo>
           <paramname>camspace</paramname>
@@ -1205,6 +1231,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
       <ParentFeedSlotInfo>
@@ -1244,7 +1271,10 @@
         <TypeFullString>System.Single, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -1281,9 +1311,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -1372,7 +1402,10 @@
         <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -1409,9 +1442,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -1460,7 +1493,7 @@
       <iscontroll>false</iscontroll>
       <checknodevalid>true</checknodevalid>
       <nodewarning>false</nodewarning>
-      <LookupClassindex>7</LookupClassindex>
+      <LookupClassindex>8</LookupClassindex>
       <lookupclassname>BBMathnodes</lookupclassname>
       <Lookupmethodindex>3</Lookupmethodindex>
       <LookupMethodName>Multiplyvector</LookupMethodName>
@@ -1507,6 +1540,7 @@
           <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
         <SlotInfo>
           <paramname>by</paramname>
@@ -1546,6 +1580,7 @@
           <TypeFullString>System.Single, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
       <ParentFeedSlotInfo>
@@ -1585,7 +1620,10 @@
         <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </ParentFeedSlotInfo>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -1622,9 +1660,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>false</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
     <BBCtrlNode>
       <GraphPerf>not evalued yet</GraphPerf>
@@ -1724,6 +1762,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
         <SlotInfo>
           <paramname>dir</paramname>
@@ -1763,6 +1802,7 @@
           <TypeFullString>UnityEngine.Vector3, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
         <SlotInfo>
           <paramname>moveallpath</paramname>
@@ -1802,6 +1842,7 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
         <SlotInfo>
           <paramname>camspace</paramname>
@@ -1841,8 +1882,11 @@
           <TypeFullString>System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</TypeFullString>
           <isoutputslot>false</isoutputslot>
           <isemiter>false</isemiter>
+          <isreceiver>false</isreceiver>
         </SlotInfo>
       </slotspos>
+      <inspectedinputslotindex>0</inspectedinputslotindex>
+      <selectedemiter>0</selectedemiter>
       <outputslot>
         <UIControllparamslot>false</UIControllparamslot>
         <index>0</index>
@@ -1879,9 +1923,9 @@
         </R>
         <isoutputslot>false</isoutputslot>
         <isemiter>false</isemiter>
+        <isreceiver>false</isreceiver>
       </outputslot>
       <isroot>true</isroot>
-      <outputslotselector>false</outputslotselector>
     </BBCtrlNode>
   </Nodes>
   <nodekeys>

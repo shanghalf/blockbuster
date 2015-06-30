@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/*
 [System.Serializable]
 public abstract class BBMovepadControll  
 {
@@ -22,7 +22,6 @@ public abstract class BBMovepadControll
         nodegraphpath = BBDir.Get(BBpath.SETING) + guid.GetHashCode() + ".xml";
         if (!System.IO.File.Exists(nodegraphpath))
         {
-            BBCtrlEditor.MovepadButtonEdited = this;
             BBCtrlEditor.init();
         }
 
@@ -43,4 +42,4 @@ public class BButton : BBMovepadControll
        // DoBlockMove(false, (front * (ofset = (b_fixedstepedit) ? stepvalue : (b_front_X) ? BlockSize.x : BlockSize.z)));
     }
 
-}
+}*/

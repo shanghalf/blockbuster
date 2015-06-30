@@ -698,6 +698,8 @@ rollout MainRollout "Untitled" width:401 height:536
 						createdialog  enterclientpath 
 				)
 				basenamearray = getMAXFileObjectNames  ( clientpath +"\\"+ maxbasename[1] )
+				
+				messagebox(basenamearray)
 	)
 	on MainRollout close do
 	(

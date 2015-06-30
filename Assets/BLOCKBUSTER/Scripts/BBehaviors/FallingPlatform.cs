@@ -139,9 +139,15 @@ using UnityEditor;
                 // NodeGraph.EditedControll  is the nodegraph actually edited by the graph editor 
                 NodeGraph.EditedControll = paramblock.BBC;
 
-                BBDebugLog.singleWarning("switch edited control to " + NodeGraph.EditedControll.guid.GetHashCode().ToString()); 
+                //
+
+
+                BBDebugLog.singleWarning("switch edited control to " + NodeGraph.EditedControll.guid.GetHashCode().ToString());
+
                 
                 EditorApplication.ExecuteMenuItem("BlockBuster/BBControllEditor");
+
+
             }
         }
         public override void OnCustomSceneGUI(SceneView sceneview)

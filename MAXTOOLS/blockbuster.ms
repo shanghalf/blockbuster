@@ -2,74 +2,55 @@
 	--**************************************************************************************************************
 	-- EDIT THIS LINES WITH YOUR OWN PATH *** there s actually no ini file to hold your settings that s for hardcore artist only 
 	-- todo split path in several sub part to compose path on flighr more easily 
-	
-	
-	global maxbasename = 	
-	
-	
-	
-	#( "E:\\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\\MAXTOOLS\\base\\HIGHTECH.max"	, 
-		"E:\\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\\MAXTOOLS\\base\\JUNGLE.max",
-		"E:\\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\\MAXTOOLS\\base\\TEMPLE.max",
-		"E:\\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\\base\\SANDBOX.max"
-		)
-	global colbasename = 	#( "D:\\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\\MAXTOOLS\\base\\orientalcolset.max")
-		
-		
-	global exportpath = "E:\\atrabuio_SGHW-ATRABUIO_NOROTATOR_9469\\Assets\\PLATFORM\\HIGHTECH\\"
+	global BlockBusterRootFolder = "E:\\BlockBuster_G\\blockbuster\\"
 
-		
-		
-	
+
+
+	global maxbasename = 	
+	#( 
+		BlockBusterRootFolder+"MAXTOOLS\\base\\HIGHTECH.max"	, 
+		BlockBusterRootFolder+"MAXTOOLS\\base\\JUNGLE.max",
+		BlockBusterRootFolder+"MAXTOOLS\\base\\TEMPLE.max",
+		BlockBusterRootFolder+"MAXTOOLS\\base\\SANDBOX.max"
+	  )
+	global colbasename = 	#( BlockBusterRootFolder+"MAXTOOLS\\base\\orientalcolset.max")
+	global exportpath = BlockBusterRootFolder+"Assets\\BLOCKBUSTER\BBGBASE\HIGHTECH\\"
 	global 	ininame = "blockbuster6.ini" 
 		
 	--**************************************************************************************************************
 	--**************************************************************************************************************
 	--**************************************************************************************************************
-	--**************************************************************************************************************
-	--e:\alf_rot
 
 	
 rollout batchrename "Batchrename" width:205 height:152
 (
 	dropdownList ddl1 "change instance name " pos:[7,7] width:189 height:41 items:#("JUNGLE", "TEMPLE", "HIGHTECH", "SANDBOX")
 	button closebutton "close" pos:[7,112] width:186 height:20 toolTip:"close the window"
-	
 	progressBar pb1   "ProgressBar" pos:[10,55] width:181 height:17
-	
 	global keepgoing = true 
 	global cmax = 0
 	global newname = ""
 	global bindex  =  1
 	global pbinc = 0
-
 	button renamebutton "rename" pos:[6,83] width:186 height:20 toolTip:"close the window"
-	
 	on ddl1 selected sel do
 	(
 		bindex = sel 
 	)
-		
-	
 	fn updatepb c  = 
 	(
 		pb1.value = pbinc * c ;
 		windows.processPostedMessages()
 	)
-	
 	on closebutton pressed do
 	(
 		destroydialog batchrename
 	)
-	
-	
 	on pb1 rightClick  do
 	(
 		keepgoing = false 
 		pb1.value = 50
-		
 	)
-	
 	on renamebutton pressed do
 	(
 		if ( $ == undefined ) do 
@@ -79,13 +60,11 @@ rollout batchrename "Batchrename" width:205 height:152
 		)
 		if ($ == selection ) do 
 				cmax = $.count 
-		
 		pbinc = 100.0 /( cmax *2 ) 
 		count = 0 
 		for n in $  do 
 		(
 			count +=1 
-			
 			s = n.name as string 
 			ns = filterstring s "_" 
 			ns[1] =   ddl1.items[bindex]
@@ -95,22 +74,15 @@ rollout batchrename "Batchrename" width:205 height:152
 				n.name +=  ss  
 				if ( ss != ns[ns.count] ) do  n.name +=    "_" 
 			)
-			
 			if ( keepgoing == false ) do  
 			return false
 			--updatepb  ( pbinc * count ) 
-		
-			
-		pb1.value = pbinc * count ;
-	
+			pb1.value = pbinc * count ;
 		)
-			
-		
-			for n in $  do 
+		for n in $  do 
 		(
 			count +=1 	
 			s =  getuserprop  n "originalname"
-			
 			ns = filterstring s "_" 
 			ns[1] =   ddl1.items[bindex]
 			newname ="" 
@@ -119,18 +91,12 @@ rollout batchrename "Batchrename" width:205 height:152
 				newname +=  ss  
 				if ( ss != ns[ns.count] ) do  newname +=    "_" 
 			)
-			
 			if ( keepgoing == false ) do 
 			return false
-			
 			pb1.value = pbinc * count ;
-			
-			
 			setuserprop n "originalname" newname
 		)
-		
 		messagebox "done"
-		
 	)
 )
 
@@ -138,26 +104,19 @@ rollout batchrename "Batchrename" width:205 height:152
 		
 	rollout enterclientpath "Enter Client Path" width:352 height:88
 	(	
-	editText clientpathtext "" pos:[8,16] width:336 height:22
-	button cancelbutton  "cancel" pos:[128,48] width:99 height:22
-	button okbutton  "OK" pos:[240,48] width:99 height:22
-		
-	
-	
-
-	on okbutton pressed    do 
-	(
-		messagebox (clientpathtext.text)
-		setINISetting ( GetDir #userScripts + "/3dsmax.ini")  "LOCALPATH" "mylocalpath"clientpathtext.text 
-		destroydialog enterclientpath
-	)
-	
-	on cancelbutton pressed   do 
-	(
-		destroydialog enterclientpath
-	)
-	
-		
+		editText clientpathtext "" pos:[8,16] width:336 height:22
+		button cancelbutton  "cancel" pos:[128,48] width:99 height:22
+		button okbutton  "OK" pos:[240,48] width:99 height:22
+		on okbutton pressed do 
+		(
+			messagebox (clientpathtext.text)
+			setINISetting ( GetDir #userScripts + "/3dsmax.ini")  "LOCALPATH" "mylocalpath"clientpathtext.text 
+			destroydialog enterclientpath
+		)
+		on cancelbutton pressed   do 
+		(
+			destroydialog enterclientpath
+		)
 	)	
 		
 	--**************************************************************************************************************
@@ -697,7 +656,7 @@ rollout MainRollout "Untitled" width:401 height:536
 					else 
 						createdialog  enterclientpath 
 				)
-				basenamearray = getMAXFileObjectNames  ( clientpath +"\\"+ maxbasename[1] )
+				basenamearray = getMAXFileObjectNames  ( maxbasename[1] )
 	)
 	on MainRollout close do
 	(
@@ -868,7 +827,7 @@ rollout MainRollout "Untitled" width:401 height:536
 				
 			print ( maxbasename[basenamenumber] )
 			basenamearray = getMAXFileObjectNames (  maxbasename[basenamenumber] )
-			exportpath = "Project_2013\\BlockBuster\\Assets\\PLATFORM\\"+ getfilenamefile ( maxbasename[basenamenumber] )+"\\"
+			exportpath = BlockBusterRootFolder+"Assets\\BLOCKBUSTER\\BBGBASE\\"+ getfilenamefile ( maxbasename[basenamenumber] )+"\\"
 			
 			
 		)

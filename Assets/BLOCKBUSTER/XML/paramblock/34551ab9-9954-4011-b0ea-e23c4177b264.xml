@@ -11,6 +11,7 @@
   <guid>34551ab9-9954-4011-b0ea-e23c4177b264</guid>
   <fullqualifiedclassname>RotatingPlatformDataset, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</fullqualifiedclassname>
   <suportedclassname>RotatingPlatform, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null</suportedclassname>
+  <Guid>440a00ef-1d40-489c-a6a0-5f09ac23305d</Guid>
   <rotatelookpoint>
     <pos>
       <x>0</x>
@@ -34,6 +35,6 @@
   <rotationspeed>2.39</rotationspeed>
   <rotationstepnumber>5</rotationstepnumber>
   <rotationtempo>0.42</rotationtempo>
-  <rotateindex>1</rotateindex>
+  <rotateindex>3</rotateindex>
   <m_pathnodes />
 </RotatingPlatformDataset>

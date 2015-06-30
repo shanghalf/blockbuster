@@ -158,9 +158,11 @@
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\AA.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\browseassetbase.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\combinedgraph.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\combinedgraph_emiter.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\controlltest.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\delete.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\duplicatenomove.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\emitertest.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\fallingplatformfollowtest.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\graph.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\graph_V.xml" />
@@ -172,6 +174,7 @@
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveonsize.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\moveside.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\rotatebase.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\testicule.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\blockbustersetings\TRS.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\03fe2863-fc2e-4cba-a95f-b7eb1d299c3b.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\0460dd9c-0256-4c1b-90dc-4ea0f010d727.xml" />
@@ -189,6 +192,7 @@
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\1a49910e-6e34-4e88-9ae3-2a5174a1443e.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\1ad418c9-6ee9-44e0-913e-2541bb887b82.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\1e4f4e38-bb89-452c-9767-2520e94a1e66.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\21e9c37b-599e-42e7-b523-6ed9dad73409.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\22ab872f-eeb7-4507-a996-b189c3b085c8.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\234e5cdf-9b9a-4d03-9528-12d4f83b71a9.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\2439f847-d01c-435a-902c-4c837b7465a6.xml" />
@@ -208,6 +212,7 @@
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\384fbb71-4a1c-4a0d-9118-2a3dbd20c683.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\3dfb0d9a-d21e-4338-be44-35f6aac6cfe1.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\3f71d231-a085-4aba-81f3-be0e2b732cc0.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\3fbdc4e5-d488-4cdb-b186-4c42b38bc86d.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\41580f36-f58b-419e-8215-318fd521d20e.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\423ebf56-a9ce-4e49-8e21-abc0e825eae8.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\431e9097-af1f-4e9e-8f22-92960b444215.xml" />
@@ -224,6 +229,8 @@
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\5cbe92ae-57d8-4190-be60-09720b3c532d.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\5e06df47-1a2e-4b8c-9cce-288f6170f865.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\5ebe68e1-a472-4a38-9065-f9b6f7b112b5.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\5ee0dc78-18c0-463d-9269-53d01cd2ffa5.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\5f69ae07-a8c1-49e1-b18f-8a4735342716.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\60ebfa29-115a-4624-89fc-e9022a967f25.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\61fd36fa-a2e0-49c2-b764-ad953106b8a5.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\636ab2a0-d056-4fed-bfc1-399f7c44f7c6.xml" />
@@ -234,11 +241,13 @@
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\6ee40f14-ab37-4c78-860c-92db535727b3.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\6efeeba9-0b9e-488c-9827-5373efaa7654.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\716260ba-6748-4162-a584-94a5579a993b.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\74397884-c04a-429a-bb13-c0409d77c3ae.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\7727b75b-94f4-4458-86fe-5d0c162f84cb.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\77ad3bfd-c2ce-4407-8dc4-02cb01e2bdb6.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\79f68573-cef6-4f67-9f66-65fe7dc5c520.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\7e9d91b4-8ea3-45cc-861d-04c3faee5114.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\7fcd39c3-d281-4cf3-8d62-3eeb1644f1c7.xml" />
+    <None Include="Assets\BLOCKBUSTER\XML\paramblock\816d0a18-25d6-456d-80cc-3a2561e26787.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\826e24fd-9ddd-4409-9d68-aad27235b85a.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\833f14e6-0534-46b0-a67d-37a046724595.xml" />
     <None Include="Assets\BLOCKBUSTER\XML\paramblock\83b4d7fd-f1fe-47a4-b0a4-ea9125ba6aff.xml" />

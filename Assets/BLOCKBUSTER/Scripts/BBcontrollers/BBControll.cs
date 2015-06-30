@@ -28,8 +28,15 @@ public class BBDebugLog
         else 
             return true ;
     }
-
-
+    /// <summary>
+    /// indirection of debug log 
+    /// can add file log here 
+    /// </summary>
+    /// <param name="msg"></param>
+    public static void Log (string msg)
+    {
+        Debug.Log(msg);
+    }
 
 
     public static void SaveMovepadTarget(String filename, Texture2D Txt)
@@ -68,9 +75,17 @@ public enum OUTSLOTTYPE
 {
     NORMAL = 1,
     EMITTER = 2,
-    REMOVE = 3
+    REMOVE = 3,
+    PIN =4,
+    UNPIN = 5
 }
 
+[System.Serializable]
+public enum INSLOTTYPE
+{
+    CREATENODE = 1,
+    REMOTE = 2,
+}
 
 
 
@@ -325,7 +340,7 @@ public class BBMovepadLayerDescriptor
     public Guid guid;
     public int id;
     public string name;
-    public static bool autoload = false;
+    //public static bool autoload = false;
     public static string bbmainfilename = "bbmain";
     
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -391,16 +406,10 @@ public class BBMovepadLayerDescriptor
     {
         string path;
         if (savepath == null)
-        {
             path = BBDir.Get(BBpath.SETING) + guid.ToString() + ".MVPL";
-        }
         else
-        {
-            //path = BBDir.Get(BBpath.SETING) + savepath + ".MVPL";
-
             path = EditorUtility.SaveFilePanel("load Movepad Layer", BBDir.Get(BBpath.SETING),"bbmain", "MVPL");
 
-        }
 
         //BBControllersAray.
         BBControllersAray.Clear();
@@ -481,6 +490,7 @@ public class BBMovepadLayerDescriptor
         }
 
         public static Rect mvpd_rect = new Rect(0, 30, MVPTXTSZ, MVPTXTSZ);
+
 
         /// <summary>
         ///  render a layer in target 
@@ -566,6 +576,17 @@ public class BBMovepadLayerDescriptor
                 return null;
             }
         }
+
+
+        public static int[] RectFromIndex(int index, int celsize, int gridsize)
+        {
+
+            int px = ((index) * celsize) % MVPTXTSZ;// base index 0
+            int py = ((((index) * celsize / MVPTXTSZ)) * celsize);
+            int[] ret = new int[] { px, py, celsize, celsize };
+            return ret;
+        }
+    
 
 
         [BBCtrlVisible]

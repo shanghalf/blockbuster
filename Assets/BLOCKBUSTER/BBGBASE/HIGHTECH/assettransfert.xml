@@ -1,56 +1,56 @@
 <ObjectList>
 		<obj>
-			<name>JUNGLE_BUILD_6_6_2_01_J</name>
-			<posx>-20.0</posx>
-			<posy>-13.0</posy>
-			<posz>-0.1</posz>
+			<name>SANDBOX_BUILD_4_6_2_01_E</name>
+			<posx>0.0</posx>
+			<posy>16.0</posy>
+			<posz>0.0</posz>
 			<rotx>0.0</rotx>
 			<roty>0.0</roty>
-			<rotz>-90.0</rotz>
+			<rotz>0.0</rotz>
 		</obj>
 		<obj>
-			<name>JUNGLE_BUILD_6_6_2_01_J</name>
-			<posx>-20.0</posx>
-			<posy>-7.0</posy>
-			<posz>-0.1</posz>
+			<name>SANDBOX_BUILD_4_6_2_01_E</name>
+			<posx>0.0</posx>
+			<posy>4.0</posy>
+			<posz>0.0</posz>
 			<rotx>0.0</rotx>
 			<roty>0.0</roty>
-			<rotz>-90.0</rotz>
+			<rotz>0.0</rotz>
 		</obj>
 		<obj>
-			<name>JUNGLE_BUILD_6_6_2_01_J</name>
-			<posx>-26.0</posx>
-			<posy>-7.0</posy>
-			<posz>-0.1</posz>
+			<name>SANDBOX_BUILD_4_6_2_01_E</name>
+			<posx>-4.0</posx>
+			<posy>4.0</posy>
+			<posz>0.0</posz>
 			<rotx>0.0</rotx>
 			<roty>0.0</roty>
-			<rotz>-90.0</rotz>
+			<rotz>180.0</rotz>
 		</obj>
 		<obj>
-			<name>JUNGLE_BUILD_6_6_2_01_J</name>
-			<posx>-14.0</posx>
-			<posy>-7.0</posy>
-			<posz>-0.1</posz>
+			<name>SANDBOX_BUILD_4_6_2_01_E</name>
+			<posx>0.0</posx>
+			<posy>10.0</posy>
+			<posz>0.0</posz>
 			<rotx>0.0</rotx>
 			<roty>0.0</roty>
-			<rotz>-90.0</rotz>
+			<rotz>0.0</rotz>
 		</obj>
 		<obj>
-			<name>JUNGLE_BUILD_6_6_2_01_J</name>
-			<posx>-26.0</posx>
-			<posy>-13.0</posy>
-			<posz>-0.1</posz>
+			<name>SANDBOX_BUILD_4_6_2_01_E</name>
+			<posx>-4.0</posx>
+			<posy>10.0</posy>
+			<posz>0.0</posz>
 			<rotx>0.0</rotx>
 			<roty>0.0</roty>
-			<rotz>-90.0</rotz>
+			<rotz>180.0</rotz>
 		</obj>
 		<obj>
-			<name>JUNGLE_BUILD_6_6_2_01_J</name>
-			<posx>-14.0</posx>
-			<posy>-13.0</posy>
-			<posz>-0.1</posz>
+			<name>SANDBOX_BUILD_4_6_2_01_E</name>
+			<posx>-4.0</posx>
+			<posy>16.0</posy>
+			<posz>0.0</posz>
 			<rotx>0.0</rotx>
 			<roty>0.0</roty>
-			<rotz>-90.0</rotz>
+			<rotz>180.0</rotz>
 		</obj>
 </ObjectList>
